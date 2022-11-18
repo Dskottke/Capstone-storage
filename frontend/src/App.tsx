@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 
 import './App.css';
 import axios from "axios";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
+
+
 
 
 
