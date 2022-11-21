@@ -20,7 +20,7 @@ public class ItemService {
         return repository.findAll();
     }
 
-    public Item getItemResponse(String eanToFind) {
+    public Item addItem(String eanToFind) {
 
         ItemResponse itemResponse = eanService.getArticleResponse(eanToFind);
 

@@ -25,7 +25,7 @@ public class ItemController {
     @ResponseStatus(HttpStatus.CREATED)
     public Item saveArticle(@PathVariable String eanToFind) {
 
-        return service.getItemResponse(eanToFind);
+        return service.addItem(eanToFind);
     }
 
     @PutMapping("{id}")
