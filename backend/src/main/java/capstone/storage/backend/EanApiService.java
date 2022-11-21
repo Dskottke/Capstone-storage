@@ -15,11 +15,9 @@ public class EanApiService {
     private final WebClient webClient;
     private static final int EXPECTED_ARRAY_LENGTH = 1;
 
-    @Value("${Applikation.Response.Token}")
-    private String token;
 
-    public EanApiService() {
-        this.webClient = WebClient.create();
+    public EanApiService(@Value("${ean.api.url}") String url) {
+        this.webClient = WebClient.create(url);
     }
 
     public Optional<ItemResponse> getArticleResponseFromArray(ItemResponse[] itemResponsesList, String eanToFind) {
@@ -35,7 +33,7 @@ public class EanApiService {
 
         ResponseEntity<ItemResponse[]> itemResponse = webClient
                 .get()
-                .uri("https://api.ean-search.org/api?token=" + token + "&op=barcode-lookup&format=json&ean=" + eanToFind)
+                .uri("&op=barcode-lookup&format=json&ean=" + eanToFind)
                 .retrieve()
                 .toEntity(ItemResponse[].class)
                 .block();

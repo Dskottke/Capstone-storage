@@ -16,20 +16,20 @@ public class ItemController {
     private final ItemService service;
 
     @GetMapping
-    public List<Item> getAllArticles() {
+    public List<Item> getAllItems() {
 
         return service.findAll();
     }
 
     @PostMapping("{eanToFind}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Item saveArticle(@PathVariable String eanToFind) {
+    public Item saveItem(@PathVariable String eanToFind) {
 
         return service.addItem(eanToFind);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Item> updateArticle(@PathVariable String id, @RequestBody Item itemToUpdate) {
+    public ResponseEntity<Item> updateItem(@PathVariable String id, @RequestBody Item itemToUpdate) {
 
         boolean itemExist = service.existById(id);
 
@@ -40,7 +40,7 @@ public class ItemController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteArticle(@PathVariable String id) {
+    public void deleteItem(@PathVariable String id) {
 
         if (service.existById(id)) {
             service.deleteItemById(id);
