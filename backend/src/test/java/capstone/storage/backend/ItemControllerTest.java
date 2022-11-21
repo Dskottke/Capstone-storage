@@ -109,7 +109,7 @@ class ItemControllerTest {
 
     @Test
     @DirtiesContext
-    void updateItem() throws Exception {
+    void updateStorableValueFromExistingItemToValue20() throws Exception {
         //GIVEN
         ItemResponse[] itemResponses = {new ItemResponse(
                 "test",
@@ -161,6 +161,33 @@ class ItemControllerTest {
 
 
     }
+
+    @DirtiesContext
+    @Test
+    void updateNotExistingItemAndExpectStatus201() throws Exception {
+        //GIVEN
+        String id = "123";
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id" : "123",
+                                "name": "test",
+                                "categoryName": "test",
+                                "issuingCountry": "GER",
+                                "ean":"8710847909610",
+                                "storeableValue": "10" 
+                                }
+                                """))
+
+
+                //THEN
+                .andExpect(status().is(201));
+
+
+    }
+
 
     @Test
     void deleteArticle() {
