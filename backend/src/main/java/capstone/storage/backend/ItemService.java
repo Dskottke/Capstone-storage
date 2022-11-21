@@ -36,8 +36,8 @@ public class ItemService {
 
     }
 
-    public void saveItem(Item articleRequest) {
-        repository.save(articleRequest);
+    public Item updateItem(Item articleRequest) {
+        return repository.save(articleRequest);
     }
 
     public boolean existById(String id) {

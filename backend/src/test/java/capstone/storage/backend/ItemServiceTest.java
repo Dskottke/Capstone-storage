@@ -56,14 +56,28 @@ class ItemServiceTest {
     }
 
     @Test
-    void saveItem() {
+    void UpdateItemAndExpectSameItemToReturn() {
+        //GIVEN
+        Item itemToExpect = new Item("123",
+                "testName",
+                "testCategory",
+                "GER", "8710847909610",
+                "20");
+        when(itemRepo.save(itemToExpect)).thenReturn(itemToExpect);
+        //WHEN
+        Item actual = itemService.updateItem(itemToExpect);
+        Item expected = itemRepo.save(itemToExpect);
+        //THEN
+        assertEquals(expected, actual);
     }
 
     @Test
     void existById() {
+
     }
 
     @Test
     void deleteItemById() {
+
     }
 }
