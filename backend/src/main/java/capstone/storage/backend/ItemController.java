@@ -33,9 +33,9 @@ public class ItemController {
 
         boolean itemExist = service.existById(id);
 
-        service.saveItem(itemToUpdate);
+        Item updatedItem = service.updateItem(itemToUpdate);
 
-        return itemExist ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.CREATED);
+        return itemExist ? ResponseEntity.status(HttpStatus.OK).body(updatedItem) : new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")
