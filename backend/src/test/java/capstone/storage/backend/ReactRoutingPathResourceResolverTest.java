@@ -1,6 +1,5 @@
 package capstone.storage.backend;
-
-import de.neuefische.reactbrowserwithspringboot.backend.ReactRoutingForwarding.ReactRoutingPathResourceResolver;
+import capstone.storage.backend.ReactRoutingForwarding.ReactRoutingPathResourceResolver;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
