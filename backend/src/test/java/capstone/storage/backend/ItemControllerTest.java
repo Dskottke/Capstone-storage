@@ -1,6 +1,8 @@
 package capstone.storage.backend;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -8,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -29,6 +33,9 @@ class ItemControllerTest {
 
     private static MockWebServer mockWebServer;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
 
     @BeforeAll
     static void beforeAll() throws IOException {
@@ -48,6 +55,7 @@ class ItemControllerTest {
 
 
     @Test
+    @DirtiesContext
     void getAllItemsAndExpectEmtpyList() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/items/"))
                 .andExpect(status().isOk())
@@ -58,10 +66,48 @@ class ItemControllerTest {
 
     @Test
     @DirtiesContext
-    void updateArticle() {
+    void addItemWithEanFromApiAndExpectItemWithId() throws Exception {
+
+        //GIVEN
+
+        ItemResponse[] itemResponses = {new ItemResponse(
+                "test",
+                "8710847909610",
+                "test",
+                "GER")};
+
+        mockWebServer.enqueue(new MockResponse()
+                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .setBody(objectMapper.writeValueAsString(itemResponses))
+                .setResponseCode(200));
+
+
+        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(201))
+                .andReturn().getResponse().getContentAsString();
+
+        Item itemResponse = objectMapper.readValue(body, Item.class);
+
+        //WHEN
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/items/"))
+
+                //THEN
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                                [{"id": "<id>",
+                                 "name": "test",
+                                 "categoryName": "test",
+                                 "issuingCountry": "GER",
+                                 "ean": "8710847909610",
+                                 "storeableValue": "20"}]
+                                 """.replace("<id>", itemResponse.id())));
 
 
     }
+
 
     @Test
     void deleteArticle() {
