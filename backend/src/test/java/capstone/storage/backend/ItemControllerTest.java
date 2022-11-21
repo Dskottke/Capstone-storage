@@ -105,9 +105,62 @@ class ItemControllerTest {
                                  "storeableValue": "20"}]
                                  """.replace("<id>", itemResponse.id())));
 
-
     }
 
+    @Test
+    @DirtiesContext
+    void updateItem() throws Exception {
+        //GIVEN
+        ItemResponse[] itemResponses = {new ItemResponse(
+                "test",
+                "8710847909610",
+                "test",
+                "GER")};
+
+        mockWebServer.enqueue(new MockResponse()
+                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .setBody(objectMapper.writeValueAsString(itemResponses))
+                .setResponseCode(200));
+
+
+        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(201))
+                .andReturn().getResponse().getContentAsString();
+
+        Item itemResponse = objectMapper.readValue(body, Item.class);
+
+        String id = itemResponse.id();
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id" : "<id>",
+                                "name": "test",
+                                "categoryName": "test",
+                                "issuingCountry": "GER",
+                                "ean":"8710847909610",
+                                "storeableValue": "10" 
+                                }
+                                """.replace("<id>", id)))
+
+
+                //THEN
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {
+                        "id" : "<id>",
+                        "name": "test",
+                        "categoryName": "test",
+                        "issuingCountry": "GER",
+                        "ean":"8710847909610",
+                        "storeableValue": "10" 
+                        }
+                        """.replace("<id>", id)));
+
+
+    }
 
     @Test
     void deleteArticle() {
