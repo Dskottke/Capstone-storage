@@ -73,7 +73,14 @@ class ItemServiceTest {
 
     @Test
     void existById() {
-
+        //GIVEN
+        String id = "123";
+        when(itemRepo.existsById(id)).thenReturn(true);
+        //WHEN
+        boolean actual = itemService.existById(id);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
     }
 
     @Test
