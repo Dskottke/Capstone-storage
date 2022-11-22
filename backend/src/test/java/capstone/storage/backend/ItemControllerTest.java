@@ -141,9 +141,7 @@ class ItemControllerTest {
                                 "categoryName": "test",
                                 "issuingCountry": "GER",
                                 "ean":"8710847909610",
-                                "storeableValue": "10" 
-                                }
-                                """.replace("<id>", id)))
+                                "storeableValue": "10"}""".replace("<id>", id)))
 
 
                 //THEN
@@ -155,11 +153,7 @@ class ItemControllerTest {
                         "categoryName": "test",
                         "issuingCountry": "GER",
                         "ean":"8710847909610",
-                        "storeableValue": "10" 
-                        }
-                        """.replace("<id>", id)));
-
-
+                        "storeableValue": "10"}""".replace("<id>", id)));
     }
 
     @DirtiesContext
@@ -177,15 +171,9 @@ class ItemControllerTest {
                                 "categoryName": "test",
                                 "issuingCountry": "GER",
                                 "ean":"8710847909610",
-                                "storeableValue": "10" 
-                                }
-                                """))
-
-
+                                "storeableValue": "10"}"""))
                 //THEN
                 .andExpect(status().is(201));
-
-
     }
 
 
@@ -198,6 +186,7 @@ class ItemControllerTest {
                 "8710847909610",
                 "test",
                 "GER")};
+
 
         mockWebServer.enqueue(new MockResponse()
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -229,4 +218,6 @@ class ItemControllerTest {
         ).andExpect(status().is(404));
 
     }
+
+
 }
