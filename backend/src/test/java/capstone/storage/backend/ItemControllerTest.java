@@ -1,7 +1,6 @@
 package capstone.storage.backend;
 
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -216,6 +215,18 @@ class ItemControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/items/" + itemResponse.id())
                 //THEN
         ).andExpect(status().is(204));
+
+    }
+
+    @Test
+    @DirtiesContext
+    void TryToDeleteNotExistingItemByIdAndReturnStatus404() throws Exception {
+        //GIVEN
+        String id = "123";
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/items/" + id)
+                //THEN
+        ).andExpect(status().is(404));
 
     }
 }
