@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-
 import java.util.Arrays;
 import java.util.Optional;
+
 
 @Service
 public class EanApiService {
@@ -34,7 +34,8 @@ public class EanApiService {
 
     public ItemResponse getItemResponse(String eanToFind) {
 
-        ResponseEntity<ItemResponse[]> itemResponse = webClient
+
+        ResponseEntity<ItemResponse[]> itemResponseEntity = webClient
                 .get()
                 .uri(url + "&op=barcode-lookup&format=json&ean=" + eanToFind)
                 .retrieve()
@@ -42,14 +43,13 @@ public class EanApiService {
                 .block();
 
 
-        if (itemResponse != null) {
+        if (itemResponseEntity != null) {
 
-            ItemResponse[] itemResponseList = itemResponse.getBody();
+            ItemResponse[] itemResponseList = itemResponseEntity.getBody();
 
             if (itemResponseList != null && itemResponseList.length == EXPECTED_ARRAY_LENGTH) {
 
                 if (itemResponseList[0].ean() != null) {
-
                     return getItemResponseFromArray(itemResponseList, eanToFind)
                             .orElseThrow(() -> new ItemResponseException("no item found"));
 

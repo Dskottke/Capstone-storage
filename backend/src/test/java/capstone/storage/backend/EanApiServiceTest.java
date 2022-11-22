@@ -1,15 +1,16 @@
 package capstone.storage.backend;
 
 import capstone.storage.backend.exceptions.ItemIsNullException;
+
+
 import capstone.storage.backend.exceptions.ItemResponseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.*;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -44,6 +45,7 @@ class EanApiServiceTest {
     }
 
     @Test
+    @DirtiesContext
     void getItemResponseFromArrayReturnsTheItemResponse() {
         //GIVEN
         ItemResponse itemResponseToGet = new ItemResponse(
@@ -64,7 +66,7 @@ class EanApiServiceTest {
     }
 
     @Test
-    void ExpectItemIsNullException() {
+    void expectItemIsNullException() {
         //GIVEN
         ItemResponse itemResponseToGet = new ItemResponse(
                 "test",
@@ -88,30 +90,95 @@ class EanApiServiceTest {
 
             assertEquals(expected, actual);
         }
-
     }
 
     @Test
-    @DisplayName("expect ItemResponseException with message (item response list is null or invalid)")
-    void expectItemResponseExceptionFromGetItemResponseMethod() {
+    @DisplayName("expect Exception with with message  (item response list is null or invalid) because response list ist null")
+    void expectItemResponseException() {
         //GIVEN
-
-
-        mockWebServer.enqueue(new MockResponse()
-                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setResponseCode(200));
+        mockWebServer.enqueue(new MockResponse());
+        String ean = "123";
         //WHEN
         try {
-            eanApiService.getItemResponse("123");
+            eanApiService.getItemResponse(ean);
             fail();
         }
         //THEN
         catch (ItemResponseException e) {
             String expected = "item response list is null or invalid";
             String actual = e.getMessage();
-
             assertEquals(expected, actual);
         }
 
     }
+
+    @Test
+    @DisplayName("expect Exception with with message  (item response list is null or invalid) because Array length is not valid")
+    void expectItemResponseException2case() {
+        //GIVEN
+        mockWebServer.enqueue(new MockResponse()
+                .setBody("""
+                        [{
+                        "name": "test",
+                        "categoryName": "test",
+                        "issuingCountry": "GER",
+                        "ean": "8710847909610",
+                        "storeableValue": "20"},
+                        {
+                        "name": "test2",
+                        "categoryName": "test",
+                        "issuingCountry": "GER",
+                        "ean": "8710847909609",
+                        "storeableValue": "20"}]
+                        """)
+                .addHeader("Content-Type", "application/json"));
+
+        String ean = "123";
+        //WHEN
+        try {
+            eanApiService.getItemResponse(ean);
+            fail();
+        }
+        //THEN
+        catch (ItemResponseException e) {
+            String expected = "item response list is null or invalid";
+            String actual = e.getMessage();
+            assertEquals(expected, actual);
+        }
+
+
+    }
+
+    @Test
+    @DisplayName("expect Exception with with message (item is null) because ean of the Response is null ")
+    void expectItemResponseException3case() {
+        //GIVEN
+        mockWebServer.enqueue(new MockResponse()
+                .setBody("""
+                        [{
+                        "name": "test",
+                        "categoryName": "test",
+                        "issuingCountry": "GER",
+                        "ean" : null,
+                        "storeableValue": "20"
+                        }]""")
+                .addHeader("Content-Type", "application/json"));
+
+        String ean = "123";
+        //WHEN
+        try {
+            eanApiService.getItemResponse(ean);
+            fail();
+        }
+        //THEN
+        catch (ItemResponseException e) {
+            String expected = "item is null";
+            String actual = e.getMessage();
+            assertEquals(expected, actual);
+        }
+
+
+    }
+
+
 }
