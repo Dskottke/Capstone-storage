@@ -22,7 +22,7 @@ function ItemNavigation(props: menuPagePobs) {
     return (
         <div className="topnav">
             <div id="navi-logo">Items</div>
-            <a className="active" href="">home</a>
+            <a className="active">home</a>
             <div className="add-container">
 
                 <form onSubmit={handleAddSubmit}>
