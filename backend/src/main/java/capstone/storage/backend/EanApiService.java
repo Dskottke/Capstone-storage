@@ -5,62 +5,46 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import java.util.Arrays;
-import java.util.Optional;
 
+import static java.util.Objects.requireNonNull;
 
 @Service
 public class EanApiService {
     private final WebClient webClient;
     private static final int EXPECTED_ARRAY_LENGTH = 1;
+    private final String apiToken;
 
-    private final String url;
-
-
-    public EanApiService(@Value("${ean.api.url}") String basicUrl, @Value("${ean.api.token}") String token) {
-        this.url = token;
+    public EanApiService(@Value("${ean.api.url}") String basicUrl, @Value("${token}") String token) {
+        this.apiToken = token;
         this.webClient = WebClient.create(basicUrl);
-
-    }
-
-    public Optional<ItemResponse> getItemResponseFromArray(ItemResponse[] itemResponsesList, String eanToFind) {
-
-        return Optional.of(
-                Arrays.stream(itemResponsesList)
-                        .filter(find -> find.ean().equals(eanToFind))
-                        .findFirst()
-                        .orElseThrow(() -> new ItemIsNullException("item not found")));
     }
 
     public ItemResponse getItemResponse(String eanToFind) {
 
+        ResponseEntity<ItemResponse[]> itemResponseEntity = requireNonNull(webClient
+                        .get()
+                        .uri("api=?token=" + apiToken + "&op=barcode-lookup&format=json&ean=" + eanToFind)
+                        .retrieve()
+                        .toEntity(ItemResponse[].class)
+                        .block(),
 
-        ResponseEntity<ItemResponse[]> itemResponseEntity = webClient
-                .get()
-                .uri(url + "&op=barcode-lookup&format=json&ean=" + eanToFind)
-                .retrieve()
-                .toEntity(ItemResponse[].class)
-                .block();
+                "ResponseEntity is null"
+        );
+        ItemResponse[] itemResponseList = itemResponseEntity.getBody();
 
-
-        if (itemResponseEntity != null) {
-
-            ItemResponse[] itemResponseList = itemResponseEntity.getBody();
-
-            if (itemResponseList != null && itemResponseList.length == EXPECTED_ARRAY_LENGTH) {
-
-                if (itemResponseList[0].ean() != null) {
-                    return getItemResponseFromArray(itemResponseList, eanToFind)
-                            .orElseThrow(() -> new ItemResponseException("no item found"));
-
-                } else {
-                    throw new ItemResponseException("item is null");
-                }
-            } else {
-                throw new ItemResponseException("item response list is null or invalid");
-            }
-        } else {
-            throw new ItemResponseException("item response is null");
+        if (itemResponseList == null || itemResponseList.length != EXPECTED_ARRAY_LENGTH) {
+            throw new ItemResponseException("item response list is null or invalid");
         }
+        ItemResponse itemResponse = itemResponseList[0];
+        String firstEan = itemResponse.ean();
+
+        if (firstEan == null) {
+            throw new ItemResponseException("item is null");
+        }
+        if (!(firstEan.equals(eanToFind))) {
+            throw new ItemIsNullException("item not found");
+        }
+        return itemResponse;
     }
+
 }
