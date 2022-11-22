@@ -1,5 +1,6 @@
 package capstone.storage.backend;
 
+import capstone.storage.backend.exceptions.ItemIsNullException;
 import capstone.storage.backend.exceptions.ItemResponseException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -127,5 +128,32 @@ class EanApiServiceTest {
 
     }
 
+    @Test
+    @DisplayName("expect Exception with with message (item is null) item not found")
+    void expectItemResponseException4case() {
+        //GIVEN
+        mockWebServer.enqueue(new MockResponse()
+                .setBody("""
+                        [{
+                        "name": "test",
+                        "categoryName": "test",
+                        "issuingCountry": "GER",
+                        "ean" : 1234,
+                        "storeableValue": "20"
+                        }]""")
+                .addHeader("Content-Type", "application/json"));
 
+        String ean = "123";
+        //WHEN
+        try {
+            eanApiService.getItemResponse(ean);
+            fail();
+        }
+        //THEN
+        catch (ItemIsNullException e) {
+            String expected = "item not found";
+            String actual = e.getMessage();
+            assertEquals(expected, actual);
+        }
+    }
 }
