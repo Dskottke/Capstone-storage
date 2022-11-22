@@ -23,7 +23,7 @@ public class EanApiService {
 
     }
 
-    public Optional<ItemResponse> getArticleResponseFromArray(ItemResponse[] itemResponsesList, String eanToFind) {
+    public Optional<ItemResponse> getItemResponseFromArray(ItemResponse[] itemResponsesList, String eanToFind) {
 
         return Optional.of(
                 Arrays.stream(itemResponsesList)
@@ -32,7 +32,7 @@ public class EanApiService {
                         .orElseThrow(() -> new ItemIsNullException("item not found")));
     }
 
-    public ItemResponse getArticleResponse(String eanToFind) {
+    public ItemResponse getItemResponse(String eanToFind) {
 
         ResponseEntity<ItemResponse[]> itemResponse = webClient
                 .get()
@@ -50,7 +50,7 @@ public class EanApiService {
 
                 if (itemResponseList[0].ean() != null) {
 
-                    return getArticleResponseFromArray(itemResponseList, eanToFind)
+                    return getItemResponseFromArray(itemResponseList, eanToFind)
                             .orElseThrow(() -> new ItemResponseException("no item found"));
 
                 } else {
