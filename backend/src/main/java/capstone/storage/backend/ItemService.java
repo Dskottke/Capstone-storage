@@ -22,7 +22,7 @@ public class ItemService {
 
     public Item addItem(String eanToFind) {
 
-        ItemResponse itemResponse = eanService.getArticleResponse(eanToFind);
+        ItemResponse itemResponse = eanService.getItemResponse(eanToFind);
 
         Item itemToAdd = new Item(
                 utils.generateUUID(),

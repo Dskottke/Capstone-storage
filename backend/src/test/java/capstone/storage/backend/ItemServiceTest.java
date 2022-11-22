@@ -44,7 +44,7 @@ class ItemServiceTest {
                 "20");
 
 
-        when(eanApiService.getArticleResponse(eanToFind)).thenReturn(response);
+        when(eanApiService.getItemResponse(eanToFind)).thenReturn(response);
         when(utils.generateUUID()).thenReturn("123");
         when(itemRepo.save(itemToExpect)).thenReturn(itemToExpect);
 
