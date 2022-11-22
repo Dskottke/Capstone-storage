@@ -1,4 +1,5 @@
 package capstone.storage.backend;
+
 import capstone.storage.backend.exceptions.ItemIsNullException;
 import capstone.storage.backend.exceptions.ItemResponseException;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,6 @@ public class EanApiService {
     }
 
     public ItemResponse getItemResponse(String eanToFind) {
-
         ResponseEntity<ItemResponse[]> itemResponseEntity = requireNonNull(webClient
                         .get()
                         .uri("api=?token=" + apiToken + "&op=barcode-lookup&format=json&ean=" + eanToFind)
@@ -39,12 +39,11 @@ public class EanApiService {
         String firstEan = itemResponse.ean();
 
         if (firstEan == null) {
-            throw new ItemResponseException("item is null");
+            throw new ItemResponseException("ean is null");
         }
         if (!(firstEan.equals(eanToFind))) {
             throw new ItemIsNullException("item not found");
         }
         return itemResponse;
     }
-
 }
