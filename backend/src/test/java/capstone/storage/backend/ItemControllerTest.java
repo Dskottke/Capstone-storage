@@ -1,6 +1,7 @@
 package capstone.storage.backend;
 
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -190,6 +191,31 @@ class ItemControllerTest {
 
 
     @Test
-    void deleteArticle() {
+    @DirtiesContext
+    void deleteExistingItemByIdAndReturnStatus204() throws Exception {
+        //GIVEN
+        ItemResponse[] itemResponses = {new ItemResponse(
+                "test",
+                "8710847909610",
+                "test",
+                "GER")};
+
+        mockWebServer.enqueue(new MockResponse()
+                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .setBody(objectMapper.writeValueAsString(itemResponses))
+                .setResponseCode(200));
+
+
+        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(201))
+                .andReturn().getResponse().getContentAsString();
+
+        Item itemResponse = objectMapper.readValue(body, Item.class);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/items/" + itemResponse.id())
+                //THEN
+        ).andExpect(status().is(204));
+
     }
 }
