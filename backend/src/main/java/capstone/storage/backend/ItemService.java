@@ -14,16 +14,12 @@ public class ItemService {
     private final ItemUtils utils;
     private static final String STOREABLEVALUE_DEFAULT = "20";
 
-
     public List<Item> findAll() {
-
         return repository.findAll();
     }
 
     public Item addItem(String eanToFind) {
-
         ItemResponse itemResponse = eanService.getItemResponse(eanToFind);
-
         Item itemToAdd = new Item(
                 utils.generateUUID(),
                 itemResponse.name(),
@@ -31,9 +27,7 @@ public class ItemService {
                 itemResponse.issuingCountry(),
                 itemResponse.ean(),
                 STOREABLEVALUE_DEFAULT);
-
         return repository.save(itemToAdd);
-
     }
 
     public Item updateItem(Item articleRequest) {

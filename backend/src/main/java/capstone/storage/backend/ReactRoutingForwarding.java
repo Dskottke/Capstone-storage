@@ -1,4 +1,5 @@
 package capstone.storage.backend;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -10,18 +11,15 @@ import java.io.IOException;
 
 @Configuration
 public class ReactRoutingForwarding implements WebMvcConfigurer {
-
     public static final String DEFAULT_STARTING_PAGE = "static/index.html";
 
     static class ReactRoutingPathResourceResolver extends PathResourceResolver {
         @Override
         protected Resource getResource(String resourcePath, Resource location) throws IOException {
             var requestedResource = location.createRelative(resourcePath);
-
             if (requestedResource.exists() && requestedResource.isReadable()) {
                 return requestedResource;
             }
-
             return new ClassPathResource(DEFAULT_STARTING_PAGE);
         }
     }
