@@ -1,8 +1,5 @@
 package capstone.storage.backend;
 
-import capstone.storage.backend.exceptions.ItemIsNullException;
-
-
 import capstone.storage.backend.exceptions.ItemResponseException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -10,10 +7,8 @@ import org.junit.jupiter.api.*;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import org.springframework.test.annotation.DirtiesContext;
-
 import java.io.IOException;
-import java.util.Optional;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,54 +37,6 @@ class EanApiServiceTest {
     @AfterAll
     static void tearDown() throws IOException {
         mockWebServer.shutdown();
-    }
-
-    @Test
-    @DirtiesContext
-    void getItemResponseFromArrayReturnsTheItemResponse() {
-        //GIVEN
-        ItemResponse itemResponseToGet = new ItemResponse(
-                "test",
-                "8710847909610",
-                "test",
-                "test");
-
-        ItemResponse[] itemResponseArray = {itemResponseToGet
-        };
-
-        String eanToFind = "8710847909610";
-        //WHEN
-        Optional<ItemResponse> actual = eanApiService.getItemResponseFromArray(itemResponseArray, eanToFind);
-        ItemResponse expected = itemResponseToGet;
-        //THEN
-        assertEquals(expected, actual.get());
-    }
-
-    @Test
-    void expectItemIsNullException() {
-        //GIVEN
-        ItemResponse itemResponseToGet = new ItemResponse(
-                "test",
-                "8710847909610",
-                "test",
-                "test");
-
-        ItemResponse[] itemResponseArray = {itemResponseToGet
-        };
-
-        String eanToFind = "123";
-        //WHEN
-        try {
-            eanApiService.getItemResponseFromArray(itemResponseArray, eanToFind);
-            fail();
-        }
-        //THEN
-        catch (ItemIsNullException e) {
-            String expected = "item not found";
-            String actual = e.getMessage();
-
-            assertEquals(expected, actual);
-        }
     }
 
     @Test
@@ -172,7 +119,7 @@ class EanApiServiceTest {
         }
         //THEN
         catch (ItemResponseException e) {
-            String expected = "item is null";
+            String expected = "ean is null";
             String actual = e.getMessage();
             assertEquals(expected, actual);
         }
