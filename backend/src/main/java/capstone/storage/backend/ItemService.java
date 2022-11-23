@@ -19,7 +19,7 @@ public class ItemService {
     }
 
     public Item addItem(String eanToFind) {
-        ItemResponse itemResponse = eanService.getItemResponse(eanToFind);
+        ItemResponse itemResponse = eanService.getItemResponseFromApi(eanToFind);
         Item itemToAdd = new Item(
                 utils.generateUUID(),
                 itemResponse.name(),

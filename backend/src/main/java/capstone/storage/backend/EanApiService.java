@@ -20,7 +20,7 @@ public class EanApiService {
         this.webClient = WebClient.create(basicUrl);
     }
 
-    public ItemResponse getItemResponse(String eanToFind) {
+    public ItemResponse getItemResponseFromApi(String eanToFind) {
         ResponseEntity<ItemResponse[]> itemResponseEntity = requireNonNull(webClient
                         .get()
                         .uri("api=?token=" + apiToken + "&op=barcode-lookup&format=json&ean=" + eanToFind)

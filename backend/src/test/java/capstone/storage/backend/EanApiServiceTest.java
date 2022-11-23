@@ -48,7 +48,7 @@ class EanApiServiceTest {
         String ean = "123";
         //WHEN
         try {
-            eanApiService.getItemResponse(ean);
+            eanApiService.getItemResponseFromApi(ean);
             fail();
         }
         //THEN
@@ -84,7 +84,7 @@ class EanApiServiceTest {
         String ean = "123";
         //WHEN
         try {
-            eanApiService.getItemResponse(ean);
+            eanApiService.getItemResponseFromApi(ean);
             fail();
         }
         //THEN
@@ -115,7 +115,7 @@ class EanApiServiceTest {
         String ean = "123";
         //WHEN
         try {
-            eanApiService.getItemResponse(ean);
+            eanApiService.getItemResponseFromApi(ean);
             fail();
         }
         //THEN
@@ -144,7 +144,7 @@ class EanApiServiceTest {
         String ean = "123";
         //WHEN
         try {
-            eanApiService.getItemResponse(ean);
+            eanApiService.getItemResponseFromApi(ean);
             fail();
         }
         //THEN
