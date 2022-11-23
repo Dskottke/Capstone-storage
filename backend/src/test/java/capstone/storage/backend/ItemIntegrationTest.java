@@ -69,7 +69,7 @@ class ItemIntegrationTest {
 
         //GIVEN
 
-        ItemResponse[] itemResponses = {new ItemResponse(
+        ItemResponse[] itemResponse = {new ItemResponse(
                 "test",
                 "8710847909610",
                 "test",
@@ -77,7 +77,7 @@ class ItemIntegrationTest {
 
         mockWebServer.enqueue(new MockResponse()
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(objectMapper.writeValueAsString(itemResponses))
+                .setBody(objectMapper.writeValueAsString(itemResponse))
                 .setResponseCode(200));
 
 
@@ -86,7 +86,7 @@ class ItemIntegrationTest {
                 .andExpect(status().is(201))
                 .andReturn().getResponse().getContentAsString();
 
-        Item itemResponse = objectMapper.readValue(body, Item.class);
+        Item mockItemResponse = objectMapper.readValue(body, Item.class);
 
         //WHEN
 
@@ -102,7 +102,7 @@ class ItemIntegrationTest {
                                  "issuingCountry": "GER",
                                  "ean": "8710847909610",
                                  "storeableValue": "20"}]
-                                 """.replace("<id>", itemResponse.id())));
+                                 """.replace("<id>", mockItemResponse.id())));
 
     }
 
