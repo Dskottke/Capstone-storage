@@ -15,7 +15,7 @@ function ItemNavigation(props: itemNavigationProbs) {
     const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
         axios.post("/api/items/" + ean)
-            .catch((error) => console.log("POST Error: " + error))
+            .catch((error) => console.error("POST Error: " + error))
             .then(props.fetchData)
     }
 
