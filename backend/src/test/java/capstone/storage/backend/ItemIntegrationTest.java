@@ -176,6 +176,26 @@ class ItemIntegrationTest {
                 .andExpect(status().is(201));
     }
 
+    @DirtiesContext
+    @Test
+    void updateWithNotMatchingPathvariableIdAndItemId() throws Exception {
+        //GIVEN
+        String id = "123";
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id" : "1234",
+                                "name": "test",
+                                "categoryName": "test",
+                                "issuingCountry": "GER",
+                                "ean":"8710847909610",
+                                "storeableValue": "10"}"""))
+                //THEN
+                .andExpect(status().is(400));
+    }
+
 
     @Test
     @DirtiesContext
