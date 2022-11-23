@@ -98,7 +98,7 @@ class EanApiServiceTest {
     }
 
     @Test
-    @DisplayName("expect Exception with with message (ean is null)")
+    @DisplayName("expect Exception with message (ean is null)")
     void expectItemResponseException3case() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()
