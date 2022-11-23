@@ -1,7 +1,7 @@
 package capstone.storage.backend;
 
 import capstone.storage.backend.exceptions.ItemNotFound;
-import capstone.storage.backend.exceptions.ItemResponseException;
+import capstone.storage.backend.exceptions.EanApiResponseException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.*;
@@ -52,7 +52,7 @@ class EanApiServiceTest {
             fail();
         }
         //THEN
-        catch (ItemResponseException e) {
+        catch (EanApiResponseException e) {
             String expected = "item response list is null or invalid";
             String actual = e.getMessage();
             assertEquals(expected, actual);
@@ -88,7 +88,7 @@ class EanApiServiceTest {
             fail();
         }
         //THEN
-        catch (ItemResponseException e) {
+        catch (EanApiResponseException e) {
             String expected = "item response list is null or invalid";
             String actual = e.getMessage();
             assertEquals(expected, actual);
@@ -119,7 +119,7 @@ class EanApiServiceTest {
             fail();
         }
         //THEN
-        catch (ItemResponseException e) {
+        catch (EanApiResponseException e) {
             String expected = "ean is null";
             String actual = e.getMessage();
             assertEquals(expected, actual);
