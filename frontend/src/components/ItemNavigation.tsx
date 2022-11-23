@@ -10,13 +10,17 @@ function ItemNavigation(props: itemNavigationProbs) {
     const [ean, setEan] = useState<string>()
 
     const handleInputEan = (event: ChangeEvent<HTMLInputElement>) => {
-        setEan(event.target.value)
+        const validEan = event.target.value.replace(/\D/g, '')
+        setEan(validEan)
     }
     const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
+
+
         axios.post("/api/items/" + ean)
             .catch((error) => console.error("POST Error: " + error))
             .then(props.fetchData)
+            .then(() => setEan(""))
     }
 
     return (
@@ -34,4 +38,5 @@ function ItemNavigation(props: itemNavigationProbs) {
 
     );
 }
+
 export default ItemNavigation;
