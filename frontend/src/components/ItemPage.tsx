@@ -4,9 +4,12 @@ import {ItemModel} from "../model/ItemModel";
 import ItemNavigation from "./ItemNavigation";
 import ItemTable from "./ItemTable";
 import "../css/ItemPage.css"
+import Alert from "@mui/material/Alert";
 
 function ItemPage() {
     const [data, setData] = useState<ItemModel[]>([]);
+    const [failModal, setFailModal] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
 
     useEffect(() => {
         fetchData()
@@ -24,9 +27,16 @@ function ItemPage() {
     }
     return (
         <div className={"item-page-container"}>
-            <ItemNavigation fetchData={fetchData}/>
+            {failModal &&
+                <Alert severity="error" onClose={() => {
+                    setFailModal(false)
+                }}>{errorMessage}</Alert>
+            }
+            <ItemNavigation fetchData={fetchData} setFailModal={setFailModal} setErrorMessage={setErrorMessage}/>
+
             <div className={"item-page-body"}>
-                <ItemTable fetchData={fetchData} data={data}/>
+                <ItemTable fetchData={fetchData} data={data} setErrorMessage={setErrorMessage}
+                           setFailModal={setFailModal}/>
             </div>
         </div>
     );

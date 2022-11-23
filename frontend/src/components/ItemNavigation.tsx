@@ -1,17 +1,17 @@
 import React, {ChangeEvent, useState} from 'react';
 import axios from "axios";
 import "../css/ItemNavigation.css"
-import Alert from '@mui/material/Alert';
+
 
 
 type itemNavigationProbs = {
     fetchData: () => void
+    setFailModal: (showAlert: boolean) => void
+    setErrorMessage: (errorMessage: string) => void
 }
 
 function ItemNavigation(props: itemNavigationProbs) {
     const [ean, setEan] = useState<string>()
-    const [failModal, setFailModal] = useState(false)
-    const [errorMessage, setErrorMessage] = useState("")
 
     const handleInputEan = (event: ChangeEvent<HTMLInputElement>) => {
         const validEan = event.target.value.replace(/\D/g, '')
@@ -24,9 +24,8 @@ function ItemNavigation(props: itemNavigationProbs) {
         axios.post("/api/items/" + ean)
             .catch(error => {
                 if (error.response.status === 500) {
-                    setFailModal(true);
-                    setErrorMessage("ean not found")
-
+                    props.setFailModal(true);
+                    props.setErrorMessage("ean not found")
                 }
             })
 
@@ -46,11 +45,6 @@ function ItemNavigation(props: itemNavigationProbs) {
 
                 </form>
             </div>
-            {failModal &&
-                <Alert severity="error" onClose={() => {
-                    setFailModal(false)
-                }}>{errorMessage}</Alert>
-            }
         </div>
 
     );
