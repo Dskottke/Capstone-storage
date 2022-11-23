@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-
 import {ItemModel} from "../model/ItemModel";
 import ItemNavigation from "./ItemNavigation";
 import ItemTable from "./ItemTable";

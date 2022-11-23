@@ -61,7 +61,7 @@ class EanApiServiceTest {
     }
 
     @Test
-    @DisplayName("expect Exception with with message  (item response list is null or invalid) because Array length is not valid")
+    @DisplayName("expect Exception with message (item response list is null or invalid)")
     void expectItemResponseException2case() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()
@@ -98,7 +98,7 @@ class EanApiServiceTest {
     }
 
     @Test
-    @DisplayName("expect Exception with with message (item is null) because ean of the Response is null ")
+    @DisplayName("expect Exception with with message (ean is null)")
     void expectItemResponseException3case() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()
@@ -125,8 +125,9 @@ class EanApiServiceTest {
             assertEquals(expected, actual);
         }
     }
+
     @Test
-    @DisplayName("expect Exception with with message (item is null) item not found")
+    @DisplayName("expect Exception with message (item not found)")
     void expectItemResponseException4case() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()
