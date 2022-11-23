@@ -59,10 +59,6 @@ function ItemTable(props: itemPageProbs) {
             rowKey: id
         })
     }
-    const onDelete = (id: string) => {
-        deleteItem(id)
-    };
-
     return (
         <div className="container-table">
             <table className="blueTable">
@@ -124,7 +120,7 @@ function ItemTable(props: itemPageProbs) {
                                 </button>
                                 <button
                                     className="button-right"
-                                    onClick={() => onDelete(item.id)}
+                                    onClick={() => deleteItem(item.id)}
                                 >
                                     delete
                                 </button>
