@@ -6,6 +6,8 @@ import "../css/ItemTable.css"
 type itemPageProbs = {
     data: ItemModel [],
     fetchData: () => void
+    setFailModal: (showAlert: boolean) => void
+    setErrorMessage: (errorMessage: string) => void
 }
 
 function ItemTable(props: itemPageProbs) {
