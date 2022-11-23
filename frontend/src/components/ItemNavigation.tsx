@@ -2,11 +2,11 @@ import React, {ChangeEvent, useState} from 'react';
 import axios from "axios";
 import "../css/ItemNavigation.css"
 
-type menuPagePobs = {
+type itemNavigationProbs = {
     fetchData: () => void
 }
 
-function ItemNavigation(props: menuPagePobs) {
+function ItemNavigation(props: itemNavigationProbs) {
     const [ean, setEan] = useState<string>()
 
     const handleInputEan = (event: ChangeEvent<HTMLInputElement>) => {
