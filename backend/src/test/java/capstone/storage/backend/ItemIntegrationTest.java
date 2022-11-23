@@ -110,7 +110,7 @@ class ItemIntegrationTest {
     @DirtiesContext
     void updateStorableValueFromExistingItemToValue20() throws Exception {
         //GIVEN
-        ItemResponse[] itemResponses = {new ItemResponse(
+        ItemResponse[] itemResponse = {new ItemResponse(
                 "test",
                 "8710847909610",
                 "test",
@@ -118,7 +118,7 @@ class ItemIntegrationTest {
 
         mockWebServer.enqueue(new MockResponse()
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(objectMapper.writeValueAsString(itemResponses))
+                .setBody(objectMapper.writeValueAsString(itemResponse))
                 .setResponseCode(200));
 
 
@@ -127,9 +127,9 @@ class ItemIntegrationTest {
                 .andExpect(status().is(201))
                 .andReturn().getResponse().getContentAsString();
 
-        Item itemResponse = objectMapper.readValue(body, Item.class);
+        Item mockItemResponse = objectMapper.readValue(body, Item.class);
 
-        String id = itemResponse.id();
+        String id = mockItemResponse.id();
         //WHEN
         mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -200,7 +200,7 @@ class ItemIntegrationTest {
     @DirtiesContext
     void deleteExistingItemByIdAndReturnStatus204() throws Exception {
         //GIVEN
-        ItemResponse[] itemResponses = {new ItemResponse(
+        ItemResponse[] itemResponse = {new ItemResponse(
                 "test",
                 "8710847909610",
                 "test",
@@ -209,7 +209,7 @@ class ItemIntegrationTest {
 
         mockWebServer.enqueue(new MockResponse()
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(objectMapper.writeValueAsString(itemResponses))
+                .setBody(objectMapper.writeValueAsString(itemResponse))
                 .setResponseCode(200));
 
 
@@ -218,9 +218,9 @@ class ItemIntegrationTest {
                 .andExpect(status().is(201))
                 .andReturn().getResponse().getContentAsString();
 
-        Item itemResponse = objectMapper.readValue(body, Item.class);
+        Item mockItemResponse = objectMapper.readValue(body, Item.class);
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/items/" + itemResponse.id())
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/items/" + mockItemResponse.id())
                 //THEN
         ).andExpect(status().is(204));
 
