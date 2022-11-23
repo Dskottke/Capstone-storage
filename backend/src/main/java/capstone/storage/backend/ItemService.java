@@ -27,7 +27,7 @@ public class ItemService {
                 itemResponse.issuingCountry(),
                 itemResponse.ean(),
                 STOREABLEVALUE_DEFAULT);
-        return repository.save(itemToAdd);
+        return repository.insert(itemToAdd);
     }
 
     public Item updateItem(Item articleRequest) {
