@@ -41,7 +41,7 @@ class EanApiServiceTest {
     }
 
     @Test
-    @DisplayName("expect Exception with with message  (item response list is null or invalid) because response list ist null")
+    @DisplayName("expect Exception with message (item response list is null or invalid) because response list ist null")
     void expectItemResponseException() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse());
