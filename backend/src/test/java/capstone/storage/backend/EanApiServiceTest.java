@@ -124,10 +124,7 @@ class EanApiServiceTest {
             String actual = e.getMessage();
             assertEquals(expected, actual);
         }
-
-
     }
-
     @Test
     @DisplayName("expect Exception with with message (item is null) item not found")
     void expectItemResponseException4case() {

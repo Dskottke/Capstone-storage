@@ -15,7 +15,6 @@ function ItemTable(props: itemPageProbs) {
     });
     const [valueStoreable, setValueStoreable] = useState<string>();
 
-
     const updateItem = (id: string, Item: ItemModel) => {
         axios.put("/api/items/" + id, Item)
             .catch(error => {
@@ -25,7 +24,6 @@ function ItemTable(props: itemPageProbs) {
             .then(onCancel)
 
     }
-
     const deleteItem = (id: string) => {
         axios.delete("/api/items/" + id)
             .catch(error => {
@@ -34,11 +32,9 @@ function ItemTable(props: itemPageProbs) {
             .then(props.fetchData)
 
     }
-
     const findItemById = (id: string) => {
         return props.data.find(item => item.id === id)
     }
-
     const onSave = (id: string) => {
         let itemToAdd = findItemById(id)
         if (itemToAdd === undefined) {
@@ -68,7 +64,6 @@ function ItemTable(props: itemPageProbs) {
     };
 
     return (
-
         <div className="container-table">
             <table className="blueTable">
                 <thead>
@@ -144,11 +139,6 @@ function ItemTable(props: itemPageProbs) {
                 </tbody>
             </table>
         </div>
-
     )
-
-
 }
-
-
 export default ItemTable;
