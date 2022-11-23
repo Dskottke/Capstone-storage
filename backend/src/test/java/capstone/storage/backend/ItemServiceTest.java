@@ -86,16 +86,16 @@ class ItemServiceTest {
     @Test
     void deleteItemById() {
         //GIVEN
-        Item itemToDelte = new Item("123",
+        Item itemToDelete = new Item("123",
                 "testName",
                 "testCategory",
                 "GER", "8710847909610",
                 "20");
         //WHEN
-        doNothing().when(itemRepo).deleteById(itemToDelte.id());
-        itemService.deleteItemById(itemToDelte.id());
+        doNothing().when(itemRepo).deleteById(itemToDelete.id());
+        itemService.deleteItemById(itemToDelete.id());
 
         //THEN
-        verify(itemRepo).deleteById(itemToDelte.id());
+        verify(itemRepo).deleteById(itemToDelete.id());
     }
 }
