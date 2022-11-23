@@ -55,7 +55,6 @@ class ItemIntegrationTest {
 
 
     @Test
-    @DirtiesContext
     void getAllItemsAndExpectEmtpyList() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/items/"))
                 .andExpect(status().isOk())
