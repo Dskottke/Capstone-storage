@@ -1,6 +1,6 @@
 package capstone.storage.backend;
 
-import capstone.storage.backend.utils.ItemUtils;
+import capstone.storage.backend.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class ItemService {
     private final ItemRepo repository;
     private final EanApiService eanService;
-    private final ItemUtils utils;
+    private final ServiceUtils utils;
     private static final String STOREABLEVALUE_DEFAULT = "20";
 
     public List<Item> findAll() {

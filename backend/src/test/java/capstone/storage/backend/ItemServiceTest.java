@@ -1,6 +1,6 @@
 package capstone.storage.backend;
 
-import capstone.storage.backend.utils.ItemUtils;
+import capstone.storage.backend.utils.ServiceUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
 
 class ItemServiceTest {
     private final ItemRepo itemRepo = mock(ItemRepo.class);
-    private final ItemUtils utils = mock(ItemUtils.class);
+    private final ServiceUtils utils = mock(ServiceUtils.class);
     private final EanApiService eanApiService = mock(EanApiService.class);
 
     private final ItemService itemService = new ItemService(itemRepo, eanApiService, utils);
