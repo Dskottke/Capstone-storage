@@ -27,9 +27,12 @@ public class ItemController {
 
     @PutMapping("{id}")
     public ResponseEntity<Item> updateItem(@PathVariable String id, @RequestBody Item itemToUpdate) {
-        boolean itemExist = service.existById(id);
-        Item updatedItem = service.updateItem(itemToUpdate);
-        return itemExist ? ResponseEntity.status(HttpStatus.OK).body(updatedItem) : new ResponseEntity<>(HttpStatus.CREATED);
+        if (itemToUpdate.id().equals(id)) {
+            boolean itemExist = service.existById(id);
+            Item updatedItem = service.updateItem(itemToUpdate);
+            return itemExist ? ResponseEntity.status(HttpStatus.OK).body(updatedItem) : new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("{id}")
