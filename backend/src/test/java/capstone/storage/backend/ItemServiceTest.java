@@ -46,7 +46,7 @@ class ItemServiceTest {
 
         when(eanApiService.getItemResponse(eanToFind)).thenReturn(response);
         when(utils.generateUUID()).thenReturn("123");
-        when(itemRepo.save(itemToExpect)).thenReturn(itemToExpect);
+        when(itemRepo.insert(itemToExpect)).thenReturn(itemToExpect);
 
         //WHEN
         Item actual = itemService.addItem(eanToFind);

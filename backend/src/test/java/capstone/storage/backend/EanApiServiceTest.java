@@ -1,6 +1,6 @@
 package capstone.storage.backend;
 
-import capstone.storage.backend.exceptions.ItemIsNullException;
+import capstone.storage.backend.exceptions.ItemNotFound;
 import capstone.storage.backend.exceptions.ItemResponseException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -148,7 +148,7 @@ class EanApiServiceTest {
             fail();
         }
         //THEN
-        catch (ItemIsNullException e) {
+        catch (ItemNotFound e) {
             String expected = "item not found";
             String actual = e.getMessage();
             assertEquals(expected, actual);
