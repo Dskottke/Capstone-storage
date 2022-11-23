@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import ItemMenu from "./ItemMenu";
+
 import {ItemModel} from "../model/ItemModel";
 import ItemNavigation from "./ItemNavigation";
 import ItemTable from "./ItemTable";
@@ -22,19 +22,14 @@ function ItemPage() {
             return error
         })
             .then((data) => setData(data))
-
     }
-
-
     return (
         <div className={"item-page-container"}>
             <ItemNavigation fetchData={fetchData}/>
             <div className={"item-page-body"}>
-                <ItemMenu/>
                 <ItemTable fetchData={fetchData} data={data}/>
             </div>
         </div>
     );
 }
-
 export default ItemPage;

@@ -34,6 +34,4 @@ function ItemNavigation(props: menuPagePobs) {
 
     );
 }
-
-
 export default ItemNavigation;
