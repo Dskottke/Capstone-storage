@@ -23,7 +23,7 @@ public class ItemController {
     @ResponseStatus(HttpStatus.CREATED)
     public Item saveItem(@PathVariable String eanToFind, @RequestBody AddItemDto addItemDto) {
         if (addItemDto.ean().equals(eanToFind)) {
-            return service.addItem(eanToFind);
+            return service.addItem(addItemDto, eanToFind);
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }

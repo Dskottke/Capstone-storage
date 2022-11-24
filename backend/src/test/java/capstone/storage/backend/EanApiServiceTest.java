@@ -17,7 +17,6 @@ class EanApiServiceTest {
     private static MockWebServer mockWebServer;
     private EanApiService eanApiService;
 
-
     @Value("${ean.api.token}")
     private String token;
 
@@ -59,7 +58,6 @@ class EanApiServiceTest {
         }
 
     }
-
     @Test
     @DisplayName("expect Exception with message (item response list is null or invalid)")
     void expectItemResponseException2case() {
@@ -93,10 +91,7 @@ class EanApiServiceTest {
             String actual = e.getMessage();
             assertEquals(expected, actual);
         }
-
-
     }
-
     @Test
     @DisplayName("expect Exception with message (ean is null)")
     void expectItemResponseException3case() {
@@ -125,7 +120,6 @@ class EanApiServiceTest {
             assertEquals(expected, actual);
         }
     }
-
     @Test
     @DisplayName("expect Exception with message (item not found)")
     void expectItemResponseException4case() {
