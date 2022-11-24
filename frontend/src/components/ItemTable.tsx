@@ -6,7 +6,7 @@ import "../css/ItemTable.css"
 type itemPageProbs = {
     data: ItemModel [],
     fetchData: () => void
-    setFailModal: (showAlert: boolean) => void
+    setErrorModal: (showAlert: boolean) => void
     setErrorMessage: (errorMessage: string) => void
     setSuccessMessage: (successMessage: string) => void
     setSuccessModal: (showSuccessAlert: boolean) => void
@@ -29,7 +29,7 @@ function ItemTable(props: itemPageProbs) {
             })
             .catch(error => {
                 if (error.response.status === 400) {
-                    props.setFailModal(true);
+                    props.setErrorModal(true);
                     props.setErrorMessage("bad request")
                     ;
                 }
@@ -47,7 +47,7 @@ function ItemTable(props: itemPageProbs) {
             })
             .catch(error => {
                 if (error.response.status === 404) {
-                    props.setFailModal(true);
+                    props.setErrorModal(true);
                     props.setErrorMessage("the item doesn't exist")
                 }
             })
@@ -122,9 +122,7 @@ function ItemTable(props: itemPageProbs) {
                                 <React.Fragment>
                                     <button
                                         className={"button-left"}
-
                                         onClick={() => onSave(item.id)}
-
                                     >save
                                     </button>
                                     <button
@@ -135,18 +133,15 @@ function ItemTable(props: itemPageProbs) {
                                     </button>
                                 </React.Fragment>) :
                             <React.Fragment>
-
                                 <button
                                     className={"button-left"}
                                     onClick={() => onEdit(item.id)}
-                                >
-                                    Edit
+                                >Edit
                                 </button>
                                 <button
                                     className="button-right"
                                     onClick={() => deleteItem(item.id)}
-                                >
-                                    delete
+                                >delete
                                 </button>
                             </React.Fragment>
                         }

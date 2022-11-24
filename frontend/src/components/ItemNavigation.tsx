@@ -2,11 +2,9 @@ import React, {ChangeEvent, useState} from 'react';
 import axios from "axios";
 import "../css/ItemNavigation.css"
 
-
-
 type itemNavigationProbs = {
     fetchData: () => void
-    setFailModal: (showErrorAlert: boolean) => void
+    setErrorModal: (showErrorAlert: boolean) => void
     setErrorMessage: (errorMessage: string) => void
     setSuccessMessage: (successMessage: string) => void
     setSuccessModal: (showSuccessAlert: boolean) => void
@@ -22,7 +20,6 @@ function ItemNavigation(props: itemNavigationProbs) {
     const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
 
-
         axios.post("/api/items/" + ean)
             .then(response => {
                 if (response.status === 201) {
@@ -32,7 +29,7 @@ function ItemNavigation(props: itemNavigationProbs) {
             })
             .catch(error => {
                 if (error.response.status === 500) {
-                    props.setFailModal(true);
+                    props.setErrorModal(true);
                     props.setErrorMessage("ean not found")
                 }
             })
