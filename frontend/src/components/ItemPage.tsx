@@ -7,6 +7,7 @@ import "../css/ItemPage.css"
 import Alert from "@mui/material/Alert";
 
 function ItemPage() {
+
     const [data, setData] = useState<ItemModel[]>([]);
     const [errorModal, setErrorModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
@@ -20,13 +21,14 @@ function ItemPage() {
     const fetchData = () => {
         axios.get("/api/items/")
             .then(response => {
-                    return response.data
-                }
-            ).catch(error => {
-            return error
-        })
+                return response.data
+            })
+            .catch(error => {
+                return error
+            })
             .then((data) => setData(data))
     }
+
     return (
         <div className={"item-page-container"}>
             <ItemNavigation fetchData={fetchData} setErrorModal={setErrorModal}

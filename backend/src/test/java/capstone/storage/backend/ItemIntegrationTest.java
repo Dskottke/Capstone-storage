@@ -1,4 +1,5 @@
 package capstone.storage.backend;
+
 import capstone.storage.backend.models.Item;
 import capstone.storage.backend.models.ItemResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +18,9 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import java.io.IOException;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,19 +32,23 @@ class ItemIntegrationTest {
     private static MockWebServer mockWebServer;
     @Autowired
     private ObjectMapper objectMapper;
+
     @BeforeAll
     static void beforeAll() throws IOException {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
     }
+
     @DynamicPropertySource
     static void backendProperties(DynamicPropertyRegistry registry) {
         registry.add("ean.api.url", () -> mockWebServer.url("/").toString());
     }
+
     @AfterAll
     static void afterAll() throws IOException {
         mockWebServer.shutdown();
     }
+
     @Test
     void getAllItemsAndExpectEmtpyList() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/items/"))
@@ -49,6 +56,7 @@ class ItemIntegrationTest {
                 .andExpect(content().json("[]"));
 
     }
+
     @Test
     @DirtiesContext
     void addItemWithEanFromApiAndExpectItemWithId() throws Exception {
@@ -191,12 +199,10 @@ class ItemIntegrationTest {
                 "test",
                 "GER")};
 
-
         mockWebServer.enqueue(new MockResponse()
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .setBody(objectMapper.writeValueAsString(itemResponse))
                 .setResponseCode(200));
-
 
         String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
                         .contentType(MediaType.APPLICATION_JSON)
