@@ -1,5 +1,6 @@
 package capstone.storage.backend;
 
+import capstone.storage.backend.exceptions.ItemAlreadyExistException;
 import capstone.storage.backend.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,12 @@ public class ItemService {
 
     public Item addItem(AddItemDto addItemDto, String eanToFind) {
         ItemResponse itemResponse = eanService.getItemResponseFromApi(eanToFind);
+
+        boolean itemExistingStatus = itemAlreadyExist(addItemDto, eanToFind);
+
+        if (itemExistingStatus) {
+            throw new ItemAlreadyExistException("item is already saved");
+        }
         Item itemToAdd = new Item(
                 utils.generateUUID(),
                 itemResponse.name(),
@@ -41,5 +48,11 @@ public class ItemService {
 
     public void deleteItemById(String id) {
         repository.deleteById(id);
+    }
+
+    public boolean itemAlreadyExist(AddItemDto addItemDto, String eanToFind) {
+        boolean eanIsAlreadySaved = repository.existsByEan(eanToFind);
+        boolean itemNumberAlreadySaved = repository.existsByItemNumber(addItemDto.itemNumber());
+        return (eanIsAlreadySaved || itemNumberAlreadySaved);
     }
 }
