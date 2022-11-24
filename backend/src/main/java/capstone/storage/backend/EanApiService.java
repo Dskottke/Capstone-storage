@@ -46,5 +46,6 @@ public class EanApiService {
             throw new ItemNotFound("item not found");
         }
         return itemResponse;
+
     }
 }
