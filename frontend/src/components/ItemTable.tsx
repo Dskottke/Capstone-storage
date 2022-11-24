@@ -27,6 +27,11 @@ function ItemTable(props: itemPageProbs) {
                     props.setErrorMessage("bad request")
                 }
             })
+            .then(() => {
+                props.setSuccessModal(true);
+                props.setSuccessMessage("item updated")
+            })
+
             .then(props.fetchData)
             .then(onCancel)
     }
