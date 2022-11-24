@@ -101,4 +101,58 @@ class ItemServiceTest {
         //THEN
         verify(itemRepo).deleteById(itemToDelete.id());
     }
+
+    @Test
+    void checkIfItemAlreadyExistWithExistingItemNumberReturnTrue() {
+        //GIVEN
+        String testEanToFind = "123";
+        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind);
+        when(itemRepo.existsByItemNumber(testAddItemDto.itemNumber())).thenReturn(true);
+        //WHEN
+        boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
+        boolean expected = true;
+        //THEN
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    void checkIfItemAlreadyExistWithNotExistingItemNumberReturnFalse() {
+        //GIVEN
+        String testEanToFind = "123";
+        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind);
+        when(itemRepo.existsByItemNumber(testAddItemDto.itemNumber())).thenReturn(false);
+        //WHEN
+        boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
+        boolean expected = false;
+        //THEN
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    void checkIfItemAlreadyExistWithExistingEanReturnTrue() {
+        //GIVEN
+        String testEanToFind = "123";
+        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind);
+        when(itemRepo.existsByEan(testEanToFind)).thenReturn(true);
+        //WHEN
+        boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
+        boolean expected = true;
+
+        //THEN
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    void checkIfItemAlreadyExistWithNotExistingEanReturnFalse() {
+        //GIVEN
+        String testEanToFind = "123";
+        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind);
+        when(itemRepo.existsByEan(testEanToFind)).thenReturn(false);
+        //WHEN
+        boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
+        boolean expected = false;
+
+        //THEN
+        assertEquals(actual, expected);
+    }
 }
