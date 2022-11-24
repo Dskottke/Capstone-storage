@@ -28,9 +28,9 @@ function ItemTable(props: itemPageProbs) {
                 }
             })
             .catch(error => {
-                if (error.response.status === 400) {
+                if (error.response.status === 403) {
                     props.setErrorModal(true);
-                    props.setErrorMessage("bad request")
+                    props.setErrorMessage("forbidden")
                     ;
                 }
             })
