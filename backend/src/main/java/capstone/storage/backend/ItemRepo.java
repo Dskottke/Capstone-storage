@@ -1,5 +1,6 @@
 package capstone.storage.backend;
 
+import capstone.storage.backend.models.Item;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface ItemRepo extends MongoRepository<Item, String> {

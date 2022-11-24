@@ -1,6 +1,8 @@
 package capstone.storage.backend;
 
 import capstone.storage.backend.exceptions.ItemAlreadyExistException;
+import capstone.storage.backend.models.AddItemDto;
+import capstone.storage.backend.models.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

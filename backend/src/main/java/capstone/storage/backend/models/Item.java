@@ -1,4 +1,4 @@
-package capstone.storage.backend;
+package capstone.storage.backend.models;
 
 public record Item(String id,
                    String name,

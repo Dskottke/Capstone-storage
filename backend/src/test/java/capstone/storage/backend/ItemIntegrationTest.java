@@ -1,6 +1,6 @@
 package capstone.storage.backend;
-
-
+import capstone.storage.backend.models.Item;
+import capstone.storage.backend.models.ItemResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -17,43 +17,31 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import java.io.IOException;
-
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class ItemIntegrationTest {
-
     @Autowired
     private MockMvc mockMvc;
-
     private static MockWebServer mockWebServer;
-
     @Autowired
     private ObjectMapper objectMapper;
-
-
     @BeforeAll
     static void beforeAll() throws IOException {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
     }
-
     @DynamicPropertySource
     static void backendProperties(DynamicPropertyRegistry registry) {
         registry.add("ean.api.url", () -> mockWebServer.url("/").toString());
     }
-
     @AfterAll
     static void afterAll() throws IOException {
         mockWebServer.shutdown();
     }
-
-
     @Test
     void getAllItemsAndExpectEmtpyList() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/items/"))
@@ -61,14 +49,10 @@ class ItemIntegrationTest {
                 .andExpect(content().json("[]"));
 
     }
-
-
     @Test
     @DirtiesContext
     void addItemWithEanFromApiAndExpectItemWithId() throws Exception {
-
         //GIVEN
-
         ItemResponse[] itemResponse = {new ItemResponse(
                 "test",
                 "8710847909610",
@@ -79,7 +63,6 @@ class ItemIntegrationTest {
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .setBody(objectMapper.writeValueAsString(itemResponse))
                 .setResponseCode(200));
-
 
         String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -92,11 +75,8 @@ class ItemIntegrationTest {
                 .andReturn().getResponse().getContentAsString();
 
         Item mockItemResponse = objectMapper.readValue(body, Item.class);
-
         //WHEN
-
         mockMvc.perform(MockMvcRequestBuilders.get("/api/items/"))
-
                 //THEN
                 .andExpect(status().isOk())
                 .andExpect(content().json(
@@ -108,7 +88,6 @@ class ItemIntegrationTest {
                                  "ean": "8710847909610",
                                  "storeableValue": "20"}]
                                  """.replace("<id>", mockItemResponse.id())));
-
     }
 
     @Test
@@ -125,7 +104,6 @@ class ItemIntegrationTest {
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .setBody(objectMapper.writeValueAsString(itemResponse))
                 .setResponseCode(200));
-
 
         String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -151,8 +129,6 @@ class ItemIntegrationTest {
                                 "issuingCountry": "GER",
                                 "ean":"8710847909610",
                                 "storeableValue": "10"}""".replace("<id>", id)))
-
-
                 //THEN
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
@@ -202,9 +178,8 @@ class ItemIntegrationTest {
                                 "ean":"8710847909610",
                                 "storeableValue": "10"}"""))
                 //THEN
-                .andExpect(status().is(400));
+                .andExpect(status().is(403));
     }
-
 
     @Test
     @DirtiesContext
@@ -235,30 +210,69 @@ class ItemIntegrationTest {
 
         Item mockItemResponse = objectMapper.readValue(body, Item.class);
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/items/" + mockItemResponse.id())
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/items/" + mockItemResponse.id()))
                 //THEN
-        ).andExpect(status().is(204));
-
+                .andExpect(status().is(204));
     }
 
     @Test
     @DirtiesContext
-    void TryToDeleteNotExistingItemByIdAndReturnStatus404() throws Exception {
+    void tryToDeleteNotExistingItemByIdAndReturnStatus404() throws Exception {
         //GIVEN
         String id = "123";
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/items/" + id)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/items/" + id))
                 //THEN
-        ).andExpect(status().is(404));
-
+                .andExpect(status().is(404));
     }
 
     @Test
-    void PostWithNotMatchingPathvariableEanAndEanFromRequestBody() throws Exception {
+    @DirtiesContext
+    void postWithAlreadyExistingItemNumberAndExpectStatus400() throws Exception {
         //GIVEN
-        String id = "123";
+        String ean = "8710847909610";
+        ItemResponse[] itemResponse = {new ItemResponse(
+                "test",
+                ean,
+                "test",
+                "GER")};
+        mockWebServer.enqueue(new MockResponse()
+                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .setBody(objectMapper.writeValueAsString(itemResponse))
+                .setResponseCode(200));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                    "ean" : "8710847909610",
+                                    "itemNumber": "12345"
+                                }"""))
+                .andExpect(status().is(201));
+
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + id)
+        mockWebServer.enqueue(new MockResponse()
+                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .setBody(objectMapper.writeValueAsString(itemResponse))
+                .setResponseCode(200));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                    "ean" : "8710847909610",
+                                    "itemNumber": "12345"
+                                }"""))
+                //THEN
+                .andExpect(status().is(400));
+    }
+
+    @Test
+    void postWithNotMatchingPathvariableEanAndEanFromRequestBodyAndExpectStatus403() throws Exception {
+        //GIVEN
+        String ean = "123";
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
@@ -266,7 +280,6 @@ class ItemIntegrationTest {
                                     "itemNumber": "12345"
                                 }"""))
                 //THEN
-                .andExpect(status().is(400));
+                .andExpect(status().is(403));
     }
-
 }
