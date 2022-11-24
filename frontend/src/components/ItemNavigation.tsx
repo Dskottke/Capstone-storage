@@ -33,9 +33,9 @@ function ItemNavigation(props: itemNavigationProbs) {
                 }
             })
             .catch(error => {
-                if (error.response.status === 500) {
+                if (error.response.status === 400) {
                     props.setErrorModal(true);
-                    props.setErrorMessage("ean not found")
+                    props.setErrorMessage("item is already existing")
                 }
             })
             .then(props.fetchData)
