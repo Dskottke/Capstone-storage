@@ -10,6 +10,8 @@ function ItemPage() {
     const [data, setData] = useState<ItemModel[]>([]);
     const [failModal, setFailModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
+    const [successModal, setSuccessModal] = useState(false)
+    const [successMessage, setSucessMessage] = useState("")
 
     useEffect(() => {
         fetchData()
@@ -32,6 +34,11 @@ function ItemPage() {
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} severity="error" onClose={() => {
                     setFailModal(false)
                 }}>{errorMessage}</Alert>
+            }
+            {successModal &&
+                <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} onClose={() => {
+                    setFailModal(false)
+                }}>{successMessage}</Alert>
             }
             <div className={"item-page-body"}>
                 <ItemTable fetchData={fetchData} data={data} setErrorMessage={setErrorMessage}

@@ -20,7 +20,6 @@ function ItemNavigation(props: itemNavigationProbs) {
     const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
 
-
         axios.post("/api/items/" + ean)
             .catch(error => {
                 if (error.response.status === 500) {
@@ -28,7 +27,6 @@ function ItemNavigation(props: itemNavigationProbs) {
                     props.setErrorMessage("ean not found")
                 }
             })
-
             .then(props.fetchData)
             .then(() => setEan(""))
     }
