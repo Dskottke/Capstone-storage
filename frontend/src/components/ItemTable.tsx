@@ -89,6 +89,7 @@ function ItemTable(props: itemPageProbs) {
             <table className="blueTable">
                 <thead>
                 <tr>
+                    <th>item-Nr</th>
                     <th>ean</th>
                     <th>name</th>
                     <th>category</th>
@@ -108,6 +109,7 @@ function ItemTable(props: itemPageProbs) {
                         <td>data not found</td>
                     </tr>) : (
                     props.data.map((item) => (<tr key={item.id}>
+                        <td>{item.itemNumber}</td>
                         <td>{item.ean}</td>
                         <td>{item.name}</td>
                         <td>{item.categoryName}</td>
