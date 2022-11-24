@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {ItemModel} from "../model/ItemModel";
 import axios from "axios";
 import "../css/ItemTable.css"
@@ -24,7 +24,6 @@ function ItemTable(props: itemPageProbs) {
             })
             .then(props.fetchData)
             .then(onCancel)
-
     }
     const deleteItem = (id: string) => {
         axios.delete("/api/items/" + id)
@@ -32,7 +31,10 @@ function ItemTable(props: itemPageProbs) {
                 return error
             })
             .then(props.fetchData)
-
+    }
+    const handleInputCapacity = (event: ChangeEvent<HTMLInputElement>) => {
+        const validCapacity = event.target.value.replace(/\D/g, '')
+        setValueStoreable(validCapacity)
     }
     const findItemById = (id: string) => {
         return props.data.find(item => item.id === id)
@@ -91,7 +93,7 @@ function ItemTable(props: itemPageProbs) {
                         <td>{item.issuingCountry}</td>
                         <td>{inEditMode.status && inEditMode.rowKey === item.id ? (
                             <input value={valueStoreable}
-                                   onChange={event => setValueStoreable(event.target.value)}
+                                   onChange={handleInputCapacity}
                             />) : (
                             item.storeableValue)}
 
@@ -126,11 +128,8 @@ function ItemTable(props: itemPageProbs) {
                                 >
                                     delete
                                 </button>
-
-
                             </React.Fragment>
                         }
-
                         </td>
                     </tr>))
                 )}
@@ -139,4 +138,5 @@ function ItemTable(props: itemPageProbs) {
         </div>
     )
 }
+
 export default ItemTable;
