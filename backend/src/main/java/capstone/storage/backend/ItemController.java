@@ -21,8 +21,11 @@ public class ItemController {
 
     @PostMapping("{eanToFind}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Item saveItem(@PathVariable String eanToFind) {
-        return service.addItem(eanToFind);
+    public Item saveItem(@PathVariable String eanToFind, @RequestBody AddItemDto addItemDto) {
+        if (addItemDto.ean().equals(eanToFind)) {
+            return service.addItem(eanToFind);
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("{id}")
