@@ -3,11 +3,12 @@ import axios from "axios";
 import "../css/ItemNavigation.css"
 
 
-
 type itemNavigationProbs = {
     fetchData: () => void
-    setFailModal: (showAlert: boolean) => void
+    setFailModal: (showErrorAlert: boolean) => void
     setErrorMessage: (errorMessage: string) => void
+    setSuccessMessage: (successMessage: string) => void
+    setSucessModal: (showSuccessAlert: boolean) => void
 }
 
 function ItemNavigation(props: itemNavigationProbs) {
@@ -26,6 +27,10 @@ function ItemNavigation(props: itemNavigationProbs) {
                     props.setFailModal(true);
                     props.setErrorMessage("ean not found")
                 }
+            })
+            .then(() => {
+                props.setSucessModal(true);
+                props.setSuccessMessage("new item created ")
             })
             .then(props.fetchData)
             .then(() => setEan(""))
