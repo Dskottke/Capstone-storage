@@ -21,31 +21,35 @@ function ItemTable(props: itemPageProbs) {
 
     const updateItem = (id: string, Item: ItemModel) => {
         axios.put("/api/items/" + id, Item)
+            .then(response => {
+                if (response.status === 200) {
+                    props.setSuccessModal(true);
+                    props.setSuccessMessage("item updated");
+                }
+            })
             .catch(error => {
                 if (error.response.status === 400) {
                     props.setFailModal(true);
                     props.setErrorMessage("bad request")
+                    ;
                 }
             })
-            .then(() => {
-                props.setSuccessModal(true);
-                props.setSuccessMessage("item updated")
-            })
-
             .then(props.fetchData)
             .then(onCancel)
     }
     const deleteItem = (id: string) => {
         axios.delete("/api/items/" + id)
+            .then(response => {
+                if (response.status === 204) {
+                    props.setSuccessModal(true);
+                    props.setSuccessMessage("item deleted")
+                }
+            })
             .catch(error => {
                 if (error.response.status === 404) {
                     props.setFailModal(true);
                     props.setErrorMessage("the item doesn't exist")
                 }
-            })
-            .then(() => {
-                props.setSuccessModal(true);
-                props.setSuccessMessage("item deleted")
             })
             .then(props.fetchData)
     }
@@ -113,7 +117,6 @@ function ItemTable(props: itemPageProbs) {
                                    onChange={handleInputCapacity}
                             />) : (
                             item.storeableValue)}
-
                         </td>
                         <td width="200px">{inEditMode.status && inEditMode.rowKey === item.id ? (
                                 <React.Fragment>
