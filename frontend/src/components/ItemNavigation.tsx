@@ -40,6 +40,10 @@ function ItemNavigation(props: itemNavigationProbs) {
                     props.setErrorModal(true);
                     props.setErrorMessage("item is already existing")
                 }
+                if (error.response.status === 500) {
+                    props.setErrorModal(true);
+                    props.setErrorMessage("found no matching item with ean")
+                }
             })
             .then(props.fetchData)
             .then(() => setEan(""))
