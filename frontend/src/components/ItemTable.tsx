@@ -8,6 +8,8 @@ type itemPageProbs = {
     fetchData: () => void
     setFailModal: (showAlert: boolean) => void
     setErrorMessage: (errorMessage: string) => void
+    setSuccessMessage: (successMessage: string) => void
+    setSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function ItemTable(props: itemPageProbs) {
@@ -35,6 +37,10 @@ function ItemTable(props: itemPageProbs) {
                     props.setFailModal(true);
                     props.setErrorMessage("the item doesn't exist")
                 }
+            })
+            .then(() => {
+                props.setSuccessModal(true);
+                props.setSuccessMessage("item deleted")
             })
             .then(props.fetchData)
     }

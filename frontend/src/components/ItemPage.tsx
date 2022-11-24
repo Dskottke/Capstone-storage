@@ -11,7 +11,7 @@ function ItemPage() {
     const [failModal, setFailModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
     const [successModal, setSuccessModal] = useState(false)
-    const [successMessage, setSucessMessage] = useState("")
+    const [successMessage, setSuccessMessage] = useState("")
 
     useEffect(() => {
         fetchData()
@@ -30,8 +30,8 @@ function ItemPage() {
     return (
         <div className={"item-page-container"}>
             <ItemNavigation fetchData={fetchData} setFailModal={setFailModal}
-                            setErrorMessage={setErrorMessage} setSucessModal={setSuccessModal}
-                            setSuccessMessage={setSucessMessage}/>
+                            setErrorMessage={setErrorMessage} setSuccessModal={setSuccessModal}
+                            setSuccessMessage={setSuccessMessage}/>
             {failModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} severity="error" onClose={() => {
                     setFailModal(false)
@@ -44,7 +44,8 @@ function ItemPage() {
             }
             <div className={"item-page-body"}>
                 <ItemTable fetchData={fetchData} data={data} setErrorMessage={setErrorMessage}
-                           setFailModal={setFailModal}/>
+                           setFailModal={setFailModal} setSuccessMessage={setSuccessMessage}
+                           setSuccessModal={setSuccessModal}/>
             </div>
 
         </div>
