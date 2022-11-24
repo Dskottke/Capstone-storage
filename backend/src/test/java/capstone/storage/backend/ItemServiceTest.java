@@ -1,5 +1,8 @@
 package capstone.storage.backend;
 
+import capstone.storage.backend.models.AddItemDto;
+import capstone.storage.backend.models.Item;
+import capstone.storage.backend.models.ItemResponse;
 import capstone.storage.backend.utils.ServiceUtils;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +33,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void addItemByEanAndReturnItemWithId() {
+    void addItemByEanAndItemNumberDtoAndReturnItemWithId() {
         //GIVEN
         String eanToFind = "8710847909610";
         ItemResponse response = new ItemResponse(
