@@ -238,5 +238,20 @@ class ItemIntegrationTest {
 
     }
 
+    @Test
+    void PostWithNotMatchingPathvariableEanAndEanFromRequestBody() throws Exception {
+        //GIVEN
+        String id = "123";
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                    "ean" : "1234",
+                                    "itemNumber": "12345"
+                                }"""))
+                //THEN
+                .andExpect(status().is(400));
+    }
 
 }
