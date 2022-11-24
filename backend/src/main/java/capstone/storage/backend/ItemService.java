@@ -22,7 +22,7 @@ public class ItemService {
     public Item addItem(AddItemDto addItemDto, String eanToFind) {
         ItemResponse itemResponse = eanService.getItemResponseFromApi(eanToFind);
 
-        boolean itemExistingStatus = itemAlreadyExist(addItemDto, eanToFind);
+        boolean itemExistingStatus = isItemExisting(addItemDto, eanToFind);
 
         if (itemExistingStatus) {
             throw new ItemAlreadyExistException("item is already saved");
@@ -50,7 +50,7 @@ public class ItemService {
         repository.deleteById(id);
     }
 
-    public boolean itemAlreadyExist(AddItemDto addItemDto, String eanToFind) {
+    public boolean isItemExisting(AddItemDto addItemDto, String eanToFind) {
         boolean eanIsAlreadySaved = repository.existsByEan(eanToFind);
         boolean itemNumberAlreadySaved = repository.existsByItemNumber(addItemDto.itemNumber());
         return (eanIsAlreadySaved || itemNumberAlreadySaved);
