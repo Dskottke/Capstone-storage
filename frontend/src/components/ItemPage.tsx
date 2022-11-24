@@ -29,7 +29,9 @@ function ItemPage() {
     }
     return (
         <div className={"item-page-container"}>
-            <ItemNavigation fetchData={fetchData} setFailModal={setFailModal} setErrorMessage={setErrorMessage}/>
+            <ItemNavigation fetchData={fetchData} setFailModal={setFailModal}
+                            setErrorMessage={setErrorMessage} setSucessModal={setSuccessModal}
+                            setSuccessMessage={setSucessMessage}/>
             {failModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} severity="error" onClose={() => {
                     setFailModal(false)
