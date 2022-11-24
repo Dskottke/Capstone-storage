@@ -20,7 +20,10 @@ function ItemTable(props: itemPageProbs) {
     const updateItem = (id: string, Item: ItemModel) => {
         axios.put("/api/items/" + id, Item)
             .catch(error => {
-                return error
+                if (error.response.status === 400) {
+                    props.setFailModal(true);
+                    props.setErrorMessage("bad request")
+                }
             })
             .then(props.fetchData)
             .then(onCancel)
