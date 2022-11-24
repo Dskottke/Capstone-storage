@@ -3,6 +3,7 @@ import axios from "axios";
 import "../css/ItemNavigation.css"
 
 
+
 type itemNavigationProbs = {
     fetchData: () => void
     setFailModal: (showErrorAlert: boolean) => void
@@ -21,16 +22,19 @@ function ItemNavigation(props: itemNavigationProbs) {
     const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
 
+
         axios.post("/api/items/" + ean)
+            .then(response => {
+                if (response.status === 201) {
+                    props.setSuccessModal(true);
+                    props.setSuccessMessage("new item created ")
+                }
+            })
             .catch(error => {
                 if (error.response.status === 500) {
                     props.setFailModal(true);
                     props.setErrorMessage("ean not found")
                 }
-            })
-            .then(() => {
-                props.setSuccessModal(true);
-                props.setSuccessMessage("new item created ")
             })
             .then(props.fetchData)
             .then(() => setEan(""))

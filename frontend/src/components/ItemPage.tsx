@@ -34,12 +34,12 @@ function ItemPage() {
                             setSuccessMessage={setSuccessMessage}/>
             {failModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} severity="error" onClose={() => {
-                    setFailModal(false)
+                    setFailModal(false);
                 }}>{errorMessage}</Alert>
             }
             {successModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} onClose={() => {
-                    setFailModal(false)
+                    setSuccessModal(false);
                 }}>{successMessage}</Alert>
             }
             <div className={"item-page-body"}>
