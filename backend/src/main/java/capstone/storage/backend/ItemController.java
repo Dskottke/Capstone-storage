@@ -30,7 +30,7 @@ public class ItemController {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
             }
         }
-        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "forbidden");
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN);
     }
 
     @PutMapping("{id}")
@@ -40,7 +40,7 @@ public class ItemController {
             Item updatedItem = service.updateItem(itemToUpdate);
             return itemExist ? ResponseEntity.status(HttpStatus.OK).body(updatedItem) : new ResponseEntity<>(HttpStatus.CREATED);
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN);
     }
 
     @DeleteMapping("{id}")
