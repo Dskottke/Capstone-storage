@@ -16,7 +16,6 @@ class ItemServiceTest {
     private final ItemRepo itemRepo = mock(ItemRepo.class);
     private final ServiceUtils utils = mock(ServiceUtils.class);
     private final EanApiService eanApiService = mock(EanApiService.class);
-
     private final ItemService itemService = new ItemService(itemRepo, eanApiService, utils);
 
     @Test
@@ -51,7 +50,6 @@ class ItemServiceTest {
         when(eanApiService.getItemResponseFromApi(eanToFind)).thenReturn(response);
         when(utils.generateUUID()).thenReturn("123");
         when(itemRepo.insert(itemToExpect)).thenReturn(itemToExpect);
-
         //WHEN
         Item actual = itemService.addItem(addItemDto, eanToFind);
         Item expected = itemToExpect;
@@ -100,7 +98,6 @@ class ItemServiceTest {
         //WHEN
         doNothing().when(itemRepo).deleteById(itemToDelete.id());
         itemService.deleteItemById(itemToDelete.id());
-
         //THEN
         verify(itemRepo).deleteById(itemToDelete.id());
     }
@@ -140,7 +137,6 @@ class ItemServiceTest {
         //WHEN
         boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
         boolean expected = true;
-
         //THEN
         assertEquals(actual, expected);
     }
@@ -154,7 +150,6 @@ class ItemServiceTest {
         //WHEN
         boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
         boolean expected = false;
-
         //THEN
         assertEquals(actual, expected);
     }

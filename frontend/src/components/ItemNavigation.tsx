@@ -11,6 +11,7 @@ type itemNavigationProbs = {
 }
 
 function ItemNavigation(props: itemNavigationProbs) {
+
     const [ean, setEan] = useState<string>()
     const [itemNumber, setItemNumber] = useState<string>()
 
@@ -18,10 +19,12 @@ function ItemNavigation(props: itemNavigationProbs) {
         const validItemNumber = event.target.value.replace(/\D/g, '')
         setItemNumber(validItemNumber)
     }
+
     const handleInputEan = (event: ChangeEvent<HTMLInputElement>) => {
         const validEan = event.target.value.replace(/\D/g, '')
         setEan(validEan)
     }
+
     const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
 

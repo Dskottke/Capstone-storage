@@ -58,6 +58,7 @@ class EanApiServiceTest {
         }
 
     }
+
     @Test
     @DisplayName("expect Exception with message (item response list is null or invalid)")
     void expectItemResponseException2case() {
@@ -92,6 +93,7 @@ class EanApiServiceTest {
             assertEquals(expected, actual);
         }
     }
+
     @Test
     @DisplayName("expect Exception with message (ean is null)")
     void expectItemResponseException3case() {
@@ -120,6 +122,7 @@ class EanApiServiceTest {
             assertEquals(expected, actual);
         }
     }
+
     @Test
     @DisplayName("expect Exception with message (item not found)")
     void expectItemResponseException4case() {
