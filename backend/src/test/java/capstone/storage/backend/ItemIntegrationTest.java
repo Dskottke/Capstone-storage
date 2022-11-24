@@ -82,7 +82,12 @@ class ItemIntegrationTest {
 
 
         String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "ean" : "8710847909610",
+                                "itemNumber" : "123"
+                                }"""))
                 .andExpect(status().is(201))
                 .andReturn().getResponse().getContentAsString();
 
@@ -123,7 +128,12 @@ class ItemIntegrationTest {
 
 
         String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "ean" : "8710847909610",
+                                "itemNumber" : "123"
+                                }"""))
                 .andExpect(status().is(201))
                 .andReturn().getResponse().getContentAsString();
 
@@ -214,7 +224,12 @@ class ItemIntegrationTest {
 
 
         String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "ean" : "8710847909610",
+                                "itemNumber" : "123"
+                                }"""))
                 .andExpect(status().is(201))
                 .andReturn().getResponse().getContentAsString();
 
