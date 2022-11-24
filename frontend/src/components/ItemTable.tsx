@@ -31,7 +31,10 @@ function ItemTable(props: itemPageProbs) {
     const deleteItem = (id: string) => {
         axios.delete("/api/items/" + id)
             .catch(error => {
-                return error
+                if (error.response.status === 404) {
+                    props.setFailModal(true);
+                    props.setErrorMessage("the item doesn't exist")
+                }
             })
             .then(props.fetchData)
     }
