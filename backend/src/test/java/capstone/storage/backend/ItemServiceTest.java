@@ -43,13 +43,13 @@ class ItemServiceTest {
                 "GER", eanToFind,
                 "20");
 
-
+        AddItemDto addItemDto = new AddItemDto(eanToFind, "1");
         when(eanApiService.getItemResponseFromApi(eanToFind)).thenReturn(response);
         when(utils.generateUUID()).thenReturn("123");
         when(itemRepo.insert(itemToExpect)).thenReturn(itemToExpect);
 
         //WHEN
-        Item actual = itemService.addItem(eanToFind);
+        Item actual = itemService.addItem(addItemDto, eanToFind);
         Item expected = itemToExpect;
         //THEN
         assertEquals(expected, actual);

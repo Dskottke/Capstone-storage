@@ -18,7 +18,7 @@ public class ItemService {
         return repository.findAll();
     }
 
-    public Item addItem(String eanToFind) {
+    public Item addItem(AddItemDto addItemDto, String eanToFind) {
         ItemResponse itemResponse = eanService.getItemResponseFromApi(eanToFind);
         Item itemToAdd = new Item(
                 utils.generateUUID(),
