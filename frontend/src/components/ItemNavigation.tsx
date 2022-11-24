@@ -8,7 +8,7 @@ type itemNavigationProbs = {
     setFailModal: (showErrorAlert: boolean) => void
     setErrorMessage: (errorMessage: string) => void
     setSuccessMessage: (successMessage: string) => void
-    setSucessModal: (showSuccessAlert: boolean) => void
+    setSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function ItemNavigation(props: itemNavigationProbs) {
@@ -29,7 +29,7 @@ function ItemNavigation(props: itemNavigationProbs) {
                 }
             })
             .then(() => {
-                props.setSucessModal(true);
+                props.setSuccessModal(true);
                 props.setSuccessMessage("new item created ")
             })
             .then(props.fetchData)
