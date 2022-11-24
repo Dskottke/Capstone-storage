@@ -26,7 +26,8 @@ public class ItemService {
                 itemResponse.categoryName(),
                 itemResponse.issuingCountry(),
                 itemResponse.ean(),
-                STOREABLEVALUE_DEFAULT);
+                STOREABLEVALUE_DEFAULT,
+                addItemDto.itemNumber());
         return repository.insert(itemToAdd);
     }
 

@@ -41,7 +41,8 @@ class ItemServiceTest {
                 "testName",
                 "testCategory",
                 "GER", eanToFind,
-                "20");
+                "20",
+                "1");
 
         AddItemDto addItemDto = new AddItemDto(eanToFind, "1");
         when(eanApiService.getItemResponseFromApi(eanToFind)).thenReturn(response);
@@ -62,7 +63,8 @@ class ItemServiceTest {
                 "testName",
                 "testCategory",
                 "GER", "8710847909610",
-                "20");
+                "20",
+                "1");
         when(itemRepo.save(itemToExpect)).thenReturn(itemToExpect);
         //WHEN
         Item actual = itemService.updateItem(itemToExpect);
@@ -90,7 +92,8 @@ class ItemServiceTest {
                 "testName",
                 "testCategory",
                 "GER", "8710847909610",
-                "20");
+                "20",
+                "1");
         //WHEN
         doNothing().when(itemRepo).deleteById(itemToDelete.id());
         itemService.deleteItemById(itemToDelete.id());
