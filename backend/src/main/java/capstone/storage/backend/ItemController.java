@@ -1,5 +1,6 @@
 package capstone.storage.backend;
 
+import capstone.storage.backend.exceptions.ItemAlreadyExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,13 @@ public class ItemController {
     @ResponseStatus(HttpStatus.CREATED)
     public Item saveItem(@PathVariable String eanToFind, @RequestBody AddItemDto addItemDto) {
         if (addItemDto.ean().equals(eanToFind)) {
-            return service.addItem(addItemDto, eanToFind);
+            try {
+                return service.addItem(addItemDto, eanToFind);
+            } catch (ItemAlreadyExistException e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            }
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "forbidden");
     }
 
     @PutMapping("{id}")

@@ -21,9 +21,7 @@ public class ItemService {
 
     public Item addItem(AddItemDto addItemDto, String eanToFind) {
         ItemResponse itemResponse = eanService.getItemResponseFromApi(eanToFind);
-
         boolean itemExistingStatus = isItemExisting(addItemDto, eanToFind);
-
         if (itemExistingStatus) {
             throw new ItemAlreadyExistException("item is already saved");
         }
