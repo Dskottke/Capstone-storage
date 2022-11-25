@@ -67,4 +67,12 @@ public class ItemService {
             throw new IllegalArgumentException("capacity and the item-number must be greater than 0");
         }
     }
+
+    public boolean isNull(AddItemDto addItemDto) {
+        if (addItemDto.ean() == null || addItemDto.itemNumber() == null || addItemDto.storeableValue() == null) {
+            return true;
+        }
+        String emptyString = "";
+        return emptyString.equals(addItemDto.itemNumber()) || emptyString.equals(addItemDto.storeableValue()) || emptyString.equals(addItemDto.ean());
+    }
 }

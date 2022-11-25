@@ -25,6 +25,11 @@ public class ItemController {
     @PostMapping("{eanToFind}")
     @ResponseStatus(HttpStatus.CREATED)
     public Item saveItem(@PathVariable String eanToFind, @RequestBody AddItemDto addItemDto) {
+
+        if (service.isNull(addItemDto)) {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+
         if (addItemDto.ean().equals(eanToFind)) {
             try {
                 return service.addItem(addItemDto, eanToFind);
@@ -36,6 +41,7 @@ public class ItemController {
         }
         throw new ResponseStatusException(HttpStatus.FORBIDDEN);
     }
+
 
     @PutMapping("{id}")
     public ResponseEntity<Item> updateItem(@PathVariable String id, @RequestBody Item itemToUpdate) {
@@ -55,4 +61,5 @@ public class ItemController {
         }
         service.deleteItemById(id);
     }
+
 }

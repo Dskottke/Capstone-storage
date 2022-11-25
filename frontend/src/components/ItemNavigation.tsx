@@ -34,6 +34,7 @@ function ItemNavigation(props: itemNavigationProbs) {
     const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
 
+
         axios.post("/api/items/" + ean, {ean, itemNumber, storeableValue})
             .then(response => {
                 if (response.status === 201) {
@@ -64,7 +65,10 @@ function ItemNavigation(props: itemNavigationProbs) {
             })
             .then(props.fetchData)
             .then(() => setEan(""))
+            .then(() => setItemNumber(""))
+            .then(() => setStoreableValue(""))
     }
+
 
     return (
         <div className="topnav">
