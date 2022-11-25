@@ -29,7 +29,9 @@ public class ItemController {
             try {
                 return service.addItem(addItemDto, eanToFind);
             } catch (ItemAlreadyExistException e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            } catch (IllegalArgumentException e) {
+                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
             }
         }
         throw new ResponseStatusException(HttpStatus.FORBIDDEN);

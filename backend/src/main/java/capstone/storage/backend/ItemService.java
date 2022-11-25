@@ -64,7 +64,7 @@ public class ItemService {
         boolean validCapacity = (Integer.parseInt(addItemDto.storeableValue()) < 1);
         boolean validItemNumber = (Integer.parseInt(addItemDto.itemNumber()) < 1);
         if (validItemNumber || validCapacity) {
-            throw new IllegalArgumentException("storeableValue and the item-number must be higher than 0");
+            throw new IllegalArgumentException("capacity and the item-number must be greater than 0");
         }
     }
 }
