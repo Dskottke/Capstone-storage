@@ -1,5 +1,6 @@
 package capstone.storage.backend;
 
+import capstone.storage.backend.exceptions.ItemAlreadyExistException;
 import capstone.storage.backend.models.AddItemDto;
 import capstone.storage.backend.models.Item;
 import capstone.storage.backend.models.ItemResponse;
@@ -32,7 +33,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void addItemByEanAndItemNumberDtoAndReturnItemWithId() {
+    void addItemByEanAndAddItemDtoAndReturnItemWithId() {
         //GIVEN
         String eanToFind = "8710847909610";
         ItemResponse response = new ItemResponse(
@@ -46,7 +47,7 @@ class ItemServiceTest {
                 "20",
                 "1");
 
-        AddItemDto addItemDto = new AddItemDto(eanToFind, "1", "1");
+        AddItemDto addItemDto = new AddItemDto(eanToFind, "1", "20");
         when(eanApiService.getItemResponseFromApi(eanToFind)).thenReturn(response);
         when(utils.generateUUID()).thenReturn("123");
         when(itemRepo.insert(itemToExpect)).thenReturn(itemToExpect);
@@ -103,54 +104,41 @@ class ItemServiceTest {
     }
 
     @Test
-    void checkIfItemAlreadyExistWithExistingItemNumberReturnTrue() {
+    void ifItemIsAlreadyExistingThrowIllegalArgumentException() {
         //GIVEN
         String testEanToFind = "123";
         AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
         when(itemRepo.existsByItemNumber(testAddItemDto.itemNumber())).thenReturn(true);
         //WHEN
-        boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
-        boolean expected = true;
+        try {
+            itemService.isItemExisting(testAddItemDto, testEanToFind);
+            fail();
+        }
         //THEN
-        assertEquals(actual, expected);
-    }
+        catch (ItemAlreadyExistException e) {
+            String actual = e.getMessage();
+            String expected = "item is already saved";
 
-    @Test
-    void checkIfItemAlreadyExistWithNotExistingItemNumberReturnFalse() {
-        //GIVEN
-        String testEanToFind = "123";
-        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
-        when(itemRepo.existsByItemNumber(testAddItemDto.itemNumber())).thenReturn(false);
-        //WHEN
-        boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
-        boolean expected = false;
-        //THEN
-        assertEquals(actual, expected);
+            assertEquals(actual, expected);
+        }
     }
-
     @Test
     void checkIfItemAlreadyExistWithExistingEanReturnTrue() {
         //GIVEN
         String testEanToFind = "123";
         AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
         when(itemRepo.existsByEan(testEanToFind)).thenReturn(true);
-        //WHEN
-        boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
-        boolean expected = true;
+        try {
+            itemService.isItemExisting(testAddItemDto, testEanToFind);
+            fail();
+        }
         //THEN
-        assertEquals(actual, expected);
+        catch (ItemAlreadyExistException e) {
+            String actual = e.getMessage();
+            String expected = "item is already saved";
+
+            assertEquals(actual, expected);
+        }
     }
 
-    @Test
-    void checkIfItemAlreadyExistWithNotExistingEanReturnFalse() {
-        //GIVEN
-        String testEanToFind = "123";
-        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
-        when(itemRepo.existsByEan(testEanToFind)).thenReturn(false);
-        //WHEN
-        boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
-        boolean expected = false;
-        //THEN
-        assertEquals(actual, expected);
-    }
 }

@@ -76,6 +76,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
+                                "capacity" : "10",
                                 "ean" : "8710847909610",
                                 "itemNumber" : "123"
                                 }"""))
@@ -94,7 +95,7 @@ class ItemIntegrationTest {
                                  "categoryName": "test",
                                  "issuingCountry": "GER",
                                  "ean": "8710847909610",
-                                 "storeableValue": "20"}]
+                                 "storeableValue": "10"}]
                                  """.replace("<id>", mockItemResponse.id())));
     }
 
@@ -117,6 +118,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
+                                "capacity" : "10",
                                 "ean" : "8710847909610",
                                 "itemNumber" : "123"
                                 }"""))
@@ -208,6 +210,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
+                                "capacity" : "10",
                                 "ean" : "8710847909610",
                                 "itemNumber" : "123"
                                 }"""))
@@ -251,6 +254,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
+                                    "capacity" : "10",
                                     "ean" : "8710847909610",
                                     "itemNumber": "12345"
                                 }"""))
@@ -266,6 +270,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
+                                    "capacity" : "10",
                                     "ean" : "8710847909610",
                                     "itemNumber": "12345"
                                 }"""))
