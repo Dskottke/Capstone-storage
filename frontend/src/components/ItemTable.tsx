@@ -46,7 +46,7 @@ function ItemTable(props: itemPageProbs) {
                 }
             })
             .catch(error => {
-                if (error.response.status === 404) {
+                if (error.response.status === 406) {
                     props.setErrorModal(true);
                     props.setErrorMessage("the item doesn't exist")
                 }
