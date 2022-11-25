@@ -16,25 +16,28 @@ public class ItemService {
     private final ItemRepo repository;
     private final EanApiService eanService;
     private final ServiceUtils utils;
-    private static final String STOREABLEVALUE_DEFAULT = "20";
 
     public List<Item> findAll() {
         return repository.findAll();
     }
 
     public Item addItem(AddItemDto addItemDto, String eanToFind) {
+
+        validateAddItemDto(addItemDto);
         ItemResponse itemResponse = eanService.getItemResponseFromApi(eanToFind);
         boolean itemExistingStatus = isItemExisting(addItemDto, eanToFind);
+
         if (itemExistingStatus) {
             throw new ItemAlreadyExistException("item is already saved");
         }
+
         Item itemToAdd = new Item(
                 utils.generateUUID(),
                 itemResponse.name(),
                 itemResponse.categoryName(),
                 itemResponse.issuingCountry(),
                 itemResponse.ean(),
-                STOREABLEVALUE_DEFAULT,
+                addItemDto.capacity(),
                 addItemDto.itemNumber());
         return repository.insert(itemToAdd);
     }
@@ -55,5 +58,13 @@ public class ItemService {
         boolean eanIsAlreadySaved = repository.existsByEan(eanToFind);
         boolean itemNumberAlreadySaved = repository.existsByItemNumber(addItemDto.itemNumber());
         return (eanIsAlreadySaved || itemNumberAlreadySaved);
+    }
+
+    public void validateAddItemDto(AddItemDto addItemDto) {
+        boolean validCapacity = (Integer.parseInt(addItemDto.capacity()) < 1);
+        boolean validItemNumber = (Integer.parseInt(addItemDto.itemNumber()) < 1);
+        if (validItemNumber || validCapacity) {
+            throw new IllegalArgumentException("capacity must be higher than 0");
+        }
     }
 }

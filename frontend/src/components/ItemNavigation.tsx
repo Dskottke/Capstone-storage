@@ -61,7 +61,7 @@ function ItemNavigation(props: itemNavigationProbs) {
             <div className="add-container">
 
                 <form onSubmit={handleAddSubmit}>
-                    <input value={itemNumber}
+                    <input value={capacity}
                            onChange={handleInputCapacity} type="text" placeholder="capacity" name="submit"/>
                     <input value={itemNumber}
                            onChange={handleInputItemNumber} type="text" placeholder="item-number" name="submit"/>
