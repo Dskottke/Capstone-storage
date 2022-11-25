@@ -180,7 +180,7 @@ class ItemServiceTest {
         AddItemDto addItemDto = new AddItemDto("", "1", "1");
         //WHEn
         boolean actual = itemService.isNullOrEmpty(addItemDto);
-        boolean expected = false;
+        boolean expected = true;
         //THEN
         assertEquals(expected, actual);
     }
