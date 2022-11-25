@@ -346,7 +346,7 @@ class ItemIntegrationTest {
                                     "itemNumber": "1"
                                 }"""))
                 //THEN
-                .andExpect(status().is(404));
+                .andExpect(status().is(405));
     }
 
     @DirtiesContext
@@ -364,7 +364,7 @@ class ItemIntegrationTest {
                                     "itemNumber": null
                                 }"""))
                 //THEN
-                .andExpect(status().is(404));
+                .andExpect(status().is(405));
     }
 
     @DirtiesContext
@@ -382,7 +382,7 @@ class ItemIntegrationTest {
                                     "itemNumber": ""
                                 }"""))
                 //THEN
-                .andExpect(status().is(404));
+                .andExpect(status().is(405));
     }
 
     @DirtiesContext
@@ -418,7 +418,7 @@ class ItemIntegrationTest {
                                     "itemNumber": "1"
                                 }"""))
                 //THEN
-                .andExpect(status().is(404));
+                .andExpect(status().is(405));
     }
 
 

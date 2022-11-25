@@ -47,18 +47,15 @@ function ItemNavigation(props: itemNavigationProbs) {
                     props.setErrorModal(true);
                     props.setErrorMessage("item is already existing")
                 }
-
                 if (error.response.status === 500) {
                     props.setErrorModal(true);
                     props.setErrorMessage("found no matching item with ean")
                 }
-
                 if (error.response.status === 412) {
                     props.setErrorModal(true);
                     props.setErrorMessage("capacity and item-number must be greater than 0")
                 }
-
-                if (error.response.status === 406) {
+                if (error.response.status === 405) {
                     props.setErrorModal(true);
                     props.setErrorMessage("all input-fields must be filled")
                 }
