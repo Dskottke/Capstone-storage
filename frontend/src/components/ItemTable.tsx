@@ -17,7 +17,7 @@ function ItemTable(props: itemPageProbs) {
         status: true,
         rowKey: ""
     });
-    const [valueStoreable, setValueStoreable] = useState<string>();
+    const [valueStorable, setValueStorable] = useState<string>();
 
     const updateItem = (id: string, Item: ItemModel) => {
         axios.put("/api/items/" + id, Item)
@@ -55,7 +55,7 @@ function ItemTable(props: itemPageProbs) {
     }
     const handleInputCapacity = (event: ChangeEvent<HTMLInputElement>) => {
         const validCapacity = event.target.value.replace(/\D/g, '')
-        setValueStoreable(validCapacity)
+        setValueStorable(validCapacity)
     }
     const findItemById = (id: string) => {
         return props.data.find(item => item.id === id)
@@ -65,8 +65,8 @@ function ItemTable(props: itemPageProbs) {
         if (itemToAdd === undefined) {
             return onCancel();
         }
-        if (typeof valueStoreable === "string") {
-            itemToAdd.storeableValue = valueStoreable;
+        if (typeof valueStorable === "string") {
+            itemToAdd.storableValue = valueStorable;
         }
         updateItem(id, itemToAdd)
 
@@ -76,7 +76,7 @@ function ItemTable(props: itemPageProbs) {
             status: false,
             rowKey: ""
         })
-        setValueStoreable("")
+        setValueStorable("")
     }
     const onEdit = (id: string) => {
         setInEditMode({
@@ -115,10 +115,10 @@ function ItemTable(props: itemPageProbs) {
                         <td>{item.categoryName}</td>
                         <td>{item.issuingCountry}</td>
                         <td>{inEditMode.status && inEditMode.rowKey === item.id ? (
-                            <input value={valueStoreable}
+                            <input value={valueStorable}
                                    onChange={handleInputCapacity}
                             />) : (
-                            item.storeableValue)}
+                            item.storableValue)}
                         </td>
                         <td width="200px">{inEditMode.status && inEditMode.rowKey === item.id ? (
                                 <React.Fragment>

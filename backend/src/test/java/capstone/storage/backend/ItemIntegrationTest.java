@@ -76,7 +76,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                "storeableValue" : "10",
+                                "storableValue" : "10",
                                 "ean" : "8710847909610",
                                 "itemNumber" : "123"
                                 }"""))
@@ -95,7 +95,7 @@ class ItemIntegrationTest {
                                  "categoryName": "test",
                                  "issuingCountry": "GER",
                                  "ean": "8710847909610",
-                                 "storeableValue": "10"}]
+                                 "storableValue": "10"}]
                                  """.replace("<id>", mockItemResponse.id())));
     }
 
@@ -118,7 +118,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                "storeableValue" : "10",
+                                "storableValue" : "10",
                                 "ean" : "8710847909610",
                                 "itemNumber" : "123"
                                 }"""))
@@ -138,7 +138,7 @@ class ItemIntegrationTest {
                                 "categoryName": "test",
                                 "issuingCountry": "GER",
                                 "ean":"8710847909610",
-                                "storeableValue": "10"}""".replace("<id>", id)))
+                                "storableValue": "10"}""".replace("<id>", id)))
                 //THEN
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
@@ -148,7 +148,7 @@ class ItemIntegrationTest {
                         "categoryName": "test",
                         "issuingCountry": "GER",
                         "ean":"8710847909610",
-                        "storeableValue": "10"}""".replace("<id>", id)));
+                        "storableValue": "10"}""".replace("<id>", id)));
     }
 
     @DirtiesContext
@@ -166,7 +166,7 @@ class ItemIntegrationTest {
                                 "categoryName": "test",
                                 "issuingCountry": "GER",
                                 "ean":"8710847909610",
-                                "storeableValue": "10"}"""))
+                                "storableValue": "10"}"""))
                 //THEN
                 .andExpect(status().is(201));
     }
@@ -186,7 +186,7 @@ class ItemIntegrationTest {
                                 "categoryName": "test",
                                 "issuingCountry": "GER",
                                 "ean":"8710847909610",
-                                "storeableValue": "10"}"""))
+                                "storableValue": "10"}"""))
                 //THEN
                 .andExpect(status().is(403));
     }
@@ -210,7 +210,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                "storeableValue" : "10",
+                                "storableValue" : "10",
                                 "ean" : "8710847909610",
                                 "itemNumber" : "123"
                                 }"""))
@@ -254,7 +254,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
-                                    "storeableValue" : "10",
+                                    "storableValue" : "10",
                                     "ean" : "8710847909610",
                                     "itemNumber": "12345"
                                 }"""))
@@ -270,7 +270,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
-                                    "storeableValue" : "10",
+                                    "storableValue" : "10",
                                     "ean" : "8710847909610",
                                     "itemNumber": "12345"
                                 }"""))
@@ -287,7 +287,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
-                                    "storeableValue" : "10",
+                                    "storableValue" : "10",
                                     "ean" : "1234",
                                     "itemNumber": "12345"
                                 }"""))
@@ -305,7 +305,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
-                                    "storeableValue" : "2",
+                                    "storableValue" : "2",
                                     "ean" : "123",
                                     "itemNumber": "0"
                                 }"""))
@@ -323,7 +323,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
-                                    "storeableValue" : "0",
+                                    "storableValue" : "0",
                                     "ean" : "123",
                                     "itemNumber": "1"
                                 }"""))
@@ -341,7 +341,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
-                                    "storeableValue" : null,
+                                    "storableValue" : null,
                                     "ean" : "123",
                                     "itemNumber": "1"
                                 }"""))
@@ -359,7 +359,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
-                                    "storeableValue" : "1",
+                                    "storableValue" : "1",
                                     "ean" : "123",
                                     "itemNumber": null
                                 }"""))
@@ -377,7 +377,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
-                                    "storeableValue" : "1",
+                                    "storableValue" : "1",
                                     "ean" : "123",
                                     "itemNumber": ""
                                 }"""))
@@ -395,7 +395,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
-                                    "storeableValue" : "1",
+                                    "storableValue" : "1",
                                     "ean" : "",
                                     "itemNumber": "1"
                                 }"""))
@@ -405,7 +405,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
-    void postWithStoreableValueEmptyStringExpectStatus405() throws Exception {
+    void postWithStorableValueEmptyStringExpectStatus405() throws Exception {
         //GIVEN
         String ean = "123";
         //WHEN
@@ -413,7 +413,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
-                                    "storeableValue" : "",
+                                    "storableValue" : "",
                                     "ean" : "123",
                                     "itemNumber": "1"
                                 }"""))
