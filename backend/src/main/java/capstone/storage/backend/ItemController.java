@@ -25,12 +25,13 @@ public class ItemController {
     @PostMapping("{eanToFind}")
     @ResponseStatus(HttpStatus.CREATED)
     public Item saveItem(@PathVariable String eanToFind, @RequestBody AddItemDto addItemDto) {
+        if (service.isNullOrEmpty(addItemDto)) {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
 
         if (addItemDto.ean().equals(eanToFind)) {
 
-            if (service.isNullOrEmpty(addItemDto)) {
-                throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
-            }
+
             try {
                 return service.addItem(addItemDto, eanToFind);
             } catch (ItemAlreadyExistException e) {
