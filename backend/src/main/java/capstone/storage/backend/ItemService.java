@@ -24,8 +24,9 @@ public class ItemService {
     public Item addItem(AddItemDto addItemDto, String eanToFind) {
 
         validateAddItemDto(addItemDto);
+        checkItemExisting(addItemDto, eanToFind);
+
         ItemResponse itemResponse = eanService.getItemResponseFromApi(eanToFind);
-        isItemExisting(addItemDto, eanToFind);
 
 
         Item itemToAdd = new Item(
@@ -34,7 +35,7 @@ public class ItemService {
                 itemResponse.categoryName(),
                 itemResponse.issuingCountry(),
                 itemResponse.ean(),
-                addItemDto.capacity(),
+                addItemDto.storeableValue(),
                 addItemDto.itemNumber());
         return repository.insert(itemToAdd);
     }
@@ -51,7 +52,7 @@ public class ItemService {
         repository.deleteById(id);
     }
 
-    public void isItemExisting(AddItemDto addItemDto, String eanToFind) {
+    public void checkItemExisting(AddItemDto addItemDto, String eanToFind) {
         boolean eanIsAlreadySaved = repository.existsByEan(eanToFind);
         boolean itemNumberAlreadySaved = repository.existsByItemNumber(addItemDto.itemNumber());
         if (eanIsAlreadySaved || itemNumberAlreadySaved) {
@@ -60,10 +61,10 @@ public class ItemService {
     }
 
     public void validateAddItemDto(AddItemDto addItemDto) {
-        boolean validCapacity = (Integer.parseInt(addItemDto.capacity()) < 1);
+        boolean validCapacity = (Integer.parseInt(addItemDto.storeableValue()) < 1);
         boolean validItemNumber = (Integer.parseInt(addItemDto.itemNumber()) < 1);
         if (validItemNumber || validCapacity) {
-            throw new IllegalArgumentException("capacity and the item-number must be higher than 0");
+            throw new IllegalArgumentException("storeableValue and the item-number must be higher than 0");
         }
     }
 }

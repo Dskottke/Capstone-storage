@@ -111,7 +111,7 @@ class ItemServiceTest {
         when(itemRepo.existsByItemNumber(testAddItemDto.itemNumber())).thenReturn(true);
         //WHEN
         try {
-            itemService.isItemExisting(testAddItemDto, testEanToFind);
+            itemService.checkItemExisting(testAddItemDto, testEanToFind);
             fail();
         }
         //THEN
@@ -129,7 +129,7 @@ class ItemServiceTest {
         AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
         when(itemRepo.existsByEan(testEanToFind)).thenReturn(true);
         try {
-            itemService.isItemExisting(testAddItemDto, testEanToFind);
+            itemService.checkItemExisting(testAddItemDto, testEanToFind);
             fail();
         }
         //THEN
