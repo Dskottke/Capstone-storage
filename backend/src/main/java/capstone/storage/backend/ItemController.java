@@ -26,12 +26,10 @@ public class ItemController {
     @ResponseStatus(HttpStatus.CREATED)
     public Item saveItem(@PathVariable String eanToFind, @RequestBody AddItemDto addItemDto) {
         if (service.isNullOrEmpty(addItemDto)) {
-            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
         if (addItemDto.ean().equals(eanToFind)) {
-
-
             try {
                 return service.addItem(addItemDto, eanToFind);
             } catch (ItemAlreadyExistException e) {
@@ -40,7 +38,7 @@ public class ItemController {
                 throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
             }
         }
-        throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
     }
     @PutMapping("{id}")
     public ResponseEntity<Item> updateItem(@PathVariable String id, @RequestBody Item itemToUpdate) {

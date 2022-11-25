@@ -58,7 +58,7 @@ function ItemNavigation(props: itemNavigationProbs) {
                     props.setErrorMessage("capacity and item-number must be greater than 0")
                 }
 
-                if (error.response.status === 405) {
+                if (error.response.status === 406) {
                     props.setErrorModal(true);
                     props.setErrorMessage("all input-fields must be filled")
                 }

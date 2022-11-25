@@ -292,7 +292,7 @@ class ItemIntegrationTest {
                                     "itemNumber": "12345"
                                 }"""))
                 //THEN
-                .andExpect(status().is(403));
+                .andExpect(status().is(406));
     }
 
     @DirtiesContext
@@ -333,7 +333,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
-    void postWithStorableValueNullAndExpectStatus405() throws Exception {
+    void postWithStorableValueNullAndExpectStatus404() throws Exception {
         //GIVEN
         String ean = "123";
         //WHEN
@@ -346,12 +346,12 @@ class ItemIntegrationTest {
                                     "itemNumber": "1"
                                 }"""))
                 //THEN
-                .andExpect(status().is(405));
+                .andExpect(status().is(404));
     }
 
     @DirtiesContext
     @Test
-    void postWithItemNumberNullExpectStatus405() throws Exception {
+    void postWithItemNumberNullExpectStatus404() throws Exception {
         //GIVEN
         String ean = "123";
         //WHEN
@@ -364,7 +364,7 @@ class ItemIntegrationTest {
                                     "itemNumber": null
                                 }"""))
                 //THEN
-                .andExpect(status().is(405));
+                .andExpect(status().is(404));
     }
 
     @DirtiesContext
@@ -382,7 +382,7 @@ class ItemIntegrationTest {
                                     "itemNumber": ""
                                 }"""))
                 //THEN
-                .andExpect(status().is(405));
+                .andExpect(status().is(404));
     }
 
     @DirtiesContext
@@ -405,7 +405,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
-    void postWithStorableValueEmptyStringExpectStatus405() throws Exception {
+    void postWithStorableValueEmptyStringExpectStatus404() throws Exception {
         //GIVEN
         String ean = "123";
         //WHEN
@@ -418,7 +418,7 @@ class ItemIntegrationTest {
                                     "itemNumber": "1"
                                 }"""))
                 //THEN
-                .andExpect(status().is(405));
+                .andExpect(status().is(404));
     }
 
 
