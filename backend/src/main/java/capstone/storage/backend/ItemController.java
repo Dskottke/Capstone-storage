@@ -26,11 +26,11 @@ public class ItemController {
     @ResponseStatus(HttpStatus.CREATED)
     public Item saveItem(@PathVariable String eanToFind, @RequestBody AddItemDto addItemDto) {
 
-        if (service.isNull(addItemDto)) {
-            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
-        }
-
         if (addItemDto.ean().equals(eanToFind)) {
+
+            if (service.isNullOrEmpty(addItemDto)) {
+                throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+            }
             try {
                 return service.addItem(addItemDto, eanToFind);
             } catch (ItemAlreadyExistException e) {
@@ -41,8 +41,6 @@ public class ItemController {
         }
         throw new ResponseStatusException(HttpStatus.FORBIDDEN);
     }
-
-
     @PutMapping("{id}")
     public ResponseEntity<Item> updateItem(@PathVariable String id, @RequestBody Item itemToUpdate) {
         if (itemToUpdate.id().equals(id)) {
@@ -52,7 +50,6 @@ public class ItemController {
         }
         throw new ResponseStatusException(HttpStatus.FORBIDDEN);
     }
-
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteItem(@PathVariable String id) {

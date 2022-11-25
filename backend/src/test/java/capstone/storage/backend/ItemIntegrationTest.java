@@ -294,6 +294,7 @@ class ItemIntegrationTest {
                 //THEN
                 .andExpect(status().is(403));
     }
+
     @DirtiesContext
     @Test
     void postWithItemNumberLessThan1AndExpectStatus412() throws Exception {
@@ -341,7 +342,7 @@ class ItemIntegrationTest {
                         .content("""
                                     {
                                     "storeableValue" : null,
-                                    "ean" : "1",
+                                    "ean" : "123",
                                     "itemNumber": "1"
                                 }"""))
                 //THEN
@@ -350,7 +351,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
-    void postWithEanNullAndExpectStatus405() throws Exception {
+    void postWithItemNumberNullExpectStatus405() throws Exception {
         //GIVEN
         String ean = "123";
         //WHEN
@@ -359,26 +360,62 @@ class ItemIntegrationTest {
                         .content("""
                                     {
                                     "storeableValue" : "1",
-                                    "ean" : null,
-                                    "itemNumber": "1"
-                                }"""))
-                //THEN
-                .andExpect(status().is(405));
-    }
-
-    @DirtiesContext
-    @Test
-    void postWithItemNumberNullexpectStatus405() throws Exception {
-        //GIVEN
-        String ean = "123";
-        //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                    {
-                                    "storeableValue" : "1",
-                                    "ean" : "1",
+                                    "ean" : "123",
                                     "itemNumber": null
+                                }"""))
+                //THEN
+                .andExpect(status().is(405));
+    }
+
+    @DirtiesContext
+    @Test
+    void postWithItemNumberEmptyStringExpectStatus405() throws Exception {
+        //GIVEN
+        String ean = "123";
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                    "storeableValue" : "1",
+                                    "ean" : "123",
+                                    "itemNumber": ""
+                                }"""))
+                //THEN
+                .andExpect(status().is(405));
+    }
+
+    @DirtiesContext
+    @Test
+    void postWithEanEmptyStringExpectStatus405() throws Exception {
+        //GIVEN
+        String ean = "";
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                    "storeableValue" : "1",
+                                    "ean" : "",
+                                    "itemNumber": "1"
+                                }"""))
+                //THEN
+                .andExpect(status().is(405));
+    }
+
+    @DirtiesContext
+    @Test
+    void postWithStoreableValueEmptyStringExpectStatus405() throws Exception {
+        //GIVEN
+        String ean = "123";
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                    "storeableValue" : "",
+                                    "ean" : "123",
+                                    "itemNumber": "1"
                                 }"""))
                 //THEN
                 .andExpect(status().is(405));

@@ -68,7 +68,7 @@ public class ItemService {
         }
     }
 
-    public boolean isNull(AddItemDto addItemDto) {
+    public boolean isNullOrEmpty(AddItemDto addItemDto) {
         if (addItemDto.ean() == null || addItemDto.itemNumber() == null || addItemDto.storeableValue() == null) {
             return true;
         }
