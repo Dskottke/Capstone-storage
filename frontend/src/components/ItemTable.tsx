@@ -17,7 +17,7 @@ function ItemTable(props: itemPageProbs) {
         status: true,
         rowKey: ""
     });
-    const [valueStorable, setValueStorable] = useState<string>();
+    const [storableValue, setStorableValue] = useState<string>("");
 
     const updateItem = (id: string, Item: ItemModel) => {
         axios.put("/api/items/" + id, Item)
@@ -55,19 +55,19 @@ function ItemTable(props: itemPageProbs) {
     }
     const handleInputCapacity = (event: ChangeEvent<HTMLInputElement>) => {
         const validCapacity = event.target.value.replace(/\D/g, '')
-        setValueStorable(validCapacity)
+        setStorableValue(validCapacity)
     }
     const findItemById = (id: string) => {
         return props.data.find(item => item.id === id)
     }
     const onSave = (id: string) => {
         let itemToAdd = findItemById(id)
-        if (itemToAdd === undefined) {
+        if (!itemToAdd) {
             return onCancel();
         }
-        if (typeof valueStorable === "string") {
-            itemToAdd.storableValue = valueStorable;
-        }
+
+        itemToAdd.storableValue = storableValue;
+
         updateItem(id, itemToAdd)
 
     };
@@ -76,7 +76,7 @@ function ItemTable(props: itemPageProbs) {
             status: false,
             rowKey: ""
         })
-        setValueStorable("")
+        setStorableValue("")
     }
     const onEdit = (id: string) => {
         setInEditMode({
@@ -115,7 +115,7 @@ function ItemTable(props: itemPageProbs) {
                         <td>{item.categoryName}</td>
                         <td>{item.issuingCountry}</td>
                         <td>{inEditMode.status && inEditMode.rowKey === item.id ? (
-                            <input value={valueStorable}
+                            <input value={storableValue}
                                    onChange={handleInputCapacity}
                             />) : (
                             item.storableValue)}

@@ -77,11 +77,11 @@ function ItemNavigation(props: itemNavigationProbs) {
 
                 <form onSubmit={handleAddSubmit}>
                     <input value={itemNumber}
-                           onChange={handleInputItemNumber} type="text" placeholder="item-number" name="submit"/>
+                           onChange={handleInputItemNumber} type="text" placeholder="item-number" name="item-number"/>
                     <input value={ean}
-                           onChange={handleInputEan} type="text" placeholder="ean" name="submit"/>
+                           onChange={handleInputEan} type="text" placeholder="ean" name="ean"/>
                     <input value={storableValue}
-                           onChange={handleInputCapacity} type="text" placeholder="capacity" name="submit"/>
+                           onChange={handleInputCapacity} type="text" placeholder="capacity" name="capacity"/>
                     <button type="submit">add</button>
                 </form>
             </div>
