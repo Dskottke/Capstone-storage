@@ -188,7 +188,7 @@ class ItemIntegrationTest {
                                 "ean":"8710847909610",
                                 "storableValue": "10"}"""))
                 //THEN
-                .andExpect(status().is(403));
+                .andExpect(status().is(406));
     }
 
     @Test

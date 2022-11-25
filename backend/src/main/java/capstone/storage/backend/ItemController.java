@@ -47,7 +47,7 @@ public class ItemController {
             Item updatedItem = service.updateItem(itemToUpdate);
             return itemExist ? ResponseEntity.status(HttpStatus.OK).body(updatedItem) : new ResponseEntity<>(HttpStatus.CREATED);
         }
-        throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
     }
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
