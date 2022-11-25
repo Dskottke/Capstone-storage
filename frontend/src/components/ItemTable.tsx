@@ -1,4 +1,3 @@
-
 import {ItemModel} from "../model/ItemModel";
 
 import "../css/ItemTable.css"
@@ -40,7 +39,7 @@ function ItemTable(props: itemPageProbs) {
                         <td>data not found</td>
                         <td>data not found</td>
                     </tr>) : (
-                    props.data.map((item) => <ItemTableRow item={item}
+                    props.data.map((item) => <ItemTableRow item={item} key={item.id}
                                                            fetchData={props.fetchData}
                                                            setErrorMessage={props.setErrorMessage}
                                                            setErrorModal={props.setErrorModal}
