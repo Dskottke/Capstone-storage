@@ -5,7 +5,7 @@ public record Item(String id,
                    String categoryName,
                    String issuingCountry,
                    String ean,
-                   String storeableValue,
+                   String storableValue,
                    String itemNumber
 ) {
 }

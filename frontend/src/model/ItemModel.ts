@@ -4,6 +4,6 @@ export type ItemModel = {
     categoryName: string,
     issuingCountry: string,
     ean: string,
-    storeableValue: string,
+    storableValue: string,
     itemNumber: string
 }

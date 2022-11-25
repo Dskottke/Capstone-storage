@@ -35,7 +35,7 @@ public class ItemService {
                 itemResponse.categoryName(),
                 itemResponse.issuingCountry(),
                 itemResponse.ean(),
-                addItemDto.storeableValue(),
+                addItemDto.storableValue(),
                 addItemDto.itemNumber());
         return repository.insert(itemToAdd);
     }
@@ -61,7 +61,7 @@ public class ItemService {
     }
 
     public void validateAddItemDto(AddItemDto addItemDto) {
-        boolean validCapacity = (Integer.parseInt(addItemDto.storeableValue()) < 1);
+        boolean validCapacity = (Integer.parseInt(addItemDto.storableValue()) < 1);
         boolean validItemNumber = (Integer.parseInt(addItemDto.itemNumber()) < 1);
         if (validItemNumber || validCapacity) {
             throw new IllegalArgumentException("capacity and the item-number must be greater than 0");
@@ -69,10 +69,10 @@ public class ItemService {
     }
 
     public boolean isNullOrEmpty(AddItemDto addItemDto) {
-        if (addItemDto.ean() == null || addItemDto.itemNumber() == null || addItemDto.storeableValue() == null) {
+        if (addItemDto.ean() == null || addItemDto.itemNumber() == null || addItemDto.storableValue() == null) {
             return true;
         }
         String emptyString = "";
-        return emptyString.equals(addItemDto.itemNumber()) || emptyString.equals(addItemDto.storeableValue()) || emptyString.equals(addItemDto.ean());
+        return emptyString.equals(addItemDto.itemNumber()) || emptyString.equals(addItemDto.storableValue()) || emptyString.equals(addItemDto.ean());
     }
 }
