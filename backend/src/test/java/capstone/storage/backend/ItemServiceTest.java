@@ -119,7 +119,7 @@ class ItemServiceTest {
             String actual = e.getMessage();
             String expected = "item is already saved";
 
-            assertEquals(actual, expected);
+            assertEquals(expected, actual);
         }
     }
     @Test
@@ -137,8 +137,31 @@ class ItemServiceTest {
             String actual = e.getMessage();
             String expected = "item is already saved";
 
-            assertEquals(actual, expected);
+            assertEquals(expected, actual);
         }
     }
+
+    @Test
+    void checkIfIsNullOrEmptyReturnsTrueWhenAddITemStorableValueIsNull() {
+        //GIVEN
+        AddItemDto addItemDto = new AddItemDto("123", "1", null);
+        //WHEn
+        boolean actual = itemService.isNullOrEmpty(addItemDto);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void checkIfIsNullOrEmptyReturnsTrueWhenAddITemStorableValueIsEmptyString() {
+        //GIVEN
+        AddItemDto addItemDto = new AddItemDto("123", "", "1");
+        //WHEn
+        boolean actual = itemService.isNullOrEmpty(addItemDto);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
 
 }
