@@ -14,6 +14,12 @@ function ItemNavigation(props: itemNavigationProbs) {
 
     const [ean, setEan] = useState<string>()
     const [itemNumber, setItemNumber] = useState<string>()
+    const [capacity, setCapacity] = useState<string>()
+
+    const handleInputCapacity = (event: ChangeEvent<HTMLInputElement>) => {
+        const validCapacity = event.target.value.replace(/\D/g, '')
+        setCapacity(validCapacity)
+    }
 
     const handleInputItemNumber = (event: ChangeEvent<HTMLInputElement>) => {
         const validItemNumber = event.target.value.replace(/\D/g, '')
@@ -28,7 +34,7 @@ function ItemNavigation(props: itemNavigationProbs) {
     const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
 
-        axios.post("/api/items/" + ean, {ean, itemNumber})
+        axios.post("/api/items/" + ean, {ean, itemNumber, capacity})
             .then(response => {
                 if (response.status === 201) {
                     props.setSuccessModal(true);
@@ -56,11 +62,12 @@ function ItemNavigation(props: itemNavigationProbs) {
 
                 <form onSubmit={handleAddSubmit}>
                     <input value={itemNumber}
+                           onChange={handleInputCapacity} type="text" placeholder="capacity" name="submit"/>
+                    <input value={itemNumber}
                            onChange={handleInputItemNumber} type="text" placeholder="item-number" name="submit"/>
                     <input value={ean}
                            onChange={handleInputEan} type="text" placeholder="ean" name="submit"/>
                     <button type="submit">add</button>
-
                 </form>
             </div>
         </div>
