@@ -25,11 +25,8 @@ public class ItemService {
 
         validateAddItemDto(addItemDto);
         ItemResponse itemResponse = eanService.getItemResponseFromApi(eanToFind);
-        boolean itemExistingStatus = isItemExisting(addItemDto, eanToFind);
+        isItemExisting(addItemDto, eanToFind);
 
-        if (itemExistingStatus) {
-            throw new ItemAlreadyExistException("item is already saved");
-        }
 
         Item itemToAdd = new Item(
                 utils.generateUUID(),
@@ -54,17 +51,19 @@ public class ItemService {
         repository.deleteById(id);
     }
 
-    public boolean isItemExisting(AddItemDto addItemDto, String eanToFind) {
+    public void isItemExisting(AddItemDto addItemDto, String eanToFind) {
         boolean eanIsAlreadySaved = repository.existsByEan(eanToFind);
         boolean itemNumberAlreadySaved = repository.existsByItemNumber(addItemDto.itemNumber());
-        return (eanIsAlreadySaved || itemNumberAlreadySaved);
+        if (eanIsAlreadySaved || itemNumberAlreadySaved) {
+            throw new ItemAlreadyExistException("item is already saved");
+        }
     }
 
     public void validateAddItemDto(AddItemDto addItemDto) {
         boolean validCapacity = (Integer.parseInt(addItemDto.capacity()) < 1);
         boolean validItemNumber = (Integer.parseInt(addItemDto.itemNumber()) < 1);
         if (validItemNumber || validCapacity) {
-            throw new IllegalArgumentException("capacity must be higher than 0");
+            throw new IllegalArgumentException("capacity and the item-number must be higher than 0");
         }
     }
 }
