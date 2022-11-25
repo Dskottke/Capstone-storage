@@ -142,9 +142,9 @@ class ItemServiceTest {
     }
 
     @Test
-    void checkIfIsNullOrEmptyReturnsTrueWhenAddITemStorableValueIsNull() {
+    void checkIfIsNullOrEmptyReturnsTrueWhenAddITemDtoFieldsAreNull() {
         //GIVEN
-        AddItemDto addItemDto = new AddItemDto("123", "1", null);
+        AddItemDto addItemDto = new AddItemDto(null, null, null);
         //WHEn
         boolean actual = itemService.isNullOrEmpty(addItemDto);
         boolean expected = true;
@@ -155,10 +155,21 @@ class ItemServiceTest {
     @Test
     void checkIfIsNullOrEmptyReturnsTrueWhenAddITemStorableValueIsEmptyString() {
         //GIVEN
-        AddItemDto addItemDto = new AddItemDto("123", "", "1");
+        AddItemDto addItemDto = new AddItemDto("", "", "");
         //WHEn
         boolean actual = itemService.isNullOrEmpty(addItemDto);
         boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void checkIfIsNullOrEmptyReturnsFalseWhenAddITemFieldsAreNotEmptyString() {
+        //GIVEN
+        AddItemDto addItemDto = new AddItemDto("123", "1", "1");
+        //WHEn
+        boolean actual = itemService.isNullOrEmpty(addItemDto);
+        boolean expected = false;
         //THEN
         assertEquals(expected, actual);
     }
