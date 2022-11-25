@@ -46,7 +46,7 @@ class ItemServiceTest {
                 "20",
                 "1");
 
-        AddItemDto addItemDto = new AddItemDto(eanToFind, "1");
+        AddItemDto addItemDto = new AddItemDto(eanToFind, "1", "1");
         when(eanApiService.getItemResponseFromApi(eanToFind)).thenReturn(response);
         when(utils.generateUUID()).thenReturn("123");
         when(itemRepo.insert(itemToExpect)).thenReturn(itemToExpect);
@@ -106,7 +106,7 @@ class ItemServiceTest {
     void checkIfItemAlreadyExistWithExistingItemNumberReturnTrue() {
         //GIVEN
         String testEanToFind = "123";
-        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind);
+        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
         when(itemRepo.existsByItemNumber(testAddItemDto.itemNumber())).thenReturn(true);
         //WHEN
         boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
@@ -119,7 +119,7 @@ class ItemServiceTest {
     void checkIfItemAlreadyExistWithNotExistingItemNumberReturnFalse() {
         //GIVEN
         String testEanToFind = "123";
-        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind);
+        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
         when(itemRepo.existsByItemNumber(testAddItemDto.itemNumber())).thenReturn(false);
         //WHEN
         boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
@@ -132,7 +132,7 @@ class ItemServiceTest {
     void checkIfItemAlreadyExistWithExistingEanReturnTrue() {
         //GIVEN
         String testEanToFind = "123";
-        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind);
+        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
         when(itemRepo.existsByEan(testEanToFind)).thenReturn(true);
         //WHEN
         boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
@@ -145,7 +145,7 @@ class ItemServiceTest {
     void checkIfItemAlreadyExistWithNotExistingEanReturnFalse() {
         //GIVEN
         String testEanToFind = "123";
-        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind);
+        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
         when(itemRepo.existsByEan(testEanToFind)).thenReturn(false);
         //WHEN
         boolean actual = itemService.isItemExisting(testAddItemDto, testEanToFind);
