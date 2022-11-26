@@ -98,7 +98,6 @@ class ItemIntegrationTest {
                                  "storableValue": "10"}]
                                  """.replace("<id>", mockItemResponse.id())));
     }
-
     @Test
     @DirtiesContext
     void updateStorableValueFromExistingItemToValue20() throws Exception {

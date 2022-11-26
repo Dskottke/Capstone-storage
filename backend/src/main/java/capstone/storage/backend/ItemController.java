@@ -1,7 +1,6 @@
 package capstone.storage.backend;
 
 import capstone.storage.backend.exceptions.IsNullOrEmptyException;
-import capstone.storage.backend.exceptions.ItemAlreadyExistException;
 import capstone.storage.backend.models.AddItemDto;
 import capstone.storage.backend.models.Item;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +32,7 @@ public class ItemController {
         if (addItemDto.ean().equals(eanToFind)) {
             try {
                 return service.addItem(addItemDto, eanToFind);
-            } catch (ItemAlreadyExistException e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
             } catch (IllegalArgumentException e) {
                 throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
             }
