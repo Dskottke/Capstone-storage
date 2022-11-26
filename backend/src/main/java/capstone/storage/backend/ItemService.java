@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepo repository;
-    private final EanApiService eanService;
+    private final ItemEanApiService eanService;
     private final ServiceUtils utils;
 
     public List<Item> findAll() {

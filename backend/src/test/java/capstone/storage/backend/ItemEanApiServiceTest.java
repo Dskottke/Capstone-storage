@@ -12,9 +12,9 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-class EanApiServiceTest {
+class ItemEanApiServiceTest {
     private static MockWebServer mockWebServer;
-    private EanApiService eanApiService;
+    private ItemEanApiService eanApiService;
     private final String eanApiResponseExceptionMessage = "couldn't find item by ean";
 
     @Value("${ean.api.token}")
@@ -31,7 +31,7 @@ class EanApiServiceTest {
         String baseUrl = String.format("http://localhost:%s",
                 mockWebServer.getPort());
 
-        eanApiService = new EanApiService(baseUrl, token);
+        eanApiService = new ItemEanApiService(baseUrl, token);
     }
 
     @AfterAll
@@ -117,7 +117,7 @@ class EanApiServiceTest {
         }
         //THEN
         catch (EanApiResponseException e) {
-            String expected = "ean is null";
+            String expected = "couldn't find item by ean";
             String actual = e.getMessage();
             assertEquals(expected, actual);
         }

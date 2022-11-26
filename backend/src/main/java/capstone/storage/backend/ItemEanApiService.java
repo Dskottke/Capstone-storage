@@ -11,12 +11,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 import static java.util.Objects.requireNonNull;
 
 @Service
-public class EanApiService {
+public class ItemEanApiService {
     private final WebClient webClient;
     private static final int EXPECTED_ARRAY_LENGTH = 1;
     private final String apiToken;
 
-    public EanApiService(@Value("${ean.api.url}") String basicUrl, @Value("${token}") String token) {
+    public ItemEanApiService(@Value("${ean.api.url}") String basicUrl, @Value("${token}") String token) {
         this.apiToken = token;
         this.webClient = WebClient.create(basicUrl);
     }
@@ -40,7 +40,7 @@ public class EanApiService {
         String firstEan = itemResponse.ean();
 
         if (firstEan == null) {
-            throw new EanApiResponseException("ean is null");
+            throw new EanApiResponseException("couldn't find item by ean");
         }
         if (!(firstEan.equals(eanToFind))) {
             throw new ItemNotFound("ean to find doesn't match with response ean");

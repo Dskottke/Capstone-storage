@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 class ItemServiceTest {
     private final ItemRepo itemRepo = mock(ItemRepo.class);
     private final ServiceUtils utils = mock(ServiceUtils.class);
-    private final EanApiService eanApiService = mock(EanApiService.class);
+    private final ItemEanApiService eanApiService = mock(ItemEanApiService.class);
     private final ItemService itemService = new ItemService(itemRepo, eanApiService, utils);
 
     @Test
@@ -125,7 +125,7 @@ class ItemServiceTest {
         //THEN
         catch (ItemAlreadyExistException e) {
             String actual = e.getMessage();
-            String expected = "item is already saved";
+            String expected = "item is already existing";
 
             assertEquals(expected, actual);
         }
@@ -145,7 +145,7 @@ class ItemServiceTest {
         //THEN
         catch (ItemAlreadyExistException e) {
             String actual = e.getMessage();
-            String expected = "item is already saved";
+            String expected = "item is already existing";
 
             assertEquals(expected, actual);
         }
