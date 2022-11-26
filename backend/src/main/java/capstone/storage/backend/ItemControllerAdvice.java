@@ -1,6 +1,7 @@
 package capstone.storage.backend;
 
 import capstone.storage.backend.exceptions.IsNullOrEmptyException;
+import capstone.storage.backend.exceptions.ItemValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,15 @@ public class ItemControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(IsNullOrEmptyException.class)
     public ResponseEntity<String> handleIsNullOrEmptyException(IsNullOrEmptyException ex) {
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("all input-fields must be filled");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ItemValidationException.class)
+    public ResponseEntity<String> handleItemValidationException(ItemValidationException ex) {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
     }
 
 
