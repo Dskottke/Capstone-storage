@@ -5,12 +5,14 @@ import capstone.storage.backend.models.AddItemDto;
 import capstone.storage.backend.models.Item;
 import capstone.storage.backend.models.ItemResponse;
 import capstone.storage.backend.utils.ServiceUtils;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 class ItemServiceTest {
@@ -20,6 +22,7 @@ class ItemServiceTest {
     private final ItemService itemService = new ItemService(itemRepo, eanApiService, utils);
 
     @Test
+    @DisplayName("method : findAll -> should return the list of all items")
     void findAllItemsAndExpectEmptyList() {
         //GIVEN
         List<Item> itemList = new ArrayList<>();
@@ -33,6 +36,7 @@ class ItemServiceTest {
     }
 
     @Test
+    @DisplayName("method : addItem -> should return the item to add")
     void addItemByEanAndAddItemDtoAndReturnItemWithId() {
         //GIVEN
         String eanToFind = "8710847909610";
@@ -59,6 +63,7 @@ class ItemServiceTest {
     }
 
     @Test
+    @DisplayName("method : updateItem -> should return updated item")
     void UpdateItemAndExpectSameItemToReturn() {
         //GIVEN
         Item itemToExpect = new Item("123",
@@ -76,6 +81,7 @@ class ItemServiceTest {
     }
 
     @Test
+    @DisplayName("method: existById -> should return true")
     void existById() {
         //GIVEN
         String id = "123";
@@ -88,6 +94,7 @@ class ItemServiceTest {
     }
 
     @Test
+    @DisplayName("method: deleteItemById -> should give the itemToDelete to the itemRepo")
     void deleteItemById() {
         //GIVEN
         Item itemToDelete = new Item("123",
@@ -104,7 +111,8 @@ class ItemServiceTest {
     }
 
     @Test
-    void ifItemIsAlreadyExistingThrowIllegalArgumentException() {
+    @DisplayName("method : checkItemExisting -> should throw ItemAlreadyExistingException")
+    void ifItemIsAlreadyExistingThrowItemAlreadyExistingException() {
         //GIVEN
         String testEanToFind = "123";
         AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
@@ -122,7 +130,9 @@ class ItemServiceTest {
             assertEquals(expected, actual);
         }
     }
+
     @Test
+    @DisplayName("method : checkItemExisting -> should return true")
     void checkIfItemAlreadyExistWithExistingEanReturnTrue() {
         //GIVEN
         String testEanToFind = "123";
@@ -142,6 +152,7 @@ class ItemServiceTest {
     }
 
     @Test
+    @DisplayName("method : isNullOrEmpty -> should return true when all AddItemDto fields are null")
     void checkIfIsNullOrEmptyReturnsTrueWhenAddITemDtoFieldsAreNull() {
         //GIVEN
         AddItemDto addItemDto = new AddItemDto(null, null, null);
@@ -153,6 +164,7 @@ class ItemServiceTest {
     }
 
     @Test
+    @DisplayName("method : isNullOrEmpty -> should return true when all AddItemDto fields are empty")
     void checkIfIsNullOrEmptyReturnsTrueWhenAddITemDtoStorableValueIsEmptyString() {
         //GIVEN
         AddItemDto addItemDto = new AddItemDto("", "", "");
@@ -164,6 +176,7 @@ class ItemServiceTest {
     }
 
     @Test
+    @DisplayName("method : isNullOrEmpty -> should return false when all AddItemDto fields are not empty")
     void checkIfIsNullOrEmptyReturnsFalseWhenAddITemDtoFieldsAreNotEmptyString() {
         //GIVEN
         AddItemDto addItemDto = new AddItemDto("123", "1", "1");
@@ -175,7 +188,8 @@ class ItemServiceTest {
     }
 
     @Test
-    void checkIfIsNullOrEmptyReturnsFalseWhen1AddITemDtoIsEmptyString() {
+    @DisplayName("method : isNullOrEmpty -> should return true when one AddItemDto field is empty ")
+    void checkIfIsNullOrEmptyReturnsTrueWhen1AddITemDtoIsEmptyString() {
         //GIVEN
         AddItemDto addItemDto = new AddItemDto("", "1", "1");
         //WHEn

@@ -1,17 +1,16 @@
 package capstone.storage.backend;
 
-import capstone.storage.backend.exceptions.ItemNotFound;
 import capstone.storage.backend.exceptions.EanApiResponseException;
+import capstone.storage.backend.exceptions.ItemNotFound;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.*;
-
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class EanApiServiceTest {
     private static MockWebServer mockWebServer;
@@ -40,7 +39,7 @@ class EanApiServiceTest {
     }
 
     @Test
-    @DisplayName("expect Exception with message (item response list is null or invalid) because response list ist null")
+    @DisplayName("method : getItemResponseFromApi -> should throw Exception with message (item response list is null or invalid) because response list ist null")
     void expectItemResponseException() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse());
@@ -60,7 +59,7 @@ class EanApiServiceTest {
     }
 
     @Test
-    @DisplayName("expect Exception with message (item response list is null or invalid)")
+    @DisplayName("method : getItemResponseFromApi -> should throw Exception with message (item response list is null or invalid)")
     void expectItemResponseException2case() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()
@@ -95,7 +94,7 @@ class EanApiServiceTest {
     }
 
     @Test
-    @DisplayName("expect Exception with message (ean is null)")
+    @DisplayName("method : getItemResponseFromApi -> should throw Exception with message (ean is null)")
     void expectItemResponseException3case() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()
@@ -124,7 +123,7 @@ class EanApiServiceTest {
     }
 
     @Test
-    @DisplayName("expect Exception with message (item not found)")
+    @DisplayName("method : getItemResponseFromApi -> should throw Exception with message (item not found)")
     void expectItemResponseException4case() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()

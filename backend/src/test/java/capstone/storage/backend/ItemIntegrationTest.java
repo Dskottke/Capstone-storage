@@ -33,12 +33,11 @@ class ItemIntegrationTest {
     private static MockWebServer mockWebServer;
     @Autowired
     private ObjectMapper objectMapper;
-    private final String isNullOrEmptyException = "all input-fields must be filled";
-    private final String itemValidationException = "capacity and the item-number must be greater than 0";
-    private final String itemForbiddenRequestException = "forbidden request";
-    private final String itemAlreadyExistException = "item is already saved";
-
-    private final String itemToDeleteNotFoundException = "item is already deleted";
+    private final String isNullOrEmptyExceptionMessage = "all input-fields must be filled";
+    private final String itemValidationExceptionMessage = "capacity and the item-number must be greater than 0";
+    private final String itemAlreadyExistExceptionMessage = "item is already saved";
+    private final String itemToDeleteNotFoundExceptionMessage = "item is already deleted";
+    private final String itemForbiddenRequestExceptionMessage = "forbidden request";
 
     @BeforeAll
     static void beforeAll() throws IOException {
@@ -184,7 +183,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
-    @DisplayName("PUT -> no matching Path-variable and ean expect HTTP-status 400 and Content : itemToDeleteNotFoundException")
+    @DisplayName("PUT -> no matching Path-variable and ean expect HTTP-status 400 and Content : itemForbiddenRequestException")
     void updateWithNotMatchingPathvariableIdAndItemId() throws Exception {
         //GIVEN
         String id = "123";
@@ -200,11 +199,12 @@ class ItemIntegrationTest {
                                 "ean":"8710847909610",
                                 "storableValue": "10"}"""))
                 //THEN
-                .andExpect(status().is(400)).andExpect(content().string(itemToDeleteNotFoundException));
+                .andExpect(status().is(400)).andExpect(content().string(itemForbiddenRequestExceptionMessage));
     }
 
     @Test
     @DirtiesContext
+    @DisplayName("DELETE -> delete existing item expect HTTP-Status 204")
     void deleteExistingItemByIdAndReturnStatus204() throws Exception {
         //GIVEN
         ItemResponse[] itemResponse = {new ItemResponse(
@@ -238,13 +238,15 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
+    @DisplayName("DELETE -> item to delete doesn't exist expect HTTP-status 404 and content : itemToDeleteNotFoundException ")
     void tryToDeleteNotExistingItemByIdAndReturnStatus404() throws Exception {
         //GIVEN
         String id = "123";
         //WHEN
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/items/" + id))
                 //THEN
-                .andExpect(status().is(404));
+                .andExpect(status().is(404))
+                .andExpect(content().string(itemToDeleteNotFoundExceptionMessage));
     }
 
     @Test
@@ -289,7 +291,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(itemAlreadyExistException));
+                .andExpect(content().string(itemAlreadyExistExceptionMessage));
 
     }
 
@@ -329,7 +331,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(itemValidationException));
+                .andExpect(content().string(itemValidationExceptionMessage));
 
 
     }
@@ -351,7 +353,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(itemValidationException));
+                .andExpect(content().string(itemValidationExceptionMessage));
     }
 
     @DirtiesContext
@@ -371,7 +373,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(isNullOrEmptyException));
+                .andExpect(content().string(isNullOrEmptyExceptionMessage));
     }
 
     @DirtiesContext
@@ -391,7 +393,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(isNullOrEmptyException));
+                .andExpect(content().string(isNullOrEmptyExceptionMessage));
     }
 
     @DirtiesContext
@@ -411,7 +413,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(isNullOrEmptyException));
+                .andExpect(content().string(isNullOrEmptyExceptionMessage));
     }
 
     @DirtiesContext
@@ -431,7 +433,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(isNullOrEmptyException));
+                .andExpect(content().string(isNullOrEmptyExceptionMessage));
     }
 
     @DirtiesContext
@@ -451,7 +453,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(isNullOrEmptyException));
+                .andExpect(content().string(isNullOrEmptyExceptionMessage));
     }
 
 
