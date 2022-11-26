@@ -28,7 +28,7 @@ public class ItemController {
     public Item saveItem(@PathVariable(required = false) String eanToFind, @RequestBody AddItemDto addItemDto) {
 
         if (eanToFind == null || service.isNullOrEmpty(addItemDto)) {
-            throw new IsNullOrEmptyException();
+            throw new IsNullOrEmptyException("all input-fields must be filled");
         }
         if (addItemDto.ean().equals(eanToFind)) {
             try {
