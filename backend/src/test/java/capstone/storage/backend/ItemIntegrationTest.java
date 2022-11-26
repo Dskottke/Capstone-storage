@@ -38,6 +38,8 @@ class ItemIntegrationTest {
     private final String itemForbiddenRequestException = "forbidden request";
     private final String itemAlreadyExistException = "item is already saved";
 
+    private final String itemToDeleteNotFoundException = "item is already deleted";
+
     @BeforeAll
     static void beforeAll() throws IOException {
         mockWebServer = new MockWebServer();
@@ -55,7 +57,7 @@ class ItemIntegrationTest {
     }
 
     @Test
-    @DisplayName("expect empty list and HTTP-status 200")
+    @DisplayName("GET -> expect empty list and HTTP-status 200")
     void getAllItemsAndExpectEmtpyList() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/items/"))
                 .andExpect(status().isOk())
@@ -65,7 +67,7 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("add item and expect HTTP-status 201 and matching content")
+    @DisplayName("POST -> add item and expect HTTP-status 201 and matching content")
     void addItemWithEanFromApiAndExpectItemWithId() throws Exception {
         //GIVEN
         ItemResponse[] itemResponse = {new ItemResponse(
@@ -108,6 +110,7 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
+    @DisplayName("PUT -> update existing item expect HTTP-status 200")
     void updateStorableValueFromExistingItemToValue20() throws Exception {
         //GIVEN
         ItemResponse[] itemResponse = {new ItemResponse(
@@ -160,6 +163,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
+    @DisplayName("PUT->not existing item expect HTTP-status 201")
     void updateNotExistingItemAndExpectStatus201() throws Exception {
         //GIVEN
         String id = "123";
@@ -180,6 +184,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
+    @DisplayName("PUT -> no matching Path-variable and ean expect HTTP-status 400 and Content : itemToDeleteNotFoundException")
     void updateWithNotMatchingPathvariableIdAndItemId() throws Exception {
         //GIVEN
         String id = "123";
@@ -195,7 +200,7 @@ class ItemIntegrationTest {
                                 "ean":"8710847909610",
                                 "storableValue": "10"}"""))
                 //THEN
-                .andExpect(status().is(406));
+                .andExpect(status().is(400)).andExpect(content().string(itemToDeleteNotFoundException));
     }
 
     @Test
@@ -244,7 +249,7 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("already existing itemNumber expect HTTP-status 400 and content: itemAlreadyExistException ")
+    @DisplayName("POST -> already existing itemNumber expect HTTP-status 400 and content: itemAlreadyExistException ")
     void postWithAlreadyExistingItemNumberAndExpectStatus400() throws Exception {
         //GIVEN
         String ean = "8710847909610";
@@ -289,7 +294,7 @@ class ItemIntegrationTest {
     }
 
     @Test
-    @DisplayName("not matching body ean and path-variable ean expect HTTP-status 400 and content: itemForbiddenRequestException")
+    @DisplayName("POST -> not matching body ean and path-variable ean expect HTTP-status 400 and content: itemForbiddenRequestException")
     void postWithNotMatchingPathvariableEanAndEanFromRequestBodyAndExpect_Status400() throws Exception {
         //GIVEN
         String ean = "123";
@@ -303,14 +308,13 @@ class ItemIntegrationTest {
                                     "itemNumber": "12345"
                                 }"""))
                 //THEN
-                .andExpect(status().is(400))
-                .andExpect(content().string(itemForbiddenRequestException));
-        ;
+                .andExpect(status().is(400));
+
     }
 
     @DirtiesContext
     @Test
-    @DisplayName("item-number less than 1 expect HTTP-status 400 and content: itemValidationException")
+    @DisplayName("POST -> item-number less than 1 expect HTTP-status 400 and content: itemValidationException")
     void postWithItemNumberLessThan1AndExpect_Status400() throws Exception {
         //GIVEN
         String ean = "123";
@@ -326,14 +330,13 @@ class ItemIntegrationTest {
                 //THEN
                 .andExpect(status().is(400))
                 .andExpect(content().string(itemValidationException));
-        ;
-        ;
+
 
     }
 
     @DirtiesContext
     @Test
-    @DisplayName("storable-value less than 1 expect HTTP-status 400 and content: itemValidationException ")
+    @DisplayName("POST -> storable-value less than 1 expect HTTP-status 400 and content: itemValidationException ")
     void postWithStorableValueLessThan1AndExpect_Status400() throws Exception {
         //GIVEN
         String ean = "123";
@@ -353,7 +356,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
-    @DisplayName("storable value is null expect HTTP-status 400 and content: isNullOrEmptyException")
+    @DisplayName("POST -> storable value is null expect HTTP-status 400 and content: isNullOrEmptyException")
     void postWithStorableValueNullAndExpect_Status400() throws Exception {
         //GIVEN
         String ean = "123";
@@ -373,7 +376,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
-    @DisplayName("item-number is null expect HTTP-status 400 and content: isNullOrEmptyException")
+    @DisplayName("POST -> item-number is null expect HTTP-status 400 and content: isNullOrEmptyException")
     void postWithItemNumberNullExpectStatus_400() throws Exception {
         //GIVEN
         String ean = "123";
@@ -393,7 +396,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
-    @DisplayName("item-number has empty string expect HTTP-status 400 and content: isNullOrEmptyException")
+    @DisplayName("POST -> item-number has empty string expect HTTP-status 400 and content: isNullOrEmptyException")
     void postWithItemNumberEmptyStringExpect_Status400() throws Exception {
         //GIVEN
         String ean = "123";
@@ -413,7 +416,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
-    @DisplayName("ean has empty string expect HTTP-status 400 and content: isNullOrEmptyException")
+    @DisplayName("POST -> ean has empty string expect HTTP-status 400 and content: isNullOrEmptyException")
     void postWithEanEmptyStringExpectStatus_400() throws Exception {
         //GIVEN
         String ean = "";
@@ -433,7 +436,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
-    @DisplayName("storable value has empty string expect HTTP-status 400 and content: IsNullOrEmptyException")
+    @DisplayName("POST -> storable value has empty string expect HTTP-status 400 and content: IsNullOrEmptyException")
     void postWithStorableValueEmptyStringExpect_Status400() throws Exception {
         //GIVEN
         String ean = "123";
