@@ -39,6 +39,8 @@ class ItemIntegrationTest {
     private final String itemToDeleteNotFoundExceptionMessage = "item is already deleted";
     private final String itemForbiddenRequestExceptionMessage = "forbidden request";
 
+    private final String itemResponseEanNullExceptionMessage = "couldn't find item by ean";
+
     @BeforeAll
     static void beforeAll() throws IOException {
         mockWebServer = new MockWebServer();
@@ -251,8 +253,35 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> already existing itemNumber expect HTTP-status 400 and content: itemAlreadyExistException ")
-    void postWithAlreadyExistingItemNumberAndExpectStatus400() throws Exception {
+    @DisplayName("POST -> itemResponse field ean is null expect HTTP-status 400 and content: itemResponseEanNullExceptionMessage ")
+    void PostRequestWithItemResponseWithEanNullAndExpectStatus400() throws Exception {
+        //GIVEN
+        String ean = "8710847909610";
+        ItemResponse[] itemResponse = {new ItemResponse(
+                "test",
+                null,
+                "test",
+                "GER")};
+        mockWebServer.enqueue(new MockResponse()
+                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .setBody(objectMapper.writeValueAsString(itemResponse))
+                .setResponseCode(200));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                    "storableValue" : "10",
+                                    "ean" : "8710847909610",
+                                    "itemNumber": "12345"
+                                }"""))
+                .andExpect(status().is(400))
+                .andExpect(content().string(itemResponseEanNullExceptionMessage));
+
+
+    }
+
+    void postWithExistingItemNumberAndExpectStatus400() throws Exception {
         //GIVEN
         String ean = "8710847909610";
         ItemResponse[] itemResponse = {new ItemResponse(
