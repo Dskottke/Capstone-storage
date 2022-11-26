@@ -35,7 +35,7 @@ class ItemIntegrationTest {
     private ObjectMapper objectMapper;
     private final String isNullOrEmptyExceptionMessage = "all input-fields must be filled";
     private final String itemValidationExceptionMessage = "capacity and the item-number must be greater than 0";
-    private final String itemAlreadyExistExceptionMessage = "item is already saved";
+    private final String itemAlreadyExistExceptionMessage = "item is already existing";
     private final String itemToDeleteNotFoundExceptionMessage = "item is already deleted";
     private final String itemForbiddenRequestExceptionMessage = "forbidden request";
 

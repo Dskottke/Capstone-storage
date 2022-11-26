@@ -43,7 +43,7 @@ public class EanApiService {
             throw new EanApiResponseException("ean is null");
         }
         if (!(firstEan.equals(eanToFind))) {
-            throw new ItemNotFound("item not found");
+            throw new ItemNotFound("ean to find doesn't match with response ean");
         }
         return itemResponse;
 
