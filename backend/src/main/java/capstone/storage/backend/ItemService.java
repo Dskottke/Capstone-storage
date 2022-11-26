@@ -57,7 +57,7 @@ public class ItemService {
         boolean eanIsAlreadySaved = repository.existsByEan(eanToFind);
         boolean itemNumberAlreadySaved = repository.existsByItemNumber(addItemDto.itemNumber());
         if (eanIsAlreadySaved || itemNumberAlreadySaved) {
-            throw new ItemAlreadyExistException("item is already saved");
+            throw new ItemAlreadyExistException("item is already existing");
         }
     }
 
