@@ -1,9 +1,6 @@
 package capstone.storage.backend;
 
-import capstone.storage.backend.exceptions.IsNullOrEmptyException;
-import capstone.storage.backend.exceptions.ItemAlreadyExistException;
-import capstone.storage.backend.exceptions.ItemForbiddenRequestException;
-import capstone.storage.backend.exceptions.ItemValidationException;
+import capstone.storage.backend.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -40,6 +37,13 @@ public class ItemControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> handleItemForbiddenRequestException(ItemForbiddenRequestException ex) {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ItemToDeleteNotFoundException.class)
+    public ResponseEntity<String> handleItemToDeleteNotFoundException(ItemToDeleteNotFoundException ex) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
 
