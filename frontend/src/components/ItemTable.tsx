@@ -4,7 +4,7 @@ import "../css/ItemTable.css"
 import ItemTableRow from "./ItemTableRow";
 
 type itemPageProbs = {
-    data: ItemModel [],
+    data: ItemModel[],
     fetchData: () => void
     setErrorModal: (showAlert: boolean) => void
     setErrorMessage: (errorMessage: string) => void
@@ -13,7 +13,6 @@ type itemPageProbs = {
 }
 
 function ItemTable(props: itemPageProbs) {
-
 
     return (
         <div className="container-table">
@@ -39,12 +38,12 @@ function ItemTable(props: itemPageProbs) {
                         <td>data not found</td>
                         <td>data not found</td>
                     </tr>) : (
-                    props.data.map((item) => <ItemTableRow item={item} key={item.id}
-                                                           fetchData={props.fetchData}
-                                                           setErrorMessage={props.setErrorMessage}
-                                                           setErrorModal={props.setErrorModal}
-                                                           setSuccessMessage={props.setSuccessMessage}
-                                                           setSuccessModal={props.setSuccessModal}/>
+                    props.data.map(item => <ItemTableRow item={item} key={item.id}
+                                                         fetchData={props.fetchData}
+                                                         setErrorMessage={props.setErrorMessage}
+                                                         setErrorModal={props.setErrorModal}
+                                                         setSuccessMessage={props.setSuccessMessage}
+                                                         setSuccessModal={props.setSuccessModal}/>
                     ))}
                 </tbody>
             </table>

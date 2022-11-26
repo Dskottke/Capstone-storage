@@ -12,9 +12,9 @@ type itemNavigationProbs = {
 
 function ItemNavigation(props: itemNavigationProbs) {
 
-    const [ean, setEan] = useState<string>()
-    const [itemNumber, setItemNumber] = useState<string>()
-    const [storableValue, setStorableValue] = useState<string>()
+    const [ean, setEan] = useState<string>("")
+    const [itemNumber, setItemNumber] = useState<string>("")
+    const [storableValue, setStorableValue] = useState<string>("")
 
     const handleInputCapacity = (event: ChangeEvent<HTMLInputElement>) => {
         const validCapacity = event.target.value.replace(/\D/g, '')
@@ -43,23 +43,13 @@ function ItemNavigation(props: itemNavigationProbs) {
                 }
             })
             .catch(error => {
-                if (error.response.status === 400) {
-                    props.setErrorModal(true);
-                    props.setErrorMessage("item is already existing")
+                    if (error.response) {
+                        console.log(error)
+                        props.setErrorModal(true);
+                        props.setErrorMessage(error.response.data)
+                    }
                 }
-                if (error.response.status === 500) {
-                    props.setErrorModal(true);
-                    props.setErrorMessage("found no matching item with ean")
-                }
-                if (error.response.status === 412) {
-                    props.setErrorModal(true);
-                    props.setErrorMessage("capacity and item-number must be greater than 0")
-                }
-                if (error.response.status === 405) {
-                    props.setErrorModal(true);
-                    props.setErrorMessage("all input-fields must be filled")
-                }
-            })
+            )
             .then(props.fetchData)
             .then(() => setEan(""))
             .then(() => setItemNumber(""))
