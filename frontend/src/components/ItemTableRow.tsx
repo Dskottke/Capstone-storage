@@ -39,9 +39,9 @@ function ItemTableRow({
                 }
             })
             .catch(error => {
-                if (error.response.status === 403) {
+                if (error.response) {
                     setErrorModal(true);
-                    setErrorMessage("forbidden")
+                    setErrorMessage(error.response.data)
                     ;
                 }
             })
@@ -57,9 +57,9 @@ function ItemTableRow({
                 }
             })
             .catch(error => {
-                if (error.response.status === 406) {
+                if (error.response) {
                     setErrorModal(true);
-                    setErrorMessage("the item doesn't exist")
+                    setErrorMessage(error.response.data)
                 }
             })
             .then(fetchData)

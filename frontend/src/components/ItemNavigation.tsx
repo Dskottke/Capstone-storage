@@ -44,7 +44,6 @@ function ItemNavigation(props: itemNavigationProbs) {
             })
             .catch(error => {
                     if (error.response) {
-                        console.log(error)
                         props.setErrorModal(true);
                         props.setErrorMessage(error.response.data)
                     }
