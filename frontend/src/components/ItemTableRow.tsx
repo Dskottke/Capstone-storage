@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import {ItemModel} from "../model/ItemModel";
 import axios from "axios";
+import "../css/ItemTableRow.css"
 
 type ItemTableRowProps = {
     item: ItemModel
