@@ -47,8 +47,8 @@ public class ItemControllerAdvice extends ResponseEntityExceptionHandler {
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler(EanApiResponseException.class)
-    public ResponseEntity<String> handleEanApiResponseException(EanApiResponseException ex) {
+    @ExceptionHandler(ItemResponseEanNullException.class)
+    public ResponseEntity<String> handleEanApiResponseException(ItemResponseEanNullException ex) {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ex.getMessage());
