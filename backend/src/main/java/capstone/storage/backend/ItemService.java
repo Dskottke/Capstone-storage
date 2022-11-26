@@ -1,6 +1,7 @@
 package capstone.storage.backend;
 
 import capstone.storage.backend.exceptions.ItemAlreadyExistException;
+import capstone.storage.backend.exceptions.ItemValidationException;
 import capstone.storage.backend.models.AddItemDto;
 import capstone.storage.backend.models.Item;
 import capstone.storage.backend.models.ItemResponse;
@@ -64,7 +65,7 @@ public class ItemService {
         boolean validCapacity = (Integer.parseInt(addItemDto.storableValue()) < 1);
         boolean validItemNumber = (Integer.parseInt(addItemDto.itemNumber()) < 1);
         if (validItemNumber || validCapacity) {
-            throw new IllegalArgumentException("capacity and the item-number must be greater than 0");
+            throw new ItemValidationException("capacity and the item-number must be greater than 0");
         }
     }
 
