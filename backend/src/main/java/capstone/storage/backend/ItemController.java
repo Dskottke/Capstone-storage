@@ -27,13 +27,9 @@ public class ItemController {
     @ResponseStatus(HttpStatus.CREATED)
     public Item saveItem(@PathVariable(required = false) String eanToFind, @RequestBody AddItemDto addItemDto) {
 
-        if (eanToFind == null) {
+        if (eanToFind == null || service.isNullOrEmpty(addItemDto)) {
             throw new IsNullOrEmptyException();
         }
-        if (service.isNullOrEmpty(addItemDto)) {
-            throw new IsNullOrEmptyException();
-        }
-
         if (addItemDto.ean().equals(eanToFind)) {
             try {
                 return service.addItem(addItemDto, eanToFind);
