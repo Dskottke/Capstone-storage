@@ -27,10 +27,9 @@ function ItemTableRow({
     });
 
     const [storableValue, setStorableValue] = useState<string>("");
+    const [onEditOpen, setOnEditOpen] = useState(false);
 
     const updateItem = () => {
-
-
         axios.put("/api/items/" + item.id, {...item, storableValue})
             .then(response => {
                 if (response.status === 200) {
@@ -69,19 +68,12 @@ function ItemTableRow({
         setStorableValue(validCapacity)
     }
 
-
     const onCancel = () => {
         setInEditMode({
             status: false,
             rowKey: ""
         })
         setStorableValue("")
-    }
-    const onEdit = (id: string) => {
-        setInEditMode({
-            status: true,
-            rowKey: id
-        })
     }
 
     return (
@@ -98,8 +90,8 @@ function ItemTableRow({
                 />) : (
                 item.storableValue)}
             </td>
-            <td width="200px">{inEditMode.status && inEditMode.rowKey === item.id ? (
-                    <React.Fragment>
+            <td width="200px">{onEditOpen ? (
+                    <>
                         <button
                             className={"button-left"}
                             onClick={() => updateItem()}
@@ -107,15 +99,14 @@ function ItemTableRow({
                         </button>
                         <button
                             className={"button-right"}
-                            style={{marginLeft: 8}}
-                            onClick={() => onCancel()}
+                            onClick={() => setOnEditOpen(!onEditOpen)}
                         >cancel
                         </button>
-                    </React.Fragment>) :
-                <React.Fragment>
+                    </>) :
+                <>
                     <button
                         className={"button-left"}
-                        onClick={() => onEdit(item.id)}
+                        onClick={() => setOnEditOpen(!onEditOpen)}
                     >Edit
                     </button>
                     <button
@@ -123,7 +114,7 @@ function ItemTableRow({
                         onClick={() => deleteItem(item.id)}
                     >delete
                     </button>
-                </React.Fragment>
+                </>
             }
             </td>
         </tr>
