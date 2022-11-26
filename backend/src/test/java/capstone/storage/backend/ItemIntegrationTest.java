@@ -333,7 +333,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
-    void postWithStorableValueNullAndExpectStatus404() throws Exception {
+    void postWithStorableValueNullAndExpect_Status400() throws Exception {
         //GIVEN
         String ean = "123";
         //WHEN
@@ -346,12 +346,12 @@ class ItemIntegrationTest {
                                     "itemNumber": "1"
                                 }"""))
                 //THEN
-                .andExpect(status().is(405));
+                .andExpect(status().is(400));
     }
 
     @DirtiesContext
     @Test
-    void postWithItemNumberNullExpectStatus404() throws Exception {
+    void postWithItemNumberNullExpectStatus_400() throws Exception {
         //GIVEN
         String ean = "123";
         //WHEN
@@ -364,12 +364,12 @@ class ItemIntegrationTest {
                                     "itemNumber": null
                                 }"""))
                 //THEN
-                .andExpect(status().is(405));
+                .andExpect(status().is(400));
     }
 
     @DirtiesContext
     @Test
-    void postWithItemNumberEmptyStringExpectStatus405() throws Exception {
+    void postWithItemNumberEmptyStringExpect_Status400() throws Exception {
         //GIVEN
         String ean = "123";
         //WHEN
@@ -382,12 +382,12 @@ class ItemIntegrationTest {
                                     "itemNumber": ""
                                 }"""))
                 //THEN
-                .andExpect(status().is(405));
+                .andExpect(status().is(400));
     }
 
     @DirtiesContext
     @Test
-    void postWithEanEmptyStringExpectStatus405() throws Exception {
+    void postWithEanEmptyStringExpectStatus_400() throws Exception {
         //GIVEN
         String ean = "";
         //WHEN
@@ -400,12 +400,12 @@ class ItemIntegrationTest {
                                     "itemNumber": "1"
                                 }"""))
                 //THEN
-                .andExpect(status().is(405));
+                .andExpect(status().is(400));
     }
 
     @DirtiesContext
     @Test
-    void postWithStorableValueEmptyStringExpectStatus404() throws Exception {
+    void postWithStorableValueEmptyStringExpect_Status400() throws Exception {
         //GIVEN
         String ean = "123";
         //WHEN
@@ -418,7 +418,7 @@ class ItemIntegrationTest {
                                     "itemNumber": "1"
                                 }"""))
                 //THEN
-                .andExpect(status().is(405));
+                .andExpect(status().is(400));
     }
 
 
