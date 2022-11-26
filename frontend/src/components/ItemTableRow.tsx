@@ -21,10 +21,6 @@ function ItemTableRow({
                           setErrorModal
                       }: ItemTableRowProps) {
 
-    const [inEditMode, setInEditMode] = useState({
-        status: true,
-        rowKey: ""
-    });
 
     const [storableValue, setStorableValue] = useState<string>("");
     const [onEditOpen, setOnEditOpen] = useState(false);
@@ -45,7 +41,7 @@ function ItemTableRow({
                 }
             })
             .then(fetchData)
-            .then(onCancel)
+            .then(() => setOnEditOpen(!onEditOpen))
     }
     const deleteItem = (id: string) => {
         axios.delete("/api/items/" + id)
@@ -68,13 +64,6 @@ function ItemTableRow({
         setStorableValue(validCapacity)
     }
 
-    const onCancel = () => {
-        setInEditMode({
-            status: false,
-            rowKey: ""
-        })
-        setStorableValue("")
-    }
 
     return (
 
@@ -84,7 +73,7 @@ function ItemTableRow({
             <td>{item.name}</td>
             <td>{item.categoryName}</td>
             <td>{item.issuingCountry}</td>
-            <td>{inEditMode.status && inEditMode.rowKey === item.id ? (
+            <td>{onEditOpen ? (
                 <input value={storableValue}
                        onChange={handleInputCapacity}
                 />) : (

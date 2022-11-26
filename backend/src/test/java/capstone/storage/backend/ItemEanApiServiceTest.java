@@ -2,6 +2,7 @@ package capstone.storage.backend;
 
 import capstone.storage.backend.exceptions.EanApiResponseException;
 import capstone.storage.backend.exceptions.ItemNotFound;
+import capstone.storage.backend.exceptions.ItemResponseEanNullException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.*;
@@ -105,7 +106,7 @@ class ItemEanApiServiceTest {
                         "categoryName": "test",
                         "issuingCountry": "GER",
                         "ean" : null,
-                        "storeableValue": "20"
+                        "storebleValue": "20"
                         }]""")
                 .addHeader("Content-Type", "application/json"));
 
@@ -116,7 +117,7 @@ class ItemEanApiServiceTest {
             fail();
         }
         //THEN
-        catch (EanApiResponseException e) {
+        catch (ItemResponseEanNullException e) {
             String expected = "couldn't find item by ean";
             String actual = e.getMessage();
             assertEquals(expected, actual);
