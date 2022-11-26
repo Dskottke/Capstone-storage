@@ -297,7 +297,7 @@ class ItemIntegrationTest {
 
     @DirtiesContext
     @Test
-    void postWithItemNumberLessThan1AndExpectStatus412() throws Exception {
+    void postWithItemNumberLessThan1AndExpect_Status400() throws Exception {
         //GIVEN
         String ean = "123";
         //WHEN
@@ -310,12 +310,12 @@ class ItemIntegrationTest {
                                     "itemNumber": "0"
                                 }"""))
                 //THEN
-                .andExpect(status().is(412));
+                .andExpect(status().is(400));
     }
 
     @DirtiesContext
     @Test
-    void postWithStorableValueLessThan1AndExpectStatus412() throws Exception {
+    void postWithStorableValueLessThan1AndExpect_Status400() throws Exception {
         //GIVEN
         String ean = "123";
         //WHEN
@@ -328,7 +328,7 @@ class ItemIntegrationTest {
                                     "itemNumber": "1"
                                 }"""))
                 //THEN
-                .andExpect(status().is(412));
+                .andExpect(status().is(400));
     }
 
     @DirtiesContext
