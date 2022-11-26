@@ -84,6 +84,7 @@ function ItemTableRow({
     }
 
     return (
+
         <tr key={item.id}>
             <td>{item.itemNumber}</td>
             <td>{item.ean}</td>

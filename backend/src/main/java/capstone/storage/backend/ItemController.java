@@ -1,5 +1,6 @@
 package capstone.storage.backend;
 
+import capstone.storage.backend.exceptions.IsNullOrEmptyException;
 import capstone.storage.backend.exceptions.ItemAlreadyExistException;
 import capstone.storage.backend.models.AddItemDto;
 import capstone.storage.backend.models.Item;
@@ -22,11 +23,15 @@ public class ItemController {
         return service.findAll();
     }
 
-    @PostMapping("{eanToFind}")
+    @PostMapping(value = {"{eanToFind}", ""})
     @ResponseStatus(HttpStatus.CREATED)
-    public Item saveItem(@PathVariable String eanToFind, @RequestBody AddItemDto addItemDto) {
+    public Item saveItem(@PathVariable(required = false) String eanToFind, @RequestBody AddItemDto addItemDto) {
+
+        if (eanToFind == null) {
+            throw new IsNullOrEmptyException();
+        }
         if (service.isNullOrEmpty(addItemDto)) {
-            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+            throw new IsNullOrEmptyException();
         }
 
         if (addItemDto.ean().equals(eanToFind)) {
