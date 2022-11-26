@@ -1,6 +1,7 @@
 package capstone.storage.backend;
 
 import capstone.storage.backend.exceptions.IsNullOrEmptyException;
+import capstone.storage.backend.exceptions.ItemForbiddenRequestException;
 import capstone.storage.backend.models.AddItemDto;
 import capstone.storage.backend.models.Item;
 import lombok.RequiredArgsConstructor;
@@ -29,15 +30,10 @@ public class ItemController {
         if (eanToFind == null || service.isNullOrEmpty(addItemDto)) {
             throw new IsNullOrEmptyException("all input-fields must be filled");
         }
-        if (addItemDto.ean().equals(eanToFind)) {
-            try {
-                return service.addItem(addItemDto, eanToFind);
-
-            } catch (IllegalArgumentException e) {
-                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
-            }
+        if (!addItemDto.ean().equals(eanToFind)) {
+            throw new ItemForbiddenRequestException("forbidden request");
         }
-        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
+        return service.addItem(addItemDto, eanToFind);
     }
     @PutMapping("{id}")
     public ResponseEntity<Item> updateItem(@PathVariable String id, @RequestBody Item itemToUpdate) {
@@ -46,7 +42,7 @@ public class ItemController {
             Item updatedItem = service.updateItem(itemToUpdate);
             return itemExist ? ResponseEntity.status(HttpStatus.OK).body(updatedItem) : new ResponseEntity<>(HttpStatus.CREATED);
         }
-        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
+        throw new ItemForbiddenRequestException("forbidden request");
     }
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
