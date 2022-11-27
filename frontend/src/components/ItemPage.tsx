@@ -21,7 +21,6 @@ function ItemPage() {
     const fetchData = () => {
         axios.get("/api/items/")
             .then(response => {
-                console.log(response.data)
                 return response.data
             })
             .catch(error => {
