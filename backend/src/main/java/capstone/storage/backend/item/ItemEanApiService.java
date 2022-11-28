@@ -1,4 +1,4 @@
-package capstone.storage.backend;
+package capstone.storage.backend.item;
 
 import capstone.storage.backend.exceptions.EanApiResponseException;
 import capstone.storage.backend.exceptions.ItemNotFound;

@@ -3,6 +3,7 @@ package capstone.storage.backend;
 import capstone.storage.backend.exceptions.EanApiResponseException;
 import capstone.storage.backend.exceptions.ItemNotFound;
 import capstone.storage.backend.exceptions.ItemResponseEanNullException;
+import capstone.storage.backend.item.ItemEanApiService;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.*;
