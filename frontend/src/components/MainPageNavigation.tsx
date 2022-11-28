@@ -1,8 +1,17 @@
 import React from 'react';
 import {AppBar, Button, Toolbar} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
 
 function MainPageNavigation() {
+    const addTestData = () => {
+        axios.post("/api/test-data")
+            .then(response => response.status)
+            .catch(error => console.log(error))
+
+    }
+
+
     return (
         <AppBar
             position="static"
@@ -14,7 +23,7 @@ function MainPageNavigation() {
                 <Typography variant="h6" color="inherit" sx={{flexGrow: 1}}>
                     Storeify
                 </Typography>
-                <Button variant="outlined" sx={{my: 1, mx: 1.5}}>
+                <Button onClick={addTestData} variant="outlined" sx={{my: 1, mx: 1.5}}>
                     application test
                 </Button>
             </Toolbar>

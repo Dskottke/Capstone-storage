@@ -9,7 +9,7 @@
     "itemNumber": "1"
   },
   {
-    "_id": "8e1569a3-1655-45c3-ba9b-107d61937500",
+    "id": "8e1569a3-1655-45c3-ba9b-107d61937500",
     "name": "Book: Hands-on Application Development using Spring Boot: Building Modern Cloud Native Applications by Lea (ISBN: 939103022X)",
     "categoryName": "Books and Magazines",
     "issuingCountry": "",
@@ -24,8 +24,7 @@
     "issuingCountry": "",
     "ean": "9783453869950",
     "storableValue": "10",
-    "itemNumber": "3",
-    "_class": "capstone.storage.backend.models.Item"
+    "itemNumber": "3"
   },
   {
     "id": "ea6913d7-4719-4835-a0ad-2830d9376f63",
@@ -34,7 +33,6 @@
     "issuingCountry": "DE",
     "ean": "4015291007986",
     "storableValue": "1",
-    "itemNumber": "4",
-    "_class": "capstone.storage.backend.models.Item"
+    "itemNumber": "4"
   }
 ]
