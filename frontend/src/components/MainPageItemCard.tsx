@@ -14,7 +14,7 @@ function MainPageItemCard() {
                     <img width={"40px"} src={item} alt={"item"}/>
                 </div>
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography variant="h5" component="div">
                         Items
                     </Typography>
                     <Typography variant="body2" color="text.secondary">

@@ -10,11 +10,11 @@ function MainPageNavigation() {
             elevation={0}
             sx={{borderBottom: (theme) => `1px solid ${theme.palette.divider}`}}
         >
-            <Toolbar sx={{flexWrap: 'wrap'}}>
-                <Typography variant="h6" color="inherit" noWrap sx={{flexGrow: 1}}>
+            <Toolbar>
+                <Typography variant="h6" color="inherit" sx={{flexGrow: 1}}>
                     Storeify
                 </Typography>
-                <Button href="#" variant="outlined" sx={{my: 1, mx: 1.5}}>
+                <Button variant="outlined" sx={{my: 1, mx: 1.5}}>
                     application test
                 </Button>
             </Toolbar>
