@@ -1,0 +1,5 @@
+.item-card-header-blue {
+    width: inherit;
+    height: 80px;
+    background: linear-gradient(0deg, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+}
