@@ -3,14 +3,15 @@ package capstone.storage.backend.testdata;
 import capstone.storage.backend.exceptions.TestDataItemsNotFoundException;
 import capstone.storage.backend.item.ItemRepo;
 import capstone.storage.backend.models.Item;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -30,9 +31,15 @@ public class TestDataService {
     }
 
     public void addItemData() throws IOException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(Objects.requireNonNull(classLoader.getResource("item.json")).getFile());
 
-        List<Item> itemList = Collections.singletonList(objectMapper.readValue(new URL(
-                "file:src/main/java/capstone/storage/backend/testdata/json/item.json"), Item.class));
+
+        List<Item> itemList = objectMapper.readValue(
+                file,
+                new TypeReference<List<Item>>() {
+                });
+
         for (Item itemToAdd : itemList) {
             itemRepo.insert(itemToAdd);
         }
