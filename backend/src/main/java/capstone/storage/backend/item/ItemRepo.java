@@ -1,4 +1,4 @@
-package capstone.storage.backend;
+package capstone.storage.backend.item;
 
 import capstone.storage.backend.models.Item;
 import org.springframework.data.mongodb.repository.MongoRepository;
