@@ -59,6 +59,7 @@ function ItemNavigation(props: itemNavigationProbs) {
     return (
         <div className="topnav">
             <div id="navi-logo">Items</div>
+            <a className="active" href="/">home</a>
             <div className="add-container">
 
                 <form onSubmit={handleAddSubmit}>
