@@ -23,4 +23,3 @@ function MainPageNavigation() {
 }
 
 export default MainPageNavigation;
-
