@@ -1,7 +1,7 @@
 package capstone.storage.backend;
 
-import capstone.storage.backend.models.Item;
-import capstone.storage.backend.models.ItemResponse;
+import capstone.storage.backend.item.models.Item;
+import capstone.storage.backend.item.models.ItemResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;

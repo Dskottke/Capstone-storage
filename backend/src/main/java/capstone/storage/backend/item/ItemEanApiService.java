@@ -3,7 +3,7 @@ package capstone.storage.backend.item;
 import capstone.storage.backend.exceptions.EanApiResponseException;
 import capstone.storage.backend.exceptions.ItemNotFound;
 import capstone.storage.backend.exceptions.ItemResponseEanNullException;
-import capstone.storage.backend.models.ItemResponse;
+import capstone.storage.backend.item.models.ItemResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,6 @@ public class ItemEanApiService {
         this.apiToken = token;
         this.webClient = WebClient.create(basicUrl);
     }
-
     public ItemResponse getItemResponseFromApi(String eanToFind) {
         ResponseEntity<ItemResponse[]> itemResponseEntity = requireNonNull(webClient
                         .get()
