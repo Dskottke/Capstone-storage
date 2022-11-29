@@ -20,7 +20,6 @@ class TestDataServiceTest {
     ItemRepo itemRepo = mock(ItemRepo.class);
     private final TestDataService testDataService = new TestDataService(itemRepo, serviceUtils);
 
-
     @Test
     @DisplayName("method -> should return the given list")
     void addListToItemDBAndExpectList() {
@@ -42,12 +41,10 @@ class TestDataServiceTest {
 
     @Test
     @DisplayName("method -> deleteAll should verify ")
-    void deleteAlltest() {
+    void deleteAllTest() {
         //GIVEN
-
         //WHEN
         testDataService.deleteAll();
-
         //THEN
         verify(itemRepo).deleteAll();
     }

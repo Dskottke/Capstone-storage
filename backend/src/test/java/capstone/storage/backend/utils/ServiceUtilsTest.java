@@ -12,9 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ServiceUtilsTest {
     private final ServiceUtils utils = new ServiceUtils();
-
     @Test
-    @DisplayName("method :  -> GetListFromItemData() should return expected List")
+    @DisplayName("method : getListFromItemData() ->  should return expected List")
     void CheckIfTheItemFromDataIsMatching() throws IOException {
         //GIVEN
         List<Item> expected = List.of(new Item(

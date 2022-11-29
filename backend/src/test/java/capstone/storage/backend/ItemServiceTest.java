@@ -25,7 +25,7 @@ class ItemServiceTest {
     private final ItemService itemService = new ItemService(itemRepo, eanApiService, utils);
 
     @Test
-    @DisplayName("method : findAll -> should return the list of all items")
+    @DisplayName("method : findAll -> should return an empty list")
     void findAllItemsAndExpectEmptyList() {
         //GIVEN
         List<Item> itemList = new ArrayList<>();
@@ -37,7 +37,6 @@ class ItemServiceTest {
         verify(itemRepo).findAll();
         assertEquals(expected, actual);
     }
-
     @Test
     @DisplayName("method : addItem -> should return the item to add")
     void addItemByEanAndAddItemDtoAndReturnItemWithId() {
