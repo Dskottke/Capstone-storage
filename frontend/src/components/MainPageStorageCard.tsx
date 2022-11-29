@@ -1,0 +1,23 @@
+import React from 'react';
+import {Card, CardContent} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import "../css/MainPageStorageCard.css"
+
+function MainPageStorageCard() {
+    return (
+        <Card sx={{marginLeft: 10, minWidth: 345, minHeight: 400, boxShadow: 5}}>
+            <div className={"storage-card-header-red"}>
+            </div>
+            <CardContent>
+                <Typography variant="h5" component="div">
+                    storage-bins
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Storage overview
+                </Typography>
+            </CardContent>
+        </Card>
+    );
+}
+
+export default MainPageStorageCard;
