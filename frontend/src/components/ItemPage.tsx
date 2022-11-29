@@ -3,7 +3,7 @@ import axios from "axios";
 import {ItemModel} from "../model/ItemModel";
 import ItemNavigation from "./ItemNavigation";
 import ItemTable from "./ItemTable";
-import "../css/ItemPage.css"
+import "../css/TablePage.css"
 import Alert from "@mui/material/Alert";
 
 function ItemPage() {
@@ -44,7 +44,7 @@ function ItemPage() {
                     setSuccessModal(false);
                 }}>{successMessage}</Alert>
             }
-            <div className={"item-page-body"}>
+            <div className={"page-body"}>
                 <ItemTable fetchData={fetchData} data={data} setErrorMessage={setErrorMessage}
                            setErrorModal={setErrorModal} setSuccessMessage={setSuccessMessage}
                            setSuccessModal={setSuccessModal}/>
