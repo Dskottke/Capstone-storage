@@ -16,16 +16,12 @@ function StorageTable(props: StorageTableProps) {
                     <th>location-number</th>
                     <th>itemNumber</th>
                     <th>amount</th>
-                    <th>notified</th>
-                    <th>reserve</th>
                     <th>action</th>
                 </tr>
                 </thead>
                 <tbody>
                 {props.data.length === 0 ? (
                     <tr>
-                        <td>data not found</td>
-                        <td>data not found</td>
                         <td>data not found</td>
                         <td>data not found</td>
                         <td>data not found</td>

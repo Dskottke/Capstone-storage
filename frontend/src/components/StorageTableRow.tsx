@@ -12,8 +12,6 @@ function StorageTableRow({storageBin, fetchData}: StorageTableRowProps) {
             <td>{storageBin.id}</td>
             <td>{storageBin.itemNumber}</td>
             <td>{storageBin.amount}</td>
-            <td>{storageBin.notified}</td>
-            <td>{storageBin.reserved}</td>
         </tr>
     );
 }
