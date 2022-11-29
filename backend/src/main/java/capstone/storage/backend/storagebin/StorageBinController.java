@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/storage-bin/")
+@RequestMapping("api/storage/")
 @RequiredArgsConstructor
 public class StorageBinController {
     private final StorageBinService storageBinService;
