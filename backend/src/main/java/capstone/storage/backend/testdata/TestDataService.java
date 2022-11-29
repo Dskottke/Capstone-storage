@@ -22,16 +22,16 @@ public class TestDataService {
             List<Item> itemListToAdd = serviceUtils.getListFromItemData();
             addListToItemDB(itemListToAdd);
         } catch (IOException e) {
-            throw new TestDataItemsNotFoundException("cant find data from json");
+            throw new TestDataItemsNotFoundException("can't find data from json");
         }
     }
-
 
     public void deleteAll() {
         itemRepo.deleteAll();
     }
 
     public List<Item> addListToItemDB(List<Item> itemList) {
+
         for (Item itemToAdd : itemList) {
             itemRepo.insert(itemToAdd);
         }

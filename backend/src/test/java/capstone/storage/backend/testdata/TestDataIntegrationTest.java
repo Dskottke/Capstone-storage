@@ -16,7 +16,6 @@ class TestDataIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-
     @Test
     @DisplayName("POST -> expect HTTP-status 204")
     void getAllItemsAndExpectEmtpyList() throws Exception {
