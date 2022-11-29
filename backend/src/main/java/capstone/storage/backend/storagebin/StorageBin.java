@@ -2,5 +2,6 @@ package capstone.storage.backend.storagebin;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record StorageBin(@JsonProperty("id") String locationNumber, String itemNumber, String amount) {
+public record StorageBin(@JsonProperty("id") String locationNumber, String itemNumber, String amount, String notified,
+                         String reserve) {
 }

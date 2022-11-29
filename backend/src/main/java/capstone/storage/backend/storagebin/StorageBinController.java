@@ -11,9 +11,7 @@ import java.util.List;
 @RequestMapping("api/storage-bin/")
 @RequiredArgsConstructor
 public class StorageBinController {
-
     private final StorageBinService storageBinService;
-
     @GetMapping()
     public List<StorageBin> getAllStorageBins() {
         return storageBinService.getAllStorageBins();
