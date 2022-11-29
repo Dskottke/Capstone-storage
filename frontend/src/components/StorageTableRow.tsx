@@ -5,7 +5,6 @@ type StorageTableRowProps = {
     storageBin: StorageBinModel
     fetchData: () => void
 }
-
 function StorageTableRow({storageBin, fetchData}: StorageTableRowProps) {
 
     return (
