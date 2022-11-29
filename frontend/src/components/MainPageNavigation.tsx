@@ -7,7 +7,7 @@ function MainPageNavigation() {
     const addTestData = () => {
         axios.post("/api/test-data")
             .then(response => response.status)
-            .catch(error => console.log(error))
+            .catch(error => console.error(error))
 
     }
 
