@@ -21,7 +21,6 @@ function ItemTableRow({
                           setErrorModal
                       }: ItemTableRowProps) {
 
-
     const [storableValue, setStorableValue] = useState<string>("");
     const [onEditOpen, setOnEditOpen] = useState(false);
 
