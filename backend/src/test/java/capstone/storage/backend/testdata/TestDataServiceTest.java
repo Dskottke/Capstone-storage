@@ -61,7 +61,7 @@ class TestDataServiceTest {
         }
         //THEN
         catch (TestDataItemsNotFoundException e) {
-            String expected = "cant find data from json";
+            String expected = "can't find data from json";
             assertEquals(expected, e.getMessage());
         }
 
