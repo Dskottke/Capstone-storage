@@ -1,5 +1,4 @@
 package capstone.storage.backend.storagebin;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
