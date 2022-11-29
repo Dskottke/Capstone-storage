@@ -1,0 +1,5 @@
+.storage-card-header-red {
+    width: inherit;
+    height: 80px;
+    background: linear-gradient(0deg, #3fb404 0%, #118308 66%, #0e7006 100%);
+}
