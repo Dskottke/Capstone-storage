@@ -8,9 +8,7 @@ function MainPageNavigation() {
         axios.post("/api/test-data")
             .then(response => response.status)
             .catch(error => console.error(error))
-
     }
-
 
     return (
         <AppBar
