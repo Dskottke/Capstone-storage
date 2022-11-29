@@ -18,7 +18,6 @@ function StoragePage() {
             })
             .then((data) => setData(data))
     }
-
     return (
         <div className={"page-body"}>
             <StorageTable fetchData={fetchData} data={data}/>
