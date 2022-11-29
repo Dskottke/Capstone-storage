@@ -7,13 +7,15 @@
     width: 90%;
     margin-left: 5%;
 }
+
 thead {
     text-shadow: 0 0 3px #363636;
     position: sticky;
     top: 0;
     height: 30px;
 }
-table.blueTable {
+
+table.redTable {
     background-color: #EEEEEE;
     width: 100%;
     text-align: left;
@@ -21,26 +23,26 @@ table.blueTable {
     box-shadow: rgba(0, 0, 0, 0.35) 10px 5px 10px;
 }
 
-table.blueTable td, table.redTable th {
-    border: 1px solid #93c8e1;
+table.redTable td, table.redTable th {
+    border: 1px solid #b9e193;
     padding: 3px 2px;
 }
 
-table.blueTable tbody td {
+table.redTable tbody td {
     font-size: 13px;
 }
 
-table.blueTable tr:nth-child(even) {
+table.redTable tr:nth-child(even) {
     background: #D0E4F5;
 }
 
-table.blueTable thead {
-    background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
-    background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
-    background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+table.redTable thead {
+    background: -moz-linear-gradient(top, #68bb55 0%, #3aad32 66%, #1ca41e 100%);
+    background: -webkit-linear-gradient(top, #68bb55 0%, #3aad32 66%, #1ca41e 100%);
+    background: linear-gradient(to bottom, #68bb55 0%, #3aad32 66%, #1ca41e 100%);
 }
 
-table.blueTable thead th {
+table.redTable thead th {
     font-size: 15px;
     font-weight: bold;
     color: #FFFFFF;
