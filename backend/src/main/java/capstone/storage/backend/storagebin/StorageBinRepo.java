@@ -1,4 +1,4 @@
-package capstone.storage.backend.storagebins;
+package capstone.storage.backend.storagebin;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

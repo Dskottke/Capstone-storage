@@ -1,4 +1,4 @@
-package capstone.storage.backend.storagebins;
+package capstone.storage.backend.storagebin;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
