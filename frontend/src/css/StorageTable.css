@@ -15,7 +15,7 @@ thead {
     height: 30px;
 }
 
-table.redTable {
+table.greenTable {
     background-color: #EEEEEE;
     width: 100%;
     text-align: left;
@@ -23,26 +23,26 @@ table.redTable {
     box-shadow: rgba(0, 0, 0, 0.35) 10px 5px 10px;
 }
 
-table.redTable td, table.redTable th {
+table.greenTable td, table.greenTable th {
     border: 1px solid #b9e193;
     padding: 3px 2px;
 }
 
-table.redTable tbody td {
+table.greenTable tbody td {
     font-size: 13px;
 }
 
-table.redTable tr:nth-child(even) {
-    background: #D0E4F5;
+table.greenTable tr:nth-child(even) {
+    background: #cae3c6;
 }
 
-table.redTable thead {
+table.greenTable thead {
     background: -moz-linear-gradient(top, #68bb55 0%, #3aad32 66%, #1ca41e 100%);
     background: -webkit-linear-gradient(top, #68bb55 0%, #3aad32 66%, #1ca41e 100%);
     background: linear-gradient(to bottom, #68bb55 0%, #3aad32 66%, #1ca41e 100%);
 }
 
-table.redTable thead th {
+table.greenTable thead th {
     font-size: 15px;
     font-weight: bold;
     color: #FFFFFF;

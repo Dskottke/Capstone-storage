@@ -1,12 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {StorageBinModel} from "../model/StorageBinModel";
 import "../css/TablePage.css"
 import StorageTable from "./StorageTable";
+import StorageNavigation from "./StorageNavigation";
 
 function StoragePage() {
 
     const [data, setData] = useState<StorageBinModel[]>([]);
+
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     const fetchData = () => {
         axios.get("/api/storage/")
@@ -19,8 +24,11 @@ function StoragePage() {
             .then((data) => setData(data))
     }
     return (
-        <div className={"page-body"}>
-            <StorageTable fetchData={fetchData} data={data}/>
+        <div>
+            <StorageNavigation/>
+            <div className={"page-body"}>
+                <StorageTable fetchData={fetchData} data={data}/>
+            </div>
         </div>
     );
 }

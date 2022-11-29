@@ -21,7 +21,7 @@ table.blueTable {
     box-shadow: rgba(0, 0, 0, 0.35) 10px 5px 10px;
 }
 
-table.blueTable td, table.redTable th {
+table.blueTable td, table.greenTable th {
     border: 1px solid #93c8e1;
     padding: 3px 2px;
 }
