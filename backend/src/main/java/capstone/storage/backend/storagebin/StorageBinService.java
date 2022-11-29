@@ -10,7 +10,6 @@ import java.util.List;
 public class StorageBinService {
     private final StorageBinRepo repo;
 
-
     public List<StorageBin> getAllStorageBins() {
         return repo.findAll();
     }
