@@ -11,13 +11,12 @@ type StorageTableProps = {
 function StorageTable(props: StorageTableProps) {
     return (
         <div className="container-table">
-            <table className="redTable">
+            <table className="greenTable">
                 <thead>
                 <tr>
                     <th>location-number</th>
                     <th>itemNumber</th>
                     <th>amount</th>
-                    <th>action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,8 +25,6 @@ function StorageTable(props: StorageTableProps) {
                         <td>data not found</td>
                         <td>data not found</td>
                         <td>data not found</td>
-                        <td>no action</td>
-
                     </tr>) : (
                     props.data.map(storageBin => <StorageTableRow storageBin={storageBin} key={storageBin.id}
                                                                   fetchData={props.fetchData}></StorageTableRow>
