@@ -3,6 +3,7 @@ import MainPageItemCard from "./MainPageItemCard";
 import MainPageNavigation from "./MainPageNavigation"
 import "../css/MainPage.css";
 import {NavLink} from "react-router-dom";
+import MainPageStorageCard from "./MainPageStorageCard";
 
 
 function MainPage() {
@@ -11,8 +12,9 @@ function MainPage() {
 
         <div>
             <MainPageNavigation/>
-            <div className="main-page-container">
+            <div className={"main-page-container"}>
                 <NavLink to={"/item-page"} style={{textDecoration: 'none'}}><MainPageItemCard/></NavLink>
+                <NavLink to={"/storage-page"} style={{textDecoration: 'none'}}><MainPageStorageCard/></NavLink>
             </div>
         </div>
 
