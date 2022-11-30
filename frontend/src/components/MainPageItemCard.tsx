@@ -2,24 +2,23 @@ import React from 'react';
 import {Card, CardContent} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import "../css/MainPageItemCard.css"
-import item from '../images/item-logo.png'
-
+import bodypart from '../images/Item_Icon_in_MaskGroup.png';
 
 function MainPageItemCard() {
     return (
 
-        <Card sx={{marginLeft: 10, minWidth: 345, minHeight: 400, boxShadow: 5}}>
-            <div className={"item-card-header-blue"}>
-                <img width={"40px"} src={item} alt={"item"}/>
+        <Card sx={{marginLeft: 10, minWidth: 500, minHeight: 400, boxShadow: 5, borderRadius: 10}}>
+            <div className={"item-card"}>
+                <img className={"item-card-bodypart"} src={bodypart} alt={"item"}/>
             </div>
             <CardContent>
-                <Typography variant="h5" component="div">
+                <Typography variant="h5" component="div" align="center">
                     Items
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" align="center">
                     item overview
                 </Typography>
-                </CardContent>
+            </CardContent>
         </Card>
     );
 }

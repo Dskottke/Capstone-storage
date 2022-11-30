@@ -1,5 +1,6 @@
 .main-page-container {
   display: flex;
-  margin-left: 50px;
-  margin-top: 150px;
+  margin-top: 40px;
+  margin-left: 10%;
+  margin-right: 10%;
 }
