@@ -1,37 +1,18 @@
+.item_input_field {
+    border-radius: 8px 8px;
+}
+
 #navi-logo {
+    color: #575757;
     font-size: 25px;
     float: left;
-    margin-left: 40px;
+    margin-left: 20px;
     padding: 9px 16px;
 }
 
 .topnav {
-    margin-left: 61px;
-    margin-right: 61px;
     overflow: hidden;
-    background-color: #e9e9e9;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-    margin-top: 30px;
-}
-
-.topnav a {
-    float: right;
-    display: block;
-    color: #ffffff;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-.topnav a.active {
-    background: #0b7ba8;
-    color: white;
+    background-color: #EAEDF5;
 }
 
 .topnav .add-container {
@@ -51,14 +32,14 @@
     padding: 6px;
     margin-top: 8px;
     margin-right: 16px;
-    background: #ddd;
+    background: #EAEDF5;
     font-size: 17px;
     border: none;
     cursor: pointer;
 }
 
 .topnav .add-container button:hover {
-    background: #ccc;
+    background: #EAEDF5;
 }
 
 @media screen and (max-width: 600px) {
@@ -75,7 +56,4 @@
         padding: 14px;
     }
 
-    .topnav input[type=text] {
-        border: 1px solid #ccc;
-    }
 }

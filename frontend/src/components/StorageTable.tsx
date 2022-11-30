@@ -1,7 +1,7 @@
 import React from 'react';
 import {StorageBinModel} from "../model/StorageBinModel";
 import StorageTableRow from "./StorageTableRow";
-import "../css/StorageTable.css"
+import "../css/table.css"
 
 type StorageTableProps = {
     data: StorageBinModel[],
@@ -11,7 +11,7 @@ type StorageTableProps = {
 function StorageTable(props: StorageTableProps) {
     return (
         <div className="container-table">
-            <table className="greenTable">
+            <table className="Table">
                 <thead>
                 <tr>
                     <th>location-number</th>

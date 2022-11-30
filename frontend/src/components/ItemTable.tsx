@@ -1,6 +1,5 @@
 import {ItemModel} from "../model/ItemModel";
-
-import "../css/ItemTable.css"
+import "../css/table.css"
 import ItemTableRow from "./ItemTableRow";
 
 type itemPageProbs = {
@@ -16,16 +15,16 @@ function ItemTable(props: itemPageProbs) {
 
     return (
         <div className="container-table">
-            <table className="blueTable">
+            <table className="Table">
                 <thead>
                 <tr>
-                    <th>item-Nr</th>
-                    <th>ean</th>
+                    <th className="center" id="id_head">Nr</th>
+                    <th className="center">ean</th>
                     <th>name</th>
                     <th>category</th>
                     <th>issuing country</th>
-                    <th>capacity</th>
-                    <th>action</th>
+                    <th className="center" id="capacity_head">capacity</th>
+                    <th className="center" id="action_head">action</th>
                 </tr>
                 </thead>
                 <tbody>
