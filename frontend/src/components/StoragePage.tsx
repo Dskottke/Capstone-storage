@@ -4,6 +4,7 @@ import {StorageBinModel} from "../model/StorageBinModel";
 import "../css/TablePage.css"
 import StorageTable from "./StorageTable";
 import StorageNavigation from "./StorageNavigation";
+import TableHeadNav from "./TableHeadNav";
 
 function StoragePage() {
 
@@ -25,6 +26,7 @@ function StoragePage() {
     }
     return (
         <div>
+            <TableHeadNav/>
             <StorageNavigation/>
             <div className={"page-body"}>
                 <StorageTable fetchData={fetchData} data={data}/>

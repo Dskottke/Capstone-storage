@@ -5,6 +5,7 @@ import ItemNavigation from "./ItemNavigation";
 import ItemTable from "./ItemTable";
 import "../css/TablePage.css"
 import Alert from "@mui/material/Alert";
+import TableHeadNav from "./TableHeadNav";
 
 function ItemPage() {
 
@@ -30,7 +31,8 @@ function ItemPage() {
     }
 
     return (
-        <div className={"item-page-container"}>
+        <div className={"page-container"}>
+            <TableHeadNav/>
             <ItemNavigation fetchData={fetchData} setErrorModal={setErrorModal}
                             setErrorMessage={setErrorMessage} setSuccessModal={setSuccessModal}
                             setSuccessMessage={setSuccessMessage}/>
