@@ -2,6 +2,9 @@ import React from 'react';
 import {AppBar, Button, Toolbar} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import logoName from "../images/Logo_Name.png";
+import "../css/MainPageNavigation.css"
+
 
 function MainPageNavigation() {
     const addTestData = () => {
@@ -9,7 +12,6 @@ function MainPageNavigation() {
             .then(response => response.status)
             .catch(error => console.error(error))
     }
-
     return (
         <AppBar
             position="static"
@@ -19,7 +21,7 @@ function MainPageNavigation() {
         >
             <Toolbar>
                 <Typography variant="h6" color="inherit" sx={{flexGrow: 1}}>
-                    Storeify
+                    <img className={"logo-name"} src={logoName} alt={"logo_name"}/>
                 </Typography>
                 <Button onClick={addTestData} variant="outlined" sx={{my: 1, mx: 1.5}}>
                     application test
