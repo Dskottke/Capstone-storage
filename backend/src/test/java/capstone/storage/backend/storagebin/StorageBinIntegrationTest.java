@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 class StorageBinIntegrationTest {
     @Autowired
     MockMvc mockMvc;
-
     @Test
     @DisplayName("GET -> expect empty list and HTTP-status 200")
     void getRequestShouldReturn_Status200() throws Exception {
