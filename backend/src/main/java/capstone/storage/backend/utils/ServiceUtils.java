@@ -18,9 +18,9 @@ public class ServiceUtils {
         return UUID.randomUUID().toString();
     }
 
-    public <T> List<T> getListFromJson(TypeReference<List<T>> classTypeReference) throws IOException {
+    public <T> List<T> parseListFromJson(TypeReference<List<T>> classTypeReference, String path) throws IOException {
         Class<?> itemClass = getClass();
-        InputStream inputStream = itemClass.getResourceAsStream("/item.json");
+        InputStream inputStream = itemClass.getResourceAsStream(path);
         return objectMapper.readValue(inputStream, classTypeReference);
     }
 }

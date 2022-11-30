@@ -5,7 +5,6 @@ import capstone.storage.backend.item.ItemRepo;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.storagebin.StorageBinRepo;
 import capstone.storage.backend.utils.ServiceUtils;
-import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class TestDataServiceTest {
@@ -41,7 +40,6 @@ class TestDataServiceTest {
         //THEN
         assertEquals(expected, actual);
     }
-
     @Test
     @DisplayName("method -> deleteAll should verify ")
     void deleteAllTest() {
@@ -51,23 +49,15 @@ class TestDataServiceTest {
         //THEN
         verify(itemRepo).deleteAll();
     }
-
     @Test
     @DisplayName("method -> addTestData and expect testDataItemsNotFoundException")
     void addTestDataAndExpectTestDataItemsNotFoundException() throws IOException {
         //GIVEN
-        when(serviceUtils.getListFromJson(new TypeReference<List<Item>>() {
-        })).thenThrow(new IOException());
-        //WHEN
-        try {
-            testDataService.addTestData();
-            fail();
-        }
-        //THEN
-        catch (TestDataItemsNotFoundException e) {
-            String expected = "can't find data from json";
-            assertEquals(expected, e.getMessage());
-        }
+        when(serviceUtils.parseListFromJson(any(), any())).thenThrow(new IOException());
+
+
+        assertThrows(TestDataItemsNotFoundException.class, () -> testDataService.addTestData());
 
     }
+
 }

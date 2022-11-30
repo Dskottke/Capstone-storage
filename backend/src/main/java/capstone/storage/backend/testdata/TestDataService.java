@@ -21,8 +21,8 @@ public class TestDataService {
     public void addTestData() {
         deleteAll();
         try {
-            List<Item> testItemListToAdd = serviceUtils.getListFromJson(new TypeReference<List<Item>>() {
-            });
+            List<Item> testItemListToAdd = serviceUtils.parseListFromJson(new TypeReference<List<Item>>() {
+            }, "/item.json");
             addListToItemDB(testItemListToAdd);
         } catch (IOException e) {
             throw new TestDataItemsNotFoundException("can't find data from json");
