@@ -11,12 +11,12 @@ type StorageTableProps = {
 function StorageTable(props: StorageTableProps) {
     return (
         <div className="container-table">
-            <table className="Table">
+            <table id="storage_table" className="Table">
                 <thead>
                 <tr>
-                    <th>location-number</th>
-                    <th>itemNumber</th>
-                    <th>amount</th>
+                    <th className="center">location-number</th>
+                    <th className="center">itemNumber</th>
+                    <th className="center">amount</th>
                 </tr>
                 </thead>
                 <tbody>

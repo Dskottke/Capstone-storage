@@ -3,6 +3,12 @@
     text-align: center;
 }
 
+#storage_table {
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%
+}
+
 #id_head {
     width: 3%;
 }

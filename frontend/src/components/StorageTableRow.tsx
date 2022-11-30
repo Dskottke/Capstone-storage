@@ -9,9 +9,9 @@ function StorageTableRow({storageBin, fetchData}: StorageTableRowProps) {
 
     return (
         <tr key={storageBin.id}>
-            <td>{storageBin.id}</td>
-            <td>{storageBin.itemNumber}</td>
-            <td>{storageBin.amount}</td>
+            <td className="center">{storageBin.id}</td>
+            <td className="center">{storageBin.itemNumber}</td>
+            <td className="center">{storageBin.amount}</td>
         </tr>
     );
 }
