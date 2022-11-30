@@ -3,7 +3,9 @@ package capstone.storage.backend.testdata;
 import capstone.storage.backend.exceptions.TestDataItemsNotFoundException;
 import capstone.storage.backend.item.ItemRepo;
 import capstone.storage.backend.item.models.Item;
+import capstone.storage.backend.storagebin.StorageBinRepo;
 import capstone.storage.backend.utils.ServiceUtils;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +19,9 @@ import static org.mockito.Mockito.*;
 class TestDataServiceTest {
 
     ServiceUtils serviceUtils = mock(ServiceUtils.class);
+    StorageBinRepo storageBinRepo = mock(StorageBinRepo.class);
     ItemRepo itemRepo = mock(ItemRepo.class);
-    private final TestDataService testDataService = new TestDataService(itemRepo, serviceUtils);
+    private final TestDataService testDataService = new TestDataService(itemRepo, storageBinRepo, serviceUtils);
 
     @Test
     @DisplayName("method -> should return the given list")
@@ -53,7 +56,8 @@ class TestDataServiceTest {
     @DisplayName("method -> addTestData and expect testDataItemsNotFoundException")
     void addTestDataAndExpectTestDataItemsNotFoundException() throws IOException {
         //GIVEN
-        when(serviceUtils.getListFromItemData()).thenThrow(new IOException());
+        when(serviceUtils.getListFromJson(new TypeReference<List<Item>>() {
+        })).thenThrow(new IOException());
         //WHEN
         try {
             testDataService.addTestData();

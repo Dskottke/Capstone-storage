@@ -1,6 +1,5 @@
 package capstone.storage.backend.utils;
 
-import capstone.storage.backend.item.models.Item;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
@@ -12,16 +11,16 @@ import java.util.UUID;
 
 @Component
 public class ServiceUtils {
+
     ObjectMapper objectMapper = new ObjectMapper();
 
     public String generateUUID() {
         return UUID.randomUUID().toString();
     }
 
-    public List<Item> getListFromItemData() throws IOException {
-        Class<Item> itemClass = Item.class;
+    public <T> List<T> getListFromJson(TypeReference<List<T>> classTypeReference) throws IOException {
+        Class<?> itemClass = getClass();
         InputStream inputStream = itemClass.getResourceAsStream("/item.json");
-        return objectMapper.readValue(inputStream, new TypeReference<>() {
-        });
+        return objectMapper.readValue(inputStream, classTypeReference);
     }
 }

@@ -1,6 +1,7 @@
 package capstone.storage.backend.utils;
 
 import capstone.storage.backend.item.models.Item;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,8 @@ class ServiceUtilsTest {
                 "20",
                 "1"));
         //WHEN
-        List<Item> actual = utils.getListFromItemData();
+        List<Item> actual = utils.getListFromJson(new TypeReference<List<Item>>() {
+        });
         //THEN
         assertEquals(expected, actual);
     }
