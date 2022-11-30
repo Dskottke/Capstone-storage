@@ -1,5 +1,6 @@
 package capstone.storage.backend.item;
 
+import capstone.storage.backend.exceptions.ExceptionMessage;
 import capstone.storage.backend.exceptions.IsNullOrEmptyException;
 import capstone.storage.backend.exceptions.ItemForbiddenRequestException;
 import capstone.storage.backend.exceptions.ItemToDeleteNotFoundException;
@@ -28,10 +29,10 @@ public class ItemController {
     public Item saveItem(@PathVariable(required = false) String eanToFind, @RequestBody AddItemDto addItemDto) {
 
         if (eanToFind == null || service.isNullOrEmpty(addItemDto)) {
-            throw new IsNullOrEmptyException("all input-fields must be filled");
+            throw new IsNullOrEmptyException(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString());
         }
         if (!addItemDto.ean().equals(eanToFind)) {
-            throw new ItemForbiddenRequestException("forbidden request");
+            throw new ItemForbiddenRequestException(ExceptionMessage.ITEM_FORBIDDEN_REQUEST_EXCEPTION_MESSAGE.toString());
         }
         return service.addItem(addItemDto, eanToFind);
     }
@@ -42,13 +43,13 @@ public class ItemController {
             Item updatedItem = service.updateItem(itemToUpdate);
             return itemExist ? ResponseEntity.status(HttpStatus.OK).body(updatedItem) : new ResponseEntity<>(HttpStatus.CREATED);
         }
-        throw new ItemForbiddenRequestException("forbidden request");
+        throw new ItemForbiddenRequestException(ExceptionMessage.ITEM_FORBIDDEN_REQUEST_EXCEPTION_MESSAGE.toString());
     }
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteItem(@PathVariable String id) {
         if (!service.existById(id)) {
-            throw new ItemToDeleteNotFoundException("item is already deleted");
+            throw new ItemToDeleteNotFoundException(ExceptionMessage.ITEM_TO_DELETE_NOT_FOUND_EXCEPTION_MESSAGE.toString());
         }
         service.deleteItemById(id);
     }

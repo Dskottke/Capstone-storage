@@ -1,5 +1,6 @@
 package capstone.storage.backend;
 
+import capstone.storage.backend.exceptions.ExceptionMessage;
 import capstone.storage.backend.exceptions.ItemAlreadyExistException;
 import capstone.storage.backend.item.ItemEanApiService;
 import capstone.storage.backend.item.ItemRepo;
@@ -127,7 +128,7 @@ class ItemServiceTest {
         //THEN
         catch (ItemAlreadyExistException e) {
             String actual = e.getMessage();
-            String expected = "item is already existing";
+            String expected = ExceptionMessage.ITEM_ALREADY_EXIST_EXCEPTION_MESSAGE.toString();
 
             assertEquals(expected, actual);
         }
@@ -147,7 +148,7 @@ class ItemServiceTest {
         //THEN
         catch (ItemAlreadyExistException e) {
             String actual = e.getMessage();
-            String expected = "item is already existing";
+            String expected = ExceptionMessage.ITEM_ALREADY_EXIST_EXCEPTION_MESSAGE.toString();
 
             assertEquals(expected, actual);
         }

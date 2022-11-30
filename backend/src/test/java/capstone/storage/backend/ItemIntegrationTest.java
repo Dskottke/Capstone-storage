@@ -1,4 +1,5 @@
 package capstone.storage.backend;
+import capstone.storage.backend.exceptions.ExceptionMessage;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.ItemResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,13 +33,6 @@ class ItemIntegrationTest {
     private static MockWebServer mockWebServer;
     @Autowired
     private ObjectMapper objectMapper;
-    private final String isNullOrEmptyExceptionMessage = "all input-fields must be filled";
-    private final String itemValidationExceptionMessage = "capacity and the item-number must be greater than 0";
-    private final String itemAlreadyExistExceptionMessage = "item is already existing";
-    private final String itemToDeleteNotFoundExceptionMessage = "item is already deleted";
-    private final String itemForbiddenRequestExceptionMessage = "forbidden request";
-
-    private final String itemResponseEanNullExceptionMessage = "couldn't find item by ean";
 
     @BeforeAll
     static void beforeAll() throws IOException {
@@ -90,7 +84,7 @@ class ItemIntegrationTest {
                                     "itemNumber": "12345"
                                 }"""))
                 .andExpect(status().is(400))
-                .andExpect(content().string(itemResponseEanNullExceptionMessage));
+                .andExpect(content().string(ExceptionMessage.ITEM_RESPONSE_EAN_NULL_EXCEPTION_MESSAGE.toString()));
     }
 
     @Test
@@ -229,7 +223,7 @@ class ItemIntegrationTest {
                                 "ean":"8710847909610",
                                 "storableValue": "10"}"""))
                 //THEN
-                .andExpect(status().is(400)).andExpect(content().string(itemForbiddenRequestExceptionMessage));
+                .andExpect(status().is(400)).andExpect(content().string(ExceptionMessage.ITEM_FORBIDDEN_REQUEST_EXCEPTION_MESSAGE.toString()));
     }
 
     @Test
@@ -276,7 +270,7 @@ class ItemIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/items/" + id))
                 //THEN
                 .andExpect(status().is(404))
-                .andExpect(content().string(itemToDeleteNotFoundExceptionMessage));
+                .andExpect(content().string(ExceptionMessage.ITEM_TO_DELETE_NOT_FOUND_EXCEPTION_MESSAGE.toString()));
     }
 
 
@@ -317,7 +311,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(itemValidationExceptionMessage));
+                .andExpect(content().string(ExceptionMessage.ITEM_VALIDATION_EXCEPTION_MESSAGE.toString()));
 
 
     }
@@ -339,7 +333,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(itemValidationExceptionMessage));
+                .andExpect(content().string(ExceptionMessage.ITEM_VALIDATION_EXCEPTION_MESSAGE.toString()));
     }
 
     @Test
@@ -359,7 +353,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(isNullOrEmptyExceptionMessage));
+                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
     }
 
     @Test
@@ -379,7 +373,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(isNullOrEmptyExceptionMessage));
+                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
     }
 
     @Test
@@ -399,7 +393,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(isNullOrEmptyExceptionMessage));
+                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
     }
 
     @Test
@@ -419,7 +413,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(isNullOrEmptyExceptionMessage));
+                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
     }
 
     @Test
@@ -439,7 +433,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(isNullOrEmptyExceptionMessage));
+                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
     }
 
     @Test
@@ -480,7 +474,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(itemAlreadyExistExceptionMessage));
+                .andExpect(content().string(ExceptionMessage.ITEM_ALREADY_EXIST_EXCEPTION_MESSAGE.toString()));
 
     }
 
