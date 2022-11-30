@@ -1,6 +1,7 @@
 package capstone.storage.backend;
 
 import capstone.storage.backend.exceptions.EanApiResponseException;
+import capstone.storage.backend.exceptions.ExceptionMessage;
 import capstone.storage.backend.exceptions.ItemNotFound;
 import capstone.storage.backend.exceptions.ItemResponseEanNullException;
 import capstone.storage.backend.item.ItemEanApiService;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 class ItemEanApiServiceTest {
     private static MockWebServer mockWebServer;
     private ItemEanApiService eanApiService;
-    private final String eanApiResponseExceptionMessage = "couldn't find item by ean";
+
 
     @Value("${ean.api.token}")
     private String token;
@@ -54,7 +55,7 @@ class ItemEanApiServiceTest {
         }
         //THEN
         catch (EanApiResponseException e) {
-            String expected = eanApiResponseExceptionMessage;
+            String expected = ExceptionMessage.EAN_API_RESPONSE_EXCEPTION_MESSAGE.toString();
             String actual = e.getMessage();
             assertEquals(expected, actual);
         }
@@ -90,14 +91,14 @@ class ItemEanApiServiceTest {
         }
         //THEN
         catch (EanApiResponseException e) {
-            String expected = eanApiResponseExceptionMessage;
+            String expected = ExceptionMessage.EAN_API_RESPONSE_EXCEPTION_MESSAGE.toString();
             String actual = e.getMessage();
             assertEquals(expected, actual);
         }
     }
 
     @Test
-    @DisplayName("method : getItemResponseFromApi -> should throw Exception with message (ean is null) because the request ean is null ")
+    @DisplayName("method : getItemResponseFromApi -> should throw Exception with EanApiResponseExceptionMessage because the request ean is null ")
     void expectItemResponseException3case() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()
@@ -119,14 +120,14 @@ class ItemEanApiServiceTest {
         }
         //THEN
         catch (ItemResponseEanNullException e) {
-            String expected = "couldn't find item by ean";
+            String expected = ExceptionMessage.EAN_API_RESPONSE_EXCEPTION_MESSAGE.toString();
             String actual = e.getMessage();
             assertEquals(expected, actual);
         }
     }
 
     @Test
-    @DisplayName("method : getItemResponseFromApi -> should throw Exception with message (ean to find doesn't match with response ean) ")
+    @DisplayName("method : getItemResponseFromApi -> should throw Exception with ItemNotFoundExceptionMessage")
     void expectItemResponseException4case() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()
@@ -148,7 +149,7 @@ class ItemEanApiServiceTest {
         }
         //THEN
         catch (ItemNotFound e) {
-            String expected = "ean to find doesn't match with response ean";
+            String expected = ExceptionMessage.ITEM_NOT_FOUND_EXCEPTION_MESSAGE.toString();
             String actual = e.getMessage();
             assertEquals(expected, actual);
         }
