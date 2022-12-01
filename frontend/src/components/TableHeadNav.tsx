@@ -2,8 +2,6 @@ import React from 'react';
 import {AppBar, Container, Link, Toolbar} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import logoName from "../images/Logo_Name.png";
-import "../css/TableHeadNav.css";
-
 
 function TableHeadNav() {
     return (
