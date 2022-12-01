@@ -15,7 +15,7 @@ function DischargeOrderCard() {
                     discharge
                 </Typography>
                 <Typography variant="body2" color="text.secondary" align="center">
-                    driving order overview
+                    discharge-order overview
                 </Typography>
             </CardContent>
         </Card>

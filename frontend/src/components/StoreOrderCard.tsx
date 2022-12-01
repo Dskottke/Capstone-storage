@@ -15,7 +15,7 @@ function StoreOrderCard() {
                     store
                 </Typography>
                 <Typography variant="body2" color="text.secondary" align="center">
-                    driving order overview
+                    storing-order overview
                 </Typography>
             </CardContent>
         </Card>
