@@ -1,4 +1,8 @@
 .main-page-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  margin-left: 2%;
+  margin-right: 5%;
   margin-top: 40px;
 }
