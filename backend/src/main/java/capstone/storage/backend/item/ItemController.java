@@ -44,10 +44,11 @@ public class ItemController {
         if (itemToUpdate.id().equals(id)) {
             boolean itemExist = service.existById(id);
             Item updatedItem = service.updateItem(itemToUpdate);
-            return itemExist ? ResponseEntity.status(HttpStatus.OK).body(updatedItem) : new ResponseEntity<>(HttpStatus.CREATED);
+            return itemExist ? ResponseEntity.status(HttpStatus.OK).body(updatedItem) : ResponseEntity.status(HttpStatus.CREATED).body(updatedItem);
         }
         throw new ItemForbiddenRequestException(ExceptionMessage.ITEM_FORBIDDEN_REQUEST_EXCEPTION_MESSAGE.toString());
     }
+
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteItem(@PathVariable String id) {
