@@ -1,7 +1,6 @@
 package capstone.storage.backend.item;
 
 import capstone.storage.backend.exceptions.EanApiResponseException;
-import capstone.storage.backend.exceptions.ExceptionMessage;
 import capstone.storage.backend.exceptions.ItemNotFound;
 import capstone.storage.backend.exceptions.ItemResponseEanNullException;
 import capstone.storage.backend.item.models.ItemResponse;
@@ -35,16 +34,16 @@ public class ItemEanApiService {
         ItemResponse[] itemResponseList = itemResponseEntity.getBody();
 
         if (itemResponseList == null || itemResponseList.length != EXPECTED_ARRAY_LENGTH) {
-            throw new EanApiResponseException(ExceptionMessage.EAN_API_RESPONSE_EXCEPTION_MESSAGE.toString());
+            throw new EanApiResponseException();
         }
         ItemResponse itemResponse = itemResponseList[0];
         String firstEan = itemResponse.ean();
 
         if (firstEan == null) {
-            throw new ItemResponseEanNullException(ExceptionMessage.ITEM_RESPONSE_EAN_NULL_EXCEPTION_MESSAGE.toString());
+            throw new ItemResponseEanNullException();
         }
         if (!(firstEan.equals(eanToFind))) {
-            throw new ItemNotFound(ExceptionMessage.ITEM_NOT_FOUND_EXCEPTION_MESSAGE.toString());
+            throw new ItemNotFound();
         }
         return itemResponse;
 

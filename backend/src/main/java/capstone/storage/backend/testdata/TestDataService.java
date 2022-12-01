@@ -31,7 +31,7 @@ public class TestDataService {
             }, ResourcePath.STORAGE_PATH.toString());
             addListToStorageDB(testStorageBinToAdd);
         } catch (IOException e) {
-            throw new TestDataItemsNotFoundException("can't find data from json");
+            throw new TestDataItemsNotFoundException();
         }
     }
 
