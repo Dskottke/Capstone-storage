@@ -18,7 +18,7 @@ class TestDataIntegrationTest {
 
     @Test
     @DisplayName("POST -> expect HTTP-status 204")
-    void getAllItemsAndExpectEmtpyList() throws Exception {
+    void PostAndCreateTestDataReturn204() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
                 .andExpect(status().is(204));
     }
