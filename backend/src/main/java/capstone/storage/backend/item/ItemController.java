@@ -39,7 +39,7 @@ public class ItemController {
         return service.addItem(addItemDto, eanToFind.get());
     }
 
-    @PutMapping("{ean}")
+    @PutMapping("{id}")
     public ResponseEntity<Item> updateItem(@PathVariable String id, @RequestBody Item itemToUpdate) {
         if (itemToUpdate.id().equals(id)) {
             boolean itemExist = service.existById(id);
