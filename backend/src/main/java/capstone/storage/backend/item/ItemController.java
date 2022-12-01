@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/items/")
@@ -24,19 +25,21 @@ public class ItemController {
         return service.findAll();
     }
 
-    @PostMapping(value = {"{eanToFind}", ""})
+    @PostMapping({"{eanToFind}", ""})
     @ResponseStatus(HttpStatus.CREATED)
-    public Item saveItem(@PathVariable(required = false) String eanToFind, @RequestBody AddItemDto addItemDto) {
+    public Item saveItem(@PathVariable Optional<String> eanToFind, @RequestBody AddItemDto addItemDto) {
 
-        if (eanToFind == null || service.isNullOrEmpty(addItemDto)) {
+        if (eanToFind.isEmpty() || service.isNullOrEmpty(addItemDto)) {
             throw new IsNullOrEmptyException(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString());
         }
-        if (!addItemDto.ean().equals(eanToFind)) {
+
+        if (!addItemDto.ean().equals(eanToFind.get())) {
             throw new ItemForbiddenRequestException(ExceptionMessage.ITEM_FORBIDDEN_REQUEST_EXCEPTION_MESSAGE.toString());
         }
-        return service.addItem(addItemDto, eanToFind);
+        return service.addItem(addItemDto, eanToFind.get());
     }
-    @PutMapping("{id}")
+
+    @PutMapping("{ean}")
     public ResponseEntity<Item> updateItem(@PathVariable String id, @RequestBody Item itemToUpdate) {
         if (itemToUpdate.id().equals(id)) {
             boolean itemExist = service.existById(id);
