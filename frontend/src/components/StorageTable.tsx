@@ -22,9 +22,7 @@ function StorageTable(props: StorageTableProps) {
                 <tbody>
                 {props.data.length === 0 ? (
                     <tr>
-                        <td>data not found</td>
-                        <td>data not found</td>
-                        <td>data not found</td>
+                        <td></td>
                     </tr>) : (
                     props.data.map(storageBin => <StorageTableRow storageBin={storageBin} key={storageBin.id}
                                                                   fetchData={props.fetchData}></StorageTableRow>
