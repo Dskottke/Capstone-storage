@@ -31,8 +31,8 @@ class ItemIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
     private static MockWebServer mockWebServer;
-    @Autowired
-    private ObjectMapper objectMapper;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeAll
     static void beforeAll() throws IOException {
