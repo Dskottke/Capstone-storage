@@ -7,7 +7,7 @@ import capstone.storage.backend.item.ItemRepo;
 import capstone.storage.backend.item.ItemService;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
-import capstone.storage.backend.item.models.ItemResponse;
+import capstone.storage.backend.item.models.Product;
 import capstone.storage.backend.utils.ServiceUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ class ItemServiceTest {
     void addItemByEanAndAddItemDtoAndReturnItemWithId() {
         //GIVEN
         String eanToFind = "8710847909610";
-        ItemResponse response = new ItemResponse(
+        Product response = new Product(
                 "testName", eanToFind,
                 "testCategory",
                 "GER");

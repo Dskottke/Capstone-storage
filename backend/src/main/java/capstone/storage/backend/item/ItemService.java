@@ -4,7 +4,7 @@ import capstone.storage.backend.exceptions.ItemAlreadyExistException;
 import capstone.storage.backend.exceptions.ItemValidationException;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
-import capstone.storage.backend.item.models.ItemResponse;
+import capstone.storage.backend.item.models.Product;
 import capstone.storage.backend.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,15 +27,15 @@ public class ItemService {
         validateAddItemDto(addItemDto);
         checkItemExisting(addItemDto, eanToFind);
 
-        ItemResponse itemResponse = eanService.getItemResponseFromApi(eanToFind);
+        Product product = eanService.getItemResponseFromApi(eanToFind);
 
 
         Item itemToAdd = new Item(
                 utils.generateUUID(),
-                itemResponse.name(),
-                itemResponse.categoryName(),
-                itemResponse.issuingCountry(),
-                itemResponse.ean(),
+                product.name(),
+                product.categoryName(),
+                product.issuingCountry(),
+                product.ean(),
                 addItemDto.storableValue(),
                 addItemDto.itemNumber());
         return repository.insert(itemToAdd);
