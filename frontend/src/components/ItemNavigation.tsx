@@ -12,9 +12,9 @@ type itemNavigationProbs = {
 
 function ItemNavigation(props: itemNavigationProbs) {
 
-    const [ean, setEan] = useState<string>("")
-    const [itemNumber, setItemNumber] = useState<string>("")
-    const [storableValue, setStorableValue] = useState<string>("")
+    const [ean, setEan] = useState("")
+    const [itemNumber, setItemNumber] = useState("")
+    const [storableValue, setStorableValue] = useState("")
 
     const handleInputCapacity = (event: ChangeEvent<HTMLInputElement>) => {
         const validCapacity = event.target.value.replace(/\D/g, '')
