@@ -15,7 +15,7 @@ function StoragePage() {
     }, [])
 
     const fetchData = () => {
-        axios.get("/api/storage/")
+        axios.get("/api/storagebins/")
             .then(response => {
                 return response.data
             })

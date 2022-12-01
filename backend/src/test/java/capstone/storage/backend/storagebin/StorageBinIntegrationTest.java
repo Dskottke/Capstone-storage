@@ -18,7 +18,7 @@ class StorageBinIntegrationTest {
     @DisplayName("GET -> expect empty list and HTTP-status 200")
     void getRequestShouldReturn_Status200() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/storage/"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/storagebins/"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
