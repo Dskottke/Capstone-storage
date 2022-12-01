@@ -84,7 +84,7 @@ class ItemIntegrationTest {
                                     "itemNumber": "12345"
                                 }"""))
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.ITEM_RESPONSE_EAN_NULL_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("couldn't find item by ean"));
     }
 
     @Test

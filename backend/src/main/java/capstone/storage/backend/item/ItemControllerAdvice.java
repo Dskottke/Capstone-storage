@@ -49,4 +49,11 @@ public class ItemControllerAdvice extends ResponseEntityExceptionHandler {
                 .body(ex.getMessage());
     }
 
+    @ExceptionHandler(ItemResponseEanNullException.class)
+    public ResponseEntity<String> handleItemResponseEanNullException(ItemResponseEanNullException ex) {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+    }
+
 }
