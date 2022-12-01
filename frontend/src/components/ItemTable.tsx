@@ -30,12 +30,8 @@ function ItemTable(props: itemPageProbs) {
                 <tbody>
                 {props.data.length === 0 ? (
                     <tr>
-                        <td>data not found</td>
-                        <td>data not found</td>
-                        <td>data not found</td>
-                        <td>data not found</td>
-                        <td>data not found</td>
-                        <td>data not found</td>
+                        <td></td>
+
                     </tr>) : (
                     props.data.map(item => <ItemTableRow item={item} key={item.id}
                                                          fetchData={props.fetchData}
