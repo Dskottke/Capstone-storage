@@ -15,7 +15,7 @@ function TableHeadNav() {
                 <Toolbar>
                     <Typography variant="h6" color="inherit" sx={{display: "flex"}}>
                         <img id={"logo-name"} src={logoName} alt={"logo_name"}/>
-                        <Container sx={{marginLeft: 80}}>
+                        <Container sx={{marginLeft: 40}}>
                             <Link href="/" underline="none" sx={{marginLeft: 10, color: "grey"}}>
                                 {"home"}
                             </Link>
@@ -24,6 +24,9 @@ function TableHeadNav() {
                             </Link>
                             <Link href="/storage-page" underline="none" sx={{marginLeft: 10, color: "grey"}}>
                                 {"storage"}
+                            </Link>
+                            <Link href="/store-page" underline="none" sx={{marginLeft: 10, color: "grey"}}>
+                                {"storing"}
                             </Link>
                         </Container>
                     </Typography>
