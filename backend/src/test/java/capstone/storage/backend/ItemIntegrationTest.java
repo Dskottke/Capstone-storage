@@ -1,7 +1,7 @@
 package capstone.storage.backend;
 import capstone.storage.backend.exceptions.ExceptionMessage;
 import capstone.storage.backend.item.models.Item;
-import capstone.storage.backend.item.models.ItemResponse;
+import capstone.storage.backend.item.models.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -64,15 +64,15 @@ class ItemIntegrationTest {
     void postRequestWithItemResponseWithEanNullAndExpectStatus400() throws Exception {
         //GIVEN
         String ean = "8710847909610";
-        ItemResponse[] itemResponse = {
-                new ItemResponse(
+        Product[] product = {
+                new Product(
                         "test123",
                         null,
                         "test123",
                         "GER")};
         mockWebServer.enqueue(new MockResponse()
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(objectMapper.writeValueAsString(itemResponse))
+                .setBody(objectMapper.writeValueAsString(product))
                 .setResponseCode(200));
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
@@ -92,7 +92,7 @@ class ItemIntegrationTest {
     @DisplayName("POST -> add item and expect HTTP-status 201 and matching content")
     void addItemWithEanFromApiAndExpectItemWithId() throws Exception {
         //GIVEN
-        ItemResponse[] itemResponse = {new ItemResponse(
+        Product[] product = {new Product(
                 "test",
                 "8710847909610",
                 "test",
@@ -100,7 +100,7 @@ class ItemIntegrationTest {
 
         mockWebServer.enqueue(new MockResponse()
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(objectMapper.writeValueAsString(itemResponse))
+                .setBody(objectMapper.writeValueAsString(product))
                 .setResponseCode(200));
 
         String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
@@ -136,7 +136,7 @@ class ItemIntegrationTest {
     @DisplayName("PUT -> update existing item expect HTTP-status 200")
     void updateStorableValueFromExistingItemToValue20() throws Exception {
         //GIVEN
-        ItemResponse[] itemResponse = {new ItemResponse(
+        Product[] product = {new Product(
                 "test",
                 "8710847909610",
                 "test",
@@ -144,7 +144,7 @@ class ItemIntegrationTest {
 
         mockWebServer.enqueue(new MockResponse()
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(objectMapper.writeValueAsString(itemResponse))
+                .setBody(objectMapper.writeValueAsString(product))
                 .setResponseCode(200));
 
         String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
@@ -231,7 +231,7 @@ class ItemIntegrationTest {
     @DisplayName("DELETE -> delete existing item expect HTTP-Status 204")
     void deleteExistingItemByIdAndReturnStatus204() throws Exception {
         //GIVEN
-        ItemResponse[] itemResponse = {new ItemResponse(
+        Product[] product = {new Product(
                 "test",
                 "8710847909610",
                 "test",
@@ -239,7 +239,7 @@ class ItemIntegrationTest {
 
         mockWebServer.enqueue(new MockResponse()
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(objectMapper.writeValueAsString(itemResponse))
+                .setBody(objectMapper.writeValueAsString(product))
                 .setResponseCode(200));
 
         String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
@@ -441,7 +441,7 @@ class ItemIntegrationTest {
     @DisplayName("POST -> with already existing Item-Number itemAlreadyExistExceptionMessage ")
     void postWithExistingItemNumberAndExpectStatus400() throws Exception {
         //GIVEN
-        ItemResponse[] itemResponse = {new ItemResponse(
+        Product[] product = {new Product(
                 "test",
                 "8710847909610",
                 "test",
@@ -449,7 +449,7 @@ class ItemIntegrationTest {
 
         mockWebServer.enqueue(new MockResponse()
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(objectMapper.writeValueAsString(itemResponse))
+                .setBody(objectMapper.writeValueAsString(product))
                 .setResponseCode(200));
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + "8710847909610")

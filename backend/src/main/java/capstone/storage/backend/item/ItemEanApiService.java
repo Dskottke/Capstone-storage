@@ -3,7 +3,7 @@ package capstone.storage.backend.item;
 import capstone.storage.backend.exceptions.EanApiResponseException;
 import capstone.storage.backend.exceptions.ItemNotFound;
 import capstone.storage.backend.exceptions.ItemResponseEanNullException;
-import capstone.storage.backend.item.models.ItemResponse;
+import capstone.storage.backend.item.models.Product;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,23 +21,24 @@ public class ItemEanApiService {
         this.apiToken = token;
         this.webClient = WebClient.create(basicUrl);
     }
-    public ItemResponse getItemResponseFromApi(String eanToFind) {
-        ResponseEntity<ItemResponse[]> itemResponseEntity = requireNonNull(webClient
+
+    public Product getItemResponseFromApi(String eanToFind) {
+        ResponseEntity<Product[]> itemResponseEntity = requireNonNull(webClient
                         .get()
                         .uri("api=?token=" + apiToken + "&op=barcode-lookup&format=json&ean=" + eanToFind)
                         .retrieve()
-                        .toEntity(ItemResponse[].class)
+                        .toEntity(Product[].class)
                         .block(),
 
                 "ResponseEntity is null"
         );
-        ItemResponse[] itemResponseList = itemResponseEntity.getBody();
+        Product[] productList = itemResponseEntity.getBody();
 
-        if (itemResponseList == null || itemResponseList.length != EXPECTED_ARRAY_LENGTH) {
+        if (productList == null || productList.length != EXPECTED_ARRAY_LENGTH) {
             throw new EanApiResponseException();
         }
-        ItemResponse itemResponse = itemResponseList[0];
-        String firstEan = itemResponse.ean();
+        Product product = productList[0];
+        String firstEan = product.ean();
 
         if (firstEan == null) {
             throw new ItemResponseEanNullException();
@@ -45,7 +46,7 @@ public class ItemEanApiService {
         if (!(firstEan.equals(eanToFind))) {
             throw new ItemNotFound();
         }
-        return itemResponse;
+        return product;
 
     }
 }
