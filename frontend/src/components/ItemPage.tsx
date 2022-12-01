@@ -25,7 +25,7 @@ function ItemPage() {
                 return response.data
             })
             .catch(error => {
-                return error
+               console.error(error)
             })
             .then((data) => setData(data))
     }
