@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Component
 public class ItemControllerAdvice extends ResponseEntityExceptionHandler {
 
+
     @ExceptionHandler(IsNullOrEmptyException.class)
     public ResponseEntity<String> handleIsNullOrEmptyException(IsNullOrEmptyException ex) {
 
@@ -48,10 +49,4 @@ public class ItemControllerAdvice extends ResponseEntityExceptionHandler {
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler(ItemResponseEanNullException.class)
-    public ResponseEntity<String> handleEanApiResponseException(ItemResponseEanNullException ex) {
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
-    }
 }

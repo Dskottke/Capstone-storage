@@ -1,6 +1,5 @@
 package capstone.storage.backend.item;
 
-import capstone.storage.backend.exceptions.ExceptionMessage;
 import capstone.storage.backend.exceptions.IsNullOrEmptyException;
 import capstone.storage.backend.exceptions.ItemForbiddenRequestException;
 import capstone.storage.backend.exceptions.ItemToDeleteNotFoundException;
@@ -30,11 +29,11 @@ public class ItemController {
     public Item saveItem(@PathVariable Optional<String> eanToFind, @RequestBody AddItemDto addItemDto) {
 
         if (eanToFind.isEmpty() || service.isNullOrEmpty(addItemDto)) {
-            throw new IsNullOrEmptyException(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString());
+            throw new IsNullOrEmptyException();
         }
 
         if (!addItemDto.ean().equals(eanToFind.get())) {
-            throw new ItemForbiddenRequestException(ExceptionMessage.ITEM_FORBIDDEN_REQUEST_EXCEPTION_MESSAGE.toString());
+            throw new ItemForbiddenRequestException();
         }
         return service.addItem(addItemDto, eanToFind.get());
     }
@@ -46,14 +45,14 @@ public class ItemController {
             Item updatedItem = service.updateItem(itemToUpdate);
             return itemExist ? ResponseEntity.status(HttpStatus.OK).body(updatedItem) : ResponseEntity.status(HttpStatus.CREATED).body(updatedItem);
         }
-        throw new ItemForbiddenRequestException(ExceptionMessage.ITEM_FORBIDDEN_REQUEST_EXCEPTION_MESSAGE.toString());
+        throw new ItemForbiddenRequestException();
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteItem(@PathVariable String id) {
         if (!service.existById(id)) {
-            throw new ItemToDeleteNotFoundException(ExceptionMessage.ITEM_TO_DELETE_NOT_FOUND_EXCEPTION_MESSAGE.toString());
+            throw new ItemToDeleteNotFoundException();
         }
         service.deleteItemById(id);
     }

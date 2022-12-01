@@ -1,7 +1,7 @@
 package capstone.storage.backend.exceptions;
 
 public class IsNullOrEmptyException extends RuntimeException {
-    public IsNullOrEmptyException(String message) {
-        super(message);
+    public IsNullOrEmptyException() {
+        super("all input-fields must be filled");
     }
 }

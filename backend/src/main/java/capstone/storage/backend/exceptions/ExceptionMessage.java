@@ -8,7 +8,9 @@ public enum ExceptionMessage {
     ITEM_FORBIDDEN_REQUEST_EXCEPTION_MESSAGE("forbidden request"),
     ITEM_RESPONSE_EAN_NULL_EXCEPTION_MESSAGE("couldn't find item by ean"),
     EAN_API_RESPONSE_EXCEPTION_MESSAGE("couldn't find item by ean"),
-    ITEM_NOT_FOUND_EXCEPTION_MESSAGE("ean to find doesn't match with response ean");
+    ITEM_NOT_FOUND_EXCEPTION_MESSAGE("ean to find doesn't match with response ean"),
+
+    TEST_DATA_ITEMS_NOT_FOUND_MESSAGE("can't find data from json");
 
     private final String message;
 

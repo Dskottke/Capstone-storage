@@ -57,15 +57,15 @@ public class ItemService {
         boolean eanIsAlreadySaved = repository.existsByEan(eanToFind);
         boolean itemNumberAlreadySaved = repository.existsByItemNumber(addItemDto.itemNumber());
         if (eanIsAlreadySaved || itemNumberAlreadySaved) {
-            throw new ItemAlreadyExistException("item is already existing");
+            throw new ItemAlreadyExistException();
         }
     }
 
     public void validateAddItemDto(AddItemDto addItemDto) {
-        boolean validCapacity = (Integer.parseInt(addItemDto.storableValue()) < 1);
-        boolean validItemNumber = (Integer.parseInt(addItemDto.itemNumber()) < 1);
-        if (validItemNumber || validCapacity) {
-            throw new ItemValidationException("capacity and the item-number must be greater than 0");
+        boolean invalidCapacity = Integer.parseInt(addItemDto.storableValue()) < 1;
+        boolean invalidItemNumber = Integer.parseInt(addItemDto.itemNumber()) < 1;
+        if (invalidItemNumber || invalidCapacity) {
+            throw new ItemValidationException();
         }
     }
 
