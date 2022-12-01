@@ -12,7 +12,7 @@ import capstone.storage.backend.utils.ServiceUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,7 +29,7 @@ class ItemServiceTest {
     @DisplayName("method : findAll -> should return an empty list")
     void findAllItemsAndExpectEmptyList() {
         //GIVEN
-        List<Item> itemList = new ArrayList<>();
+        List<Item> itemList = Collections.emptyList();
         when(itemRepo.findAll()).thenReturn(itemList);
         //WHEN
         List<Item> actual = itemService.findAll();
@@ -140,6 +140,8 @@ class ItemServiceTest {
         //GIVEN
         String testEanToFind = "123";
         AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
+
+        //WHEN
         when(itemRepo.existsByEan(testEanToFind)).thenReturn(true);
         try {
             itemService.checkItemExisting(testAddItemDto, testEanToFind);
@@ -159,7 +161,7 @@ class ItemServiceTest {
     void checkIfIsNullOrEmptyReturnsTrueWhenAddITemDtoFieldsAreNull() {
         //GIVEN
         AddItemDto addItemDto = new AddItemDto(null, null, null);
-        //WHEn
+        //WHEN
         boolean actual = itemService.isNullOrEmpty(addItemDto);
         boolean expected = true;
         //THEN
