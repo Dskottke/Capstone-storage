@@ -14,7 +14,7 @@ public class TestDataController {
 
   private final TestDataService testDataService;
 
-  @PostMapping()
+  @PostMapping
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void addTestData() {
     testDataService.addTestData();

@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StorageBinController {
     private final StorageBinService storageBinService;
-    @GetMapping()
+    @GetMapping
     public List<StorageBin> getAllStorageBins() {
         return storageBinService.getAllStorageBins();
     }
