@@ -28,8 +28,8 @@ function TableHeadNav() {
                             <Link href="/store-page" underline="none" sx={{marginLeft: 10, color: "grey"}}>
                                 {"storing"}
                             </Link>
-                            <Link href="/discharging-page" underline="none" sx={{marginLeft: 10, color: "grey"}}>
-                                {"discharging"}
+                            <Link href="/retrieval-page" underline="none" sx={{marginLeft: 10, color: "grey"}}>
+                                {"retrieval"}
                             </Link>
                         </Container>
                     </Typography>

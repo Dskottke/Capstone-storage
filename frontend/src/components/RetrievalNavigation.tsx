@@ -1,6 +1,6 @@
 import React from 'react';
 
-function DischargingNavigation() {
+function RetrievalNavigation() {
     return (
         <div>
             <div>
@@ -12,4 +12,4 @@ function DischargingNavigation() {
     );
 }
 
-export default DischargingNavigation;
+export default RetrievalNavigation;

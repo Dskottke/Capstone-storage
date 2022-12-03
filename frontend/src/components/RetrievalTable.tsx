@@ -1,12 +1,12 @@
 import React from 'react';
 import {DrivingOrder} from "../model/DrivingOrder";
-import DischargingTableRow from "./DischargingTableRow";
+import RetrievalTableRow from "./RetrievalTableRow";
 
 type dischargingTableProps = {
     drivingOrders: DrivingOrder[]
 }
 
-function DischargingTable(props: dischargingTableProps) {
+function RetrievalTable(props: dischargingTableProps) {
 
     return (
         <div className="container-table">
@@ -26,7 +26,7 @@ function DischargingTable(props: dischargingTableProps) {
                         <td></td>
 
                     </tr>) : (
-                    props.drivingOrders.map(order => <DischargingTableRow drivingOrder={order}/>
+                    props.drivingOrders.map(order => <RetrievalTableRow drivingOrder={order}/>
                     ))}
                 </tbody>
             </table>
@@ -34,4 +34,4 @@ function DischargingTable(props: dischargingTableProps) {
     );
 }
 
-export default DischargingTable;
+export default RetrievalTable;

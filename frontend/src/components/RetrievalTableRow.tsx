@@ -7,7 +7,7 @@ type dischargingTableRowProps = {
     drivingOrder: DrivingOrder
 }
 
-function DischargingTableRow(props: dischargingTableRowProps) {
+function RetrievalTableRow(props: dischargingTableRowProps) {
     return (
         <tr key={props.drivingOrder.id}>
             <td className="center">{props.drivingOrder.id}</td>
@@ -18,4 +18,4 @@ function DischargingTableRow(props: dischargingTableRowProps) {
     );
 }
 
-export default DischargingTableRow;
+export default RetrievalTableRow;

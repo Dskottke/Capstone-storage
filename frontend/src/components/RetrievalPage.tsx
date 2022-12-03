@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import TableHeadNav from "./TableHeadNav";
 import "../css/TableNavigation.css"
-import DischargingNavigation from "./DischargingNavigation";
-import DischargingTable from "./DischargingTable";
+import RetrievalNavigation from "./RetrievalNavigation";
+import RetrievalTable from "./RetrievalTable";
 import axios from "axios";
 import {DrivingOrder} from "../model/DrivingOrder";
 import "../css/TablePage.css"
 
-function DischargingPage() {
+function RetrievalPage() {
 
     const [data, setData] = useState<DrivingOrder[]>([])
 
@@ -29,13 +29,13 @@ function DischargingPage() {
     return (
         <div className={"page-container"}>
             <TableHeadNav/>
-            <DischargingNavigation/>
+            <RetrievalNavigation/>
             <div className={"page-body"}>
-                <DischargingTable drivingOrders={data}/>
+                <RetrievalTable drivingOrders={data}/>
             </div>
         </div>
     );
 }
 
 
-export default DischargingPage;
+export default RetrievalPage;
