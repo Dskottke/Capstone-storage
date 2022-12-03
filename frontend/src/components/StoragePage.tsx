@@ -25,7 +25,7 @@ function StoragePage() {
             .then((data) => setData(data))
     }
     return (
-        <div>
+        <div className={"page-container"}>
             <TableHeadNav/>
             <StorageNavigation/>
             <div className={"page-body"}>
