@@ -49,7 +49,7 @@ table.Table {
     width: 100%;
     text-align: left;
     border-collapse: collapse;
-    box-shadow: rgba(0, 0, 0, 0.35) 10px 5px 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 1px 1px 1px;
 }
 
 table.Table td, table.greenTable th {
