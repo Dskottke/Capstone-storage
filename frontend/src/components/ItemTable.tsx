@@ -12,7 +12,6 @@ type itemPageProbs = {
 }
 
 function ItemTable(props: itemPageProbs) {
-
     return (
         <div className="container-table">
             <table className="Table">
