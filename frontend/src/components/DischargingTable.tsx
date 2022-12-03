@@ -13,7 +13,7 @@ function DischargingTable(props: dischargingTableProps) {
             <table className="Table">
                 <thead>
                 <tr>
-                    <th>Nr</th>
+                    <th className={"center"}>Nr</th>
                     <th>storage-bin</th>
                     <th>item</th>
                     <th>amount</th>
