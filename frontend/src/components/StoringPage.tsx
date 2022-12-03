@@ -5,7 +5,7 @@ import StoringNavigation from "./StoringNavigation";
 import StoringTable from "./StoringTable";
 import {DrivingOrder} from "../model/DrivingOrder";
 import axios from "axios";
-
+import "../css/TablePage.css"
 
 function StoringPage() {
     const [data, setData] = useState<DrivingOrder[]>([])
@@ -26,7 +26,7 @@ function StoringPage() {
     }, [])
 
     return (
-        <div>
+        <div className={"page-container"}>
             <TableHeadNav/>
             <StoringNavigation/>
             <div className={"page-body"}>

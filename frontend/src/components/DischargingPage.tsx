@@ -5,6 +5,7 @@ import DischargingNavigation from "./DischargingNavigation";
 import DischargingTable from "./DischargingTable";
 import axios from "axios";
 import {DrivingOrder} from "../model/DrivingOrder";
+import "../css/TablePage.css"
 
 function DischargingPage() {
 
@@ -26,7 +27,7 @@ function DischargingPage() {
     }, [])
 
     return (
-        <div>
+        <div className={"page-container"}>
             <TableHeadNav/>
             <DischargingNavigation/>
             <div className={"page-body"}>
