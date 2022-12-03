@@ -11,7 +11,8 @@ import java.util.List;
 public class DrivingOrderService {
     private final DrivingOrderRepo drivingOrderRepo;
 
-    public List<DrivingOrder> getAllInputDrivingOrders() {
-        drivingOrderRepo.findAllByDrivingOrderTypeIsInput();
+    public List<DrivingOrder> getAllDrivingOrdersByType(Type type) {
+        return drivingOrderRepo.findByType(type);
     }
+
 }

@@ -1,6 +1,6 @@
 package capstone.storage.backend.drivingorders;
 
-public enum DrivingOrderType {
+public enum Type {
     INPUT,
     OUTPUT;
 }
