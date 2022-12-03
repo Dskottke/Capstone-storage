@@ -26,7 +26,7 @@ function DischargingTable(props: dischargingTableProps) {
                         <td></td>
 
                     </tr>) : (
-                    props.drivingOrders.map(item => <DischargingTableRow drivingOrder={item}/>
+                    props.drivingOrders.map(order => <DischargingTableRow drivingOrder={order}/>
                     ))}
                 </tbody>
             </table>

@@ -1,7 +1,13 @@
 import React from 'react';
+import {DrivingOrder} from "../model/DrivingOrder";
 
+import StoringTableRow from "./StoringTableRow";
 
-function StoringTable() {
+type storingTableProps = {
+    drivingOrders: DrivingOrder[]
+}
+
+function StoringTable(props: storingTableProps) {
     return (
         <div className="container-table">
             <table className="Table">
@@ -14,6 +20,15 @@ function StoringTable() {
                     <th>action</th>
                 </tr>
                 </thead>
+                <tbody>
+                {props.drivingOrders.length === 0 ? (
+                    <tr>
+                        <td></td>
+
+                    </tr>) : (
+                    props.drivingOrders.map(order => <StoringTableRow drivingOrder={order} key={order.id}/>
+                    ))}
+                </tbody>
             </table>
         </div>
     );
