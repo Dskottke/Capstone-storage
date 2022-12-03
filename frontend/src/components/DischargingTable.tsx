@@ -1,6 +1,13 @@
 import React from 'react';
+import {DrivingOrder} from "../model/DrivingOrder";
+import DischargingTableRow from "./DischargingTableRow";
 
-function DischargingTable() {
+type dischargingTableProps = {
+    drivingOrders: DrivingOrder[]
+}
+
+function DischargingTable(props: dischargingTableProps) {
+
     return (
         <div className="container-table">
             <table className="Table">
@@ -13,6 +20,15 @@ function DischargingTable() {
                     <th>action</th>
                 </tr>
                 </thead>
+                <tbody>
+                {props.drivingOrders.length === 0 ? (
+                    <tr>
+                        <td></td>
+
+                    </tr>) : (
+                    props.drivingOrders.map(item => <DischargingTableRow drivingOrder={item}/>
+                    ))}
+                </tbody>
             </table>
         </div>
     );
