@@ -5,7 +5,7 @@ import MainPage from "./components/MainPage";
 import {Route, Routes} from "react-router-dom";
 import StoragePage from "./components/StoragePage";
 import StoringPage from "./components/StoringPage";
-import DischargingPage from "./components/DischargingPage";
+import RetrievalPage from "./components/RetrievalPage";
 
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
                 <Route path={"/item-page"} element={<ItemPage/>}/>
                 <Route path={"/storage-page"} element={<StoragePage/>}/>
                 <Route path={"/store-page"} element={<StoringPage/>}/>
-                <Route path={"/discharging-page"} element={<DischargingPage/>}/>
+                <Route path={"/retrieval-page"} element={<RetrievalPage/>}/>
             </Routes>
 
         </>

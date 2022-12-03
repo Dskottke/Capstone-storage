@@ -21,7 +21,7 @@ function MainPageNavigation() {
         >
             <Toolbar>
                 <Typography variant="h6" color="inherit" sx={{flexGrow: 1}}>
-                    <img className={"logo-name"} src={logoName} alt={"logo_name"}/>
+                    <img id="logo-name" src={logoName} alt={"logo_name"}/>
                 </Typography>
                 <Button onClick={addTestData} variant="outlined" sx={{my: 1, mx: 1.5}}>
                     application test

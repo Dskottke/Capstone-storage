@@ -5,7 +5,7 @@ import "../css/MainPage.css";
 import {NavLink} from "react-router-dom";
 import MainPageStorageCard from "./MainPageStorageCard";
 import StoringCard from "./StoringCard";
-import DischargingCard from "./DischargingCard";
+import RetrievalCard from "./RetrievalCard";
 
 
 function MainPage() {
@@ -19,8 +19,8 @@ function MainPage() {
                 <NavLink to={"/storage-page"} style={{textDecoration: 'none'}}><MainPageStorageCard/></NavLink>
                 <NavLink to={"/store-page"}
                          style={{textDecoration: 'none', marginTop: 40}}><StoringCard/></NavLink>
-                <NavLink to={"/discharging-page"}
-                         style={{textDecoration: 'none', marginTop: 40}}><DischargingCard/></NavLink>
+                <NavLink to={"/retrieval-page"}
+                         style={{textDecoration: 'none', marginTop: 40}}><RetrievalCard/></NavLink>
 
             </div>
         </div>
