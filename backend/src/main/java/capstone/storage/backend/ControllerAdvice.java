@@ -1,17 +1,16 @@
-package capstone.storage.backend.item;
+package capstone.storage.backend;
 
 import capstone.storage.backend.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 
-@ControllerAdvice
+@org.springframework.web.bind.annotation.ControllerAdvice
 @Component
-public class ItemControllerAdvice extends ResponseEntityExceptionHandler {
+public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(IsNullOrEmptyException.class)
