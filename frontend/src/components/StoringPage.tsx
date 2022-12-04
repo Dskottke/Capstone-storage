@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import TableHeadNav from "./TableHeadNav";
 import "../css/TableNavigation.css"
 import StoringNavigation from "./StoringNavigation";
@@ -7,7 +7,19 @@ import {DrivingOrder} from "../model/DrivingOrder";
 import axios from "axios";
 import "../css/TablePage.css"
 
-function StoringPage() {
+type storingPageProps = {
+    amountValue: string
+    storageBinNumber: string
+    itemNumber: string
+    setStorageBinNumber: (storageBinNumber: string) => void
+    setItemNumber: (itemNumber: string) => void
+    setAmountValue: (amount: string) => void
+    handleInputAmount: (event: ChangeEvent<HTMLInputElement>) => void
+    handleInputItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    handleInputStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
+}
+
+function StoringPage(props: storingPageProps) {
     const [data, setData] = useState<DrivingOrder[]>([])
 
     const fetchData = () => {
@@ -28,7 +40,13 @@ function StoringPage() {
     return (
         <div className={"page-container"}>
             <TableHeadNav/>
-            <StoringNavigation/>
+            <StoringNavigation amountValue={props.amountValue} setAmountValue={props.setAmountValue}
+                               handleInputAmount={props.handleInputAmount}
+                               handleInputItemNumber={props.handleInputItemNumber}
+                               handleInputStorageBinNumber={props.handleInputStorageBinNumber}
+                               setStorageBinNumber={props.setStorageBinNumber}
+                               storageBinNumber={props.storageBinNumber} itemNumber={props.itemNumber}
+                               setItemNumber={props.setItemNumber}/>
             <div className={"page-body"}>
                 <StoringTable drivingOrders={data}/>
             </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import "../css/TableNavigation.css"
 
 function StorageNavigation() {
+
     return (
         <div>
             <div className="topnav">

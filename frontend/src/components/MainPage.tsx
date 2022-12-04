@@ -21,7 +21,6 @@ function MainPage() {
                          style={{textDecoration: 'none', marginTop: 40}}><StoringCard/></NavLink>
                 <NavLink to={"/retrieval-page"}
                          style={{textDecoration: 'none', marginTop: 40}}><RetrievalCard/></NavLink>
-
             </div>
         </div>
 

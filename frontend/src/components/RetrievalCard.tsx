@@ -5,6 +5,7 @@ import "../css/Discharging.css"
 import Typography from "@mui/material/Typography";
 
 function RetrievalCard() {
+
     return (
         <Card sx={{marginLeft: 10, minWidth: 500, minHeight: 400, boxShadow: 5, borderRadius: 10}}>
             <div className={"discharging-card"}>
