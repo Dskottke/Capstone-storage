@@ -1,6 +1,7 @@
 .main-page-container {
   display: flex;
   flex-wrap: wrap;
+  margin-right: 3%;
   justify-content: center;
   margin-top: 40px;
 }
