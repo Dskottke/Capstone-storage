@@ -1,5 +1,6 @@
 package capstone.storage.backend.drivingorders;
 
+import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
