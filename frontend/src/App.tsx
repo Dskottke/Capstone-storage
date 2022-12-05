@@ -13,6 +13,10 @@ function App() {
     const [storageBinNumber, setStorageBinNumber] = useState("")
     const [itemNumber, setItemNumber] = useState("")
     const [amountValue, setAmountValue] = useState("")
+    const [errorModal, setErrorModal] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
+    const [successModal, setSuccessModal] = useState(false)
+    const [successMessage, setSuccessMessage] = useState("")
 
     const handleInputAmount = (event: ChangeEvent<HTMLInputElement>) => {
         const validAmount = event.target.value.replace(/\D/g, '')
@@ -29,10 +33,21 @@ function App() {
     return (<>
             <Routes>
                 <Route path={"/"} element={<MainPage/>}/>
-                <Route path={"/item-page"} element={<ItemPage/>}/>
+                <Route path={"/item-page"}
+                       element={<ItemPage successModal={successModal} successMessage={successMessage}
+                                          errorMessage={errorMessage} errorModal={errorModal}
+                                          setErrorModal={setErrorModal}
+                                          setErrorMessage={setErrorMessage}
+                                          setSuccessMessage={setSuccessMessage}
+                                          setSuccessModal={setSuccessModal}/>}/>
                 <Route path={"/storage-page"} element={<StoragePage/>}/>
                 <Route path={"/store-page"}
-                       element={<StoringPage amountValue={amountValue} setAmountValue={setAmountValue}
+                       element={<StoringPage errorModal={errorModal} errorMessage={errorMessage}
+                                             setSuccessModal={setSuccessModal}
+                                             setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage}
+                                             setErrorModal={setErrorModal} successMessage={successMessage}
+                                             successModal={successModal} amountValue={amountValue}
+                                             setAmountValue={setAmountValue}
                                              handleInputAmount={handleInputAmount}
                                              handleInputItemNumber={handleInputItemNumber}
                                              handleInputStorageBinNumber={handleInputStorageBinNumber}

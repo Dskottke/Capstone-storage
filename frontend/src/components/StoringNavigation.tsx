@@ -11,6 +11,10 @@ type storingNavigationProps = {
     handleInputAmount: (event: ChangeEvent<HTMLInputElement>) => void
     handleInputItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
     handleInputStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    setErrorModal: (showAlert: boolean) => void
+    setErrorMessage: (errorMessage: string) => void
+    setSuccessMessage: (successMessage: string) => void
+    setSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function StoringNavigation(props: storingNavigationProps) {
@@ -22,9 +26,20 @@ function StoringNavigation(props: storingNavigationProps) {
         const amount = props.amountValue
 
         axios.post("/api/driving-orders/input", {itemNumber, storageLocationNumber, amount})
-            .catch(error => console.error(error))
-
+            .then(response => {
+                if (response.status === 201) {
+                    props.setSuccessModal(true);
+                    props.setSuccessMessage("new driving order created ")
+                }
+            })
+            .catch(error => {
+                if (error.response) {
+                    props.setErrorModal(true);
+                    props.setErrorMessage(error.response.data)
+                }
+            })
     }
+
 
     return (
         <div className="topnav">

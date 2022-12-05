@@ -38,6 +38,7 @@ public class DrivingOrderService {
 
         Item itemToCheck = itemService.findItemByItemNumber(newDrivingOrder.itemNumber());
         StorageBin storageBinToCheck = storageBinService.findStorageBinByLocationNumber(newDrivingOrder.storageLocationNumber());
+
         if (!checkStorageBinValid(storageBinToCheck, itemToCheck)) {
             throw new StorageBinFalseItemException();
         }
@@ -71,15 +72,12 @@ public class DrivingOrderService {
     }
 
     public boolean checkStorageBinValid(StorageBin storageBinToCheck, Item itemToCheck) {
-        //hier muss auch über die Liste geschaut werden
+
         Optional<DrivingOrder> existingOrder = drivingOrderRepo.findFirstByStorageBinNumber(storageBinToCheck.locationNumber());
         if (existingOrder.isPresent() && (!existingOrder.get().itemNumber().equals(itemToCheck.itemNumber()))) {
             return false;
         }
-
         return storageBinToCheck.itemNumber().equals(itemToCheck.itemNumber()) || storageBinToCheck.itemNumber().equals("0");
-
-
     }
 
     public int getTotalAmountFromList(List<DrivingOrder> existingInputDrivingOrders) {
