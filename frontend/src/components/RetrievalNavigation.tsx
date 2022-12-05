@@ -2,9 +2,9 @@ import React, {ChangeEvent} from 'react';
 
 type retrievalNavigationProps = {
     amountValue: string
-    storageBinNumber: string
+    storageLocationId: string
     itemNumber: string
-    setStorageBinNumber: (storageBinNumber: string) => void
+    setStorageLocationId: (storageBinNumber: string) => void
     setItemNumber: (itemNumber: string) => void
     setAmountValue: (amount: string) => void
     handleInputAmount: (event: ChangeEvent<HTMLInputElement>) => void
@@ -25,7 +25,7 @@ function RetrievalNavigation(props: retrievalNavigationProps) {
                     <input className="item_input_field" value={props.itemNumber}
                            onChange={props.handleInputItemNumber} type="text" placeholder="item-number"
                            name="item-number"/>
-                    <input className="item_input_field" value={props.storageBinNumber}
+                    <input className="item_input_field" value={props.storageLocationId}
                            onChange={props.handleInputStorageBinNumber} type="text" placeholder="storage-bin-nr"
                            name="ean"/>
                     <input className="item_input_field" value={props.amountValue}

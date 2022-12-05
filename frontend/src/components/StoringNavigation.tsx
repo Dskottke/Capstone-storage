@@ -4,7 +4,7 @@ import axios from "axios";
 type storingNavigationProps = {
     fetchData: () => void
     amountValue: string
-    storageLocationNumber: string
+    storageLocationId: string
     itemNumber: string
     setStorageBinNumber: (storageBinNumber: string) => void
     setItemNumber: (itemNumber: string) => void
@@ -23,10 +23,10 @@ function StoringNavigation(props: storingNavigationProps) {
     const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
         const itemNumber = props.itemNumber
-        const storageLocationNumber = props.storageLocationNumber
+        const storageLocationId = props.storageLocationId
         const amount = props.amountValue
 
-        axios.post("/api/driving-orders/input", {itemNumber, storageLocationNumber, amount})
+        axios.post("/api/driving-orders/input", {itemNumber, storageLocationId, amount})
             .then(response => {
                 if (response.status === 201) {
                     props.setSuccessModal(true);
@@ -53,7 +53,7 @@ function StoringNavigation(props: storingNavigationProps) {
                     <input className="item_input_field" value={props.itemNumber}
                            onChange={props.handleInputItemNumber} type="text" placeholder="item-number"
                            name="item-number"/>
-                    <input className="item_input_field" value={props.storageLocationNumber}
+                    <input className="item_input_field" value={props.storageLocationId}
                            onChange={props.handleInputStorageBinNumber} type="text" placeholder="storage-bin-nr"
                            name="ean"/>
                     <input className="item_input_field" value={props.amountValue}

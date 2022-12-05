@@ -1,7 +1,7 @@
 package capstone.storage.backend.drivingorders.models;
 
 public record NewDrivingOrder(
-        String storageLocationNumber,
+        String storageLocationId,
         String itemNumber,
         String amount
 ) {

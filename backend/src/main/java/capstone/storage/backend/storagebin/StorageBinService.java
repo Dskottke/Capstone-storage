@@ -12,8 +12,8 @@ public class StorageBinService {
     private final StorageBinRepo repo;
 
 
-    public StorageBin findStorageBinByLocationNumber(String storageBinNumber) {
-        return repo.findItemByLocationNumber(storageBinNumber);
+    public StorageBin findStorageBinByLocationId(String storageBinNumber) {
+        return repo.findItemByLocationId(storageBinNumber);
     }
 
     public List<StorageBin> getAllStorageBins() {
@@ -21,7 +21,7 @@ public class StorageBinService {
     }
 
     public boolean existsByLocationNumber(String locationNumber) {
-        return repo.existsByLocationNumber(locationNumber);
+        return repo.existsByLocationId(locationNumber);
     }
 
     public void updateStorageBin(DrivingOrder drivingOrder) {

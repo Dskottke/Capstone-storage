@@ -8,7 +8,7 @@ function StorageTableRow({storageBin}: StorageTableRowProps) {
 
     return (
         <tr key={storageBin.id}>
-            <td className="center">{storageBin.locationNumber}</td>
+            <td className="center">{storageBin.locationId}</td>
             <td className="center">{storageBin.itemNumber}</td>
             <td className="center">{storageBin.amount}</td>
         </tr>

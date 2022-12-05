@@ -18,9 +18,9 @@ type storingPageProps = {
     setSuccessMessage: (successMessage: string) => void
     setSuccessModal: (showSuccessAlert: boolean) => void
     amountValue: string
-    storageBinNumber: string
+    storageLocationId: string
     itemNumber: string
-    setStorageBinNumber: (storageBinNumber: string) => void
+    setStorageLocationId: (storageBinNumber: string) => void
     setItemNumber: (itemNumber: string) => void
     setAmountValue: (amount: string) => void
     handleInputAmount: (event: ChangeEvent<HTMLInputElement>) => void
@@ -58,8 +58,8 @@ function StoringPage(props: storingPageProps) {
                                handleInputAmount={props.handleInputAmount}
                                handleInputItemNumber={props.handleInputItemNumber}
                                handleInputStorageBinNumber={props.handleInputStorageBinNumber}
-                               setStorageBinNumber={props.setStorageBinNumber}
-                               storageLocationNumber={props.storageBinNumber} itemNumber={props.itemNumber}
+                               setStorageBinNumber={props.setStorageLocationId}
+                               storageLocationId={props.storageLocationId} itemNumber={props.itemNumber}
                                setItemNumber={props.setItemNumber}/>
 
             {props.errorModal &&
