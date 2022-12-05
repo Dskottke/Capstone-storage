@@ -29,9 +29,9 @@ type storingPageProps = {
 }
 
 function StoringPage(props: storingPageProps) {
-    const [data, setData] = useState<DrivingOrder[]>([])
+    const [inputDrivingOrders, setInputDrivingOrders] = useState<DrivingOrder[]>([])
 
-    const fetchData = () => {
+    const fetchInputOrders = () => {
         axios.get("/api/driving-orders/?type=INPUT")
             .then(response => {
                 return response.data
@@ -39,18 +39,17 @@ function StoringPage(props: storingPageProps) {
             .catch(error => {
                 console.error(error)
             })
-            .then((data) => setData(data))
-
+            .then((data) => setInputDrivingOrders(data))
     }
 
     useEffect(() => {
-        fetchData()
+        fetchInputOrders()
     }, [])
 
     return (
         <div className={"page-container"}>
             <TableHeadNav/>
-            <StoringNavigation fetchData={fetchData}
+            <StoringNavigation fetchData={fetchInputOrders}
                                setErrorModal={props.setErrorModal}
                                setErrorMessage={props.setErrorMessage} setSuccessMessage={props.setSuccessMessage}
                                setSuccessModal={props.setSuccessModal} amountValue={props.amountValue}
@@ -73,10 +72,10 @@ function StoringPage(props: storingPageProps) {
                 }}>{props.successMessage}</Alert>
             }
             <div className={"page-body"}>
-                <StoringTable fetchData={fetchData} setSuccessMessage={props.setSuccessMessage}
+                <StoringTable fetchData={fetchInputOrders} setSuccessMessage={props.setSuccessMessage}
                               setSuccessModal={props.setSuccessModal}
                               setErrorModal={props.setErrorModal} setErrorMessage={props.setErrorMessage}
-                              drivingOrders={data}/>
+                              drivingOrders={inputDrivingOrders}/>
             </div>
         </div>
     );
