@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface DrivingOrderRepo extends MongoRepository<DrivingOrder, String> {
     List<DrivingOrder> findByType(Type type);
 
-    List<DrivingOrder> findByTypeAndStorageBinNumber(Type type, String storageBinNumber);
+    List<DrivingOrder> findByTypeAndStorageBinId(Type type, String storageBinNumber);
 
-    Optional<DrivingOrder> findFirstByStorageBinNumber(String storageBinNumber);
+    Optional<DrivingOrder> findFirstByStorageBinId(String storageBinNumber);
 }

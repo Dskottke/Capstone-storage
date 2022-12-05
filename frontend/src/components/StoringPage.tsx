@@ -73,7 +73,10 @@ function StoringPage(props: storingPageProps) {
                 }}>{props.successMessage}</Alert>
             }
             <div className={"page-body"}>
-                <StoringTable drivingOrders={data}/>
+                <StoringTable fetchData={fetchData} setSuccessMessage={props.setSuccessMessage}
+                              setSuccessModal={props.setSuccessModal}
+                              setErrorModal={props.setErrorModal} setErrorMessage={props.setErrorMessage}
+                              drivingOrders={data}/>
             </div>
         </div>
     );

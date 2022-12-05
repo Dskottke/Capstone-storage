@@ -74,7 +74,7 @@ public class DrivingOrderService {
 
     public boolean checkStorageBinValid(StorageBin storageBinToCheck, Item itemToCheck) {
 
-        Optional<DrivingOrder> existingOrder = drivingOrderRepo.findFirstByStorageBinNumber(storageBinToCheck.locationNumber());
+        Optional<DrivingOrder> existingOrder = drivingOrderRepo.findFirstByStorageBinId(storageBinToCheck.locationNumber());
         if (existingOrder.isPresent() && (!existingOrder.get().itemNumber().equals(itemToCheck.itemNumber()))) {
             return false;
         }
@@ -94,7 +94,7 @@ public class DrivingOrderService {
 
         int storageBinCapacity = Integer.parseInt(itemToCheck.storableValue());
 
-        List<DrivingOrder> existingInputDrivingOrders = drivingOrderRepo.findByTypeAndStorageBinNumber(Type.INPUT, storageBinToCheck.locationNumber());
+        List<DrivingOrder> existingInputDrivingOrders = drivingOrderRepo.findByTypeAndStorageBinId(Type.INPUT, storageBinToCheck.locationNumber());
 
         int ordersTotalAmount = getTotalAmountFromList(existingInputDrivingOrders);
 
@@ -106,6 +106,7 @@ public class DrivingOrderService {
 
     public void drivingOrderDone(String id) {
         Optional<DrivingOrder> succeedDrivingOrder = drivingOrderRepo.findById(id);
+
         if (succeedDrivingOrder.isEmpty()) {
             throw new ItemToDeleteNotFoundException();
         }
