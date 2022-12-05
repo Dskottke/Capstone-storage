@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 @RequiredArgsConstructor
@@ -29,13 +30,13 @@ public class DrivingOrderService {
     }
 
     public DrivingOrder addNewInputDrivingOrder(NewDrivingOrder newDrivingOrder) {
+
         if (!fieldsExisting(newDrivingOrder)) {
             throw new ItemOrStorageBinNotExistingException();
         }
 
         Item itemToCheck = itemService.findItemByItemNumber(newDrivingOrder.itemNumber());
         StorageBin storageBinToCheck = storageBinService.findStorageBinByLocationNumber(newDrivingOrder.storageLocationNumber());
-
         if (!checkStorageBinValid(storageBinToCheck, itemToCheck)) {
             throw new StorageBinFalseItemException();
         }
@@ -44,13 +45,11 @@ public class DrivingOrderService {
             throw new IsNotEnoughSpaceException();
         }
 
-        DrivingOrder drivingOrderToAdd = new DrivingOrder(serviceUtils.generateUUID(),
+        return drivingOrderRepo.insert(new DrivingOrder(serviceUtils.generateUUID(),
                 newDrivingOrder.storageLocationNumber(),
                 newDrivingOrder.itemNumber(),
                 Type.INPUT,
-                newDrivingOrder.amount());
-
-        return drivingOrderRepo.insert(drivingOrderToAdd);
+                newDrivingOrder.amount()));
     }
 
     public boolean isNullOrEmpty(NewDrivingOrder newDrivingOrder) {
@@ -74,6 +73,12 @@ public class DrivingOrderService {
         return storageBinToCheck.itemNumber().equals(itemToCheck.itemNumber()) || storageBinToCheck.itemNumber().equals("0");
     }
 
+    public int getTotalAmountFromList(List<DrivingOrder> existingInputDrivingOrders) {
+        AtomicInteger orderTotalAmount = new AtomicInteger();
+        existingInputDrivingOrders.forEach(drivingOrder -> orderTotalAmount.addAndGet(Integer.parseInt(drivingOrder.amount())));
+        return orderTotalAmount.get();
+    }
+
     public boolean checkInputDrivingOrderIsValid(StorageBin storageBinToCheck, NewDrivingOrder newDrivingOrder, Item itemToCheck) {
         int actualStorageBinAmount = Integer.parseInt(storageBinToCheck.amount());
 
@@ -83,13 +88,9 @@ public class DrivingOrderService {
 
         List<DrivingOrder> existingInputDrivingOrders = drivingOrderRepo.findByTypeAndStorageBinNumber(Type.INPUT, storageBinToCheck.locationNumber());
 
-        int orderTotalAmount = 0;
+        int ordersTotalAmount = getTotalAmountFromList(existingInputDrivingOrders);
 
-        for (DrivingOrder drivingOrder : existingInputDrivingOrders) {
-            orderTotalAmount += Integer.parseInt(drivingOrder.amount());
-        }
-
-        int freeAmount = storageBinCapacity - (orderTotalAmount + actualStorageBinAmount);
+        int freeAmount = storageBinCapacity - (ordersTotalAmount + actualStorageBinAmount);
 
         return itemsToStore >= freeAmount;
     }
