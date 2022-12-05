@@ -12,7 +12,7 @@ function RetrievalTableRow(props: dischargingTableRowProps) {
         <tr key={props.drivingOrder.id}>
             <td className="center">{props.drivingOrder.id}</td>
             <td>{props.drivingOrder.itemNumber}</td>
-            <td>{props.drivingOrder.storageBinId}</td>
+            <td>{props.drivingOrder.storageLocationId}</td>
             <td>{props.drivingOrder.amount}</td>
         </tr>
     );

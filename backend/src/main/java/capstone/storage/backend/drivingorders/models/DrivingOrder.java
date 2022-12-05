@@ -4,7 +4,7 @@ import capstone.storage.backend.drivingorders.Type;
 
 public record DrivingOrder(
         String id,
-        String storageBinId,
+        String storageLocationId,
         String itemNumber,
         Type type,
         String amount

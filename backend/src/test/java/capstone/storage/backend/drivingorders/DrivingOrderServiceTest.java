@@ -95,4 +95,48 @@ class DrivingOrderServiceTest {
         //THEN
         assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("method -> itemAndStorageBinExisting should return true")
+    void itemAndStorageBinExistingReturnsTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "1");
+        //WHEN
+        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(true);
+        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(true);
+        boolean actual = drivingOrderService.itemAndStorageBinExisting(newDrivingOrder);
+        //THEN
+        boolean expected = true;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method -> itemAndStorageBinExisting should return false")
+    void itemAndStorageBinExistingReturnsFalse() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "1");
+        //WHEN
+        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(false);
+        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(false);
+        boolean actual = drivingOrderService.itemAndStorageBinExisting(newDrivingOrder);
+        //THEN
+        boolean expected = false;
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    @DisplayName("method -> getTotalAmountFromList and return 10")
+    void getTotalAmountFromList() {
+        //GIVEN
+        List<DrivingOrder> testInputDrivingOrders = List.of(
+                new DrivingOrder("1", "1", "1", Type.INPUT, "5"),
+                new DrivingOrder("2", "1", "1", Type.INPUT, "5"));
+        //WHEN
+        int actual = drivingOrderService.getTotalAmountFromList(testInputDrivingOrders);
+        int expected = 10;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
 }

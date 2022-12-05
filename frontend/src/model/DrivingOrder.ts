@@ -1,6 +1,6 @@
 export type DrivingOrder = {
     id: string,
-    storageBinId: string,
+    storageLocationId: string,
     itemNumber: string,
     amount: string
 }
