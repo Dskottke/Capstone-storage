@@ -33,18 +33,18 @@ public class DrivingOrderService {
 
     public DrivingOrder addNewInputDrivingOrder(NewDrivingOrder newDrivingOrder) {
 
-        if (!fieldsExisting(newDrivingOrder)) {
+        if (!itemAndStorageBinExisting(newDrivingOrder)) {
             throw new ItemOrStorageBinNotExistingException();
         }
 
-        Item itemToCheck = itemService.findItemByItemNumber(newDrivingOrder.itemNumber());
-        StorageBin storageBinToCheck = storageBinService.findStorageBinByLocationNumber(newDrivingOrder.storageLocationNumber());
+        Item itemFromOrder = itemService.findItemByItemNumber(newDrivingOrder.itemNumber());
+        StorageBin storageBinFromOrder = storageBinService.findStorageBinByLocationNumber(newDrivingOrder.storageLocationNumber());
 
-        if (!checkStorageBinValid(storageBinToCheck, itemToCheck)) {
+        if (!checkDrivingOrderWithStorageBinAlreadyExist(storageBinFromOrder, itemFromOrder)) {
             throw new StorageBinFalseItemException();
         }
 
-        if (!checkInputDrivingOrderIsValid(storageBinToCheck, newDrivingOrder, itemToCheck)) {
+        if (!checkStorageBinFreeAmount(storageBinFromOrder, newDrivingOrder, itemFromOrder)) {
             throw new IsNotEnoughSpaceException();
         }
 
@@ -67,14 +67,14 @@ public class DrivingOrderService {
                 || emptyString.equals(newDrivingOrder.amount());
     }
 
-    public boolean fieldsExisting(NewDrivingOrder newDrivingOrder) {
+    public boolean itemAndStorageBinExisting(NewDrivingOrder newDrivingOrder) {
         return itemService.existByItemNumber(newDrivingOrder.itemNumber())
                 || storageBinService.existsByLocationNumber(newDrivingOrder.storageLocationNumber());
     }
 
-    public boolean checkStorageBinValid(StorageBin storageBinToCheck, Item itemToCheck) {
+    public boolean checkDrivingOrderWithStorageBinAlreadyExist(StorageBin storageBinToCheck, Item itemToCheck) {
+        Optional<DrivingOrder> existingOrder = drivingOrderRepo.findFirstByStorageBinId(storageBinToCheck.locationId());
 
-        Optional<DrivingOrder> existingOrder = drivingOrderRepo.findFirstByStorageBinId(storageBinToCheck.locationNumber());
         if (existingOrder.isPresent() && (!existingOrder.get().itemNumber().equals(itemToCheck.itemNumber()))) {
             return false;
         }
@@ -87,14 +87,15 @@ public class DrivingOrderService {
         return orderTotalAmount.get();
     }
 
-    public boolean checkInputDrivingOrderIsValid(StorageBin storageBinToCheck, NewDrivingOrder newDrivingOrder, Item itemToCheck) {
+    public boolean checkStorageBinFreeAmount(StorageBin storageBinToCheck, NewDrivingOrder newDrivingOrder, Item itemToCheck) {
+
         int actualStorageBinAmount = Integer.parseInt(storageBinToCheck.amount());
 
         int itemsToStore = Integer.parseInt(newDrivingOrder.amount());
 
         int storageBinCapacity = Integer.parseInt(itemToCheck.storableValue());
 
-        List<DrivingOrder> existingInputDrivingOrders = drivingOrderRepo.findByTypeAndStorageBinId(Type.INPUT, storageBinToCheck.locationNumber());
+        List<DrivingOrder> existingInputDrivingOrders = drivingOrderRepo.findByTypeAndStorageBinId(Type.INPUT, storageBinToCheck.locationId());
 
         int ordersTotalAmount = getTotalAmountFromList(existingInputDrivingOrders);
 
