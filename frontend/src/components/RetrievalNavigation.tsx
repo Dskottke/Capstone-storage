@@ -14,20 +14,20 @@ type retrievalNavigationProps = {
 
 function RetrievalNavigation(props: retrievalNavigationProps) {
 
-    const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
     }
     return (
         <div className="topnav">
             <div id="navi-logo">retrieval</div>
             <div className="add-container">
-                <form onSubmit={handleAddSubmit}>
+                <form onSubmit={handleSubmit}>
                     <input className="item_input_field" value={props.itemNumber}
                            onChange={props.handleInputItemNumber} type="text" placeholder="item-number"
                            name="item-number"/>
                     <input className="item_input_field" value={props.storageLocationId}
                            onChange={props.handleInputStorageBinNumber} type="text" placeholder="storage-bin-nr"
-                           name="ean"/>
+                           name="storage-bin-nr"/>
                     <input className="item_input_field" value={props.amountValue}
                            onChange={props.handleInputAmount} type="text" placeholder="amount" name="amount"/>
                     <button type="submit">add</button>
