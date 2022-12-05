@@ -19,7 +19,7 @@ class StorageBinServiceTest {
     void getAllStorageBinsAndReturnExpectedList() {
         //GIVEN
         List<StorageBin> expectedList = List.of(
-                new StorageBin("1", "1", "20"));
+                new StorageBin("1", "1", "1", "20"));
         //WHEN
         when(repo.findAll()).thenReturn(expectedList);
         List<StorageBin> actual = service.getAllStorageBins();

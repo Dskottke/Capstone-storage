@@ -11,6 +11,7 @@ import java.util.List;
 public class StorageBinService {
     private final StorageBinRepo repo;
 
+
     public StorageBin findStorageBinByLocationNumber(String storageBinNumber) {
         return repo.findItemByLocationNumber(storageBinNumber);
     }
@@ -24,12 +25,18 @@ public class StorageBinService {
     }
 
     public void updateStorageBin(DrivingOrder drivingOrder) {
-        StorageBin storageBinToUpdate = new StorageBin(
-                drivingOrder.storageBinNumber(),
-                drivingOrder.itemNumber(),
-                drivingOrder.amount());
+        StorageBin storageBinToUpdate = repo.findById(drivingOrder.storageBinId())
+                .orElseThrow();
 
-        repo.save(storageBinToUpdate);
+        int newAmount = Integer.parseInt(storageBinToUpdate.amount()) + Integer.parseInt(drivingOrder.amount());
+
+        StorageBin update = new StorageBin(
+                storageBinToUpdate.id(),
+                drivingOrder.storageBinId(),
+                drivingOrder.itemNumber(),
+                Integer.toString(newAmount));
+
+        repo.save(update);
     }
 }
 

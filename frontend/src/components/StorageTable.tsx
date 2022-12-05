@@ -25,7 +25,7 @@ function StorageTable(props: StorageTableProps) {
                         <td></td>
                     </tr>) : (
                     props.data.map(storageBin => <StorageTableRow storageBin={storageBin} key={storageBin.id}
-                                                                  fetchData={props.fetchData}></StorageTableRow>
+                        ></StorageTableRow>
                     ))}
                 </tbody>
             </table>

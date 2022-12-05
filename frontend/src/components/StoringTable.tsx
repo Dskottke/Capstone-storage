@@ -4,7 +4,12 @@ import StoringTableRow from "./StoringTableRow";
 import "../css/table.css"
 
 type storingTableProps = {
+    fetchData: () => void
     drivingOrders: DrivingOrder[]
+    setErrorModal: (showErrorAlert: boolean) => void
+    setErrorMessage: (errorMessage: string) => void
+    setSuccessMessage: (successMessage: string) => void
+    setSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function StoringTable(props: storingTableProps) {
@@ -26,7 +31,12 @@ function StoringTable(props: storingTableProps) {
                         <td></td>
 
                     </tr>) : (
-                    props.drivingOrders.map(order => <StoringTableRow drivingOrder={order} key={order.id}/>
+                    props.drivingOrders.map(order => <StoringTableRow fetchData={props.fetchData}
+                                                                      setSuccessModal={props.setSuccessModal}
+                                                                      setErrorModal={props.setErrorModal}
+                                                                      setErrorMessage={props.setErrorMessage}
+                                                                      setSuccessMessage={props.setSuccessMessage}
+                                                                      drivingOrder={order} key={order.id}/>
                     ))}
                 </tbody>
             </table>
