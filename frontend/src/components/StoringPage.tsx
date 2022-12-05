@@ -45,7 +45,7 @@ function StoringPage(props: storingPageProps) {
                                handleInputItemNumber={props.handleInputItemNumber}
                                handleInputStorageBinNumber={props.handleInputStorageBinNumber}
                                setStorageBinNumber={props.setStorageBinNumber}
-                               storageBinNumber={props.storageBinNumber} itemNumber={props.itemNumber}
+                               storageLocationNumber={props.storageBinNumber} itemNumber={props.itemNumber}
                                setItemNumber={props.setItemNumber}/>
             <div className={"page-body"}>
                 <StoringTable drivingOrders={data}/>
