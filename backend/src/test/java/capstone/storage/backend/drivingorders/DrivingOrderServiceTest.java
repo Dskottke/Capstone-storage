@@ -2,6 +2,8 @@ package capstone.storage.backend.drivingorders;
 
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.drivingorders.models.NewDrivingOrder;
+import capstone.storage.backend.item.ItemService;
+import capstone.storage.backend.storagebin.StorageBinService;
 import capstone.storage.backend.utils.ServiceUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,10 @@ class DrivingOrderServiceTest {
 
     private final DrivingOrderRepo drivingOrderRepo = mock(DrivingOrderRepo.class);
     private final ServiceUtils serviceUtils = mock(ServiceUtils.class);
-    private final DrivingOrderService drivingOrderService = new DrivingOrderService(drivingOrderRepo, serviceUtils);
+    private final ItemService itemService = mock(ItemService.class);
+    private final StorageBinService storageBinService = mock(StorageBinService.class);
+    private final DrivingOrderService drivingOrderService = new DrivingOrderService(
+            drivingOrderRepo, itemService, serviceUtils, storageBinService);
 
 
     @Test

@@ -49,6 +49,10 @@ public class ItemService {
         return repository.existsById(id);
     }
 
+    public boolean existByItemNumber(String itemNumber) {
+        return repository.existsByItemNumber(itemNumber);
+    }
+
     public void deleteItemById(String id) {
         repository.deleteById(id);
     }

@@ -1,4 +1,5 @@
 package capstone.storage.backend.storagebin;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,4 +13,9 @@ public class StorageBinService {
     public List<StorageBin> getAllStorageBins() {
         return repo.findAll();
     }
+
+    public boolean existsByLocationNumber(String locationNumber) {
+        return repo.existsByLocationNumber(locationNumber);
+    }
 }
+
