@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface DrivingOrderRepo extends MongoRepository<DrivingOrder, String> {
    List<DrivingOrder> findByType(Type type);
+
+   List<DrivingOrder> findByTypeAndStorageBinNumber(Type type, String storageBinNumber);
 }

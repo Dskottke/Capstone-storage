@@ -7,4 +7,6 @@ public interface ItemRepo extends MongoRepository<Item, String> {
     boolean existsByEan(String ean);
 
     boolean existsByItemNumber(String itemNumber);
+
+    Item findItemByItemNumber(String itemNumber);
 }

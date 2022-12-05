@@ -45,6 +45,10 @@ public class ItemService {
         return repository.save(articleRequest);
     }
 
+    public Item findItemByItemNumber(String itemNumber) {
+        return repository.findItemByItemNumber(itemNumber);
+    }
+
     public boolean existById(String id) {
         return repository.existsById(id);
     }

@@ -10,6 +10,10 @@ import java.util.List;
 public class StorageBinService {
     private final StorageBinRepo repo;
 
+    public StorageBin findStorageBinByLocationNumber(String storageBinNumber) {
+        return repo.findItemByLocationNumber(storageBinNumber);
+    }
+
     public List<StorageBin> getAllStorageBins() {
         return repo.findAll();
     }
