@@ -2,7 +2,8 @@ import React, {ChangeEvent, useState} from 'react';
 import axios from "axios";
 import "../css/TableNavigation.css"
 
-type itemNavigationProbs = {
+type itemNavigationProps = {
+
     fetchData: () => void
     setErrorModal: (showErrorAlert: boolean) => void
     setErrorMessage: (errorMessage: string) => void
@@ -10,7 +11,7 @@ type itemNavigationProbs = {
     setSuccessModal: (showSuccessAlert: boolean) => void
 }
 
-function ItemNavigation(props: itemNavigationProbs) {
+function ItemNavigation(props: itemNavigationProps) {
 
     const [ean, setEan] = useState("")
     const [itemNumber, setItemNumber] = useState("")

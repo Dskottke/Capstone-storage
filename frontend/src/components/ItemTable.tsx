@@ -2,7 +2,7 @@ import {ItemModel} from "../model/ItemModel";
 import "../css/table.css"
 import ItemTableRow from "./ItemTableRow";
 
-type itemPageProbs = {
+type itemPageProps = {
     data: ItemModel[],
     fetchData: () => void
     setErrorModal: (showAlert: boolean) => void
@@ -11,7 +11,7 @@ type itemPageProbs = {
     setSuccessModal: (showSuccessAlert: boolean) => void
 }
 
-function ItemTable(props: itemPageProbs) {
+function ItemTable(props: itemPageProps) {
     return (
         <div className="container-table">
             <table className="Table">

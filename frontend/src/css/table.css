@@ -3,6 +3,13 @@
     text-align: center;
 }
 
+#storing-table {
+    table-layout: fixed;
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%
+}
+
 #storage_table {
     table-layout: fixed;
     margin-left: 10%;
