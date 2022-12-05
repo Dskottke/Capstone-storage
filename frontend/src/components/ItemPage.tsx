@@ -20,28 +20,28 @@ type itemPageProps = {
 
 function ItemPage(props: itemPageProps) {
 
-    const [data, setData] = useState<ItemModel[]>([]);
+    const [itemData, setItemData] = useState<ItemModel[]>([]);
 
 
     useEffect(() => {
-        fetchData()
+        fetchItemData()
     }, [])
 
-    const fetchData = () => {
+    const fetchItemData = () => {
         axios.get("/api/items/")
             .then(response => {
                 return response.data
             })
             .catch(error => {
-               console.error(error)
+                console.error(error)
             })
-            .then((data) => setData(data))
+            .then((data) => setItemData(data))
     }
 
     return (
         <div className={"page-container"}>
             <TableHeadNav/>
-            <ItemNavigation fetchData={fetchData} setErrorModal={props.setErrorModal}
+            <ItemNavigation fetchData={fetchItemData} setErrorModal={props.setErrorModal}
                             setErrorMessage={props.setErrorMessage} setSuccessModal={props.setSuccessModal}
                             setSuccessMessage={props.setSuccessMessage}/>
             {props.errorModal &&
@@ -55,7 +55,7 @@ function ItemPage(props: itemPageProps) {
                 }}>{props.successMessage}</Alert>
             }
             <div className={"page-body"}>
-                <ItemTable fetchData={fetchData} data={data} setErrorMessage={props.setErrorMessage}
+                <ItemTable fetchData={fetchItemData} data={itemData} setErrorMessage={props.setErrorMessage}
                            setErrorModal={props.setErrorModal} setSuccessMessage={props.setSuccessMessage}
                            setSuccessModal={props.setSuccessModal}/>
             </div>
