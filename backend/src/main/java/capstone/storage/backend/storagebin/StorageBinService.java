@@ -20,19 +20,19 @@ public class StorageBinService {
         return repo.findAll();
     }
 
-    public boolean existsByLocationNumber(String locationNumber) {
+    public boolean existsByLocationId(String locationNumber) {
         return repo.existsByLocationId(locationNumber);
     }
 
     public void updateStorageBin(DrivingOrder drivingOrder) {
-        StorageBin storageBinToUpdate = repo.findById(drivingOrder.storageBinId())
+        StorageBin storageBinToUpdate = repo.findById(drivingOrder.storageLocationId())
                 .orElseThrow();
 
         int newAmount = Integer.parseInt(storageBinToUpdate.amount()) + Integer.parseInt(drivingOrder.amount());
 
         StorageBin update = new StorageBin(
                 storageBinToUpdate.id(),
-                drivingOrder.storageBinId(),
+                drivingOrder.storageLocationId(),
                 drivingOrder.itemNumber(),
                 Integer.toString(newAmount));
 

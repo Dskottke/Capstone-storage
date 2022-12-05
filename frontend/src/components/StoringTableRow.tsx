@@ -37,7 +37,7 @@ function StoringTableRow(props: storingTableRowProps) {
         <tr key={props.drivingOrder.id}>
             <td className="center">{props.drivingOrder.id}</td>
             <td className="center">{props.drivingOrder.itemNumber}</td>
-            <td className="center">{props.drivingOrder.storageBinId}</td>
+            <td className="center">{props.drivingOrder.storageLocationId}</td>
             <td className="center">{props.drivingOrder.amount}</td>
             <td className="center"><IconButton aria-label="driving-order-done" size="small"
                                                onClick={deleteDrivingOrder}>
