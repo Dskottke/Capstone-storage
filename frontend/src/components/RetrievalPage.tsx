@@ -9,9 +9,9 @@ import "../css/TablePage.css"
 
 type retrievalPageProps = {
     amountValue: string
-    storageBinNumber: string
+    storageLocationId: string
     itemNumber: string
-    setStorageBinNumber: (storageBinNumber: string) => void
+    setStorageLocationId: (storageBinNumber: string) => void
     setItemNumber: (itemNumber: string) => void
     setAmountValue: (amount: string) => void
     handleInputAmount: (event: ChangeEvent<HTMLInputElement>) => void
@@ -45,8 +45,8 @@ function RetrievalPage(props: retrievalPageProps) {
                                  handleInputAmount={props.handleInputAmount}
                                  handleInputItemNumber={props.handleInputItemNumber}
                                  handleInputStorageBinNumber={props.handleInputStorageBinNumber}
-                                 setStorageBinNumber={props.setStorageBinNumber}
-                                 storageBinNumber={props.storageBinNumber} itemNumber={props.itemNumber}
+                                 setStorageLocationId={props.setStorageLocationId}
+                                 storageLocationId={props.storageLocationId} itemNumber={props.itemNumber}
                                  setItemNumber={props.setItemNumber}/>
             <div className={"page-body"}>
                 <RetrievalTable drivingOrders={data}/>

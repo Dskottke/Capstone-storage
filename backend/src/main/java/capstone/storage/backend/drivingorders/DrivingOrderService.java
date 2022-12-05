@@ -38,7 +38,7 @@ public class DrivingOrderService {
         }
 
         Item itemFromOrder = itemService.findItemByItemNumber(newDrivingOrder.itemNumber());
-        StorageBin storageBinFromOrder = storageBinService.findStorageBinByLocationNumber(newDrivingOrder.storageLocationNumber());
+        StorageBin storageBinFromOrder = storageBinService.findStorageBinByLocationId(newDrivingOrder.storageLocationId());
 
         if (!checkDrivingOrderWithStorageBinAlreadyExist(storageBinFromOrder, itemFromOrder)) {
             throw new StorageBinFalseItemException();
@@ -49,27 +49,27 @@ public class DrivingOrderService {
         }
 
         return drivingOrderRepo.insert(new DrivingOrder(serviceUtils.generateUUID(),
-                newDrivingOrder.storageLocationNumber(),
+                newDrivingOrder.storageLocationId(),
                 newDrivingOrder.itemNumber(),
                 Type.INPUT,
                 newDrivingOrder.amount()));
     }
 
     public boolean isNullOrEmpty(NewDrivingOrder newDrivingOrder) {
-        if (newDrivingOrder.storageLocationNumber() == null
+        if (newDrivingOrder.storageLocationId() == null
                 || newDrivingOrder.itemNumber() == null
                 || newDrivingOrder.amount() == null) {
             return true;
         }
         String emptyString = "";
         return emptyString.equals(newDrivingOrder.itemNumber())
-                || emptyString.equals(newDrivingOrder.storageLocationNumber())
+                || emptyString.equals(newDrivingOrder.storageLocationId())
                 || emptyString.equals(newDrivingOrder.amount());
     }
 
     public boolean itemAndStorageBinExisting(NewDrivingOrder newDrivingOrder) {
         return itemService.existByItemNumber(newDrivingOrder.itemNumber())
-                || storageBinService.existsByLocationNumber(newDrivingOrder.storageLocationNumber());
+                || storageBinService.existsByLocationNumber(newDrivingOrder.storageLocationId());
     }
 
     public boolean checkDrivingOrderWithStorageBinAlreadyExist(StorageBin storageBinToCheck, Item itemToCheck) {

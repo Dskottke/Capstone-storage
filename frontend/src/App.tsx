@@ -10,7 +10,7 @@ import RetrievalPage from "./components/RetrievalPage";
 
 function App() {
 
-    const [storageBinNumber, setStorageBinNumber] = useState("")
+    const [storageLocationId, setStorageLocationId] = useState("")
     const [itemNumber, setItemNumber] = useState("")
     const [amountValue, setAmountValue] = useState("")
     const [errorModal, setErrorModal] = useState(false)
@@ -28,7 +28,7 @@ function App() {
     }
     const handleInputStorageBinNumber = (event: ChangeEvent<HTMLInputElement>) => {
         const validStorageBinNumber = event.target.value.replace(/\D/g, '')
-        setStorageBinNumber(validStorageBinNumber)
+        setStorageLocationId(validStorageBinNumber)
     }
     return (<>
             <Routes>
@@ -51,16 +51,16 @@ function App() {
                                              handleInputAmount={handleInputAmount}
                                              handleInputItemNumber={handleInputItemNumber}
                                              handleInputStorageBinNumber={handleInputStorageBinNumber}
-                                             setStorageBinNumber={setStorageBinNumber}
-                                             storageBinNumber={storageBinNumber} itemNumber={itemNumber}
+                                             setStorageLocationId={setStorageLocationId}
+                                             storageLocationId={storageLocationId} itemNumber={itemNumber}
                                              setItemNumber={setItemNumber}/>}/>
                 <Route path={"/retrieval-page"}
                        element={<RetrievalPage amountValue={amountValue} setAmountValue={setAmountValue}
                                                handleInputAmount={handleInputAmount}
                                                handleInputItemNumber={handleInputItemNumber}
                                                handleInputStorageBinNumber={handleInputStorageBinNumber}
-                                               setStorageBinNumber={setStorageBinNumber}
-                                               storageBinNumber={storageBinNumber} itemNumber={itemNumber}
+                                               setStorageLocationId={setStorageLocationId}
+                                               storageLocationId={storageLocationId} itemNumber={itemNumber}
                                                setItemNumber={setItemNumber}/>}/>
             </Routes>
 
