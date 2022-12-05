@@ -7,13 +7,21 @@ import "../css/TablePage.css"
 import Alert from "@mui/material/Alert";
 import TableHeadNav from "./TableHeadNav";
 
-function ItemPage() {
+type itemPageProps = {
+    errorModal: boolean
+    successModal: boolean
+    errorMessage: string
+    successMessage: string
+    setErrorModal: (showAlert: boolean) => void
+    setErrorMessage: (errorMessage: string) => void
+    setSuccessMessage: (successMessage: string) => void
+    setSuccessModal: (showSuccessAlert: boolean) => void
+}
+
+function ItemPage(props: itemPageProps) {
 
     const [data, setData] = useState<ItemModel[]>([]);
-    const [errorModal, setErrorModal] = useState(false)
-    const [errorMessage, setErrorMessage] = useState("")
-    const [successModal, setSuccessModal] = useState(false)
-    const [successMessage, setSuccessMessage] = useState("")
+
 
     useEffect(() => {
         fetchData()
@@ -33,23 +41,23 @@ function ItemPage() {
     return (
         <div className={"page-container"}>
             <TableHeadNav/>
-            <ItemNavigation fetchData={fetchData} setErrorModal={setErrorModal}
-                            setErrorMessage={setErrorMessage} setSuccessModal={setSuccessModal}
-                            setSuccessMessage={setSuccessMessage}/>
-            {errorModal &&
+            <ItemNavigation fetchData={fetchData} setErrorModal={props.setErrorModal}
+                            setErrorMessage={props.setErrorMessage} setSuccessModal={props.setSuccessModal}
+                            setSuccessMessage={props.setSuccessMessage}/>
+            {props.errorModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} severity="error" onClose={() => {
-                    setErrorModal(false);
-                }}>{errorMessage}</Alert>
+                    props.setErrorModal(false);
+                }}>{props.errorMessage}</Alert>
             }
-            {successModal &&
+            {props.successModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} onClose={() => {
-                    setSuccessModal(false);
-                }}>{successMessage}</Alert>
+                    props.setSuccessModal(false);
+                }}>{props.successMessage}</Alert>
             }
             <div className={"page-body"}>
-                <ItemTable fetchData={fetchData} data={data} setErrorMessage={setErrorMessage}
-                           setErrorModal={setErrorModal} setSuccessMessage={setSuccessMessage}
-                           setSuccessModal={setSuccessModal}/>
+                <ItemTable fetchData={fetchData} data={data} setErrorMessage={props.setErrorMessage}
+                           setErrorModal={props.setErrorModal} setSuccessMessage={props.setSuccessMessage}
+                           setSuccessModal={props.setSuccessModal}/>
             </div>
 
         </div>
