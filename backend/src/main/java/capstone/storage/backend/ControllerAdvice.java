@@ -67,4 +67,9 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
                 .body(ex.getMessage());
     }
 
+    @ExceptionHandler(OrderToDeleteNotFoundException.class)
+    public ResponseEntity<String> handleStorageBinFalseItemException(OrderToDeleteNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+    }
 }

@@ -101,4 +101,8 @@ public class DrivingOrderService {
 
         return itemsToStore <= freeAmount;
     }
+
+    public boolean existById(String id) {
+        return drivingOrderRepo.existsById(id);
+    }
 }
