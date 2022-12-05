@@ -1,4 +1,4 @@
-package capstone.storage.backend;
+package capstone.storage.backend.item;
 import capstone.storage.backend.exceptions.ExceptionMessage;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;

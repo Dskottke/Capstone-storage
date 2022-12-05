@@ -1,10 +1,7 @@
-package capstone.storage.backend;
+package capstone.storage.backend.item;
 
 import capstone.storage.backend.exceptions.ExceptionMessage;
 import capstone.storage.backend.exceptions.ItemAlreadyExistException;
-import capstone.storage.backend.item.ItemEanApiService;
-import capstone.storage.backend.item.ItemRepo;
-import capstone.storage.backend.item.ItemService;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
