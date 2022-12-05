@@ -3,7 +3,6 @@ package capstone.storage.backend.drivingorders;
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.drivingorders.models.NewDrivingOrder;
 import capstone.storage.backend.exceptions.IsNullOrEmptyException;
-import capstone.storage.backend.exceptions.ItemToDeleteNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +33,7 @@ public class DrivingOrderController {
     @DeleteMapping("/input/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void drivingOrderDone(@PathVariable String id) {
-        if (!drivingOrderService.existById(id)) {
-            throw new ItemToDeleteNotFoundException();
-        }
+        drivingOrderService.drivingOrderDone(id);
+
     }
 }

@@ -1,5 +1,6 @@
 package capstone.storage.backend.storagebin;
 
+import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,15 @@ public class StorageBinService {
 
     public boolean existsByLocationNumber(String locationNumber) {
         return repo.existsByLocationNumber(locationNumber);
+    }
+
+    public void updateStorageBin(DrivingOrder drivingOrder) {
+        StorageBin storageBinToUpdate = new StorageBin(
+                drivingOrder.storageBinNumber(),
+                drivingOrder.itemNumber(),
+                drivingOrder.amount());
+
+        repo.save(storageBinToUpdate);
     }
 }
 
