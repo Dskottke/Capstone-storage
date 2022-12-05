@@ -40,6 +40,7 @@ function StoringPage(props: storingPageProps) {
                 console.error(error)
             })
             .then((data) => setData(data))
+
     }
 
     useEffect(() => {
@@ -49,17 +50,17 @@ function StoringPage(props: storingPageProps) {
     return (
         <div className={"page-container"}>
             <TableHeadNav/>
-            <StoringNavigation
-                setErrorModal={props.setErrorModal}
-                setErrorMessage={props.setErrorMessage} setSuccessMessage={props.setSuccessMessage}
-                setSuccessModal={props.setSuccessModal} amountValue={props.amountValue}
-                setAmountValue={props.setAmountValue}
-                handleInputAmount={props.handleInputAmount}
-                handleInputItemNumber={props.handleInputItemNumber}
-                handleInputStorageBinNumber={props.handleInputStorageBinNumber}
-                setStorageBinNumber={props.setStorageBinNumber}
-                storageLocationNumber={props.storageBinNumber} itemNumber={props.itemNumber}
-                setItemNumber={props.setItemNumber}/>
+            <StoringNavigation fetchData={fetchData}
+                               setErrorModal={props.setErrorModal}
+                               setErrorMessage={props.setErrorMessage} setSuccessMessage={props.setSuccessMessage}
+                               setSuccessModal={props.setSuccessModal} amountValue={props.amountValue}
+                               setAmountValue={props.setAmountValue}
+                               handleInputAmount={props.handleInputAmount}
+                               handleInputItemNumber={props.handleInputItemNumber}
+                               handleInputStorageBinNumber={props.handleInputStorageBinNumber}
+                               setStorageBinNumber={props.setStorageBinNumber}
+                               storageLocationNumber={props.storageBinNumber} itemNumber={props.itemNumber}
+                               setItemNumber={props.setItemNumber}/>
 
             {props.errorModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} severity="error" onClose={() => {
