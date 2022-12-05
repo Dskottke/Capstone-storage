@@ -1,8 +1,9 @@
 import React, {ChangeEvent} from 'react';
+import axios from "axios";
 
 type storingNavigationProps = {
     amountValue: string
-    storageBinNumber: string
+    storageLocationNumber: string
     itemNumber: string
     setStorageBinNumber: (storageBinNumber: string) => void
     setItemNumber: (itemNumber: string) => void
@@ -16,6 +17,13 @@ function StoringNavigation(props: storingNavigationProps) {
 
     const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
+        const itemNumber = props.itemNumber
+        const storageLocationNumber = props.storageLocationNumber
+        const amount = props.amountValue
+
+        axios.post("/api/driving-orders/input", {itemNumber, storageLocationNumber, amount})
+            .catch(error => console.error(error))
+
     }
 
     return (
@@ -26,7 +34,7 @@ function StoringNavigation(props: storingNavigationProps) {
                     <input className="item_input_field" value={props.itemNumber}
                            onChange={props.handleInputItemNumber} type="text" placeholder="item-number"
                            name="item-number"/>
-                    <input className="item_input_field" value={props.storageBinNumber}
+                    <input className="item_input_field" value={props.storageLocationNumber}
                            onChange={props.handleInputStorageBinNumber} type="text" placeholder="storage-bin-nr"
                            name="ean"/>
                     <input className="item_input_field" value={props.amountValue}

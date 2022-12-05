@@ -92,6 +92,6 @@ public class DrivingOrderService {
 
         int freeAmount = storageBinCapacity - (ordersTotalAmount + actualStorageBinAmount);
 
-        return itemsToStore >= freeAmount;
+        return itemsToStore <= freeAmount;
     }
 }
