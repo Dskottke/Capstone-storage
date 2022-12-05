@@ -1,7 +1,7 @@
 import React from 'react';
 import {DrivingOrder} from "../model/DrivingOrder";
-
 import StoringTableRow from "./StoringTableRow";
+import "../css/table.css"
 
 type storingTableProps = {
     drivingOrders: DrivingOrder[]
@@ -10,14 +10,14 @@ type storingTableProps = {
 function StoringTable(props: storingTableProps) {
     return (
         <div className="container-table">
-            <table className="Table">
+            <table id="storing-table" className="Table">
                 <thead>
                 <tr>
-                    <th className={"center"}>nr.</th>
-                    <th>item-nr.</th>
-                    <th>storage-bin-nr.</th>
-                    <th>amount</th>
-                    <th>action</th>
+                    <th className="center">nr.</th>
+                    <th className="center">item-nr.</th>
+                    <th className="center">storage-bin-nr.</th>
+                    <th className="center">amount</th>
+                    <th className="center">action</th>
                 </tr>
                 </thead>
                 <tbody>

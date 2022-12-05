@@ -39,6 +39,9 @@ function StoringNavigation(props: storingNavigationProps) {
                     props.setErrorMessage(error.response.data)
                 }
             }).then(props.fetchData)
+            .then(() => props.setAmountValue(""))
+            .then(() => props.setItemNumber(""))
+            .then(() => props.setStorageBinNumber(""))
     }
 
 
