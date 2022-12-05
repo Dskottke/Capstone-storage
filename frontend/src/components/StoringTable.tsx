@@ -14,8 +14,8 @@ function StoringTable(props: storingTableProps) {
                 <thead>
                 <tr>
                     <th className={"center"}>nr.</th>
-                    <th>storage-bin</th>
-                    <th>item</th>
+                    <th>item-nr.</th>
+                    <th>storage-bin-nr.</th>
                     <th>amount</th>
                     <th>action</th>
                 </tr>
