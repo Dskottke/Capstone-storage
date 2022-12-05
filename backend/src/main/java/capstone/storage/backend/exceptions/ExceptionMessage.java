@@ -15,14 +15,15 @@ public enum ExceptionMessage {
 
     STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE("storage-bin is filled with not matching item"),
 
-    TEST_DATA_ITEMS_NOT_FOUND_MESSAGE("can't find data from json");
+    TEST_DATA_ITEMS_NOT_FOUND_MESSAGE("can't find data from json"),
+
+    ORDER_TO_DELETE_NOT_FOUND_EXCEPTION_MESSAGE("item is already deleted");
 
     private final String message;
 
     ExceptionMessage(String message) {
         this.message = message;
     }
-
 
     @Override
     public String toString() {
