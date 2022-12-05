@@ -55,4 +55,16 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
                 .body(ex.getMessage());
     }
 
+    @ExceptionHandler(IsNotEnoughSpaceException.class)
+    public ResponseEntity<String> handleIsNotEnoughSpaceException(IsNotEnoughSpaceException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(StorageBinFalseItemException.class)
+    public ResponseEntity<String> handleStorageBinFalseItemException(StorageBinFalseItemException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+    }
+
 }
