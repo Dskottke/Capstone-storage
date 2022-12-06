@@ -9,13 +9,13 @@ import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.storagebin.StorageBin;
 import capstone.storage.backend.storagebin.StorageBinService;
 import capstone.storage.backend.utils.ServiceUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -95,6 +95,18 @@ class DrivingOrderServiceTest {
     void isNullOrEmptyWithTwoFieldsNullShouldReturnTrue() {
         //GIVEN
         NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", null, null);
+        //WHEN
+        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method -> isNullOrEmpty should return true because two fields are empty")
+    void isNullOrEmptyWithTwoFieldsEmptyShouldReturnTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "", "");
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -189,7 +201,7 @@ class DrivingOrderServiceTest {
         when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.of(testDrivingOrder));
         try {
             drivingOrderService.addNewInputDrivingOrder(newDrivingOrder);
-            fail();
+            Assertions.fail();
         }
         //THEN
         catch (StorageBinFalseItemException e) {
