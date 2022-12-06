@@ -12,19 +12,19 @@ import {pink} from "@mui/material/colors";
 type ItemTableRowProps = {
     item: ItemModel
     fetchItemData: () => void
-    setItemErrorModal: (showItemErrorAlert: boolean) => void
-    setItemErrorMessage: (itemErrorMessage: string) => void
-    setItemSuccessMessage: (itemSuccessMessage: string) => void
-    setItemSuccessModal: (showItemSuccessAlert: boolean) => void
+    setItemTableRowErrorModal: (showItemErrorAlert: boolean) => void
+    setItemTableRowErrorMessage: (itemErrorMessage: string) => void
+    setItemTableRowSuccessMessage: (itemSuccessMessage: string) => void
+    setItemTableRowSuccessModal: (showItemSuccessAlert: boolean) => void
 }
 
 function ItemTableRow({
                           item,
                           fetchItemData,
-                          setItemSuccessModal,
-                          setItemSuccessMessage,
-                          setItemErrorMessage,
-                          setItemErrorModal
+                          setItemTableRowSuccessModal,
+                          setItemTableRowSuccessMessage,
+                          setItemTableRowErrorMessage,
+                          setItemTableRowErrorModal
                       }: ItemTableRowProps) {
 
     const [storableValue, setStorableValue] = useState<string>("");
@@ -34,14 +34,14 @@ function ItemTableRow({
         axios.put("/api/items/" + item.id, {...item, storableValue})
             .then(response => {
                 if (response.status === 200) {
-                    setItemSuccessModal(true);
-                    setItemSuccessMessage("item updated");
+                    setItemTableRowSuccessModal(true);
+                    setItemTableRowSuccessMessage("item updated");
                 }
             })
             .catch(error => {
                 if (error.response) {
-                    setItemErrorModal(true);
-                    setItemErrorMessage(error.response.data)
+                    setItemTableRowErrorModal(true);
+                    setItemTableRowErrorMessage(error.response.data)
                     ;
                 }
             })
@@ -52,14 +52,14 @@ function ItemTableRow({
         axios.delete("/api/items/" + id)
             .then(response => {
                 if (response.status === 204) {
-                    setItemSuccessModal(true);
-                    setItemSuccessMessage("item deleted")
+                    setItemTableRowSuccessModal(true);
+                    setItemTableRowSuccessMessage("item deleted")
                 }
             })
             .catch(error => {
                 if (error.response) {
-                    setItemErrorModal(true);
-                    setItemErrorMessage(error.response.data)
+                    setItemTableRowErrorModal(true);
+                    setItemTableRowErrorMessage(error.response.data)
                 }
             })
             .then(fetchItemData)

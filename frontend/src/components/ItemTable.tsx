@@ -5,10 +5,10 @@ import ItemTableRow from "./ItemTableRow";
 type itemPageProps = {
     itemData: ItemModel[],
     fetchItemData: () => void
-    setItemErrorModal: (showItemAlert: boolean) => void
-    setItemErrorMessage: (itemErrorMessage: string) => void
-    setItemSuccessMessage: (itemSuccessMessage: string) => void
-    setItemSuccessModal: (showItemSuccessAlert: boolean) => void
+    setItemTableErrorModal: (showItemAlert: boolean) => void
+    setItemTableErrorMessage: (itemErrorMessage: string) => void
+    setItemTableSuccessMessage: (itemSuccessMessage: string) => void
+    setItemTableSuccessModal: (showItemSuccessAlert: boolean) => void
 }
 
 function ItemTable(props: itemPageProps) {
@@ -34,10 +34,10 @@ function ItemTable(props: itemPageProps) {
                     </tr>) : (
                     props.itemData.map(item => <ItemTableRow item={item} key={item.id}
                                                              fetchItemData={props.fetchItemData}
-                                                             setItemErrorMessage={props.setItemErrorMessage}
-                                                             setItemErrorModal={props.setItemErrorModal}
-                                                             setItemSuccessMessage={props.setItemSuccessMessage}
-                                                             setItemSuccessModal={props.setItemSuccessModal}/>
+                                                             setItemTableRowErrorMessage={props.setItemTableErrorMessage}
+                                                             setItemTableRowErrorModal={props.setItemTableErrorModal}
+                                                             setItemTableRowSuccessMessage={props.setItemTableSuccessMessage}
+                                                             setItemTableRowSuccessModal={props.setItemTableSuccessModal}/>
                     ))}
                 </tbody>
             </table>

@@ -12,10 +12,10 @@ type storingNavigationProps = {
     handleStoringAmount: (event: ChangeEvent<HTMLInputElement>) => void
     handleStoringItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
     handleStoringStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
-    setStoringErrorModal: (showStoringAlert: boolean) => void
-    setStoringErrorMessage: (errorStoringMessage: string) => void
-    setStoringSuccessMessage: (successStoringMessage: string) => void
-    setStoringSuccessModal: (showStoringSuccessAlert: boolean) => void
+    setStoringNavigationErrorModal: (showStoringAlert: boolean) => void
+    setStoringNavigationErrorMessage: (errorStoringMessage: string) => void
+    setStoringNavigationSuccessMessage: (successStoringMessage: string) => void
+    setStoringNavigationSuccessModal: (showStoringSuccessAlert: boolean) => void
 }
 
 function StoringNavigation(props: storingNavigationProps) {
@@ -33,14 +33,14 @@ function StoringNavigation(props: storingNavigationProps) {
         })
             .then(response => {
                 if (response.status === 201) {
-                    props.setStoringSuccessModal(true);
-                    props.setStoringSuccessMessage("new driving order created ")
+                    props.setStoringNavigationSuccessModal(true);
+                    props.setStoringNavigationSuccessMessage("new driving order created ")
                 }
             })
             .catch(error => {
                 if (error.response) {
-                    props.setStoringErrorModal(true);
-                    props.setStoringErrorMessage(error.response.data)
+                    props.setStoringNavigationErrorModal(true);
+                    props.setStoringNavigationErrorMessage(error.response.data)
                 }
             }).then(props.fetchStoringData)
             .then(() => props.setStoringAmountValue(""))

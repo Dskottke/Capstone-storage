@@ -11,10 +11,10 @@ function StoragePage() {
     const [storageData, setStorageData] = useState<StorageBinModel[]>([]);
 
     useEffect(() => {
-        fetchData()
+        fetchStorageData()
     }, [])
 
-    const fetchData = () => {
+    const fetchStorageData = () => {
         axios.get("/api/storagebins/")
             .then(response => {
                 return response.data
@@ -29,7 +29,7 @@ function StoragePage() {
             <TableHeadNav/>
             <StorageNavigation/>
             <div className={"page-body"}>
-                <StorageTable fetchStorageData={fetchData} storageData={storageData}/>
+                <StorageTable fetchStorageData={fetchStorageData} storageData={storageData}/>
             </div>
         </div>
     );
