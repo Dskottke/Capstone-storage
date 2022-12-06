@@ -5,11 +5,11 @@ import "../css/Table.css"
 
 type storingTableProps = {
     fetchData: () => void
-    drivingOrders: DrivingOrder[]
-    setErrorModal: (showErrorAlert: boolean) => void
-    setErrorMessage: (errorMessage: string) => void
-    setSuccessMessage: (successMessage: string) => void
-    setSuccessModal: (showSuccessAlert: boolean) => void
+    storingDrivingOrders: DrivingOrder[]
+    setStoringErrorModal: (showErrorAlert: boolean) => void
+    setStoringErrorMessage: (errorMessage: string) => void
+    setStoringSuccessMessage: (successMessage: string) => void
+    setStoringSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function StoringTable(props: storingTableProps) {
@@ -26,17 +26,18 @@ function StoringTable(props: storingTableProps) {
                 </tr>
                 </thead>
                 <tbody>
-                {props.drivingOrders.length === 0 ? (
+                {props.storingDrivingOrders.length === 0 ? (
                     <tr>
                         <td></td>
 
                     </tr>) : (
-                    props.drivingOrders.map(order => <StoringTableRow fetchData={props.fetchData}
-                                                                      setSuccessModal={props.setSuccessModal}
-                                                                      setErrorModal={props.setErrorModal}
-                                                                      setErrorMessage={props.setErrorMessage}
-                                                                      setSuccessMessage={props.setSuccessMessage}
-                                                                      drivingOrder={order} key={order.id}/>
+                    props.storingDrivingOrders.map(order => <StoringTableRow fetchStoringData={props.fetchData}
+                                                                             setStoringSuccessModal={props.setStoringSuccessModal}
+                                                                             setStoringErrorModal={props.setStoringErrorModal}
+                                                                             setStoringErrorMessage={props.setStoringErrorMessage}
+                                                                             setStoringSuccessMessage={props.setStoringSuccessMessage}
+                                                                             storingDrivingOrder={order}
+                                                                             key={order.id}/>
                     ))}
                 </tbody>
             </table>

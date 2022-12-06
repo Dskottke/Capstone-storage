@@ -41,34 +41,38 @@ function App() {
                                           setSuccessMessage={setSuccessMessage}
                                           setSuccessModal={setSuccessModal}/>}/>
                 <Route path={"/storage-page"} element={<StoragePage/>}/>
-                <Route path={"/store-page"} element={<StoringPage errorModal={errorModal} errorMessage={errorMessage}
-                                                                  setSuccessModal={setSuccessModal}
-                                                                  setSuccessMessage={setSuccessMessage}
-                                                                  setErrorMessage={setErrorMessage}
-                                                                  setErrorModal={setErrorModal}
-                                                                  successMessage={successMessage}
-                                                                  successModal={successModal} amountValue={amountValue}
-                                                                  setAmountValue={setAmountValue}
-                                                                  handleInputAmount={handleInputAmount}
-                                                                  handleInputItemNumber={handleInputItemNumber}
-                                                                  handleInputStorageBinNumber={handleInputStorageBinNumber}
-                                                                  setStorageLocationId={setStorageLocationId}
-                                                                  storageLocationId={storageLocationId}
-                                                                  itemNumber={itemNumber}
-                                                                  setItemNumber={setItemNumber}/>}/>
+                <Route path={"/store-page"}
+                       element={<StoringPage storingErrorModal={errorModal} storingErrorMessage={errorMessage}
+                                             setStoringSuccessModal={setSuccessModal}
+                                             setStoringSuccessMessage={setSuccessMessage}
+                                             setStoringErrorMessage={setErrorMessage}
+                                             setStoringErrorModal={setErrorModal}
+                                             storingSuccessMessage={successMessage}
+                                             storingSuccessModal={successModal} storingAmountValue={amountValue}
+                                             setStoringAmountValue={setAmountValue}
+                                             handleStoringAmount={handleInputAmount}
+                                             handleStoringItemNumber={handleInputItemNumber}
+                                             handleStoringStorageBinNumber={handleInputStorageBinNumber}
+                                             setStoringStorageLocationId={setStorageLocationId}
+                                             storingStorageLocationId={storageLocationId}
+                                             storingItemNumber={itemNumber}
+                                             setStoringItemNumber={setItemNumber}/>}/>
                 <Route path={"/retrieval-page"}
-                       element={<RetrievalPage errorModal={errorModal} errorMessage={errorMessage}
-                                               setSuccessModal={setSuccessModal}
-                                               setSuccessMessage={setSuccessMessage} setErrorMessage={setErrorMessage}
-                                               setErrorModal={setErrorModal} successMessage={successMessage}
-                                               successModal={successModal} amountValue={amountValue}
-                                               setAmountValue={setAmountValue}
-                                               handleOutputAmount={handleInputAmount}
-                                               handleOutputItemNumber={handleInputItemNumber}
-                                               handleOutputStorageBinNumber={handleInputStorageBinNumber}
-                                               setStorageLocationId={setStorageLocationId}
-                                               storageLocationId={storageLocationId} itemNumber={itemNumber}
-                                               setItemNumber={setItemNumber}/>}/>
+                       element={<RetrievalPage retrievalErrorModal={errorModal} retrievalErrorMessage={errorMessage}
+                                               setRetrievalSuccessModal={setSuccessModal}
+                                               setRetrievalSuccessMessage={setSuccessMessage}
+                                               setRetrievalErrorMessage={setErrorMessage}
+                                               setRetrievalErrorModal={setErrorModal}
+                                               retrievalSuccessMessage={successMessage}
+                                               retrievalSuccessModal={successModal} retrievalAmountValue={amountValue}
+                                               setRetrievalAmountValue={setAmountValue}
+                                               handleRetrievalAmount={handleInputAmount}
+                                               handleRetrievalItemNumber={handleInputItemNumber}
+                                               handleRetrievalStorageBinNumber={handleInputStorageBinNumber}
+                                               setRetrievalStorageLocationId={setStorageLocationId}
+                                               retrievalStorageLocationId={storageLocationId}
+                                               retrievalItemNumber={itemNumber}
+                                               setRetrievalItemNumber={setItemNumber}/>}/>
             </Routes>
 
         </>

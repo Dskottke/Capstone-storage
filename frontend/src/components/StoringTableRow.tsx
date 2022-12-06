@@ -5,40 +5,40 @@ import {IconButton} from "@mui/material";
 import axios from "axios";
 
 type storingTableRowProps = {
-    fetchData: () => void
-    drivingOrder: DrivingOrder
-    setErrorModal: (showErrorAlert: boolean) => void
-    setErrorMessage: (errorMessage: string) => void
-    setSuccessMessage: (successMessage: string) => void
-    setSuccessModal: (showSuccessAlert: boolean) => void
+    fetchStoringData: () => void
+    storingDrivingOrder: DrivingOrder
+    setStoringErrorModal: (showErrorAlert: boolean) => void
+    setStoringErrorMessage: (errorMessage: string) => void
+    setStoringSuccessMessage: (successMessage: string) => void
+    setStoringSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function StoringTableRow(props: storingTableRowProps) {
 
     const deleteDrivingOrder = () => {
-        axios.delete("/api/driving-orders/input/" + props.drivingOrder.id)
+        axios.delete("/api/driving-orders/input/" + props.storingDrivingOrder.id)
             .then(response => {
                 if (response.status === 204) {
-                    props.setSuccessModal(true);
-                    props.setSuccessMessage("items stored")
+                    props.setStoringSuccessModal(true);
+                    props.setStoringSuccessMessage("items stored")
                 }
             })
             .catch(error => {
                 if (error.response) {
-                    props.setErrorModal(true);
-                    props.setErrorMessage(error.response.data)
+                    props.setStoringErrorModal(true);
+                    props.setStoringErrorMessage(error.response.data)
                 }
             })
-            .then(props.fetchData)
+            .then(props.fetchStoringData)
 
     }
 
     return (
-        <tr key={props.drivingOrder.id}>
-            <td className="center">{props.drivingOrder.id}</td>
-            <td className="center">{props.drivingOrder.itemNumber}</td>
-            <td className="center">{props.drivingOrder.storageLocationId}</td>
-            <td className="center">{props.drivingOrder.amount}</td>
+        <tr key={props.storingDrivingOrder.id}>
+            <td className="center">{props.storingDrivingOrder.id}</td>
+            <td className="center">{props.storingDrivingOrder.itemNumber}</td>
+            <td className="center">{props.storingDrivingOrder.storageLocationId}</td>
+            <td className="center">{props.storingDrivingOrder.amount}</td>
             <td className="center"><IconButton aria-label="driving-order-done" size="small"
                                                onClick={deleteDrivingOrder}>
                 <CheckBoxIcon color="success" fontSize="inherit"/>
