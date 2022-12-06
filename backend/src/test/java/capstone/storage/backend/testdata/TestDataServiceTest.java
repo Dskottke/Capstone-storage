@@ -56,7 +56,7 @@ class TestDataServiceTest {
         when(serviceUtils.parseListFromJson(any(), any())).thenThrow(new IOException());
 
 
-        assertThrows(TestDataItemsNotFoundException.class, () -> testDataService.addTestData());
+        assertThrows(TestDataItemsNotFoundException.class, testDataService::addTestData);
 
     }
 

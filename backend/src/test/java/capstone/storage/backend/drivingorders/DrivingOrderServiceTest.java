@@ -42,6 +42,55 @@ class DrivingOrderServiceTest {
         assertEquals(expectedList, actual);
     }
 
+
+    @Test
+    @DisplayName("method -> isNullOrEmpty should return true because one field is null")
+    void isNullOrEmptyWithOneFieldNullShouldReturnTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "2", null);
+        //WHEN
+        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method -> isNullOrEmpty should return true because two fields are empty")
+    void isNullOrEmptyWithTwoFieldsEmptyShouldReturnTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "2", "");
+        //WHEN
+        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method -> isNullOrEmpty should return true because two fields are null")
+    void isNullOrEmptyWithTwoFieldsNullShouldReturnTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", null, null);
+        //WHEN
+        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method -> isNullOrEmpty should return true because one field is empty")
+    void isNullOrEmptyWithOneFieldIsEmptyShouldReturnTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "", "");
+        //WHEN
+        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
     @Test
     @DisplayName("Method -> isNullOrEmpty should return true because all fields are null")
     void isNullOrEmptyWithAllFieldsNullShouldReturnTrue() {
@@ -67,54 +116,6 @@ class DrivingOrderServiceTest {
     }
 
     @Test
-    @DisplayName("method -> isNullOrEmpty should return true because one field is empty")
-    void isNullOrEmptyWithOneFieldIsEmptyShouldReturnTrue() {
-        //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "", "");
-        //WHEN
-        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
-        boolean expected = true;
-        //THEN
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("method -> isNullOrEmpty should return true because one field is null")
-    void isNullOrEmptyWithOneFieldNullShouldReturnTrue() {
-        //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "2", null);
-        //WHEN
-        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
-        boolean expected = true;
-        //THEN
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("method -> isNullOrEmpty should return true because two fields are null")
-    void isNullOrEmptyWithTwoFieldsNullShouldReturnTrue() {
-        //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", null, null);
-        //WHEN
-        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
-        boolean expected = true;
-        //THEN
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("method -> isNullOrEmpty should return true because two fields are empty")
-    void isNullOrEmptyWithTwoFieldsEmptyShouldReturnTrue() {
-        //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "2", "");
-        //WHEN
-        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
-        boolean expected = true;
-        //THEN
-        assertEquals(expected, actual);
-    }
-
-    @Test
     @DisplayName("method -> isNullOrEmpty should return false because all fields are filled")
     void isNullOrEmptyWithOneFieldNullShouldReturnFalse() {
         //GIVEN
@@ -125,6 +126,19 @@ class DrivingOrderServiceTest {
         //THEN
         assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("method -> isNullOrEmpty should return true because one field is null and one field is empty")
+    void isNullOrEmptyWithOneFieldNullAndOneFieldEmptyStringShouldReturnTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder(null, "2", "");
+        //WHEN
+        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
 
     @Test
     @DisplayName("method -> itemAndStorageBinExisting should return true")
@@ -139,6 +153,7 @@ class DrivingOrderServiceTest {
         boolean expected = true;
         assertEquals(expected, actual);
     }
+
 
     @Test
     @DisplayName("method -> itemAndStorageBinExisting should return true")
