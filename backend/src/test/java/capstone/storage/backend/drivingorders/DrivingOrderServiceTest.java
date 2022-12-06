@@ -70,7 +70,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> isNullOrEmpty should return true because one field is empty")
     void isNullOrEmptyWithOneFieldIsEmptyShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "");
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "", "");
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -106,7 +106,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> isNullOrEmpty should return true because two fields are empty")
     void isNullOrEmptyWithTwoFieldsEmptyShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "", "");
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "2", "");
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -127,16 +127,16 @@ class DrivingOrderServiceTest {
     }
 
     @Test
-    @DisplayName("method -> itemAndStorageBinExisting should return false")
-    void itemAndStorageBinExistingReturnsFalse() {
+    @DisplayName("method -> itemAndStorageBinExisting should return true")
+    void itemAndStorageBinExistingReturnsTrue() {
         //GIVEN
         NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "1");
         //WHEN
-        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(false);
-        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(false);
+        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(true);
+        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(true);
         boolean actual = drivingOrderService.itemAndStorageBinExisting(newDrivingOrder);
         //THEN
-        boolean expected = false;
+        boolean expected = true;
         assertEquals(expected, actual);
     }
 
@@ -146,13 +146,12 @@ class DrivingOrderServiceTest {
         //GIVEN
         NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "1");
         //WHEN
-        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(true);
-        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(false);
+        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(false);
+        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(true);
         boolean actual = drivingOrderService.itemAndStorageBinExisting(newDrivingOrder);
         //THEN
         boolean expected = true;
         assertEquals(expected, actual);
-
     }
 
     @Test
