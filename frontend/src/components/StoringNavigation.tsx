@@ -22,11 +22,15 @@ function StoringNavigation(props: storingNavigationProps) {
 
     const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
-        const itemNumber = props.itemNumber
-        const storageLocationId = props.storageLocationId
-        const amount = props.amountValue
+        const storingItemNumber = props.itemNumber
+        const storingStorageLocationId = props.storageLocationId
+        const storingAmount = props.amountValue
 
-        axios.post("/api/driving-orders/?type=INPUT", {itemNumber, storageLocationId, amount})
+        axios.post("/api/driving-orders/?type=INPUT", {
+            itemNumber: storingItemNumber,
+            storageLocationId: storingStorageLocationId,
+            amount: storingAmount
+        })
             .then(response => {
                 if (response.status === 201) {
                     props.setSuccessModal(true);
