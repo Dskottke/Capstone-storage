@@ -22,12 +22,18 @@ public class DrivingOrderController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/input")
-    public DrivingOrder addNewInputDrivingOrder(@RequestBody Optional<NewDrivingOrder> drivingOrderToAdd) {
+    @PostMapping
+    public DrivingOrder addNewDrivingOrder(@RequestParam Type type, @RequestBody Optional<NewDrivingOrder> drivingOrderToAdd) {
         if (drivingOrderToAdd.isEmpty() || drivingOrderService.isNullOrEmpty(drivingOrderToAdd.get())) {
             throw new IsNullOrEmptyException();
         }
-        return drivingOrderService.addNewInputDrivingOrder(drivingOrderToAdd.get());
+
+        if (type.equals(Type.INPUT)) {
+            return drivingOrderService.addNewInputDrivingOrder(drivingOrderToAdd.get());
+        }
+
+        return new DrivingOrder("1", "1", "3", Type.OUTPUT, "1");
+
     }
 
     @DeleteMapping("/input/{id}")
