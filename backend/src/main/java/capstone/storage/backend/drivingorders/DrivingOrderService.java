@@ -4,7 +4,7 @@ import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.drivingorders.models.NewDrivingOrder;
 import capstone.storage.backend.exceptions.IsNotEnoughSpaceException;
 import capstone.storage.backend.exceptions.ItemOrStorageBinNotExistingException;
-import capstone.storage.backend.exceptions.ItemToDeleteNotFoundException;
+import capstone.storage.backend.exceptions.OrderToDeleteNotFoundException;
 import capstone.storage.backend.exceptions.StorageBinFalseItemException;
 import capstone.storage.backend.item.ItemService;
 import capstone.storage.backend.item.models.Item;
@@ -107,7 +107,7 @@ public class DrivingOrderService {
         Optional<DrivingOrder> succeedDrivingOrder = drivingOrderRepo.findById(id);
 
         if (succeedDrivingOrder.isEmpty()) {
-            throw new ItemToDeleteNotFoundException();
+            throw new OrderToDeleteNotFoundException();
         }
         storageBinService.updateStorageBin(succeedDrivingOrder.get());
         drivingOrderRepo.deleteById(id);

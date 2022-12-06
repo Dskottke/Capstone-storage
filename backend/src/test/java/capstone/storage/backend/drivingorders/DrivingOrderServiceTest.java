@@ -2,14 +2,20 @@ package capstone.storage.backend.drivingorders;
 
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.drivingorders.models.NewDrivingOrder;
+import capstone.storage.backend.exceptions.ExceptionMessage;
+import capstone.storage.backend.exceptions.StorageBinFalseItemException;
 import capstone.storage.backend.item.ItemService;
+import capstone.storage.backend.item.models.Item;
+import capstone.storage.backend.storagebin.StorageBin;
 import capstone.storage.backend.storagebin.StorageBinService;
 import capstone.storage.backend.utils.ServiceUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -139,4 +145,44 @@ class DrivingOrderServiceTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    @DisplayName("method -> checkValidation should return false because there is an existing DrivingOrder with not matching item on the storage bin ")
+    void checkValidationShouldReturnFalse() {
+        //GIVEN
+        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
+        Item testItem = new Item("1", "test", "test", "test", "1", "30", "1");
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "2", Type.INPUT, "5");
+        //WHEN
+        when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.of(testDrivingOrder));
+        boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
+        boolean expected = false;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method -> addNewInputDrivingOrder should throw StorageBinFalseItemException ")
+    void addNewInputDrivingOrderShouldThrowException() {
+        //GIVEN
+        Item testItem = new Item("1", "test", "test", "ger", "test", "10", "1");
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "1");
+        StorageBin testStorageBin = new StorageBin("1", "1", "0", "1");
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "2", Type.INPUT, "5");
+
+        //WHEN
+        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(true);
+        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(true);
+        when(itemService.findItemByItemNumber(newDrivingOrder.itemNumber())).thenReturn(testItem);
+        when(storageBinService.findStorageBinByLocationId(newDrivingOrder.storageLocationId())).thenReturn(testStorageBin);
+        when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.of(testDrivingOrder));
+        try {
+            drivingOrderService.addNewInputDrivingOrder(newDrivingOrder);
+            fail();
+        }
+        //THEN
+        catch (StorageBinFalseItemException e) {
+            assertEquals(ExceptionMessage.STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE.toString(), e.getMessage());
+        }
+
+    }
 }
