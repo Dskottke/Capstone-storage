@@ -56,30 +56,6 @@ class DrivingOrderServiceTest {
     }
 
     @Test
-    @DisplayName("method -> isNullOrEmpty should return true because two fields are empty")
-    void isNullOrEmptyWithOneEmptyShouldReturnTrue() {
-        //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "", "1");
-        //WHEN
-        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
-        boolean expected = true;
-        //THEN
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("method -> isNullOrEmpty should return true because two fields are empty")
-    void isNullOrEmptyWithTwoFieldsEmptyShouldReturnTrue() {
-        //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "2", "");
-        //WHEN
-        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
-        boolean expected = true;
-        //THEN
-        assertEquals(expected, actual);
-    }
-
-    @Test
     @DisplayName("method -> isNullOrEmpty should return true because two fields are null")
     void isNullOrEmptyWithTwoFieldsNullShouldReturnTrue() {
         //GIVEN
@@ -92,8 +68,21 @@ class DrivingOrderServiceTest {
     }
 
     @Test
-    @DisplayName("method -> isNullOrEmpty should return true because one field is empty")
-    void isNullOrEmptyWithOneFieldIsEmptyShouldReturnTrue() {
+    @DisplayName("Method -> isNullOrEmpty should return true because all fields are null")
+    void isNullOrEmptyWithAllFieldsNullShouldReturnTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder(null, null, null);
+        //WHEN
+        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    @DisplayName("method -> isNullOrEmpty should return true because itemNumber and amount are empty")
+    void isNullOrEmptyWithItemNumberAndAmountEmptyShouldReturnTrue() {
         //GIVEN
         NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "", "");
         //WHEN
@@ -104,10 +93,46 @@ class DrivingOrderServiceTest {
     }
 
     @Test
-    @DisplayName("Method -> isNullOrEmpty should return true because all fields are null")
-    void isNullOrEmptyWithAllFieldsNullShouldReturnTrue() {
+    @DisplayName("method -> isNullOrEmpty should return true because storageLocationId is empty")
+    void isNullOrEmptyWitStorageLocationIdFieldIsEmptyShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder(null, null, null);
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("", "1", "1");
+        //WHEN
+        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method -> isNullOrEmpty should return true because storageLocationId and itemNumber are empty")
+    void isNullOrEmptyWitStorageLocationIdFieldAndItemNumberAreEmptyShouldReturnTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("", "", "1");
+        //WHEN
+        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method -> isNullOrEmpty should return true because itemNumber field is empty")
+    void isNullOrEmptyWithItemNumberEmptyShouldReturnTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "", "1");
+        //WHEN
+        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method -> isNullOrEmpty should return true because amount field is empty")
+    void isNullOrEmptyWithAmountEmptyShouldReturnTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "");
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -151,7 +176,6 @@ class DrivingOrderServiceTest {
         assertEquals(expected, actual);
     }
 
-
     @Test
     @DisplayName("method -> itemAndStorageBinExisting should return true")
     void itemAndStorageBinExistingReturnsTrue() {
@@ -165,7 +189,6 @@ class DrivingOrderServiceTest {
         boolean expected = true;
         assertEquals(expected, actual);
     }
-
 
     @Test
     @DisplayName("method -> itemAndStorageBinExisting should return true")
