@@ -7,5 +7,14 @@
     "ean": "8710847909610",
     "storableValue": "20",
     "itemNumber": "1"
+  },
+  {
+    "id": "8e1569a3-1655-45c3-ba9b-107d61937500",
+    "name": "Book: Hands-on Application Development using Spring Boot: Building Modern Cloud Native Applications by Lea (ISBN: 939103022X)",
+    "categoryName": "Books and Magazines",
+    "issuingCountry": "",
+    "ean": "9789391030223",
+    "storableValue": "10",
+    "itemNumber": "2"
   }
 ]

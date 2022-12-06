@@ -1,5 +1,4 @@
 package capstone.storage.backend.drivingorders;
-
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.exceptions.ExceptionMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,8 +31,6 @@ class DrivingOrderIntegrationTest {
                         .json("""
                                 []
                                 """));
-
-
     }
 
     @Test
@@ -174,6 +171,36 @@ class DrivingOrderIntegrationTest {
                                 }"""))
                 .andExpect(status().is(400))
                 .andExpect(content().string(ExceptionMessage.IS_NOT_ENOUGH_SPACE_EXCEPTION_MESSAGE.toString()));
+    }
+
+    @Test
+    @DirtiesContext
+    @DisplayName("POST -> should return status 400 and STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE")
+    void addNewInputDrivingOrderWithExistingInputOrderWithMatchingStorageButDifferentItemNumbers() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
+                .andExpect(status().is(204));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/input")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "storageLocationId" : "1",
+                                "itemNumber" : "1",
+                                "amount" : "10"
+                                }"""))
+                .andExpect(status().is(201));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/input")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "storageLocationId" : "1",
+                                "itemNumber" : "2",
+                                "amount" : "10"
+                                }"""))
+                .andExpect(status().is(400))
+                .andExpect(content().string(ExceptionMessage.STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE.toString()));
 
     }
+
 }
