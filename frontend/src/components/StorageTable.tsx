@@ -4,8 +4,8 @@ import StorageTableRow from "./StorageTableRow";
 import "../css/Table.css"
 
 type StorageTableProps = {
-    data: StorageBinModel[],
-    fetchData: () => void
+    storageData: StorageBinModel[],
+    fetchStorageData: () => void
 }
 
 function StorageTable(props: StorageTableProps) {
@@ -20,11 +20,11 @@ function StorageTable(props: StorageTableProps) {
                 </tr>
                 </thead>
                 <tbody>
-                {props.data.length === 0 ? (
+                {props.storageData.length === 0 ? (
                     <tr>
                         <td></td>
                     </tr>) : (
-                    props.data.map(storageBin => <StorageTableRow storageBin={storageBin} key={storageBin.id}
+                    props.storageData.map(storageBin => <StorageTableRow storageBin={storageBin} key={storageBin.id}
                         ></StorageTableRow>
                     ))}
                 </tbody>

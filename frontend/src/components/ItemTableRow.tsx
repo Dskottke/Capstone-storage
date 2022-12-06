@@ -11,20 +11,20 @@ import {pink} from "@mui/material/colors";
 
 type ItemTableRowProps = {
     item: ItemModel
-    fetchData: () => void
-    setErrorModal: (showErrorAlert: boolean) => void
-    setErrorMessage: (errorMessage: string) => void
-    setSuccessMessage: (successMessage: string) => void
-    setSuccessModal: (showSuccessAlert: boolean) => void
+    fetchItemData: () => void
+    setItemErrorModal: (showErrorAlert: boolean) => void
+    setItemErrorMessage: (errorMessage: string) => void
+    setItemSuccessMessage: (successMessage: string) => void
+    setItemSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function ItemTableRow({
                           item,
-                          fetchData,
-                          setSuccessModal,
-                          setSuccessMessage,
-                          setErrorMessage,
-                          setErrorModal
+                          fetchItemData,
+                          setItemSuccessModal,
+                          setItemSuccessMessage,
+                          setItemErrorMessage,
+                          setItemErrorModal
                       }: ItemTableRowProps) {
 
     const [storableValue, setStorableValue] = useState<string>("");
@@ -34,35 +34,35 @@ function ItemTableRow({
         axios.put("/api/items/" + item.id, {...item, storableValue})
             .then(response => {
                 if (response.status === 200) {
-                    setSuccessModal(true);
-                    setSuccessMessage("item updated");
+                    setItemSuccessModal(true);
+                    setItemSuccessMessage("item updated");
                 }
             })
             .catch(error => {
                 if (error.response) {
-                    setErrorModal(true);
-                    setErrorMessage(error.response.data)
+                    setItemErrorModal(true);
+                    setItemErrorMessage(error.response.data)
                     ;
                 }
             })
-            .then(fetchData)
+            .then(fetchItemData)
             .then(() => setOnEditOpen(!onEditOpen))
     }
     const deleteItem = (id: string) => {
         axios.delete("/api/items/" + id)
             .then(response => {
                 if (response.status === 204) {
-                    setSuccessModal(true);
-                    setSuccessMessage("item deleted")
+                    setItemSuccessModal(true);
+                    setItemSuccessMessage("item deleted")
                 }
             })
             .catch(error => {
                 if (error.response) {
-                    setErrorModal(true);
-                    setErrorMessage(error.response.data)
+                    setItemErrorModal(true);
+                    setItemErrorMessage(error.response.data)
                 }
             })
-            .then(fetchData)
+            .then(fetchItemData)
     }
     const handleInputCapacity = (event: ChangeEvent<HTMLInputElement>) => {
         const validCapacity = event.target.value.replace(/\D/g, '')
