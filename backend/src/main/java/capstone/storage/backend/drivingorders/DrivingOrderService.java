@@ -29,17 +29,12 @@ public class DrivingOrderService {
     }
 
     public DrivingOrder addNewDrivingOrder(Type type, NewDrivingOrder newDrivingOrder) {
-        //gemeinsam
-        //überprüfen ob das lager und das item existieren
         if (!itemAndStorageBinExisting(newDrivingOrder)) {
             throw new ItemOrStorageBinNotExistingException();
         }
-        //das item rausholen
         Item itemFromOrder = itemService.findItemByItemNumber(newDrivingOrder.itemNumber());
-        // das Lager rausholen
         StorageBin storageBinFromOrder = storageBinService.findStorageBinByLocationId(newDrivingOrder.storageLocationId());
 
-        //input
         if (type.equals(Type.INPUT)) {
 
             if (!checkInputValidation(storageBinFromOrder, itemFromOrder)) {
@@ -57,16 +52,13 @@ public class DrivingOrderService {
                     newDrivingOrder.amount()));
         }
 
-        //output
-        //überprüfen ob das item auf dem Lager mit dem item übereinstimmt
+
         if (!checkOutputValidation(storageBinFromOrder, itemFromOrder)) {
             throw new StorageBinFalseItemException();
         }
-        //überprüfen in abhängigkeit der vorhandenen Aufträge ob die Restmenge reicht
         if (!checkOutputStorageBinEnoughAmount(storageBinFromOrder, newDrivingOrder)) {
             throw new NotEnoughItemsRemainingException();
         }
-        // auftrag speichern
         return drivingOrderRepo.insert(new DrivingOrder(serviceUtils.generateUUID(),
                 newDrivingOrder.storageLocationId(),
                 newDrivingOrder.itemNumber(),
@@ -97,14 +89,10 @@ public class DrivingOrderService {
     }
 
     public boolean checkInputValidation(StorageBin storageBinToCheck, Item itemToCheck) {
-        //überprüfen ob es einen Auftrag gibt für den Lagerplatz und den holen
-        //HIER MUSS WAS GEÄNDERT WERDEN ER MUSS NACH DEM TYPE SUCHEN // SOLLTE ERLEDIGT SEIN <-
         Optional<DrivingOrder> existingOrderMatchingStorageBin = drivingOrderRepo.findFirstByStorageLocationIdAndType(storageBinToCheck.locationId(), Type.INPUT);
-        //wenn dieser existiert dann fragen ob das item auf dem lagerplatz mit dem geholten item übereinstimmt
         if (existingOrderMatchingStorageBin.isPresent() && (!existingOrderMatchingStorageBin.get().itemNumber().equals(itemToCheck.itemNumber()))) {
             return false;
         }
-        //gucken ob die itemNumber vom lager mit der itemNumber vom auftrag übereinstimmt oder der lagerplatz 0 enthält
         return storageBinToCheck.itemNumber().equals(itemToCheck.itemNumber()) || storageBinToCheck.itemNumber().equals("0");
     }
 
@@ -133,17 +121,16 @@ public class DrivingOrderService {
 
     public boolean checkOutputStorageBinEnoughAmount(StorageBin storageBinToCheck, NewDrivingOrder newDrivingOrder) {
 
-        // aktuelle lagermenge
         int actualStorageBinAmount = Integer.parseInt(storageBinToCheck.amount());
-        //neuer auftragsbetrag
+
         int itemsToRetrieve = Integer.parseInt(newDrivingOrder.amount());
-        //hol mir alle existierenden output aufträge für den Lagerplatz
+
         List<DrivingOrder> existingOutputDrivingOrders = drivingOrderRepo.findByTypeAndStorageLocationId(Type.OUTPUT, storageBinToCheck.locationId());
-        // die Menge aller auftragsbeträge
+
         int ordersTotalAmount = getTotalAmountFromList(existingOutputDrivingOrders);
-        //aktuelle Lagermenge - die menge aller auftragsbeträge
+
         int remainingAmount = actualStorageBinAmount - ordersTotalAmount;
-        //wenn die Restmenge größer gleich der Auftragsmenge ist dann true sonst false
+
         return remainingAmount >= itemsToRetrieve;
 
     }

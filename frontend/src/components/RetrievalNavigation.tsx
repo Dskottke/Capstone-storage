@@ -22,11 +22,15 @@ function RetrievalNavigation(props: retrievalNavigationProps) {
 
     const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
-        const itemNumber = props.itemNumber
-        const storageLocationId = props.storageLocationId
-        const amount = props.amountValue
+        const retrievalItemNumber = props.itemNumber
+        const retrievalStorageLocationId = props.storageLocationId
+        const retrievalAmount = props.amountValue
 
-        axios.post("/api/driving-orders/?type=OUTPUT", {itemNumber, storageLocationId, amount})
+        axios.post("/api/driving-orders/?type=OUTPUT", {
+            itemNumber: retrievalItemNumber,
+            storageLocationId: retrievalStorageLocationId,
+            amount: retrievalAmount
+        })
             .then(response => {
                 if (response.status === 201) {
                     props.setSuccessModal(true);
