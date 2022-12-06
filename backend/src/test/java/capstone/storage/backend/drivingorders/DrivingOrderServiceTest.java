@@ -127,20 +127,6 @@ class DrivingOrderServiceTest {
     }
 
     @Test
-    @DisplayName("method -> itemAndStorageBinExisting should return true")
-    void itemAndStorageBinExistingReturnsTrue() {
-        //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "1");
-        //WHEN
-        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(true);
-        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(true);
-        boolean actual = drivingOrderService.itemAndStorageBinExisting(newDrivingOrder);
-        //THEN
-        boolean expected = true;
-        assertEquals(expected, actual);
-    }
-
-    @Test
     @DisplayName("method -> itemAndStorageBinExisting should return false")
     void itemAndStorageBinExistingReturnsFalse() {
         //GIVEN
@@ -154,6 +140,20 @@ class DrivingOrderServiceTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    @DisplayName("method -> itemAndStorageBinExisting should return true")
+    void itemAndStorageBinItemNotExistingReturnsTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "1");
+        //WHEN
+        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(true);
+        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(false);
+        boolean actual = drivingOrderService.itemAndStorageBinExisting(newDrivingOrder);
+        //THEN
+        boolean expected = true;
+        assertEquals(expected, actual);
+
+    }
 
     @Test
     @DisplayName("method -> getTotalAmountFromList and return 10")
