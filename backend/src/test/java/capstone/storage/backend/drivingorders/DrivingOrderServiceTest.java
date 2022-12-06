@@ -236,7 +236,7 @@ class DrivingOrderServiceTest {
     }
 
     @Test
-    @DisplayName("method -> checkValidation should return true ")
+    @DisplayName("method -> checkValidation should return true because StorageBin-itemNumber equals item-itemNumber ")
     void checkValidationShouldReturnTrue() {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
@@ -274,6 +274,19 @@ class DrivingOrderServiceTest {
         boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
         //THEN
         assertTrue(actual);
+    }
+
+    @Test
+    @DisplayName("method -> checkValidation should return true because StorageBin-itemNumber is 12 ")
+    void checkValidationShouldReturnFalseBecauseStorageBinItemNumberIs12() {
+        //GIVEN
+        StorageBin testStorageBin = new StorageBin("1", "1", "12", "20");
+        Item testItem = new Item("1", "test", "test", "test", "1", "30", "2");
+        //WHEN
+        when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.empty());
+        boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
+        //THEN
+        assertFalse(actual);
     }
 
     @Test
