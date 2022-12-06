@@ -78,4 +78,10 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ex.getMessage());
     }
+
+    @ExceptionHandler(NotEnoughItemsRemainingException.class)
+    public ResponseEntity<String> handleNotEnoughItemsRemainingException(NotEnoughItemsRemainingException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+    }
 }

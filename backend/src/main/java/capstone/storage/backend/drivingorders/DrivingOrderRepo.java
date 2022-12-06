@@ -11,5 +11,5 @@ public interface DrivingOrderRepo extends MongoRepository<DrivingOrder, String> 
 
     List<DrivingOrder> findByTypeAndStorageLocationId(Type type, String storageLocationId);
 
-    Optional<DrivingOrder> findFirstByStorageLocationId(String storageLocationId);
+    Optional<DrivingOrder> findFirstByStorageLocationIdAndType(String storageLocationId, Type type);
 }

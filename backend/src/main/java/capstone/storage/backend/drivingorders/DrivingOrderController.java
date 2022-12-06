@@ -27,13 +27,7 @@ public class DrivingOrderController {
         if (drivingOrderToAdd.isEmpty() || drivingOrderService.isNullOrEmpty(drivingOrderToAdd.get())) {
             throw new IsNullOrEmptyException();
         }
-
-        if (type.equals(Type.INPUT)) {
-            return drivingOrderService.addNewInputDrivingOrder(drivingOrderToAdd.get());
-        }
-
-        return new DrivingOrder("1", "1", "3", Type.OUTPUT, "1");
-
+            return drivingOrderService.addNewDrivingOrder(type, drivingOrderToAdd.get());
     }
 
     @DeleteMapping("/input/{id}")
