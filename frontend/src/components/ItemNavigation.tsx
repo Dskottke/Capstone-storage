@@ -5,10 +5,10 @@ import "../css/TableNavigation.css"
 type itemNavigationProps = {
 
     fetchItemData: () => void
-    setItemErrorModal: (showErrorAlert: boolean) => void
-    setItemErrorMessage: (errorMessage: string) => void
-    setItemSuccessMessage: (successMessage: string) => void
-    setItemSuccessModal: (showSuccessAlert: boolean) => void
+    setItemErrorModal: (showItemErrorAlert: boolean) => void
+    setItemErrorMessage: (itemErrorMessage: string) => void
+    setItemSuccessMessage: (itemSuccessMessage: string) => void
+    setItemSuccessModal: (showItemSuccessAlert: boolean) => void
 }
 
 function ItemNavigation(props: itemNavigationProps) {

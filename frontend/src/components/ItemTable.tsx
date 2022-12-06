@@ -5,10 +5,10 @@ import ItemTableRow from "./ItemTableRow";
 type itemPageProps = {
     itemData: ItemModel[],
     fetchItemData: () => void
-    setItemErrorModal: (showAlert: boolean) => void
-    setItemErrorMessage: (errorMessage: string) => void
-    setItemSuccessMessage: (successMessage: string) => void
-    setItemSuccessModal: (showSuccessAlert: boolean) => void
+    setItemErrorModal: (showItemAlert: boolean) => void
+    setItemErrorMessage: (itemErrorMessage: string) => void
+    setItemSuccessMessage: (itemSuccessMessage: string) => void
+    setItemSuccessModal: (showItemSuccessAlert: boolean) => void
 }
 
 function ItemTable(props: itemPageProps) {

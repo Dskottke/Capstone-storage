@@ -6,10 +6,10 @@ import "../css/Table.css"
 type retrievalTableProps = {
     drivingOutputOrders: DrivingOrder[]
     fetchRetrievalData: () => void
-    setRetrievalErrorModal: (showErrorAlert: boolean) => void
-    setRetrievalErrorMessage: (errorMessage: string) => void
-    setRetrievalSuccessMessage: (successMessage: string) => void
-    setRetrievalSuccessModal: (showSuccessAlert: boolean) => void
+    setRetrievalErrorModal: (showRetrievalErrorAlert: boolean) => void
+    setRetrievalErrorMessage: (retrievalErrorMessage: string) => void
+    setRetrievalSuccessMessage: (retrievalSuccessMessage: string) => void
+    setRetrievalSuccessModal: (showRetrievalSuccessAlert: boolean) => void
 }
 
 function RetrievalTable(props: retrievalTableProps) {

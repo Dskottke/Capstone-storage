@@ -6,10 +6,10 @@ import "../css/Table.css"
 type storingTableProps = {
     fetchData: () => void
     storingDrivingOrders: DrivingOrder[]
-    setStoringErrorModal: (showErrorAlert: boolean) => void
-    setStoringErrorMessage: (errorMessage: string) => void
-    setStoringSuccessMessage: (successMessage: string) => void
-    setStoringSuccessModal: (showSuccessAlert: boolean) => void
+    setStoringErrorModal: (showStoringErrorAlert: boolean) => void
+    setStoringErrorMessage: (errorStoringMessage: string) => void
+    setStoringSuccessMessage: (successStoringMessage: string) => void
+    setStoringSuccessModal: (showStoringSuccessAlert: boolean) => void
 }
 
 function StoringTable(props: storingTableProps) {
