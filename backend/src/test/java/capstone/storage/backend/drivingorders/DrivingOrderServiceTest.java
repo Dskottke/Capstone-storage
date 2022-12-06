@@ -57,6 +57,18 @@ class DrivingOrderServiceTest {
 
     @Test
     @DisplayName("method -> isNullOrEmpty should return true because two fields are empty")
+    void isNullOrEmptyWithOneEmptyShouldReturnTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "", "1");
+        //WHEN
+        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method -> isNullOrEmpty should return true because two fields are empty")
     void isNullOrEmptyWithTwoFieldsEmptyShouldReturnTrue() {
         //GIVEN
         NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "2", "");
