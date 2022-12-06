@@ -1,6 +1,8 @@
 import React, {ChangeEvent} from 'react';
+import axios from "axios";
 
 type retrievalNavigationProps = {
+    fetchRetrievalData: () => void
     amountValue: string
     storageLocationId: string
     itemNumber: string
@@ -16,6 +18,15 @@ function RetrievalNavigation(props: retrievalNavigationProps) {
 
     const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
+        const itemNumber = props.itemNumber
+        const storageLocationId = props.storageLocationId
+        const amount = props.amountValue
+
+        axios.post("/api/driving-orders/?type=OUTPUT", {itemNumber, storageLocationId, amount})
+            .then(response => response.data)
+            .catch(error => console.log(error))
+            .then(props.fetchRetrievalData)
+
     }
     return (
         <div className="topnav">

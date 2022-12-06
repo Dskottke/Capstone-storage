@@ -21,9 +21,9 @@ type retrievalPageProps = {
 
 function RetrievalPage(props: retrievalPageProps) {
 
-    const [data, setData] = useState<DrivingOrder[]>([])
+    const [retrievalData, setRetrievalData] = useState<DrivingOrder[]>([])
 
-    const fetchData = () => {
+    const fetchRetrievalData = () => {
         axios.get("/api/driving-orders/?type=OUTPUT")
             .then(response => {
                 return response.data
@@ -31,17 +31,18 @@ function RetrievalPage(props: retrievalPageProps) {
             .catch(error => {
                 console.error(error)
             })
-            .then((data) => setData(data))
+            .then((data) => setRetrievalData(data))
     }
 
     useEffect(() => {
-        fetchData()
+        fetchRetrievalData()
     }, [])
 
     return (
         <div className={"page-container"}>
             <TableHeadNav/>
-            <RetrievalNavigation amountValue={props.amountValue} setAmountValue={props.setAmountValue}
+            <RetrievalNavigation fetchRetrievalData={fetchRetrievalData} amountValue={props.amountValue}
+                                 setAmountValue={props.setAmountValue}
                                  handleInputAmount={props.handleInputAmount}
                                  handleInputItemNumber={props.handleInputItemNumber}
                                  handleInputStorageBinNumber={props.handleInputStorageBinNumber}
@@ -49,7 +50,7 @@ function RetrievalPage(props: retrievalPageProps) {
                                  storageLocationId={props.storageLocationId} itemNumber={props.itemNumber}
                                  setItemNumber={props.setItemNumber}/>
             <div className={"page-body"}>
-                <RetrievalTable drivingOrders={data}/>
+                <RetrievalTable drivingOrders={retrievalData}/>
             </div>
         </div>
     );
