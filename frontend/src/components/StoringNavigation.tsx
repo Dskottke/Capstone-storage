@@ -26,7 +26,7 @@ function StoringNavigation(props: storingNavigationProps) {
         const storageLocationId = props.storageLocationId
         const amount = props.amountValue
 
-        axios.post("/api/driving-orders/input", {itemNumber, storageLocationId, amount})
+        axios.post("/api/driving-orders/?type=INPUT", {itemNumber, storageLocationId, amount})
             .then(response => {
                 if (response.status === 201) {
                     props.setSuccessModal(true);

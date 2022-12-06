@@ -40,7 +40,7 @@ class DrivingOrderIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
                 .andExpect(status().is(204));
 
-        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/input")
+        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -69,7 +69,7 @@ class DrivingOrderIntegrationTest {
     @DisplayName("POST -> should return HTTP-Status 400 and IsNullOrEmptyExceptionMessage because all fields are null ")
     @DirtiesContext
     void addNewInputDrivingOrderWithAllFieldsNullAndExpectStatus400andIsNullOrEmptyExceptionMessage() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/input")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -87,7 +87,7 @@ class DrivingOrderIntegrationTest {
     @DirtiesContext
     void addNewInputDrivingOrderWithRequestBodyNullAndExpectStatus400andIsNullOrEmptyException() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/input")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(400))
                 .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
@@ -101,7 +101,7 @@ class DrivingOrderIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
                 .andExpect(status().is(204));
 
-        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/input")
+        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -132,7 +132,7 @@ class DrivingOrderIntegrationTest {
     @DirtiesContext
     void addNewInputDrivingOrderWithNotExistingStorageLocationIdShouldReturnStatus400() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/input")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -151,7 +151,7 @@ class DrivingOrderIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
                 .andExpect(status().is(204));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/input")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -161,7 +161,7 @@ class DrivingOrderIntegrationTest {
                                 }"""))
                 .andExpect(status().is(201));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/input")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -180,7 +180,7 @@ class DrivingOrderIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
                 .andExpect(status().is(204));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/input")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -190,7 +190,7 @@ class DrivingOrderIntegrationTest {
                                 }"""))
                 .andExpect(status().is(201));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/input")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
