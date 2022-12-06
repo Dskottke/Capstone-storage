@@ -9,23 +9,23 @@ import "../css/TablePage.css"
 import Alert from "@mui/material/Alert";
 
 type retrievalPageProps = {
-    errorModal: boolean
-    successModal: boolean
-    errorMessage: string
-    successMessage: string
-    amountValue: string
-    storageLocationId: string
-    itemNumber: string
-    setStorageLocationId: (storageBinNumber: string) => void
-    setItemNumber: (itemNumber: string) => void
-    setAmountValue: (amount: string) => void
-    handleOutputAmount: (event: ChangeEvent<HTMLInputElement>) => void
-    handleOutputItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
-    handleOutputStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
-    setErrorModal: (showAlert: boolean) => void
-    setErrorMessage: (errorMessage: string) => void
-    setSuccessMessage: (successMessage: string) => void
-    setSuccessModal: (showSuccessAlert: boolean) => void
+    retrievalErrorModal: boolean
+    retrievalSuccessModal: boolean
+    retrievalErrorMessage: string
+    retrievalSuccessMessage: string
+    retrievalAmountValue: string
+    retrievalStorageLocationId: string
+    retrievalItemNumber: string
+    setRetrievalStorageLocationId: (storageBinNumber: string) => void
+    setRetrievalItemNumber: (itemNumber: string) => void
+    setRetrievalAmountValue: (amount: string) => void
+    handleRetrievalAmount: (event: ChangeEvent<HTMLInputElement>) => void
+    handleRetrievalItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    handleRetrievalStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    setRetrievalErrorModal: (showAlert: boolean) => void
+    setRetrievalErrorMessage: (errorMessage: string) => void
+    setRetrievalSuccessMessage: (successMessage: string) => void
+    setRetrievalSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function RetrievalPage(props: retrievalPageProps) {
@@ -51,36 +51,38 @@ function RetrievalPage(props: retrievalPageProps) {
         <div className={"page-container"}>
             <TableHeadNav/>
             <RetrievalNavigation
-                setSuccessModal={props.setSuccessModal}
-                setErrorModal={props.setErrorModal}
-                setErrorMessage={props.setErrorMessage}
-                setSuccessMessage={props.setSuccessMessage}
+                setRetrievalSuccessModal={props.setRetrievalSuccessModal}
+                setRetrievalErrorModal={props.setRetrievalErrorModal}
+                setRetrievalErrorMessage={props.setRetrievalErrorMessage}
+                setRetrievalSuccessMessage={props.setRetrievalSuccessMessage}
                 fetchRetrievalData={fetchRetrievalData}
-                amountValue={props.amountValue}
-                setAmountValue={props.setAmountValue}
-                handleOutputAmount={props.handleOutputAmount}
-                handleOutputItemNumber={props.handleOutputItemNumber}
-                handleOutputStorageBinNumber={props.handleOutputStorageBinNumber}
-                setStorageLocationId={props.setStorageLocationId}
-                storageLocationId={props.storageLocationId} itemNumber={props.itemNumber}
-                setItemNumber={props.setItemNumber}/>
+                retrievalAmountValue={props.retrievalAmountValue}
+                setRetrievalAmountValue={props.setRetrievalAmountValue}
+                handleRetrievalAmount={props.handleRetrievalAmount}
+                handleRetrievalItemNumber={props.handleRetrievalItemNumber}
+                handleRetrievalStorageBinNumber={props.handleRetrievalStorageBinNumber}
+                setRetrievalStorageLocationId={props.setRetrievalStorageLocationId}
+                retrievalStorageLocationId={props.retrievalStorageLocationId}
+                retrievalItemNumber={props.retrievalItemNumber}
+                setRetrievalItemNumber={props.setRetrievalItemNumber}/>
 
-            {props.errorModal &&
+            {props.retrievalErrorModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} severity="error" onClose={() => {
-                    props.setErrorModal(false);
-                }}>{props.errorMessage}</Alert>
+                    props.setRetrievalErrorModal(false);
+                }}>{props.retrievalErrorMessage}</Alert>
             }
-            {props.successModal &&
+            {props.retrievalSuccessModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} onClose={() => {
-                    props.setSuccessModal(false);
-                }}>{props.successMessage}</Alert>
+                    props.setRetrievalSuccessModal(false);
+                }}>{props.retrievalSuccessMessage}</Alert>
             }
             <div className={"page-body"}>
 
-                <RetrievalTable fetchRetrievalData={fetchRetrievalData} setSuccessMessage={props.setSuccessMessage}
-                                setSuccessModal={props.setSuccessModal}
-                                setErrorModal={props.setErrorModal}
-                                setErrorMessage={props.setErrorMessage}
+                <RetrievalTable fetchRetrievalData={fetchRetrievalData}
+                                setRetrievalSuccessMessage={props.setRetrievalSuccessMessage}
+                                setRetrievalSuccessModal={props.setRetrievalSuccessModal}
+                                setRetrievalErrorModal={props.setRetrievalErrorModal}
+                                setRetrievalErrorMessage={props.setRetrievalErrorMessage}
                                 drivingOutputOrders={retrievalData}/>
             </div>
         </div>

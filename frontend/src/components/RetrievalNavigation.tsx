@@ -3,28 +3,28 @@ import axios from "axios";
 
 type retrievalNavigationProps = {
     fetchRetrievalData: () => void
-    amountValue: string
-    storageLocationId: string
-    itemNumber: string
-    setStorageLocationId: (storageBinNumber: string) => void
-    setItemNumber: (itemNumber: string) => void
-    setAmountValue: (amount: string) => void
-    handleOutputAmount: (event: ChangeEvent<HTMLInputElement>) => void
-    handleOutputItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
-    handleOutputStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
-    setErrorModal: (showAlert: boolean) => void
-    setErrorMessage: (errorMessage: string) => void
-    setSuccessMessage: (successMessage: string) => void
-    setSuccessModal: (showSuccessAlert: boolean) => void
+    retrievalAmountValue: string
+    retrievalStorageLocationId: string
+    retrievalItemNumber: string
+    setRetrievalStorageLocationId: (storageBinNumber: string) => void
+    setRetrievalItemNumber: (itemNumber: string) => void
+    setRetrievalAmountValue: (amount: string) => void
+    handleRetrievalAmount: (event: ChangeEvent<HTMLInputElement>) => void
+    handleRetrievalItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    handleRetrievalStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    setRetrievalErrorModal: (showAlert: boolean) => void
+    setRetrievalErrorMessage: (errorMessage: string) => void
+    setRetrievalSuccessMessage: (successMessage: string) => void
+    setRetrievalSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function RetrievalNavigation(props: retrievalNavigationProps) {
 
     const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault()
-        const retrievalItemNumber = props.itemNumber
-        const retrievalStorageLocationId = props.storageLocationId
-        const retrievalAmount = props.amountValue
+        const retrievalItemNumber = props.retrievalItemNumber
+        const retrievalStorageLocationId = props.retrievalStorageLocationId
+        const retrievalAmount = props.retrievalAmountValue
 
         axios.post("/api/driving-orders/?type=OUTPUT", {
             itemNumber: retrievalItemNumber,
@@ -33,14 +33,14 @@ function RetrievalNavigation(props: retrievalNavigationProps) {
         })
             .then(response => {
                 if (response.status === 201) {
-                    props.setSuccessModal(true);
-                    props.setSuccessMessage("new driving order created ")
+                    props.setRetrievalSuccessModal(true);
+                    props.setRetrievalSuccessMessage("new driving order created ")
                 }
             })
             .catch(error => {
                 if (error.response) {
-                    props.setErrorModal(true);
-                    props.setErrorMessage(error.response.data)
+                    props.setRetrievalErrorModal(true);
+                    props.setRetrievalErrorMessage(error.response.data)
                 }
             }).then(props.fetchRetrievalData)
 
@@ -50,14 +50,14 @@ function RetrievalNavigation(props: retrievalNavigationProps) {
             <div id="navi-logo">retrieval</div>
             <div className="add-container">
                 <form onSubmit={handleSubmit}>
-                    <input className="item_input_field" value={props.itemNumber}
-                           onChange={props.handleOutputItemNumber} type="text" placeholder="item-number"
+                    <input className="item_input_field" value={props.retrievalItemNumber}
+                           onChange={props.handleRetrievalItemNumber} type="text" placeholder="item-number"
                            name="item-number"/>
-                    <input className="item_input_field" value={props.storageLocationId}
-                           onChange={props.handleOutputStorageBinNumber} type="text" placeholder="storage-bin-nr"
+                    <input className="item_input_field" value={props.retrievalStorageLocationId}
+                           onChange={props.handleRetrievalStorageBinNumber} type="text" placeholder="storage-bin-nr"
                            name="storage-bin-nr"/>
-                    <input className="item_input_field" value={props.amountValue}
-                           onChange={props.handleOutputAmount} type="text" placeholder="amount" name="amount"/>
+                    <input className="item_input_field" value={props.retrievalAmountValue}
+                           onChange={props.handleRetrievalAmount} type="text" placeholder="amount" name="amount"/>
                     <button type="submit">add</button>
                 </form>
             </div>

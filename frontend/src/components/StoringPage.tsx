@@ -9,23 +9,23 @@ import "../css/TablePage.css"
 import Alert from "@mui/material/Alert";
 
 type storingPageProps = {
-    errorModal: boolean
-    successModal: boolean
-    errorMessage: string
-    successMessage: string
-    setErrorModal: (showAlert: boolean) => void
-    setErrorMessage: (errorMessage: string) => void
-    setSuccessMessage: (successMessage: string) => void
-    setSuccessModal: (showSuccessAlert: boolean) => void
-    amountValue: string
-    storageLocationId: string
-    itemNumber: string
-    setStorageLocationId: (storageBinNumber: string) => void
-    setItemNumber: (itemNumber: string) => void
-    setAmountValue: (amount: string) => void
-    handleInputAmount: (event: ChangeEvent<HTMLInputElement>) => void
-    handleInputItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
-    handleInputStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    storingErrorModal: boolean
+    storingSuccessModal: boolean
+    storingErrorMessage: string
+    storingSuccessMessage: string
+    setStoringErrorModal: (showAlert: boolean) => void
+    setStoringErrorMessage: (errorMessage: string) => void
+    setStoringSuccessMessage: (successMessage: string) => void
+    setStoringSuccessModal: (showSuccessAlert: boolean) => void
+    storingAmountValue: string
+    storingStorageLocationId: string
+    storingItemNumber: string
+    setStoringStorageLocationId: (storageBinNumber: string) => void
+    setStoringItemNumber: (itemNumber: string) => void
+    setStoringAmountValue: (amount: string) => void
+    handleStoringAmount: (event: ChangeEvent<HTMLInputElement>) => void
+    handleStoringItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    handleStoringStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
 function StoringPage(props: storingPageProps) {
@@ -50,32 +50,36 @@ function StoringPage(props: storingPageProps) {
         <div className={"page-container"}>
             <TableHeadNav/>
             <StoringNavigation fetchStoringData={fetchInputOrders}
-                               setErrorModal={props.setErrorModal}
-                               setErrorMessage={props.setErrorMessage} setSuccessMessage={props.setSuccessMessage}
-                               setSuccessModal={props.setSuccessModal} amountValue={props.amountValue}
-                               setAmountValue={props.setAmountValue}
-                               handleInputAmount={props.handleInputAmount}
-                               handleInputItemNumber={props.handleInputItemNumber}
-                               handleInputStorageBinNumber={props.handleInputStorageBinNumber}
-                               setStorageBinNumber={props.setStorageLocationId}
-                               storageLocationId={props.storageLocationId} itemNumber={props.itemNumber}
-                               setItemNumber={props.setItemNumber}/>
+                               setStoringErrorModal={props.setStoringErrorModal}
+                               setStoringErrorMessage={props.setStoringErrorMessage}
+                               setStoringSuccessMessage={props.setStoringSuccessMessage}
+                               setStoringSuccessModal={props.setStoringSuccessModal}
+                               storingAmountValue={props.storingAmountValue}
+                               setStoringAmountValue={props.setStoringAmountValue}
+                               handleStoringAmount={props.handleStoringAmount}
+                               handleStoringItemNumber={props.handleStoringItemNumber}
+                               handleStoringStorageBinNumber={props.handleStoringStorageBinNumber}
+                               setStoringStorageBinNumber={props.setStoringStorageLocationId}
+                               storingStorageLocationId={props.storingStorageLocationId}
+                               storingItemNumber={props.storingItemNumber}
+                               setStoringItemNumber={props.setStoringItemNumber}/>
 
-            {props.errorModal &&
+            {props.storingErrorModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} severity="error" onClose={() => {
-                    props.setErrorModal(false);
-                }}>{props.errorMessage}</Alert>
+                    props.setStoringErrorModal(false);
+                }}>{props.storingErrorMessage}</Alert>
             }
-            {props.successModal &&
+            {props.storingSuccessModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} onClose={() => {
-                    props.setSuccessModal(false);
-                }}>{props.successMessage}</Alert>
+                    props.setStoringSuccessModal(false);
+                }}>{props.storingSuccessMessage}</Alert>
             }
             <div className={"page-body"}>
-                <StoringTable fetchData={fetchInputOrders} setSuccessMessage={props.setSuccessMessage}
-                              setSuccessModal={props.setSuccessModal}
-                              setErrorModal={props.setErrorModal} setErrorMessage={props.setErrorMessage}
-                              drivingOrders={inputDrivingOrders}/>
+                <StoringTable fetchData={fetchInputOrders} setStoringSuccessMessage={props.setStoringSuccessMessage}
+                              setStoringSuccessModal={props.setStoringSuccessModal}
+                              setStoringErrorModal={props.setStoringErrorModal}
+                              setStoringErrorMessage={props.setStoringErrorMessage}
+                              storingDrivingOrders={inputDrivingOrders}/>
             </div>
         </div>
     );

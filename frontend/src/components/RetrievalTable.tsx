@@ -6,10 +6,10 @@ import "../css/Table.css"
 type retrievalTableProps = {
     drivingOutputOrders: DrivingOrder[]
     fetchRetrievalData: () => void
-    setErrorModal: (showErrorAlert: boolean) => void
-    setErrorMessage: (errorMessage: string) => void
-    setSuccessMessage: (successMessage: string) => void
-    setSuccessModal: (showSuccessAlert: boolean) => void
+    setRetrievalErrorModal: (showErrorAlert: boolean) => void
+    setRetrievalErrorMessage: (errorMessage: string) => void
+    setRetrievalSuccessMessage: (successMessage: string) => void
+    setRetrievalSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function RetrievalTable(props: retrievalTableProps) {
@@ -34,10 +34,10 @@ function RetrievalTable(props: retrievalTableProps) {
                     </tr>) : (
                     props.drivingOutputOrders.map(order => <RetrievalTableRow
                         fetchRetrievalData={props.fetchRetrievalData}
-                        setSuccessMessage={props.setSuccessMessage}
-                        setSuccessModal={props.setSuccessModal}
-                        setErrorModal={props.setErrorModal}
-                        setErrorMessage={props.setErrorMessage}
+                        setSuccessMessage={props.setRetrievalSuccessMessage}
+                        setSuccessModal={props.setRetrievalSuccessModal}
+                        setErrorModal={props.setRetrievalErrorModal}
+                        setErrorMessage={props.setRetrievalErrorMessage}
                         drivingOrder={order}/>
                     ))}
                 </tbody>
