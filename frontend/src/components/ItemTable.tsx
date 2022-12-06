@@ -3,12 +3,12 @@ import "../css/Table.css"
 import ItemTableRow from "./ItemTableRow";
 
 type itemPageProps = {
-    data: ItemModel[],
-    fetchData: () => void
-    setErrorModal: (showAlert: boolean) => void
-    setErrorMessage: (errorMessage: string) => void
-    setSuccessMessage: (successMessage: string) => void
-    setSuccessModal: (showSuccessAlert: boolean) => void
+    itemData: ItemModel[],
+    fetchItemData: () => void
+    setItemErrorModal: (showAlert: boolean) => void
+    setItemErrorMessage: (errorMessage: string) => void
+    setItemSuccessMessage: (successMessage: string) => void
+    setItemSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function ItemTable(props: itemPageProps) {
@@ -27,17 +27,17 @@ function ItemTable(props: itemPageProps) {
                 </tr>
                 </thead>
                 <tbody>
-                {props.data.length === 0 ? (
+                {props.itemData.length === 0 ? (
                     <tr>
                         <td></td>
 
                     </tr>) : (
-                    props.data.map(item => <ItemTableRow item={item} key={item.id}
-                                                         fetchData={props.fetchData}
-                                                         setErrorMessage={props.setErrorMessage}
-                                                         setErrorModal={props.setErrorModal}
-                                                         setSuccessMessage={props.setSuccessMessage}
-                                                         setSuccessModal={props.setSuccessModal}/>
+                    props.itemData.map(item => <ItemTableRow item={item} key={item.id}
+                                                             fetchItemData={props.fetchItemData}
+                                                             setItemErrorMessage={props.setItemErrorMessage}
+                                                             setItemErrorModal={props.setItemErrorModal}
+                                                             setItemSuccessMessage={props.setItemSuccessMessage}
+                                                             setItemSuccessModal={props.setItemSuccessModal}/>
                     ))}
                 </tbody>
             </table>

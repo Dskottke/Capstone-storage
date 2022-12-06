@@ -34,12 +34,12 @@ function App() {
             <Routes>
                 <Route path={"/"} element={<MainPage/>}/>
                 <Route path={"/item-page"}
-                       element={<ItemPage successModal={successModal} successMessage={successMessage}
-                                          errorMessage={errorMessage} errorModal={errorModal}
-                                          setErrorModal={setErrorModal}
-                                          setErrorMessage={setErrorMessage}
-                                          setSuccessMessage={setSuccessMessage}
-                                          setSuccessModal={setSuccessModal}/>}/>
+                       element={<ItemPage itemSuccessModal={successModal} itemSuccessMessage={successMessage}
+                                          itemErrorMessage={errorMessage} itemErrorModal={errorModal}
+                                          setItemErrorModal={setErrorModal}
+                                          setItemErrorMessage={setErrorMessage}
+                                          setItemSuccessMessage={setSuccessMessage}
+                                          setItemSuccessModal={setSuccessModal}/>}/>
                 <Route path={"/storage-page"} element={<StoragePage/>}/>
                 <Route path={"/store-page"}
                        element={<StoringPage storingErrorModal={errorModal} storingErrorMessage={errorMessage}

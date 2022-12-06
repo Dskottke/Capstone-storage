@@ -4,11 +4,11 @@ import "../css/TableNavigation.css"
 
 type itemNavigationProps = {
 
-    fetchData: () => void
-    setErrorModal: (showErrorAlert: boolean) => void
-    setErrorMessage: (errorMessage: string) => void
-    setSuccessMessage: (successMessage: string) => void
-    setSuccessModal: (showSuccessAlert: boolean) => void
+    fetchItemData: () => void
+    setItemErrorModal: (showErrorAlert: boolean) => void
+    setItemErrorMessage: (errorMessage: string) => void
+    setItemSuccessMessage: (successMessage: string) => void
+    setItemSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function ItemNavigation(props: itemNavigationProps) {
@@ -39,18 +39,18 @@ function ItemNavigation(props: itemNavigationProps) {
         axios.post("/api/items/" + ean, {ean, itemNumber, storableValue})
             .then(response => {
                 if (response.status === 201) {
-                    props.setSuccessModal(true);
-                    props.setSuccessMessage("new item created ")
+                    props.setItemSuccessModal(true);
+                    props.setItemSuccessMessage("new item created ")
                 }
             })
             .catch(error => {
                     if (error.response) {
-                        props.setErrorModal(true);
-                        props.setErrorMessage(error.response.data)
+                        props.setItemErrorModal(true);
+                        props.setItemErrorMessage(error.response.data)
                     }
                 }
             )
-            .then(props.fetchData)
+            .then(props.fetchItemData)
             .then(() => setEan(""))
             .then(() => setItemNumber(""))
             .then(() => setStorableValue(""))
