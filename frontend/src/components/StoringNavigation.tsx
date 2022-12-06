@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react';
 import axios from "axios";
 
 type storingNavigationProps = {
-    fetchData: () => void
+    fetchStoringData: () => void
     amountValue: string
     storageLocationId: string
     itemNumber: string
@@ -38,7 +38,7 @@ function StoringNavigation(props: storingNavigationProps) {
                     props.setErrorModal(true);
                     props.setErrorMessage(error.response.data)
                 }
-            }).then(props.fetchData)
+            }).then(props.fetchStoringData)
             .then(() => props.setAmountValue(""))
             .then(() => props.setItemNumber(""))
             .then(() => props.setStorageBinNumber(""))

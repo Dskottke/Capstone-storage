@@ -49,7 +49,7 @@ function StoringPage(props: storingPageProps) {
     return (
         <div className={"page-container"}>
             <TableHeadNav/>
-            <StoringNavigation fetchData={fetchInputOrders}
+            <StoringNavigation fetchStoringData={fetchInputOrders}
                                setErrorModal={props.setErrorModal}
                                setErrorMessage={props.setErrorMessage} setSuccessMessage={props.setSuccessMessage}
                                setSuccessModal={props.setSuccessModal} amountValue={props.amountValue}
