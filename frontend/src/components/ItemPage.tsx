@@ -21,8 +21,7 @@ type itemPageProps = {
 function ItemPage(props: itemPageProps) {
 
     const [itemData, setItemData] = useState<ItemModel[]>([]);
-
-
+    
     useEffect(() => {
         fetchItemData()
     }, [])

@@ -2,11 +2,11 @@ import React from 'react';
 import {DrivingOrder} from "../model/DrivingOrder";
 import RetrievalTableRow from "./RetrievalTableRow";
 
-type dischargingTableProps = {
+type retrievalTableProps = {
     drivingOrders: DrivingOrder[]
 }
 
-function RetrievalTable(props: dischargingTableProps) {
+function RetrievalTable(props: retrievalTableProps) {
 
     return (
         <div className="container-table">
