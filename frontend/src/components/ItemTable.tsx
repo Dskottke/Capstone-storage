@@ -1,5 +1,5 @@
 import {ItemModel} from "../model/ItemModel";
-import "../css/table.css"
+import "../css/Table.css"
 import ItemTableRow from "./ItemTableRow";
 
 type itemPageProps = {

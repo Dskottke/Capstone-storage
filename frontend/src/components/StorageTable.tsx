@@ -1,7 +1,7 @@
 import React from 'react';
 import {StorageBinModel} from "../model/StorageBinModel";
 import StorageTableRow from "./StorageTableRow";
-import "../css/table.css"
+import "../css/Table.css"
 
 type StorageTableProps = {
     data: StorageBinModel[],
