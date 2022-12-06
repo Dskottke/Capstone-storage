@@ -6,16 +6,16 @@ type retrievalNavigationProps = {
     retrievalAmountValue: string
     retrievalStorageLocationId: string
     retrievalItemNumber: string
-    setRetrievalStorageLocationId: (storageBinNumber: string) => void
-    setRetrievalItemNumber: (itemNumber: string) => void
-    setRetrievalAmountValue: (amount: string) => void
+    setRetrievalStorageLocationId: (retrievalStorageBinNumber: string) => void
+    setRetrievalItemNumber: (retrievalItemNumber: string) => void
+    setRetrievalAmountValue: (retrievalAmount: string) => void
     handleRetrievalAmount: (event: ChangeEvent<HTMLInputElement>) => void
     handleRetrievalItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
     handleRetrievalStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
-    setRetrievalErrorModal: (showAlert: boolean) => void
-    setRetrievalErrorMessage: (errorMessage: string) => void
-    setRetrievalSuccessMessage: (successMessage: string) => void
-    setRetrievalSuccessModal: (showSuccessAlert: boolean) => void
+    setRetrievalErrorModal: (showRetrievalAlert: boolean) => void
+    setRetrievalErrorMessage: (retrievalErrorMessage: string) => void
+    setRetrievalSuccessMessage: (retrievalSuccessMessage: string) => void
+    setRetrievalSuccessModal: (showRetrievalSuccessAlert: boolean) => void
 }
 
 function RetrievalNavigation(props: retrievalNavigationProps) {

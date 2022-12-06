@@ -7,10 +7,10 @@ import axios from "axios";
 type storingTableRowProps = {
     fetchStoringData: () => void
     storingDrivingOrder: DrivingOrder
-    setStoringErrorModal: (showErrorAlert: boolean) => void
-    setStoringErrorMessage: (errorMessage: string) => void
-    setStoringSuccessMessage: (successMessage: string) => void
-    setStoringSuccessModal: (showSuccessAlert: boolean) => void
+    setStoringErrorModal: (showStoringErrorAlert: boolean) => void
+    setStoringErrorMessage: (errorStoringMessage: string) => void
+    setStoringSuccessMessage: (successStoringMessage: string) => void
+    setStoringSuccessModal: (showStoringSuccessAlert: boolean) => void
 }
 
 function StoringTableRow(props: storingTableRowProps) {

@@ -8,7 +8,7 @@ import TableHeadNav from "./TableHeadNav";
 
 function StoragePage() {
 
-    const [Storagedata, setStoragedata] = useState<StorageBinModel[]>([]);
+    const [storageData, setStorageData] = useState<StorageBinModel[]>([]);
 
     useEffect(() => {
         fetchData()
@@ -22,14 +22,14 @@ function StoragePage() {
             .catch(error => {
                 return error
             })
-            .then((data) => setStoragedata(data))
+            .then((data) => setStorageData(data))
     }
     return (
         <div className={"page-container"}>
             <TableHeadNav/>
             <StorageNavigation/>
             <div className={"page-body"}>
-                <StorageTable fetchStorageData={fetchData} storageData={Storagedata}/>
+                <StorageTable fetchStorageData={fetchData} storageData={storageData}/>
             </div>
         </div>
     );

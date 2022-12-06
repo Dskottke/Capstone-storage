@@ -6,16 +6,16 @@ type storingNavigationProps = {
     storingAmountValue: string
     storingStorageLocationId: string
     storingItemNumber: string
-    setStoringStorageBinNumber: (storageBinNumber: string) => void
-    setStoringItemNumber: (itemNumber: string) => void
-    setStoringAmountValue: (amount: string) => void
+    setStoringStorageBinNumber: (storingStorageBinNumber: string) => void
+    setStoringItemNumber: (storingItemNumber: string) => void
+    setStoringAmountValue: (storingAmount: string) => void
     handleStoringAmount: (event: ChangeEvent<HTMLInputElement>) => void
     handleStoringItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
     handleStoringStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
-    setStoringErrorModal: (showAlert: boolean) => void
-    setStoringErrorMessage: (errorMessage: string) => void
-    setStoringSuccessMessage: (successMessage: string) => void
-    setStoringSuccessModal: (showSuccessAlert: boolean) => void
+    setStoringErrorModal: (showStoringAlert: boolean) => void
+    setStoringErrorMessage: (errorStoringMessage: string) => void
+    setStoringSuccessMessage: (successStoringMessage: string) => void
+    setStoringSuccessModal: (showStoringSuccessAlert: boolean) => void
 }
 
 function StoringNavigation(props: storingNavigationProps) {
