@@ -226,13 +226,13 @@ class DrivingOrderServiceTest {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "1");
-        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.INPUT, "5");
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "2", Type.INPUT, "5");
         //WHEN
         when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.of(testDrivingOrder));
         boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
-        boolean expected = false;
+
         //THEN
-        assertEquals(expected, actual);
+        assertFalse(actual);
     }
 
     @Test
