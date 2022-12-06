@@ -228,8 +228,8 @@ class DrivingOrderServiceTest {
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "1");
         DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "2", Type.INPUT, "5");
         //WHEN
-        when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.of(testDrivingOrder));
-        boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
+        when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.of(testDrivingOrder));
+        boolean actual = drivingOrderService.checkInputValidation(testStorageBin, testItem);
 
         //THEN
         assertFalse(actual);
@@ -243,8 +243,8 @@ class DrivingOrderServiceTest {
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "1");
         DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.INPUT, "5");
         //WHEN
-        when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.of(testDrivingOrder));
-        boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
+        when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.of(testDrivingOrder));
+        boolean actual = drivingOrderService.checkInputValidation(testStorageBin, testItem);
         //THEN
         assertTrue(actual);
     }
@@ -257,8 +257,8 @@ class DrivingOrderServiceTest {
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "2");
         DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.INPUT, "5");
         //WHEN
-        when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.of(testDrivingOrder));
-        boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
+        when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.of(testDrivingOrder));
+        boolean actual = drivingOrderService.checkInputValidation(testStorageBin, testItem);
         //THEN
         assertFalse(actual);
     }
@@ -270,8 +270,8 @@ class DrivingOrderServiceTest {
         StorageBin testStorageBin = new StorageBin("1", "1", "0", "20");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "2");
         //WHEN
-        when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.empty());
-        boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
+        when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.empty());
+        boolean actual = drivingOrderService.checkInputValidation(testStorageBin, testItem);
         //THEN
         assertTrue(actual);
     }
@@ -283,8 +283,8 @@ class DrivingOrderServiceTest {
         StorageBin testStorageBin = new StorageBin("1", "1", "12", "20");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "2");
         //WHEN
-        when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.empty());
-        boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
+        when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.empty());
+        boolean actual = drivingOrderService.checkInputValidation(testStorageBin, testItem);
         //THEN
         assertFalse(actual);
     }
@@ -303,9 +303,9 @@ class DrivingOrderServiceTest {
         when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(true);
         when(itemService.findItemByItemNumber(newDrivingOrder.itemNumber())).thenReturn(testItem);
         when(storageBinService.findStorageBinByLocationId(newDrivingOrder.storageLocationId())).thenReturn(testStorageBin);
-        when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.of(testDrivingOrder));
+        when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.of(testDrivingOrder));
         try {
-            drivingOrderService.addNewInputDrivingOrder(newDrivingOrder);
+            drivingOrderService.addNewDrivingOrder(Type.INPUT, newDrivingOrder);
             Assertions.fail();
         }
         //THEN
