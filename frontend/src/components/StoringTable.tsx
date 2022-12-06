@@ -1,7 +1,7 @@
 import React from 'react';
 import {DrivingOrder} from "../model/DrivingOrder";
 import StoringTableRow from "./StoringTableRow";
-import "../css/table.css"
+import "../css/Table.css"
 
 type storingTableProps = {
     fetchData: () => void

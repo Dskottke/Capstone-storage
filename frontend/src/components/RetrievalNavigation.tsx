@@ -12,6 +12,10 @@ type retrievalNavigationProps = {
     handleInputAmount: (event: ChangeEvent<HTMLInputElement>) => void
     handleInputItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
     handleInputStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    setErrorModal: (showAlert: boolean) => void
+    setErrorMessage: (errorMessage: string) => void
+    setSuccessMessage: (successMessage: string) => void
+    setSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function RetrievalNavigation(props: retrievalNavigationProps) {
@@ -23,9 +27,18 @@ function RetrievalNavigation(props: retrievalNavigationProps) {
         const amount = props.amountValue
 
         axios.post("/api/driving-orders/?type=OUTPUT", {itemNumber, storageLocationId, amount})
-            .then(response => response.data)
-            .catch(error => console.log(error))
-            .then(props.fetchRetrievalData)
+            .then(response => {
+                if (response.status === 201) {
+                    props.setSuccessModal(true);
+                    props.setSuccessMessage("new driving order created ")
+                }
+            })
+            .catch(error => {
+                if (error.response) {
+                    props.setErrorModal(true);
+                    props.setErrorMessage(error.response.data)
+                }
+            }).then(props.fetchRetrievalData)
 
     }
     return (

@@ -1,32 +1,44 @@
 import React from 'react';
 import {DrivingOrder} from "../model/DrivingOrder";
 import RetrievalTableRow from "./RetrievalTableRow";
+import "../css/Table.css"
 
 type retrievalTableProps = {
-    drivingOrders: DrivingOrder[]
+    drivingOutputOrders: DrivingOrder[]
+    fetchRetrievalData: () => void
+    setErrorModal: (showErrorAlert: boolean) => void
+    setErrorMessage: (errorMessage: string) => void
+    setSuccessMessage: (successMessage: string) => void
+    setSuccessModal: (showSuccessAlert: boolean) => void
 }
 
 function RetrievalTable(props: retrievalTableProps) {
 
     return (
         <div className="container-table">
-            <table className="Table">
+            <table className="Table" id="retrieval-table">
                 <thead>
                 <tr>
-                    <th className={"center"}>Nr</th>
-                    <th>storage-bin</th>
-                    <th>item</th>
-                    <th>amount</th>
-                    <th>action</th>
+                    <th className="center">nr.</th>
+                    <th className="center">item-nr.</th>
+                    <th className="center">storage-bin-nr.</th>
+                    <th className="center">amount</th>
+                    <th className="center">action</th>
                 </tr>
                 </thead>
                 <tbody>
-                {props.drivingOrders.length === 0 ? (
+                {props.drivingOutputOrders.length === 0 ? (
                     <tr>
                         <td></td>
 
                     </tr>) : (
-                    props.drivingOrders.map(order => <RetrievalTableRow drivingOrder={order}/>
+                    props.drivingOutputOrders.map(order => <RetrievalTableRow
+                        fetchRetrievalData={props.fetchRetrievalData}
+                        setSuccessMessage={props.setSuccessMessage}
+                        setSuccessModal={props.setSuccessModal}
+                        setErrorModal={props.setErrorModal}
+                        setErrorMessage={props.setErrorMessage}
+                        drivingOrder={order}/>
                     ))}
                 </tbody>
             </table>
