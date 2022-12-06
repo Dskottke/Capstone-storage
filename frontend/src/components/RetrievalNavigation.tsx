@@ -12,10 +12,10 @@ type retrievalNavigationProps = {
     handleRetrievalAmount: (event: ChangeEvent<HTMLInputElement>) => void
     handleRetrievalItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
     handleRetrievalStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
-    setRetrievalErrorModal: (showRetrievalAlert: boolean) => void
-    setRetrievalErrorMessage: (retrievalErrorMessage: string) => void
-    setRetrievalSuccessMessage: (retrievalSuccessMessage: string) => void
-    setRetrievalSuccessModal: (showRetrievalSuccessAlert: boolean) => void
+    setRetrievalNavigationErrorModal: (showRetrievalAlert: boolean) => void
+    setRetrievalNavigationErrorMessage: (retrievalErrorMessage: string) => void
+    setRetrievalNavigationSuccessMessage: (retrievalSuccessMessage: string) => void
+    setRetrievalNavigationSuccessModal: (showRetrievalSuccessAlert: boolean) => void
 }
 
 function RetrievalNavigation(props: retrievalNavigationProps) {
@@ -33,14 +33,14 @@ function RetrievalNavigation(props: retrievalNavigationProps) {
         })
             .then(response => {
                 if (response.status === 201) {
-                    props.setRetrievalSuccessModal(true);
-                    props.setRetrievalSuccessMessage("new driving order created ")
+                    props.setRetrievalNavigationSuccessModal(true);
+                    props.setRetrievalNavigationSuccessMessage("new driving order created ")
                 }
             })
             .catch(error => {
                 if (error.response) {
-                    props.setRetrievalErrorModal(true);
-                    props.setRetrievalErrorMessage(error.response.data)
+                    props.setRetrievalNavigationErrorModal(true);
+                    props.setRetrievalNavigationErrorMessage(error.response.data)
                 }
             }).then(props.fetchRetrievalData)
 

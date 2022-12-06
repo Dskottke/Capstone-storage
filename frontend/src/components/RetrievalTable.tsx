@@ -6,10 +6,10 @@ import "../css/Table.css"
 type retrievalTableProps = {
     drivingOutputOrders: DrivingOrder[]
     fetchRetrievalData: () => void
-    setRetrievalErrorModal: (showRetrievalErrorAlert: boolean) => void
-    setRetrievalErrorMessage: (retrievalErrorMessage: string) => void
-    setRetrievalSuccessMessage: (retrievalSuccessMessage: string) => void
-    setRetrievalSuccessModal: (showRetrievalSuccessAlert: boolean) => void
+    setRetrievalTableErrorModal: (showRetrievalErrorAlert: boolean) => void
+    setRetrievalTableErrorMessage: (retrievalErrorMessage: string) => void
+    setRetrievalTableSuccessMessage: (retrievalSuccessMessage: string) => void
+    setRetrievalTableSuccessModal: (showRetrievalSuccessAlert: boolean) => void
 }
 
 function RetrievalTable(props: retrievalTableProps) {
@@ -34,10 +34,10 @@ function RetrievalTable(props: retrievalTableProps) {
                     </tr>) : (
                     props.drivingOutputOrders.map(order => <RetrievalTableRow
                         fetchRetrievalData={props.fetchRetrievalData}
-                        setSuccessMessage={props.setRetrievalSuccessMessage}
-                        setSuccessModal={props.setRetrievalSuccessModal}
-                        setErrorModal={props.setRetrievalErrorModal}
-                        setErrorMessage={props.setRetrievalErrorMessage}
+                        setRetrievalTableRowSuccessMessage={props.setRetrievalTableSuccessMessage}
+                        setRetrievalTableRowSuccessModal={props.setRetrievalTableSuccessModal}
+                        setRetrievalTableRowErrorModal={props.setRetrievalTableErrorModal}
+                        setRetrievalTableRowMessage={props.setRetrievalTableErrorMessage}
                         drivingOrder={order}/>
                     ))}
                 </tbody>

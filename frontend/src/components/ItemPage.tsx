@@ -40,10 +40,10 @@ function ItemPage(props: itemPageProps) {
     return (
         <div className={"page-container"}>
             <TableHeadNav/>
-            <ItemNavigation fetchItemData={fetchItemData} setItemErrorModal={props.setItemErrorModal}
-                            setItemErrorMessage={props.setItemErrorMessage}
-                            setItemSuccessModal={props.setItemSuccessModal}
-                            setItemSuccessMessage={props.setItemSuccessMessage}/>
+            <ItemNavigation fetchItemData={fetchItemData} setItemNavigationErrorModal={props.setItemErrorModal}
+                            setItemNavigationErrorMessage={props.setItemErrorMessage}
+                            setItemNavigationSuccessModal={props.setItemSuccessModal}
+                            setItemNavigationSuccessMessage={props.setItemSuccessMessage}/>
             {props.itemErrorModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} severity="error" onClose={() => {
                     props.setItemErrorModal(false);
@@ -56,10 +56,10 @@ function ItemPage(props: itemPageProps) {
             }
             <div className={"page-body"}>
                 <ItemTable fetchItemData={fetchItemData} itemData={itemData}
-                           setItemErrorMessage={props.setItemErrorMessage}
-                           setItemErrorModal={props.setItemErrorModal}
-                           setItemSuccessMessage={props.setItemSuccessMessage}
-                           setItemSuccessModal={props.setItemSuccessModal}/>
+                           setItemTableErrorMessage={props.setItemErrorMessage}
+                           setItemTableErrorModal={props.setItemErrorModal}
+                           setItemTableSuccessMessage={props.setItemSuccessMessage}
+                           setItemTableSuccessModal={props.setItemSuccessModal}/>
             </div>
 
         </div>

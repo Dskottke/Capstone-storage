@@ -8,10 +8,10 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 type dischargingTableRowProps = {
     drivingOrder: DrivingOrder
     fetchRetrievalData: () => void
-    setErrorModal: (showRetrievalErrorAlert: boolean) => void
-    setErrorMessage: (retrievalErrorMessage: string) => void
-    setSuccessMessage: (retrievalSuccessMessage: string) => void
-    setSuccessModal: (showRetrievalSuccessAlert: boolean) => void
+    setRetrievalTableRowErrorModal: (showRetrievalErrorAlert: boolean) => void
+    setRetrievalTableRowMessage: (retrievalErrorMessage: string) => void
+    setRetrievalTableRowSuccessMessage: (retrievalSuccessMessage: string) => void
+    setRetrievalTableRowSuccessModal: (showRetrievalSuccessAlert: boolean) => void
 }
 
 function RetrievalTableRow(props: dischargingTableRowProps) {

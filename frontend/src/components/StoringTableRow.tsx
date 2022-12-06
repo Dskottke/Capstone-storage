@@ -7,10 +7,10 @@ import axios from "axios";
 type storingTableRowProps = {
     fetchStoringData: () => void
     storingDrivingOrder: DrivingOrder
-    setStoringErrorModal: (showStoringErrorAlert: boolean) => void
-    setStoringErrorMessage: (errorStoringMessage: string) => void
-    setStoringSuccessMessage: (successStoringMessage: string) => void
-    setStoringSuccessModal: (showStoringSuccessAlert: boolean) => void
+    setStoringTableRowErrorModal: (showStoringErrorAlert: boolean) => void
+    setStoringTableRowErrorMessage: (errorStoringMessage: string) => void
+    setStoringTableRowSuccessMessage: (successStoringMessage: string) => void
+    setStoringTableRowSuccessModal: (showStoringSuccessAlert: boolean) => void
 }
 
 function StoringTableRow(props: storingTableRowProps) {
@@ -19,14 +19,14 @@ function StoringTableRow(props: storingTableRowProps) {
         axios.delete("/api/driving-orders/input/" + props.storingDrivingOrder.id)
             .then(response => {
                 if (response.status === 204) {
-                    props.setStoringSuccessModal(true);
-                    props.setStoringSuccessMessage("items stored")
+                    props.setStoringTableRowSuccessModal(true);
+                    props.setStoringTableRowSuccessMessage("items stored")
                 }
             })
             .catch(error => {
                 if (error.response) {
-                    props.setStoringErrorModal(true);
-                    props.setStoringErrorMessage(error.response.data)
+                    props.setStoringTableRowErrorModal(true);
+                    props.setStoringTableRowErrorMessage(error.response.data)
                 }
             })
             .then(props.fetchStoringData)

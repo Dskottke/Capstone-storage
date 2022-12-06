@@ -5,10 +5,10 @@ import "../css/TableNavigation.css"
 type itemNavigationProps = {
 
     fetchItemData: () => void
-    setItemErrorModal: (showItemErrorAlert: boolean) => void
-    setItemErrorMessage: (itemErrorMessage: string) => void
-    setItemSuccessMessage: (itemSuccessMessage: string) => void
-    setItemSuccessModal: (showItemSuccessAlert: boolean) => void
+    setItemNavigationErrorModal: (showItemErrorAlert: boolean) => void
+    setItemNavigationErrorMessage: (itemErrorMessage: string) => void
+    setItemNavigationSuccessMessage: (itemSuccessMessage: string) => void
+    setItemNavigationSuccessModal: (showItemSuccessAlert: boolean) => void
 }
 
 function ItemNavigation(props: itemNavigationProps) {
@@ -39,14 +39,14 @@ function ItemNavigation(props: itemNavigationProps) {
         axios.post("/api/items/" + ean, {ean, itemNumber, storableValue})
             .then(response => {
                 if (response.status === 201) {
-                    props.setItemSuccessModal(true);
-                    props.setItemSuccessMessage("new item created ")
+                    props.setItemNavigationSuccessModal(true);
+                    props.setItemNavigationSuccessMessage("new item created ")
                 }
             })
             .catch(error => {
                     if (error.response) {
-                        props.setItemErrorModal(true);
-                        props.setItemErrorMessage(error.response.data)
+                        props.setItemNavigationErrorModal(true);
+                        props.setItemNavigationErrorMessage(error.response.data)
                     }
                 }
             )

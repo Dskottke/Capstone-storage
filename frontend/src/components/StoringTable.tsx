@@ -6,10 +6,10 @@ import "../css/Table.css"
 type storingTableProps = {
     fetchData: () => void
     storingDrivingOrders: DrivingOrder[]
-    setStoringErrorModal: (showStoringErrorAlert: boolean) => void
-    setStoringErrorMessage: (errorStoringMessage: string) => void
-    setStoringSuccessMessage: (successStoringMessage: string) => void
-    setStoringSuccessModal: (showStoringSuccessAlert: boolean) => void
+    setStoringTableErrorModal: (showStoringErrorAlert: boolean) => void
+    setStoringTableErrorMessage: (errorStoringMessage: string) => void
+    setStoringTableSuccessMessage: (successStoringMessage: string) => void
+    setStoringTableSuccessModal: (showStoringSuccessAlert: boolean) => void
 }
 
 function StoringTable(props: storingTableProps) {
@@ -32,10 +32,10 @@ function StoringTable(props: storingTableProps) {
 
                     </tr>) : (
                     props.storingDrivingOrders.map(order => <StoringTableRow fetchStoringData={props.fetchData}
-                                                                             setStoringSuccessModal={props.setStoringSuccessModal}
-                                                                             setStoringErrorModal={props.setStoringErrorModal}
-                                                                             setStoringErrorMessage={props.setStoringErrorMessage}
-                                                                             setStoringSuccessMessage={props.setStoringSuccessMessage}
+                                                                             setStoringTableRowSuccessModal={props.setStoringTableSuccessModal}
+                                                                             setStoringTableRowErrorModal={props.setStoringTableErrorModal}
+                                                                             setStoringTableRowErrorMessage={props.setStoringTableErrorMessage}
+                                                                             setStoringTableRowSuccessMessage={props.setStoringTableSuccessMessage}
                                                                              storingDrivingOrder={order}
                                                                              key={order.id}/>
                     ))}

@@ -9,14 +9,14 @@ import "../css/TablePage.css"
 import Alert from "@mui/material/Alert";
 
 type storingPageProps = {
-    storingErrorModal: boolean
-    storingSuccessModal: boolean
-    storingErrorMessage: string
-    storingSuccessMessage: string
-    setStoringErrorModal: (showAlert: boolean) => void
-    setStoringErrorMessage: (errorStoringMessage: string) => void
-    setStoringSuccessMessage: (successStoringMessage: string) => void
-    setStoringSuccessModal: (showStoringSuccessAlert: boolean) => void
+    storingPageErrorModal: boolean
+    storingPageSuccessModal: boolean
+    storingPageErrorMessage: string
+    storingPageSuccessMessage: string
+    setStoringPageErrorModal: (showAlert: boolean) => void
+    setStoringPageErrorMessage: (errorStoringMessage: string) => void
+    setStoringPageSuccessMessage: (successStoringMessage: string) => void
+    setStoringPageSuccessModal: (showStoringSuccessAlert: boolean) => void
     storingAmountValue: string
     storingStorageLocationId: string
     storingItemNumber: string
@@ -50,10 +50,10 @@ function StoringPage(props: storingPageProps) {
         <div className={"page-container"}>
             <TableHeadNav/>
             <StoringNavigation fetchStoringData={fetchInputOrders}
-                               setStoringErrorModal={props.setStoringErrorModal}
-                               setStoringErrorMessage={props.setStoringErrorMessage}
-                               setStoringSuccessMessage={props.setStoringSuccessMessage}
-                               setStoringSuccessModal={props.setStoringSuccessModal}
+                               setStoringNavigationErrorModal={props.setStoringPageErrorModal}
+                               setStoringNavigationErrorMessage={props.setStoringPageErrorMessage}
+                               setStoringNavigationSuccessMessage={props.setStoringPageSuccessMessage}
+                               setStoringNavigationSuccessModal={props.setStoringPageSuccessModal}
                                storingAmountValue={props.storingAmountValue}
                                setStoringAmountValue={props.setStoringAmountValue}
                                handleStoringAmount={props.handleStoringAmount}
@@ -64,21 +64,22 @@ function StoringPage(props: storingPageProps) {
                                storingItemNumber={props.storingItemNumber}
                                setStoringItemNumber={props.setStoringItemNumber}/>
 
-            {props.storingErrorModal &&
+            {props.storingPageErrorModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} severity="error" onClose={() => {
-                    props.setStoringErrorModal(false);
-                }}>{props.storingErrorMessage}</Alert>
+                    props.setStoringPageErrorModal(false);
+                }}>{props.storingPageErrorMessage}</Alert>
             }
-            {props.storingSuccessModal &&
+            {props.storingPageSuccessModal &&
                 <Alert style={{width: '80%', marginLeft: "10%", marginTop: "30px"}} onClose={() => {
-                    props.setStoringSuccessModal(false);
-                }}>{props.storingSuccessMessage}</Alert>
+                    props.setStoringPageSuccessModal(false);
+                }}>{props.storingPageSuccessMessage}</Alert>
             }
             <div className={"page-body"}>
-                <StoringTable fetchData={fetchInputOrders} setStoringSuccessMessage={props.setStoringSuccessMessage}
-                              setStoringSuccessModal={props.setStoringSuccessModal}
-                              setStoringErrorModal={props.setStoringErrorModal}
-                              setStoringErrorMessage={props.setStoringErrorMessage}
+                <StoringTable fetchData={fetchInputOrders}
+                              setStoringTableSuccessMessage={props.setStoringPageSuccessMessage}
+                              setStoringTableSuccessModal={props.setStoringPageSuccessModal}
+                              setStoringTableErrorModal={props.setStoringPageErrorModal}
+                              setStoringTableErrorMessage={props.setStoringPageErrorMessage}
                               storingDrivingOrders={inputDrivingOrders}/>
             </div>
         </div>
