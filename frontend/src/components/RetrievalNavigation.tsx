@@ -9,9 +9,9 @@ type retrievalNavigationProps = {
     setStorageLocationId: (storageBinNumber: string) => void
     setItemNumber: (itemNumber: string) => void
     setAmountValue: (amount: string) => void
-    handleInputAmount: (event: ChangeEvent<HTMLInputElement>) => void
-    handleInputItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
-    handleInputStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    handleOutputAmount: (event: ChangeEvent<HTMLInputElement>) => void
+    handleOutputItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    handleOutputStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
     setErrorModal: (showAlert: boolean) => void
     setErrorMessage: (errorMessage: string) => void
     setSuccessMessage: (successMessage: string) => void
@@ -47,13 +47,13 @@ function RetrievalNavigation(props: retrievalNavigationProps) {
             <div className="add-container">
                 <form onSubmit={handleSubmit}>
                     <input className="item_input_field" value={props.itemNumber}
-                           onChange={props.handleInputItemNumber} type="text" placeholder="item-number"
+                           onChange={props.handleOutputItemNumber} type="text" placeholder="item-number"
                            name="item-number"/>
                     <input className="item_input_field" value={props.storageLocationId}
-                           onChange={props.handleInputStorageBinNumber} type="text" placeholder="storage-bin-nr"
+                           onChange={props.handleOutputStorageBinNumber} type="text" placeholder="storage-bin-nr"
                            name="storage-bin-nr"/>
                     <input className="item_input_field" value={props.amountValue}
-                           onChange={props.handleInputAmount} type="text" placeholder="amount" name="amount"/>
+                           onChange={props.handleOutputAmount} type="text" placeholder="amount" name="amount"/>
                     <button type="submit">add</button>
                 </form>
             </div>

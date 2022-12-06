@@ -63,9 +63,9 @@ function App() {
                                                setErrorModal={setErrorModal} successMessage={successMessage}
                                                successModal={successModal} amountValue={amountValue}
                                                setAmountValue={setAmountValue}
-                                               handleInputAmount={handleInputAmount}
-                                               handleInputItemNumber={handleInputItemNumber}
-                                               handleInputStorageBinNumber={handleInputStorageBinNumber}
+                                               handleOutputAmount={handleInputAmount}
+                                               handleOutputItemNumber={handleInputItemNumber}
+                                               handleOutputStorageBinNumber={handleInputStorageBinNumber}
                                                setStorageLocationId={setStorageLocationId}
                                                storageLocationId={storageLocationId} itemNumber={itemNumber}
                                                setItemNumber={setItemNumber}/>}/>

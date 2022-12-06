@@ -19,9 +19,9 @@ type retrievalPageProps = {
     setStorageLocationId: (storageBinNumber: string) => void
     setItemNumber: (itemNumber: string) => void
     setAmountValue: (amount: string) => void
-    handleInputAmount: (event: ChangeEvent<HTMLInputElement>) => void
-    handleInputItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
-    handleInputStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    handleOutputAmount: (event: ChangeEvent<HTMLInputElement>) => void
+    handleOutputItemNumber: (event: ChangeEvent<HTMLInputElement>) => void
+    handleOutputStorageBinNumber: (event: ChangeEvent<HTMLInputElement>) => void
     setErrorModal: (showAlert: boolean) => void
     setErrorMessage: (errorMessage: string) => void
     setSuccessMessage: (successMessage: string) => void
@@ -58,9 +58,9 @@ function RetrievalPage(props: retrievalPageProps) {
                 fetchRetrievalData={fetchRetrievalData}
                 amountValue={props.amountValue}
                 setAmountValue={props.setAmountValue}
-                handleInputAmount={props.handleInputAmount}
-                handleInputItemNumber={props.handleInputItemNumber}
-                handleInputStorageBinNumber={props.handleInputStorageBinNumber}
+                handleOutputAmount={props.handleOutputAmount}
+                handleOutputItemNumber={props.handleOutputItemNumber}
+                handleOutputStorageBinNumber={props.handleOutputStorageBinNumber}
                 setStorageLocationId={props.setStorageLocationId}
                 storageLocationId={props.storageLocationId} itemNumber={props.itemNumber}
                 setItemNumber={props.setItemNumber}/>
