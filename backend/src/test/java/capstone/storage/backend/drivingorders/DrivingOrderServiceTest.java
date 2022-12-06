@@ -31,7 +31,7 @@ class DrivingOrderServiceTest {
 
 
     @Test
-    @DisplayName("Mehtod -> should return the expected List")
+    @DisplayName("Method -> should return the expected List")
     void getAllDrivingOrdersByTypeInputAndGetExpectedList() {
         //GIVEN
         List<DrivingOrder> expectedList = List.of(new DrivingOrder("1", "2", "1", Type.INPUT, "20"));
@@ -83,6 +83,18 @@ class DrivingOrderServiceTest {
     void isNullOrEmptyWithOneFieldNullShouldReturnTrue() {
         //GIVEN
         NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "2", null);
+        //WHEN
+        boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
+        boolean expected = true;
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method -> isNullOrEmpty should return true because two fields are null")
+    void isNullOrEmptyWithTwoFieldsNullShouldReturnTrue() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", null, null);
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
