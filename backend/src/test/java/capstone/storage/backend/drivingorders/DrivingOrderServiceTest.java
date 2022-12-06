@@ -16,7 +16,9 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Optional;
 
+import static com.mongodb.assertions.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -220,17 +222,58 @@ class DrivingOrderServiceTest {
 
     @Test
     @DisplayName("method -> checkValidation should return false because there is an existing DrivingOrder with not matching item on the storage bin ")
-    void checkValidationShouldReturnFalse() {
+    void checkValidationWithExistingDrivingOrderNotMatchingItemOnStorageBinShouldReturnFalse() {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "1");
-        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "2", Type.INPUT, "5");
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.INPUT, "5");
         //WHEN
         when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.of(testDrivingOrder));
         boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
         boolean expected = false;
         //THEN
         assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method -> checkValidation should return true ")
+    void checkValidationShouldReturnTrue() {
+        //GIVEN
+        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
+        Item testItem = new Item("1", "test", "test", "test", "1", "30", "1");
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.INPUT, "5");
+        //WHEN
+        when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.of(testDrivingOrder));
+        boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
+        //THEN
+        assertTrue(actual);
+    }
+
+    @Test
+    @DisplayName("method -> checkValidation should return false because StorageBin-itemNumber is different to Item-ItemNumber ")
+    void checkValidationShouldReturnFalseBecauseStorageBinItemNumberAndItemItemNumberAreDifferent() {
+        //GIVEN
+        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
+        Item testItem = new Item("1", "test", "test", "test", "1", "30", "2");
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.INPUT, "5");
+        //WHEN
+        when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.of(testDrivingOrder));
+        boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
+        //THEN
+        assertFalse(actual);
+    }
+
+    @Test
+    @DisplayName("method -> checkValidation should return true because StorageBin-itemNumber is 0 ")
+    void checkValidationShouldReturnTrueBecauseStorageBinItemNumberIs0() {
+        //GIVEN
+        StorageBin testStorageBin = new StorageBin("1", "1", "0", "20");
+        Item testItem = new Item("1", "test", "test", "test", "1", "30", "2");
+        //WHEN
+        when(drivingOrderRepo.findFirstByStorageLocationId(testStorageBin.locationId())).thenReturn(Optional.empty());
+        boolean actual = drivingOrderService.checkValidation(testStorageBin, testItem);
+        //THEN
+        assertTrue(actual);
     }
 
     @Test
