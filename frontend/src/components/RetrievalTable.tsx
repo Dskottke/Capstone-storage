@@ -37,8 +37,8 @@ function RetrievalTable(props: retrievalTableProps) {
                         setRetrievalTableRowSuccessMessage={props.setRetrievalTableSuccessMessage}
                         setRetrievalTableRowSuccessModal={props.setRetrievalTableSuccessModal}
                         setRetrievalTableRowErrorModal={props.setRetrievalTableErrorModal}
-                        setRetrievalTableRowMessage={props.setRetrievalTableErrorMessage}
-                        drivingOrder={order}/>
+                        setRetrievalTableRowErrorMessage={props.setRetrievalTableErrorMessage}
+                        retrievalDrivingOrder={order}/>
                     ))}
                 </tbody>
             </table>

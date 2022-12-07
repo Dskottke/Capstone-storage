@@ -24,19 +24,34 @@ public class StorageBinService {
         return repo.existsByLocationId(locationNumber);
     }
 
-    public void updateStorageBin(DrivingOrder drivingOrder) {
-        StorageBin storageBinToUpdate = repo.findById(drivingOrder.storageLocationId())
+    public void updateInputStorageBin(DrivingOrder drivingOrder) {
+        StorageBin storageBinToUpdateInput = repo.findById(drivingOrder.storageLocationId())
                 .orElseThrow();
 
-        int newAmount = Integer.parseInt(storageBinToUpdate.amount()) + Integer.parseInt(drivingOrder.amount());
+        int newAmountInput = Integer.parseInt(storageBinToUpdateInput.amount()) + Integer.parseInt(drivingOrder.amount());
 
-        StorageBin update = new StorageBin(
-                storageBinToUpdate.id(),
+        StorageBin updateInput = new StorageBin(
+                storageBinToUpdateInput.id(),
                 drivingOrder.storageLocationId(),
                 drivingOrder.itemNumber(),
-                Integer.toString(newAmount));
+                Integer.toString(newAmountInput));
 
-        repo.save(update);
+        repo.save(updateInput);
+    }
+
+    public void updateOutputStorageBin(DrivingOrder drivingOrder) {
+        StorageBin storageBinToUpdateOutput = repo.findById(drivingOrder.storageLocationId())
+                .orElseThrow();
+
+        int newAmountOutput = Integer.parseInt(storageBinToUpdateOutput.amount()) - Integer.parseInt(drivingOrder.amount());
+
+        StorageBin updateOutput = new StorageBin(
+                storageBinToUpdateOutput.id(),
+                drivingOrder.storageLocationId(),
+                drivingOrder.itemNumber(),
+                Integer.toString(newAmountOutput));
+
+        repo.save(updateOutput);
     }
 }
 
