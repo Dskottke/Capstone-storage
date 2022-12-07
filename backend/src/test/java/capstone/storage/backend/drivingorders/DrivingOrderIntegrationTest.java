@@ -301,4 +301,40 @@ class DrivingOrderIntegrationTest {
                 .andExpect(status().is(404));
 
     }
+
+    @Test
+    @DirtiesContext
+    @DisplayName("POST -> Output should return status 400 and STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE")
+    void addNewOutputDrivingOrderWithExistingInputOrderWithMatchingStorageButDifferentItemNumbers() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
+                .andExpect(status().is(204));
+
+        String body1 = mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "storageLocationId" : "1",
+                                "itemNumber" : "1",
+                                "amount" : "20"
+                                }"""))
+                .andExpect(status().is(201)).andReturn().getResponse().getContentAsString();
+
+        DrivingOrder drivingOrder1 = objectMapper.readValue(body1, DrivingOrder.class);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/driving-orders/input/" + drivingOrder1.id()))
+                .andExpect(status().is(204));
+
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=OUTPUT")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "storageLocationId" : "1",
+                                "itemNumber" : "2",
+                                "amount" : "10"
+                                }"""))
+                .andExpect(status().is(400)).andExpect(content().string(ExceptionMessage.STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE.toString()));
+
+    }
 }
