@@ -159,8 +159,8 @@ public class DrivingOrderService {
     }
 
     public void beforeDoneControl(DrivingOrder succeedOutputDrivingOrder) {
-        StorageBin storageBin = storageBinService.findStorageBinByLocationId(succeedOutputDrivingOrder.storageLocationId());
-        int storageBinAmount = Integer.parseInt(storageBin.amount());
+        StorageBin storageBinToControl = storageBinService.findStorageBinByLocationId(succeedOutputDrivingOrder.storageLocationId());
+        int storageBinAmount = Integer.parseInt(storageBinToControl.amount());
         int succeedOutputDrivingOrderAmount = Integer.parseInt(succeedOutputDrivingOrder.amount());
         if ((storageBinAmount - succeedOutputDrivingOrderAmount) < 0) {
             throw new NotEnoughItemsRemainingException();
