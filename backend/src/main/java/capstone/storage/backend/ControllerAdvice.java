@@ -23,24 +23,18 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
             StorageBinFalseItemException.class,
             ItemOrStorageBinNotExistingException.class,
             NotEnoughItemsRemainingException.class})
-    public ResponseEntity<String> handleIsNullOrEmptyException(RuntimeException ex) {
+    public ResponseEntity<String> handleBadRequestResponseException(RuntimeException ex) {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ex.getMessage());
     }
 
-
     @ExceptionHandler({ItemToDeleteNotFoundException.class, OrderToDeleteNotFoundException.class})
-    public ResponseEntity<String> handleItemToDeleteNotFoundException(RuntimeException ex) {
+    public ResponseEntity<String> handleNotFoundResponseException(RuntimeException ex) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
-
-
-
-
-
 
 
 }
