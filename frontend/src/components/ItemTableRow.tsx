@@ -84,6 +84,7 @@ function ItemTableRow({
                 />) : (
                 item.storableValue)}
             </td>
+            <td className="center">{item.storageBinAmount}</td>
             <td className="td_actions" width="200px">{onEditOpen ? (
                     <>
                         <IconButton sx={{marginLeft: 4}} aria-label="save" size="small" onClick={() => updateItem()}>

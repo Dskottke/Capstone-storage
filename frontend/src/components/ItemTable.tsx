@@ -23,6 +23,7 @@ function ItemTable(props: itemPageProps) {
                     <th>category</th>
                     <th>issuing country</th>
                     <th className="center" id="capacity_head">capacity</th>
+                    <th className="center">stored-items</th>
                     <th className="center" id="action_head">action</th>
                 </tr>
                 </thead>
