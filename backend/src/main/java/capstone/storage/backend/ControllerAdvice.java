@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Component
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
-
     @ExceptionHandler({
             IsNullOrEmptyException.class,
             ItemValidationException.class,
