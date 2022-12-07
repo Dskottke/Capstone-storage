@@ -1,4 +1,5 @@
 package capstone.storage.backend.drivingorders;
+
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.exceptions.ExceptionMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +35,7 @@ class DrivingOrderIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST -> should return HTTP-Status 201 and Content ")
+    @DisplayName("POST -> INPUT should return HTTP-Status 201 and Content ")
     @DirtiesContext
     void addNewInputDrivingOrderAndExpectStatus201() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
@@ -66,7 +67,7 @@ class DrivingOrderIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST -> should return HTTP-Status 400 and IsNullOrEmptyExceptionMessage because all fields are null ")
+    @DisplayName("POST -> INPUT should return HTTP-Status 400 and IsNullOrEmptyExceptionMessage because all fields are null ")
     @DirtiesContext
     void addNewInputDrivingOrderWithAllFieldsNullAndExpectStatus400andIsNullOrEmptyExceptionMessage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
@@ -83,7 +84,7 @@ class DrivingOrderIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST -> should return HTTP-Status 400 and IsNullOrEmptyExceptionMessage because the RequestBody is null ")
+    @DisplayName("POST -> INPUT should return HTTP-Status 400 and IsNullOrEmptyExceptionMessage because the RequestBody is null ")
     @DirtiesContext
     void addNewInputDrivingOrderWithRequestBodyNullAndExpectStatus400andIsNullOrEmptyException() throws Exception {
 
@@ -95,7 +96,7 @@ class DrivingOrderIntegrationTest {
     }
 
     @Test
-    @DisplayName("DELETE -> should return HTTP-Status 204")
+    @DisplayName("DELETE -> INPUT should return HTTP-Status 204")
     @DirtiesContext
     void drivingOrderDoneShouldReturnStatus204() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
@@ -118,7 +119,7 @@ class DrivingOrderIntegrationTest {
     }
 
     @Test
-    @DisplayName("DELETE -> should return HTTP-Status 404 and ITEM_TO_DELETE_NOT_FOUND_EXCEPTION_MESSAGE")
+    @DisplayName("DELETE -> INPUT should return HTTP-Status 404 and ITEM_TO_DELETE_NOT_FOUND_EXCEPTION_MESSAGE")
     @DirtiesContext
     void drivingOrderDoneShouldReturnStatus400() throws Exception {
 
@@ -128,7 +129,7 @@ class DrivingOrderIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST -> should return HTTP-Status 400 and ITEM_OR_STORAGE_BIN_NOT_EXISTING_EXCEPTION_MESSAGE ")
+    @DisplayName("POST -> INPUT should return HTTP-Status 400 and ITEM_OR_STORAGE_BIN_NOT_EXISTING_EXCEPTION_MESSAGE ")
     @DirtiesContext
     void addNewInputDrivingOrderWithNotExistingStorageLocationIdShouldReturnStatus400() throws Exception {
 
@@ -145,7 +146,7 @@ class DrivingOrderIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST -> should return HTTP-Status 400 and IS_NOT_ENOUGH_SPACE_EXCEPTION_MESSAGE ")
+    @DisplayName("POST -> INPUT should return HTTP-Status 400 and IS_NOT_ENOUGH_SPACE_EXCEPTION_MESSAGE ")
     @DirtiesContext
     void addNewInputDrivingOrderWithAmountGreaterThanCapacity() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
@@ -175,7 +176,7 @@ class DrivingOrderIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> should return status 400 and STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE")
+    @DisplayName("POST -> INPUT should return status 400 and STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE")
     void addNewInputDrivingOrderWithExistingInputOrderWithMatchingStorageButDifferentItemNumbers() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
                 .andExpect(status().is(204));
@@ -203,4 +204,101 @@ class DrivingOrderIntegrationTest {
 
     }
 
+    @Test
+    @DisplayName("POST -> OUTPUT should return HTTP-Status 201 and Content ")
+    @DirtiesContext
+    void addNewOutputDrivingOrderAndExpectStatus201() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
+                .andExpect(status().is(204));
+
+        String body1 = mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "storageLocationId" : "1",
+                                "itemNumber" : "1",
+                                "amount" : "20"
+                                }"""))
+                .andExpect(status().is(201)).andReturn().getResponse().getContentAsString();
+
+        DrivingOrder drivingOrder1 = objectMapper.readValue(body1, DrivingOrder.class);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/driving-orders/input/" + drivingOrder1.id()))
+                .andExpect(status().is(204));
+
+
+        String body2 = mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=OUTPUT")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "storageLocationId" : "1",
+                                "itemNumber" : "1",
+                                "amount" : "10"
+                                }"""))
+                .andExpect(status().is(201))
+                .andReturn().getResponse().getContentAsString();
+
+        DrivingOrder drivingOrder2 = objectMapper.readValue(body2, DrivingOrder.class);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/driving-orders/?type=OUTPUT"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                                [{"id": "<id>",
+                                "storageLocationId": "1",
+                                "itemNumber": "1",
+                                "type":"OUTPUT",
+                                "amount": "10"}]
+                                """.replace("<id>", drivingOrder2.id())));
+    }
+
+    @Test
+    @DisplayName("DELETE -> OUTPUT should return HTTP-Status 204 ")
+    @DirtiesContext
+    void deleteOutputDrivingOrderAndExpectStatus204() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
+                .andExpect(status().is(204));
+
+        String body1 = mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "storageLocationId" : "1",
+                                "itemNumber" : "1",
+                                "amount" : "20"
+                                }"""))
+                .andExpect(status().is(201)).andReturn().getResponse().getContentAsString();
+
+        DrivingOrder drivingOrder1 = objectMapper.readValue(body1, DrivingOrder.class);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/driving-orders/input/" + drivingOrder1.id()))
+                .andExpect(status().is(204));
+
+
+        String body2 = mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=OUTPUT")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "storageLocationId" : "1",
+                                "itemNumber" : "1",
+                                "amount" : "10"
+                                }"""))
+                .andExpect(status().is(201))
+                .andReturn().getResponse().getContentAsString();
+
+        DrivingOrder drivingOrder2 = objectMapper.readValue(body2, DrivingOrder.class);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/driving-orders/output/" + drivingOrder2.id()))
+                .andExpect(status().is(204));
+
+    }
+
+    @Test
+    @DisplayName("DELETE -> OUTPUT should return HTTP-Status 404  ")
+    @DirtiesContext
+    void deleteOutputDrivingOrderAndExpectStatus404() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/driving-orders/output/123"))
+                .andExpect(status().is(404));
+
+    }
 }
