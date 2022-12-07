@@ -6,4 +6,5 @@ export type ItemModel = {
     ean: string,
     storableValue: string,
     itemNumber: string
+    storageBinAmount: string
 }
