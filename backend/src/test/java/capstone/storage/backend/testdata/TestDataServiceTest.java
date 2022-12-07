@@ -33,7 +33,8 @@ class TestDataServiceTest {
                 "NL",
                 "8710847909610",
                 "20",
-                "1");
+                "1",
+                "0");
         List<Item> expected = List.of(listItem);
         //WHEN
         List<Item> actual = testDataService.addListToItemDB(expected);
