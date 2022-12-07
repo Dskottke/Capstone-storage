@@ -7,6 +7,8 @@ public record Item(
         String issuingCountry,
         String ean,
         String storableValue,
-        String itemNumber
+        String itemNumber,
+
+        String storageBinAmount
 ) {
 }
