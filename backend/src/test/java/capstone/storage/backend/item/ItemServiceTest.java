@@ -5,6 +5,7 @@ import capstone.storage.backend.exceptions.ItemAlreadyExistException;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
+import capstone.storage.backend.storagebin.StorageBinService;
 import capstone.storage.backend.utils.ServiceUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,8 @@ class ItemServiceTest {
     private final ItemRepo itemRepo = mock(ItemRepo.class);
     private final ServiceUtils utils = mock(ServiceUtils.class);
     private final ItemEanApiService eanApiService = mock(ItemEanApiService.class);
-    private final ItemService itemService = new ItemService(itemRepo, eanApiService, utils);
+    private final StorageBinService storageBinService = mock(StorageBinService.class);
+    private final ItemService itemService = new ItemService(itemRepo, eanApiService, storageBinService, utils);
 
     @Test
     @DisplayName("method : findAll -> should return an empty list")
@@ -35,6 +37,7 @@ class ItemServiceTest {
         verify(itemRepo).findAll();
         assertEquals(expected, actual);
     }
+
     @Test
     @DisplayName("method : addItem -> should return the item to add")
     void addItemByEanAndAddItemDtoAndReturnItemWithId() {
@@ -49,7 +52,8 @@ class ItemServiceTest {
                 "testCategory",
                 "GER", eanToFind,
                 "20",
-                "1");
+                "1"
+                , "0");
 
         AddItemDto addItemDto = new AddItemDto(eanToFind, "1", "20");
         when(eanApiService.getItemResponseFromApi(eanToFind)).thenReturn(response);
@@ -71,6 +75,7 @@ class ItemServiceTest {
                 "testCategory",
                 "GER", "8710847909610",
                 "20",
+                "1",
                 "1");
         when(itemRepo.save(itemToExpect)).thenReturn(itemToExpect);
         //WHEN
@@ -102,7 +107,8 @@ class ItemServiceTest {
                 "testCategory",
                 "GER", "8710847909610",
                 "20",
-                "1");
+                "1",
+                "0");
         //WHEN
         doNothing().when(itemRepo).deleteById(itemToDelete.id());
         itemService.deleteItemById(itemToDelete.id());
