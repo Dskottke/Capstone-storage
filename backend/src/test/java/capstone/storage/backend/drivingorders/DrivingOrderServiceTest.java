@@ -222,7 +222,7 @@ class DrivingOrderServiceTest {
 
     @Test
     @DisplayName("method -> checkValidation should return false because there is an existing DrivingOrder with not matching item on the storage bin ")
-    void checkValidationWithExistingDrivingOrderNotMatchingItemOnStorageBinShouldReturnFalse() {
+    void checkInputValidationWithExistingDrivingOrderNotMatchingItemOnStorageBinShouldReturnFalse() {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "1");
@@ -237,7 +237,7 @@ class DrivingOrderServiceTest {
 
     @Test
     @DisplayName("method -> checkValidation should return true because StorageBin-itemNumber equals item-itemNumber ")
-    void checkValidationShouldReturnTrue() {
+    void checkInputValidationShouldReturnTrue() {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "1");
@@ -250,8 +250,8 @@ class DrivingOrderServiceTest {
     }
 
     @Test
-    @DisplayName("method -> checkValidation should return false because StorageBin-itemNumber is different to Item-ItemNumber ")
-    void checkValidationShouldReturnFalseBecauseStorageBinItemNumberAndItemItemNumberAreDifferent() {
+    @DisplayName("method -> INPUT checkValidation should return false because StorageBin-itemNumber is different to Item-ItemNumber ")
+    void checkInputValidationShouldReturnFalseBecauseStorageBinItemNumberAndItemItemNumberAreDifferent() {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "2");
@@ -264,8 +264,8 @@ class DrivingOrderServiceTest {
     }
 
     @Test
-    @DisplayName("method -> checkValidation should return true because StorageBin-itemNumber is 0 ")
-    void checkValidationShouldReturnTrueBecauseStorageBinItemNumberIs0() {
+    @DisplayName("method -> INPUT checkValidation should return true because StorageBin-itemNumber is 0 ")
+    void checkInputValidationShouldReturnTrueBecauseStorageBinItemNumberIs0() {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", "0", "20");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "2");
@@ -277,8 +277,8 @@ class DrivingOrderServiceTest {
     }
 
     @Test
-    @DisplayName("method -> checkValidation should return true because StorageBin-itemNumber is 12 ")
-    void checkValidationShouldReturnFalseBecauseStorageBinItemNumberIs12() {
+    @DisplayName("method -> INPUT checkValidation should return true because StorageBin-itemNumber is 12 ")
+    void checkInputValidationInputShouldReturnFalseBecauseStorageBinItemNumberIs12() {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", "12", "20");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "2");
@@ -312,6 +312,31 @@ class DrivingOrderServiceTest {
         catch (StorageBinFalseItemException e) {
             assertEquals(ExceptionMessage.STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE.toString(), e.getMessage());
         }
-
     }
+
+    @Test
+    @DisplayName("method -> OUTPUT checkValidation should return false because the ItemNumber of testStorageBin and testItem don't match")
+    void checkOutputValidationInputShouldReturnFalseBecauseStorageBinItemNumberIs12() {
+        //GIVEN
+        StorageBin testStorageBin = new StorageBin("1", "1", "12", "20");
+        Item testItem = new Item("1", "test", "test", "test", "1", "30", "2");
+        //WHEN
+        boolean actual = drivingOrderService.checkOutputValidation(testStorageBin, testItem);
+        //THEN
+        assertFalse(actual);
+    }
+
+    @Test
+    @DisplayName("method -> OUTPUT checkValidation should return true because itemNumber of storageBinTest and testItem are equal ")
+    void checkOutputValidationInputShouldReturnTrue() {
+        //GIVEN
+        StorageBin testStorageBin = new StorageBin("1", "1", "2", "20");
+        Item testItem = new Item("1", "test", "test", "test", "1", "30", "2");
+        //WHEN
+        boolean actual = drivingOrderService.checkOutputValidation(testStorageBin, testItem);
+        //THEN
+        assertTrue(actual);
+    }
+
+
 }
