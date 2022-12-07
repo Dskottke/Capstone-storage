@@ -13,75 +13,34 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
 
-    @ExceptionHandler(IsNullOrEmptyException.class)
-    public ResponseEntity<String> handleIsNullOrEmptyException(IsNullOrEmptyException ex) {
+    @ExceptionHandler({
+            IsNullOrEmptyException.class,
+            ItemValidationException.class,
+            ItemAlreadyExistException.class,
+            ItemForbiddenRequestException.class,
+            ItemResponseEanNullException.class,
+            IsNotEnoughSpaceException.class,
+            StorageBinFalseItemException.class,
+            ItemOrStorageBinNotExistingException.class,
+            NotEnoughItemsRemainingException.class})
+    public ResponseEntity<String> handleIsNullOrEmptyException(RuntimeException ex) {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler(ItemValidationException.class)
-    public ResponseEntity<String> handleItemValidationException(ItemValidationException ex) {
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
-    }
-
-    @ExceptionHandler(ItemAlreadyExistException.class)
-    public ResponseEntity<String> handleItemAlreadyExistException(ItemAlreadyExistException ex) {
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
-    }
-
-    @ExceptionHandler(ItemForbiddenRequestException.class)
-    public ResponseEntity<String> handleItemForbiddenRequestException(ItemForbiddenRequestException ex) {
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
-    }
-
-    @ExceptionHandler(ItemToDeleteNotFoundException.class)
-    public ResponseEntity<String> handleItemToDeleteNotFoundException(ItemToDeleteNotFoundException ex) {
+    @ExceptionHandler({ItemToDeleteNotFoundException.class, OrderToDeleteNotFoundException.class})
+    public ResponseEntity<String> handleItemToDeleteNotFoundException(RuntimeException ex) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler(ItemResponseEanNullException.class)
-    public ResponseEntity<String> handleItemResponseEanNullException(ItemResponseEanNullException ex) {
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
-    }
 
-    @ExceptionHandler(IsNotEnoughSpaceException.class)
-    public ResponseEntity<String> handleIsNotEnoughSpaceException(IsNotEnoughSpaceException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
-    }
 
-    @ExceptionHandler(StorageBinFalseItemException.class)
-    public ResponseEntity<String> handleStorageBinFalseItemException(StorageBinFalseItemException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
-    }
 
-    @ExceptionHandler(OrderToDeleteNotFoundException.class)
-    public ResponseEntity<String> handleStorageBinFalseItemException(OrderToDeleteNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ex.getMessage());
-    }
 
-    @ExceptionHandler(ItemOrStorageBinNotExistingException.class)
-    public ResponseEntity<String> handleItemOrStorageBinNotExistingException(ItemOrStorageBinNotExistingException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
-    }
 
-    @ExceptionHandler(NotEnoughItemsRemainingException.class)
-    public ResponseEntity<String> handleNotEnoughItemsRemainingException(NotEnoughItemsRemainingException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
-    }
 }
