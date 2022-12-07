@@ -3,6 +3,7 @@ package capstone.storage.backend.drivingorders;
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.drivingorders.models.NewDrivingOrder;
 import capstone.storage.backend.exceptions.ExceptionMessage;
+import capstone.storage.backend.exceptions.NotEnoughItemsRemainingException;
 import capstone.storage.backend.exceptions.StorageBinFalseItemException;
 import capstone.storage.backend.item.ItemService;
 import capstone.storage.backend.item.models.Item;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.mongodb.assertions.Assertions.assertFalse;
+import static com.mongodb.assertions.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -336,6 +338,25 @@ class DrivingOrderServiceTest {
         boolean actual = drivingOrderService.checkOutputValidation(testStorageBin, testItem);
         //THEN
         assertTrue(actual);
+    }
+
+    @Test
+    @DisplayName("method-> beforeDoneControl should throw NotEnoughItemsRemainingException ")
+    void beforeDoneControlShouldThrowException() {
+        //GIVEN
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.OUTPUT, "10");
+        StorageBin mockStorageBin = new StorageBin("1", "1", "1", "0");
+        //WHEN
+        when(storageBinService.findStorageBinByLocationId(testDrivingOrder.storageLocationId())).thenReturn(mockStorageBin);
+        try {
+            drivingOrderService.beforeDoneControl(testDrivingOrder);
+            fail();
+        }
+        //THEN
+        catch (NotEnoughItemsRemainingException e) {
+            assertEquals(ExceptionMessage.NOT_ENOUGH_ITEMS_REMAINING_EXCEPTION_MESSAGE.toString(), e.getMessage());
+        }
+
     }
 
 
