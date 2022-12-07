@@ -135,14 +135,25 @@ public class DrivingOrderService {
 
     }
 
-    public void drivingOrderDone(String id) {
-        Optional<DrivingOrder> succeedDrivingOrder = drivingOrderRepo.findById(id);
+    public void inputDrivingOrderDone(String id) {
+        Optional<DrivingOrder> succeedInputDrivingOrder = drivingOrderRepo.findById(id);
 
-        if (succeedDrivingOrder.isEmpty()) {
+        if (succeedInputDrivingOrder.isEmpty()) {
             throw new OrderToDeleteNotFoundException();
         }
-        storageBinService.updateStorageBin(succeedDrivingOrder.get());
+        storageBinService.updateInputStorageBin(succeedInputDrivingOrder.get());
         drivingOrderRepo.deleteById(id);
     }
 
+    public void outputDrivingOrderDone(String id) {
+        Optional<DrivingOrder> succeedOutputDrivingOrder = drivingOrderRepo.findById(id);
+
+        if (succeedOutputDrivingOrder.isEmpty()) {
+            throw new OrderToDeleteNotFoundException();
+        }
+        storageBinService.updateOutputStorageBin(succeedOutputDrivingOrder.get());
+        drivingOrderRepo.deleteById(id);
+
+
+    }
 }

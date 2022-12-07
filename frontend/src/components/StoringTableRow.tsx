@@ -15,7 +15,7 @@ type storingTableRowProps = {
 
 function StoringTableRow(props: storingTableRowProps) {
 
-    const deleteDrivingOrder = () => {
+    const finishInputDrivingOrder = () => {
         axios.delete("/api/driving-orders/input/" + props.storingDrivingOrder.id)
             .then(response => {
                 if (response.status === 204) {
@@ -40,7 +40,7 @@ function StoringTableRow(props: storingTableRowProps) {
             <td className="center">{props.storingDrivingOrder.storageLocationId}</td>
             <td className="center">{props.storingDrivingOrder.amount}</td>
             <td className="center"><IconButton aria-label="driving-order-done" size="small"
-                                               onClick={deleteDrivingOrder}>
+                                               onClick={finishInputDrivingOrder}>
                 <CheckBoxIcon color="success" fontSize="inherit"/>
             </IconButton></td>
         </tr>

@@ -27,13 +27,19 @@ public class DrivingOrderController {
         if (drivingOrderToAdd.isEmpty() || drivingOrderService.isNullOrEmpty(drivingOrderToAdd.get())) {
             throw new IsNullOrEmptyException();
         }
-            return drivingOrderService.addNewDrivingOrder(type, drivingOrderToAdd.get());
+        return drivingOrderService.addNewDrivingOrder(type, drivingOrderToAdd.get());
     }
 
     @DeleteMapping("/input/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void drivingOrderDone(@PathVariable String id) {
-        drivingOrderService.drivingOrderDone(id);
+    public void inputDrivingOrderDone(@PathVariable String id) {
+        drivingOrderService.inputDrivingOrderDone(id);
 
+    }
+
+    @DeleteMapping("/output/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void outputDrivingOrderDone(@PathVariable String id) {
+        drivingOrderService.outputDrivingOrderDone(id);
     }
 }
