@@ -1,10 +1,12 @@
 package capstone.storage.backend.storagebin;
 
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
+import capstone.storage.backend.item.models.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +54,13 @@ public class StorageBinService {
                 Integer.toString(newAmountOutput));
 
         repo.save(updateOutput);
+    }
+
+    public String getItemAmountFromStorageBinsByItemNumber(Item itemToCount) {
+        AtomicInteger finalItemAmount = new AtomicInteger();
+        List<StorageBin> storageBinsWithItem = repo.findAllByItemNumber(itemToCount.itemNumber());
+        storageBinsWithItem.forEach(storageBin -> finalItemAmount.addAndGet(Integer.parseInt(storageBin.amount())));
+        return Integer.toString(finalItemAmount.get());
     }
 }
 
