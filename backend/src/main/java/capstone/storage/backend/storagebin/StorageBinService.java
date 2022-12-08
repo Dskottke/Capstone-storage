@@ -80,16 +80,17 @@ public class StorageBinService {
                     Integer.toString(newAmountOutput),
                     storageBinToUpdateOutput.storedItemName());
             storageBinRepo.save(updateOutput);
+        } else {
+            String emptyStorageItemName = "";
+            String emptyStorageItemNumber = "0";
+            StorageBin updateOutput = new StorageBin(
+                    storageBinToUpdateOutput.id(),
+                    drivingOrder.storageLocationId(),
+                    emptyStorageItemNumber,
+                    Integer.toString(newAmountOutput),
+                    emptyStorageItemName);
+            storageBinRepo.save(updateOutput);
         }
-        String emptyStorageItemName = "";
-        String emptyStorageItemNumber = "0";
-        StorageBin updateOutput = new StorageBin(
-                storageBinToUpdateOutput.id(),
-                drivingOrder.storageLocationId(),
-                emptyStorageItemNumber,
-                Integer.toString(newAmountOutput),
-                emptyStorageItemName);
-        storageBinRepo.save(updateOutput);
     }
 
     public String getItemAmountFromStorageBinsByItemNumber(Item itemToCount) {
