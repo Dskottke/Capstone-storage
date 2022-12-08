@@ -17,7 +17,7 @@ public class StorageBinService {
     private final ItemRepo itemRepo;
 
     public StorageBin findStorageBinByLocationId(String storageBinNumber) {
-        return storageBinRepo.findItemByLocationId(storageBinNumber);
+        return storageBinRepo.findStorageBinByLocationId(storageBinNumber);
     }
 
     public List<StorageBin> getAllStorageBins() {

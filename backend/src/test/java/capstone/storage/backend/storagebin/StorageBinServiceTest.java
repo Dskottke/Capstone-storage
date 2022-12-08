@@ -1,10 +1,14 @@
 package capstone.storage.backend.storagebin;
 
+import capstone.storage.backend.drivingorders.Type;
+import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.item.ItemRepo;
+import capstone.storage.backend.item.models.Item;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -29,4 +33,68 @@ class StorageBinServiceTest {
         assertEquals(expectedList, actual);
     }
 
+    @Test
+    @DisplayName("method -> addItemNameToStorageList should update the StorageBin in DB with the itemNumber matching ItemName")
+    void addItemNameToStorageListAndExpectStorageBinWithMatchingItemName() {
+        //GIVEN
+        StorageBin testStorageBin = new StorageBin("1", "1", "1", "2", "");
+        List<StorageBin> testStorageBinList = List.of(testStorageBin);
+        Item testItem = new Item(
+                "992901d9-5eb8-4992-9620-e5e80bb7f0e0",
+                "Axe Bodyspray Wasabi & Fresh Linen",
+                "Unknown",
+                "NL",
+                "8710847909610",
+                "20",
+                "1",
+                "2");
+        //WHEN
+        StorageBin expected = new StorageBin("1", "1", "1", "2", "Axe Bodyspray Wasabi & Fresh Linen");
+        when(storageBinrepo.findAll()).thenReturn(testStorageBinList);
+        when(itemRepo.findItemByItemNumber(testStorageBin.itemNumber())).thenReturn(Optional.of(testItem));
+        when(storageBinrepo.findStorageBinByLocationId("1")).thenReturn(expected);
+        service.addItemNameToStorageList();
+        StorageBin actual = storageBinrepo.findStorageBinByLocationId("1");
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @DisplayName("method -> updateOutputStorageBin should return StorageBin with empty storedItemName and itemNumber 0 ")
+    @Test
+    void updateOutputStorageBinAndExpectStorageBinWithEmptyItemNameAndItemNumber0() {
+        //GIVEN
+        boolean testStorageBinIsEmpty = false;
+        StorageBin expected = new StorageBin("1", "1", "0", "0", "");
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.OUTPUT, "10");
+        StorageBin testStorageBin = new StorageBin("1", "1", "1", "10", "Axe Bodyspray Wasabi & Fresh Linen");
+        //WHEN
+        when(storageBinrepo.findById(testDrivingOrder.storageLocationId())).thenReturn(Optional.of(testStorageBin));
+        when(storageBinrepo.findStorageBinByLocationId(testStorageBin.locationId())).thenReturn(expected);
+        service.updateOutputStorageBin(testStorageBinIsEmpty, testDrivingOrder);
+        StorageBin actual = storageBinrepo.findStorageBinByLocationId(testStorageBin.locationId());
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @DisplayName("method -> getItemAmountFromStorageBinsByItemNumber should Return 1")
+    @Test
+    void getItemAmountFromStorageBinsByItemNumberAndExpect1() {
+        //GIVEN
+        Item itemToCount = new Item("1",
+                "Axe Bodyspray Wasabi & Fresh Linen",
+                "ger",
+                "DE",
+                "123",
+                "10",
+                "1",
+                "0");
+        List<StorageBin> storageBinsWithItem = List.of(new StorageBin("1"
+                , "1", "1", "1", ""));
+        //WHEN
+        when(storageBinrepo.findAllByItemNumber(itemToCount.itemNumber())).thenReturn(storageBinsWithItem);
+        String actual = service.getItemAmountFromStorageBinsByItemNumber(itemToCount);
+        String expected = "1";
+        //THEN
+        assertEquals(expected, actual);
+    }
 }
