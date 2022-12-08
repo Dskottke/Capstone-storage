@@ -72,15 +72,7 @@ public class StorageBinService {
 
         int newAmountOutput = Integer.parseInt(storageBinToUpdateOutput.amount()) - Integer.parseInt(drivingOrder.amount());
 
-        if (!storageBinIsEmpty) {
-            StorageBin updateOutput = new StorageBin(
-                    storageBinToUpdateOutput.id(),
-                    drivingOrder.storageLocationId(),
-                    drivingOrder.itemNumber(),
-                    Integer.toString(newAmountOutput),
-                    storageBinToUpdateOutput.storedItemName());
-            storageBinRepo.save(updateOutput);
-        } else {
+        if (storageBinIsEmpty) {
             String emptyStorageItemName = "";
             String emptyStorageItemNumber = "0";
             StorageBin updateOutput = new StorageBin(
@@ -89,6 +81,14 @@ public class StorageBinService {
                     emptyStorageItemNumber,
                     Integer.toString(newAmountOutput),
                     emptyStorageItemName);
+            storageBinRepo.save(updateOutput);
+        } else {
+            StorageBin updateOutput = new StorageBin(
+                    storageBinToUpdateOutput.id(),
+                    drivingOrder.storageLocationId(),
+                    drivingOrder.itemNumber(),
+                    Integer.toString(newAmountOutput),
+                    storageBinToUpdateOutput.storedItemName());
             storageBinRepo.save(updateOutput);
         }
     }
