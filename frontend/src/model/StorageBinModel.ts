@@ -3,4 +3,5 @@ export type StorageBinModel = {
     "locationId": string
     "itemNumber": string,
     "amount": string
+    "storedItemName": string
 }

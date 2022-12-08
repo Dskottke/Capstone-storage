@@ -1,5 +1,6 @@
 package capstone.storage.backend.storagebin;
 
+import capstone.storage.backend.item.ItemRepo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,17 +12,18 @@ import static org.mockito.Mockito.when;
 
 class StorageBinServiceTest {
 
-    private final StorageBinRepo repo = mock(StorageBinRepo.class);
-    private final StorageBinService service = new StorageBinService(repo);
+    private final StorageBinRepo storageBinrepo = mock(StorageBinRepo.class);
+    private final ItemRepo itemRepo = mock(ItemRepo.class);
+    private final StorageBinService service = new StorageBinService(storageBinrepo, itemRepo);
 
     @Test
     @DisplayName("method -> getAllStorageBins should return the expected list")
     void getAllStorageBinsAndReturnExpectedList() {
         //GIVEN
         List<StorageBin> expectedList = List.of(
-                new StorageBin("1", "1", "1", "20"));
+                new StorageBin("1", "1", "1", "20", ""));
         //WHEN
-        when(repo.findAll()).thenReturn(expectedList);
+        when(storageBinrepo.findAll()).thenReturn(expectedList);
         List<StorageBin> actual = service.getAllStorageBins();
         //THEN
         assertEquals(expectedList, actual);

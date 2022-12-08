@@ -10,6 +10,7 @@ function StorageTableRow({storageBin}: StorageTableRowProps) {
         <tr key={storageBin.id}>
             <td className="center">{storageBin.locationId}</td>
             <td className="center">{storageBin.itemNumber}</td>
+            <td>{storageBin.storedItemName}</td>
             <td className="center">{storageBin.amount}</td>
         </tr>
     );
