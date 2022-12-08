@@ -22,7 +22,6 @@ public class ItemService {
     private final ItemRepo repository;
     private final ItemEanApiService eanService;
     private final StorageBinService storageBinService;
-
     private final DrivingOrderRepo drivingOrderRepo;
     private final ServiceUtils utils;
 
@@ -100,7 +99,7 @@ public class ItemService {
         Item item = repository.findById(id).orElseThrow();
         boolean isExistingInStorageBin = storageBinService.existsByItemNumber(item.itemNumber());
         boolean isExistingInDrivingOrders = drivingOrderRepo.existsByItemNumber(item.itemNumber());
-        return isExistingInDrivingOrders && isExistingInStorageBin;
+        return isExistingInDrivingOrders || isExistingInStorageBin;
     }
 
     public void checkItemExisting(AddItemDto addItemDto, String eanToFind) {
