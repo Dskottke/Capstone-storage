@@ -2,7 +2,7 @@ package capstone.storage.backend.item;
 
 import capstone.storage.backend.drivingorders.DrivingOrderRepo;
 import capstone.storage.backend.exceptions.ItemAlreadyExistException;
-import capstone.storage.backend.exceptions.ItemNotExistingException;
+import capstone.storage.backend.exceptions.ItemISNotExistingException;
 import capstone.storage.backend.exceptions.ItemValidationException;
 import capstone.storage.backend.exceptions.StoredItemsException;
 import capstone.storage.backend.item.models.AddItemDto;
@@ -77,7 +77,7 @@ public class ItemService {
     }
 
     public Item findItemByItemNumber(String itemNumber) {
-        return repository.findItemByItemNumber(itemNumber).orElseThrow(ItemNotExistingException::new);
+        return repository.findItemByItemNumber(itemNumber).orElseThrow(ItemISNotExistingException::new);
     }
 
     public boolean existById(String id) {
