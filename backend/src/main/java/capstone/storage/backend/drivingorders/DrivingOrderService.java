@@ -169,4 +169,5 @@ public class DrivingOrderService {
         return (storageBinAmount - succeedOutputDrivingOrderAmount) == 0;
 
     }
+
 }
