@@ -214,30 +214,7 @@ class ItemServiceTest {
 
     @Test
     @DisplayName("method : beforeDeleteControl should return true")
-    void beforeDeleteControlShouldReturnTrueBecauseAllReturnTrue() {
-        //GIVEN
-        String id = "1";
-        Item item = new Item(
-                "1",
-                "test",
-                "testCategory",
-                "GER",
-                "123",
-                "12",
-                "12",
-                "10");
-        //WHEN
-        when(itemRepo.findById(id)).thenReturn(Optional.of(item));
-        when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(true);
-        when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(true);
-        boolean actual = itemService.beforeDeleteControl(id);
-        //THEN
-        assertTrue(actual);
-    }
-
-    @Test
-    @DisplayName("method : beforeDeleteControl should return false")
-    void beforeDeleteControlShouldReturnFalseBecauseDrivingOrderRepoReturnsFalse() {
+    void beforeDeleteControlShouldReturnTrueBecauseDrivingOrderRepoReturnsTrue() {
         //GIVEN
         String id = "1";
         Item item = new Item(
@@ -255,12 +232,12 @@ class ItemServiceTest {
         when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(false);
         boolean actual = itemService.beforeDeleteControl(id);
         //THEN
-        assertFalse(actual);
+        assertTrue(actual);
     }
 
     @Test
-    @DisplayName("method : beforeDeleteControl should return false")
-    void beforeDeleteControlShouldReturnFalseBecauseStorageBinRepoReturnsFalse() {
+    @DisplayName("method : beforeDeleteControl should return true")
+    void beforeDeleteControlShouldReturnTrueBecauseStorageBinRepoReturnsTrue() {
         //GIVEN
         String id = "1";
         Item item = new Item(
@@ -278,8 +255,32 @@ class ItemServiceTest {
         when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(true);
         boolean actual = itemService.beforeDeleteControl(id);
         //THEN
+        assertTrue(actual);
+    }
+    @Test
+    @DisplayName("method : beforeDeleteControl should return false")
+    void beforeDeleteControlShouldReturnFalseBecauseBothBooleanAreFalse() {
+        //GIVEN
+        String id = "1";
+        Item item = new Item(
+                "1",
+                "test",
+                "testCategory",
+                "GER",
+                "123",
+                "12",
+                "12",
+                "10");
+        //WHEN
+        when(itemRepo.findById(id)).thenReturn(Optional.of(item));
+        when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(false);
+        when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(false);
+        boolean actual = itemService.beforeDeleteControl(id);
+        //THEN
         assertFalse(actual);
     }
+
+
 
     @DisplayName("method -> deleteItemById should throw StoredItemException")
     @Test
