@@ -13,6 +13,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({
+            ItemNotExistingException.class,
+            StoredItemsException.class,
             IsNullOrEmptyException.class,
             ItemValidationException.class,
             ItemAlreadyExistException.class,
