@@ -14,7 +14,11 @@ public enum ExceptionMessage {
     ORDER_TO_DELETE_NOT_FOUND_EXCEPTION_MESSAGE("order to delete not found"),
     STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE("storage-bin is filled with not matching item"),
     TEST_DATA_ITEMS_NOT_FOUND_MESSAGE("can't find data from json"),
-    NOT_ENOUGH_ITEMS_REMAINING_EXCEPTION_MESSAGE("not enough items remaining");
+    NOT_ENOUGH_ITEMS_REMAINING_EXCEPTION_MESSAGE("not enough items remaining"),
+
+    STORED_ITEMS_EXCEPTION("can't delete because there are open orders or items stored"),
+
+    ITEM_IS_NOT_EXISTING("item is not existing");
 
     private final String message;
 
