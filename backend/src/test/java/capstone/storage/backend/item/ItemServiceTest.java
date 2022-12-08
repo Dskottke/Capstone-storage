@@ -1,5 +1,6 @@
 package capstone.storage.backend.item;
 
+import capstone.storage.backend.drivingorders.DrivingOrderRepo;
 import capstone.storage.backend.exceptions.ExceptionMessage;
 import capstone.storage.backend.exceptions.ItemAlreadyExistException;
 import capstone.storage.backend.item.models.AddItemDto;
@@ -22,7 +23,8 @@ class ItemServiceTest {
     private final ServiceUtils utils = mock(ServiceUtils.class);
     private final ItemEanApiService eanApiService = mock(ItemEanApiService.class);
     private final StorageBinService storageBinService = mock(StorageBinService.class);
-    private final ItemService itemService = new ItemService(itemRepo, eanApiService, storageBinService, utils);
+    private final DrivingOrderRepo drivingOrderRepo = mock(DrivingOrderRepo.class);
+    private final ItemService itemService = new ItemService(itemRepo, eanApiService, storageBinService,drivingOrderRepo,utils);
 
     @Test
     @DisplayName("method : findAll -> should return an empty list")
