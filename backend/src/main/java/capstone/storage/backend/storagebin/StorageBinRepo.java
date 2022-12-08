@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface StorageBinRepo extends MongoRepository<StorageBin, String> {
     boolean existsByLocationId(String id);
+    boolean existsByItemNumber(String id);
 
     StorageBin findStorageBinByLocationId(String storageBinNumber);
 
