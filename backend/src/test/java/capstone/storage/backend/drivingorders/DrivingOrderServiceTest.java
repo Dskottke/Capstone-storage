@@ -359,5 +359,30 @@ class DrivingOrderServiceTest {
 
     }
 
+    @Test
+    @DisplayName("method-> beforeDoneControl should return true because the storageBin will be empty ")
+    void beforeDoneControlShouldReturnTrue() {
+        //WHEN
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.OUTPUT, "10");
+        StorageBin mockStorageBin = new StorageBin("1", "1", "1", "10", "");
+        //GIVEN
+        when(storageBinService.findStorageBinByLocationId(testDrivingOrder.storageLocationId())).thenReturn(mockStorageBin);
+        boolean actual = drivingOrderService.beforeDoneControl(testDrivingOrder);
+        //THEN
+        assertTrue(actual);
+    }
+
+    @Test
+    @DisplayName("method-> beforeDoneControl should return false because the Storage Bin will not be empty ")
+    void beforeDoneControlShouldReturnFalse() {
+        //WHEN
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.OUTPUT, "10");
+        StorageBin mockStorageBin = new StorageBin("1", "1", "1", "12", "");
+        //GIVEN
+        when(storageBinService.findStorageBinByLocationId(testDrivingOrder.storageLocationId())).thenReturn(mockStorageBin);
+        boolean actual = drivingOrderService.beforeDoneControl(testDrivingOrder);
+        //THEN
+        assertFalse(actual);
+    }
 
 }
