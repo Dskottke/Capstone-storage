@@ -1,7 +1,7 @@
 package capstone.storage.backend.item;
 
+import capstone.storage.backend.exceptions.ApiItemNotFound;
 import capstone.storage.backend.exceptions.EanApiResponseException;
-import capstone.storage.backend.exceptions.ItemNotFound;
 import capstone.storage.backend.exceptions.ItemResponseEanNullException;
 import capstone.storage.backend.item.models.Product;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,7 +44,7 @@ public class ItemEanApiService {
             throw new ItemResponseEanNullException();
         }
         if (!(firstEan.equals(eanToFind))) {
-            throw new ItemNotFound();
+            throw new ApiItemNotFound();
         }
         return product;
 

@@ -1,8 +1,10 @@
 package capstone.storage.backend.item;
 
+import capstone.storage.backend.drivingorders.DrivingOrderRepo;
 import capstone.storage.backend.exceptions.ItemAlreadyExistException;
-import capstone.storage.backend.exceptions.ItemNotFound;
+import capstone.storage.backend.exceptions.ItemNotExistingException;
 import capstone.storage.backend.exceptions.ItemValidationException;
+import capstone.storage.backend.exceptions.StoredItemsException;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
@@ -20,7 +22,10 @@ public class ItemService {
     private final ItemRepo repository;
     private final ItemEanApiService eanService;
     private final StorageBinService storageBinService;
+
+    private final DrivingOrderRepo drivingOrderRepo;
     private final ServiceUtils utils;
+
 
     public List<Item> findAll() {
         List<Item> allItems = repository.findAll();
@@ -72,7 +77,7 @@ public class ItemService {
     }
 
     public Item findItemByItemNumber(String itemNumber) {
-        return repository.findItemByItemNumber(itemNumber).orElseThrow(ItemNotFound::new);
+        return repository.findItemByItemNumber(itemNumber).orElseThrow(ItemNotExistingException::new);
     }
 
     public boolean existById(String id) {
@@ -84,7 +89,18 @@ public class ItemService {
     }
 
     public void deleteItemById(String id) {
-        repository.deleteById(id);
+        if (beforeDeleteControl(id)) {
+            throw new StoredItemsException();
+        } else {
+            repository.deleteById(id);
+        }
+    }
+
+    public boolean beforeDeleteControl(String id) {
+        Item item = repository.findById(id).orElseThrow();
+        boolean isExistingInStorageBin = storageBinService.existsByItemNumber(item.itemNumber());
+        boolean isExistingInDrivingOrders = drivingOrderRepo.existsByItemNumber(item.itemNumber());
+        return isExistingInDrivingOrders || isExistingInStorageBin;
     }
 
     public void checkItemExisting(AddItemDto addItemDto, String eanToFind) {

@@ -19,6 +19,7 @@ import java.util.Optional;
 public class ItemController {
     private final ItemService service;
 
+
     @GetMapping
     public List<Item> getAllItems() {
         return service.findAll();
@@ -54,7 +55,6 @@ public class ItemController {
         if (!service.existById(id)) {
             throw new ItemToDeleteNotFoundException();
         }
-
         service.deleteItemById(id);
     }
 
