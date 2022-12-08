@@ -151,20 +151,22 @@ public class DrivingOrderService {
         if (succeedOutputDrivingOrder.isEmpty()) {
             throw new OrderToDeleteNotFoundException();
         }
-        beforeDoneControl(succeedOutputDrivingOrder.get());
+        boolean storageBinIsEmpty = beforeDoneControl(succeedOutputDrivingOrder.get());
 
-        storageBinService.updateOutputStorageBin(succeedOutputDrivingOrder.get());
+        storageBinService.updateOutputStorageBin(storageBinIsEmpty, succeedOutputDrivingOrder.get());
+
         drivingOrderRepo.deleteById(id);
 
     }
 
-    public void beforeDoneControl(DrivingOrder succeedOutputDrivingOrder) {
+    public boolean beforeDoneControl(DrivingOrder succeedOutputDrivingOrder) {
         StorageBin storageBinToControl = storageBinService.findStorageBinByLocationId(succeedOutputDrivingOrder.storageLocationId());
         int storageBinAmount = Integer.parseInt(storageBinToControl.amount());
         int succeedOutputDrivingOrderAmount = Integer.parseInt(succeedOutputDrivingOrder.amount());
         if ((storageBinAmount - succeedOutputDrivingOrderAmount) < 0) {
             throw new NotEnoughItemsRemainingException();
         }
+        return (storageBinAmount - succeedOutputDrivingOrderAmount) == 0;
 
     }
 }
