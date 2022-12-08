@@ -6,7 +6,6 @@ import capstone.storage.backend.item.models.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,7 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RequiredArgsConstructor
 public class StorageBinService {
     private final StorageBinRepo storageBinRepo;
-
     private final ItemRepo itemRepo;
 
     public StorageBin findStorageBinByLocationId(String storageBinNumber) {
@@ -23,35 +21,29 @@ public class StorageBinService {
     }
 
     public List<StorageBin> getAllStorageBins() {
-
-        List<StorageBin> allStorageBins = storageBinRepo.findAll();
-
-        return addItemNameToStorageList(allStorageBins);
+        addItemNameToStorageList();
+        return storageBinRepo.findAll();
     }
 
-    public List<StorageBin> addItemNameToStorageList(List<StorageBin> allStorageBins) {
+    public void addItemNameToStorageList() {
 
-        List<StorageBin> storageBinsToReturn = new ArrayList<>();
+        List<StorageBin> storageBinList = storageBinRepo.findAll();
 
         String noItemNumber = "0";
-        for (StorageBin storageBin : allStorageBins) {
+        for (StorageBin storageBin : storageBinList) {
             if (!noItemNumber.equals(storageBin.itemNumber())) {
 
                 Optional<Item> item = itemRepo.findItemByItemNumber(storageBin.itemNumber());
 
-                item.ifPresent(value -> storageBinsToReturn.add(
+                item.ifPresent(update -> storageBinRepo.save(
                         new StorageBin(
                                 storageBin.id(),
                                 storageBin.locationId(),
                                 storageBin.itemNumber(),
                                 storageBin.amount(),
-                                value.name())));
-
-            } else {
-                storageBinsToReturn.add(storageBin);
+                                update.name())));
             }
         }
-        return storageBinsToReturn;
     }
 
     public boolean existsByLocationId(String locationNumber) {
@@ -74,19 +66,29 @@ public class StorageBinService {
         storageBinRepo.save(updateInput);
     }
 
-    public void updateOutputStorageBin(DrivingOrder drivingOrder) {
-        StorageBin storageBinToUpdateOutput = storageBinRepo.findById(drivingOrder.storageLocationId())
-                .orElseThrow();
+    public void updateOutputStorageBin(boolean storageBinIsEmpty, DrivingOrder drivingOrder) {
+
+        StorageBin storageBinToUpdateOutput = storageBinRepo.findById(drivingOrder.storageLocationId()).orElseThrow();
 
         int newAmountOutput = Integer.parseInt(storageBinToUpdateOutput.amount()) - Integer.parseInt(drivingOrder.amount());
 
+        if (!storageBinIsEmpty) {
+            StorageBin updateOutput = new StorageBin(
+                    storageBinToUpdateOutput.id(),
+                    drivingOrder.storageLocationId(),
+                    drivingOrder.itemNumber(),
+                    Integer.toString(newAmountOutput),
+                    storageBinToUpdateOutput.storedItemName());
+            storageBinRepo.save(updateOutput);
+        }
+        String emptyStorageItemName = "";
+        String emptyStorageItemNumber = "0";
         StorageBin updateOutput = new StorageBin(
                 storageBinToUpdateOutput.id(),
                 drivingOrder.storageLocationId(),
-                drivingOrder.itemNumber(),
+                emptyStorageItemNumber,
                 Integer.toString(newAmountOutput),
-                storageBinToUpdateOutput.storedItemName());
-
+                emptyStorageItemName);
         storageBinRepo.save(updateOutput);
     }
 
@@ -97,4 +99,3 @@ public class StorageBinService {
         return Integer.toString(finalItemAmount.get());
     }
 }
-
