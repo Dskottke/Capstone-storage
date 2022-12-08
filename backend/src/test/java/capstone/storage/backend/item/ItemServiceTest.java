@@ -3,6 +3,7 @@ package capstone.storage.backend.item;
 import capstone.storage.backend.drivingorders.DrivingOrderRepo;
 import capstone.storage.backend.exceptions.ExceptionMessage;
 import capstone.storage.backend.exceptions.ItemAlreadyExistException;
+import capstone.storage.backend.exceptions.ItemISNotExistingException;
 import capstone.storage.backend.exceptions.StoredItemsException;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
@@ -25,7 +26,7 @@ class ItemServiceTest {
     private final ItemEanApiService eanApiService = mock(ItemEanApiService.class);
     private final StorageBinService storageBinService = mock(StorageBinService.class);
     private final DrivingOrderRepo drivingOrderRepo = mock(DrivingOrderRepo.class);
-    private final ItemService itemService = new ItemService(itemRepo, eanApiService, storageBinService,drivingOrderRepo,utils);
+    private final ItemService itemService = new ItemService(itemRepo, eanApiService, storageBinService, drivingOrderRepo, utils);
 
     @Test
     @DisplayName("method : findAll -> should return an empty list")
@@ -210,6 +211,7 @@ class ItemServiceTest {
         //THEN
         assertEquals(expected, actual);
     }
+
     @Test
     @DisplayName("method : beforeDeleteControl should return true")
     void beforeDeleteControlShouldReturnTrueBecauseAllReturnTrue() {
@@ -232,6 +234,7 @@ class ItemServiceTest {
         //THEN
         assertTrue(actual);
     }
+
     @Test
     @DisplayName("method : beforeDeleteControl should return false")
     void beforeDeleteControlShouldReturnFalseBecauseDrivingOrderRepoReturnsFalse() {
@@ -254,6 +257,7 @@ class ItemServiceTest {
         //THEN
         assertFalse(actual);
     }
+
     @Test
     @DisplayName("method : beforeDeleteControl should return false")
     void beforeDeleteControlShouldReturnFalseBecauseStorageBinRepoReturnsFalse() {
@@ -276,9 +280,10 @@ class ItemServiceTest {
         //THEN
         assertFalse(actual);
     }
+
     @DisplayName("method -> deleteItemById should throw StoredItemException")
     @Test
-    void deleteItemByIdShouldThrowStoredItemException(){
+    void deleteItemByIdShouldThrowStoredItemException() {
         //GIVEN
         String id = "1";
         Item item = new Item(
@@ -294,13 +299,31 @@ class ItemServiceTest {
         when(itemRepo.findById(id)).thenReturn(Optional.of(item));
         when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(true);
         when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(true);
-        try{
+        try {
             itemService.deleteItemById(id);
             fail();
         }
         //THEN
-        catch (StoredItemsException e){
-            assertEquals(ExceptionMessage.STORED_ITEMS_EXCEPTION.toString(),e.getMessage());
+        catch (StoredItemsException e) {
+            assertEquals(ExceptionMessage.STORED_ITEMS_EXCEPTION.toString(), e.getMessage());
         }
+    }
+
+    @Test
+    @DisplayName("method -> should throw ItemNotExistingException because the repository returns null")
+    void findItemByItemNumberThrowItemIsNotExistingException() {
+        //GIVEN
+        String itemNumber = "1";
+        //WHEN
+        when(itemRepo.findItemByItemNumber(itemNumber)).thenReturn(Optional.empty());
+        try {
+            itemService.findItemByItemNumber(itemNumber);
+            fail();
+        }
+        //THEN
+        catch (ItemISNotExistingException e) {
+            assertEquals(ExceptionMessage.ITEM_IS_NOT_EXISTING.toString(), e.getMessage());
+        }
+
     }
 }
