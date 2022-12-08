@@ -59,6 +59,20 @@ class StorageBinServiceTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    @DisplayName("method -> addItemNameToStorageList should do nothing because itemNumber is 0")
+    void getAllStorageBinsShouldReturnExpectedList() {
+        //GIVEN
+        StorageBin testStorageBin = new StorageBin("1", "1", "0", "2", "");
+        List<StorageBin> testStorageBinList = List.of(testStorageBin);
+        //WHEN
+        when(storageBinrepo.findAll()).thenReturn(testStorageBinList);
+        List<StorageBin> expected = testStorageBinList;
+        List<StorageBin> actual = service.getAllStorageBins();
+        //THEN
+        assertEquals(expected, actual);
+    }
+
     @DisplayName("method -> updateOutputStorageBin should return StorageBin with empty storedItemName and itemNumber 0 ")
     @Test
     void updateOutputStorageBinAndExpectStorageBinWithEmptyItemNameAndItemNumber0() {
@@ -67,6 +81,23 @@ class StorageBinServiceTest {
         StorageBin expected = new StorageBin("1", "1", "0", "0", "");
         DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.OUTPUT, "10");
         StorageBin testStorageBin = new StorageBin("1", "1", "1", "10", "Axe Bodyspray Wasabi & Fresh Linen");
+        //WHEN
+        when(storageBinrepo.findById(testDrivingOrder.storageLocationId())).thenReturn(Optional.of(testStorageBin));
+        when(storageBinrepo.findStorageBinByLocationId(testStorageBin.locationId())).thenReturn(expected);
+        service.updateOutputStorageBin(testStorageBinIsEmpty, testDrivingOrder);
+        StorageBin actual = storageBinrepo.findStorageBinByLocationId(testStorageBin.locationId());
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @DisplayName("method -> updateOutputStorageBin should return StorageBin with same ItemNumber but updated amount ")
+    @Test
+    void updateOutputStorageBinAndExpectStorageBinWithSameItemNumberAndNewAmount() {
+        //GIVEN
+        boolean testStorageBinIsEmpty = true;
+        StorageBin expected = new StorageBin("1", "1", "0", "10", "");
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.OUTPUT, "10");
+        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20", "Axe Bodyspray Wasabi & Fresh Linen");
         //WHEN
         when(storageBinrepo.findById(testDrivingOrder.storageLocationId())).thenReturn(Optional.of(testStorageBin));
         when(storageBinrepo.findStorageBinByLocationId(testStorageBin.locationId())).thenReturn(expected);
@@ -97,4 +128,6 @@ class StorageBinServiceTest {
         //THEN
         assertEquals(expected, actual);
     }
+
+
 }
