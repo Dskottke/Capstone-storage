@@ -4,5 +4,7 @@ public record StorageBin(
         String id,
         String locationId,
         String itemNumber,
-        String amount) {
+        String amount,
+        String storedItemName
+) {
 }

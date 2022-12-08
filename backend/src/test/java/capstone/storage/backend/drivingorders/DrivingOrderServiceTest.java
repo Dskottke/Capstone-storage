@@ -226,7 +226,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> checkValidation should return false because there is an existing DrivingOrder with not matching item on the storage bin ")
     void checkInputValidationWithExistingDrivingOrderNotMatchingItemOnStorageBinShouldReturnFalse() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
+        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20", "");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "1", "1");
         DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "2", Type.INPUT, "5");
         //WHEN
@@ -241,7 +241,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> checkValidation should return true because StorageBin-itemNumber equals item-itemNumber ")
     void checkInputValidationShouldReturnTrue() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
+        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20", "");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "1", "1");
         DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.INPUT, "5");
         //WHEN
@@ -255,7 +255,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> INPUT checkValidation should return false because StorageBin-itemNumber is different to Item-ItemNumber ")
     void checkInputValidationShouldReturnFalseBecauseStorageBinItemNumberAndItemItemNumberAreDifferent() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
+        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20", "");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "2", "1");
         DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.INPUT, "5");
         //WHEN
@@ -269,7 +269,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> INPUT checkValidation should return true because StorageBin-itemNumber is 0 ")
     void checkInputValidationShouldReturnTrueBecauseStorageBinItemNumberIs0() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "0", "20");
+        StorageBin testStorageBin = new StorageBin("1", "1", "0", "20", "");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "2", "1");
         //WHEN
         when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.empty());
@@ -282,7 +282,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> INPUT checkValidation should return true because StorageBin-itemNumber is 12 ")
     void checkInputValidationInputShouldReturnFalseBecauseStorageBinItemNumberIs12() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "12", "20");
+        StorageBin testStorageBin = new StorageBin("1", "1", "12", "20", "");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "2", "1");
         //WHEN
         when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.empty());
@@ -297,7 +297,7 @@ class DrivingOrderServiceTest {
         //GIVEN
         Item testItem = new Item("1", "test", "test", "ger", "test", "10", "1", "1");
         NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "1");
-        StorageBin testStorageBin = new StorageBin("1", "1", "0", "1");
+        StorageBin testStorageBin = new StorageBin("1", "1", "0", "1", "");
         DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "2", Type.INPUT, "5");
 
         //WHEN
@@ -320,7 +320,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> OUTPUT checkValidation should return false because the ItemNumber of testStorageBin and testItem don't match")
     void checkOutputValidationInputShouldReturnFalseBecauseStorageBinItemNumberIs12() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "12", "20");
+        StorageBin testStorageBin = new StorageBin("1", "1", "12", "20", "");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "2", "1");
         //WHEN
         boolean actual = drivingOrderService.checkOutputValidation(testStorageBin, testItem);
@@ -332,7 +332,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> OUTPUT checkValidation should return true because itemNumber of storageBinTest and testItem are equal ")
     void checkOutputValidationInputShouldReturnTrue() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "2", "20");
+        StorageBin testStorageBin = new StorageBin("1", "1", "2", "20", "");
         Item testItem = new Item("1", "test", "test", "test", "1", "30", "2", "1");
         //WHEN
         boolean actual = drivingOrderService.checkOutputValidation(testStorageBin, testItem);
@@ -345,7 +345,7 @@ class DrivingOrderServiceTest {
     void beforeDoneControlShouldThrowException() {
         //GIVEN
         DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.OUTPUT, "10");
-        StorageBin mockStorageBin = new StorageBin("1", "1", "1", "0");
+        StorageBin mockStorageBin = new StorageBin("1", "1", "1", "0", "");
         //WHEN
         when(storageBinService.findStorageBinByLocationId(testDrivingOrder.storageLocationId())).thenReturn(mockStorageBin);
         try {
