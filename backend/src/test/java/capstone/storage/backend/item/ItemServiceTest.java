@@ -3,6 +3,7 @@ package capstone.storage.backend.item;
 import capstone.storage.backend.drivingorders.DrivingOrderRepo;
 import capstone.storage.backend.exceptions.ExceptionMessage;
 import capstone.storage.backend.exceptions.ItemAlreadyExistException;
+import capstone.storage.backend.exceptions.StoredItemsException;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
@@ -13,9 +14,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ItemServiceTest {
@@ -113,6 +114,7 @@ class ItemServiceTest {
                 "0");
         //WHEN
         doNothing().when(itemRepo).deleteById(itemToDelete.id());
+        when(itemRepo.findById(itemToDelete.id())).thenReturn(Optional.of(itemToDelete));
         itemService.deleteItemById(itemToDelete.id());
         //THEN
         verify(itemRepo).deleteById(itemToDelete.id());
@@ -208,6 +210,97 @@ class ItemServiceTest {
         //THEN
         assertEquals(expected, actual);
     }
-
-
+    @Test
+    @DisplayName("method : beforeDeleteControl should return true")
+    void beforeDeleteControlShouldReturnTrueBecauseAllReturnTrue() {
+        //GIVEN
+        String id = "1";
+        Item item = new Item(
+                "1",
+                "test",
+                "testCategory",
+                "GER",
+                "123",
+                "12",
+                "12",
+                "10");
+        //WHEN
+        when(itemRepo.findById(id)).thenReturn(Optional.of(item));
+        when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(true);
+        when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(true);
+        boolean actual = itemService.beforeDeleteControl(id);
+        //THEN
+        assertTrue(actual);
+    }
+    @Test
+    @DisplayName("method : beforeDeleteControl should return false")
+    void beforeDeleteControlShouldReturnFalseBecauseDrivingOrderRepoReturnsFalse() {
+        //GIVEN
+        String id = "1";
+        Item item = new Item(
+                "1",
+                "test",
+                "testCategory",
+                "GER",
+                "123",
+                "12",
+                "12",
+                "10");
+        //WHEN
+        when(itemRepo.findById(id)).thenReturn(Optional.of(item));
+        when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(true);
+        when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(false);
+        boolean actual = itemService.beforeDeleteControl(id);
+        //THEN
+        assertFalse(actual);
+    }
+    @Test
+    @DisplayName("method : beforeDeleteControl should return false")
+    void beforeDeleteControlShouldReturnFalseBecauseStorageBinRepoReturnsFalse() {
+        //GIVEN
+        String id = "1";
+        Item item = new Item(
+                "1",
+                "test",
+                "testCategory",
+                "GER",
+                "123",
+                "12",
+                "12",
+                "10");
+        //WHEN
+        when(itemRepo.findById(id)).thenReturn(Optional.of(item));
+        when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(false);
+        when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(true);
+        boolean actual = itemService.beforeDeleteControl(id);
+        //THEN
+        assertFalse(actual);
+    }
+    @DisplayName("method -> deleteItemById should throw StoredItemException")
+    @Test
+    void deleteItemByIdShouldThrowStoredItemException(){
+        //GIVEN
+        String id = "1";
+        Item item = new Item(
+                "1",
+                "test",
+                "testCategory",
+                "GER",
+                "123",
+                "12",
+                "12",
+                "10");
+        //WHEN
+        when(itemRepo.findById(id)).thenReturn(Optional.of(item));
+        when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(true);
+        when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(true);
+        try{
+            itemService.deleteItemById(id);
+            fail();
+        }
+        //THEN
+        catch (StoredItemsException e){
+            assertEquals(ExceptionMessage.STORED_ITEMS_EXCEPTION.toString(),e.getMessage());
+        }
+    }
 }
