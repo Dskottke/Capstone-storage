@@ -29,9 +29,8 @@ public class StorageBinService {
 
         List<StorageBin> storageBinList = storageBinRepo.findAll();
 
-        String noItemNumber = "0";
         for (StorageBin storageBin : storageBinList) {
-            if (!noItemNumber.equals(storageBin.itemNumber())) {
+            if (Integer.parseInt(storageBin.itemNumber()) > 0) {
 
                 Optional<Item> item = itemRepo.findItemByItemNumber(storageBin.itemNumber());
 

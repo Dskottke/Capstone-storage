@@ -54,7 +54,9 @@ public class ItemController {
         if (!service.existById(id)) {
             throw new ItemToDeleteNotFoundException();
         }
+
         service.deleteItemById(id);
     }
+
 
 }
