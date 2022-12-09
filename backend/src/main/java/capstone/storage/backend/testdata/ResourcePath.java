@@ -2,7 +2,8 @@ package capstone.storage.backend.testdata;
 
 public enum ResourcePath {
     STORAGE_PATH("/storage.json"),
-    ITEM_PATH("/item.json");
+    ITEM_PATH("/item.json"),
+    DRIVING_ORDER_PATH("/drivingOrder.json");
 
     private final String path;
 
