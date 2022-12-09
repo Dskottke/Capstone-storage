@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import axios from "axios";
 import "../css/TableNavigation.css"
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 type itemNavigationProps = {
 
@@ -68,7 +69,7 @@ function ItemNavigation(props: itemNavigationProps) {
                            onChange={handleInputEan} type="text" placeholder="ean" name="ean"/>
                     <input className="item_input_field" value={storableValue}
                            onChange={handleInputCapacity} type="text" placeholder="capacity" name="capacity"/>
-                    <button type="submit">add</button>
+                    <button type="submit"><AddCircleOutlineOutlinedIcon/></button>
                 </form>
             </div>
         </div>
