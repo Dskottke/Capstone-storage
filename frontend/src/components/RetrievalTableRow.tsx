@@ -40,7 +40,7 @@ function RetrievalTableRow(props: dischargingTableRowProps) {
             <td className="center">{props.retrievalDrivingOrder.itemNumber}</td>
             <td className="center">{props.retrievalDrivingOrder.storageLocationId}</td>
             <td className="center">{props.retrievalDrivingOrder.amount}</td>
-            <td className="center"><IconButton aria-label="driving-order-done" size="small"
+            <td className="center"><IconButton sx={{position:"static"}}  aria-label="driving-order-done" size="small"
                                                onClick={finishOutputDrivingOrder}>
                 <CheckBoxIcon color="success" fontSize="inherit"/>
             </IconButton></td>
