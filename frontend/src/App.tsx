@@ -18,6 +18,8 @@ function App() {
     const [successModal, setSuccessModal] = useState(false)
     const [successMessage, setSuccessMessage] = useState("")
 
+
+
     const handleInputAmount = (event: ChangeEvent<HTMLInputElement>) => {
         const validAmount = event.target.value.replace(/\D/g, '')
         setAmountValue(validAmount)
@@ -30,7 +32,7 @@ function App() {
         const validStorageBinNumber = event.target.value.replace(/\D/g, '')
         setStorageLocationId(validStorageBinNumber)
     }
-    return (<>
+    return  (<>
             <Routes>
                 <Route path={"/"} element={<MainPage/>}/>
                 <Route path={"/item-page"}
