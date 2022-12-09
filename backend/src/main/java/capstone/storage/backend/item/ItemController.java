@@ -19,7 +19,6 @@ import java.util.Optional;
 public class ItemController {
     private final ItemService service;
 
-
     @GetMapping
     public List<Item> getAllItems() {
         return service.findAll();
