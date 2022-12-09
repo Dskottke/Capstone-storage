@@ -39,7 +39,7 @@ function StoringTableRow(props: storingTableRowProps) {
             <td className="center">{props.storingDrivingOrder.itemNumber}</td>
             <td className="center">{props.storingDrivingOrder.storageLocationId}</td>
             <td className="center">{props.storingDrivingOrder.amount}</td>
-            <td className="center"><IconButton aria-label="driving-order-done" size="small"
+            <td className="center"><IconButton sx={{position:"static"}}  aria-label="driving-order-done" size="small"
                                                onClick={finishInputDrivingOrder}>
                 <CheckBoxIcon color="success" fontSize="inherit"/>
             </IconButton></td>

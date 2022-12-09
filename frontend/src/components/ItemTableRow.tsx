@@ -68,8 +68,6 @@ function ItemTableRow({
         const validCapacity = event.target.value.replace(/\D/g, '')
         setStorableValue(validCapacity)
     }
-
-
     return (
 
         <tr key={item.id}>
@@ -100,7 +98,7 @@ function ItemTableRow({
                                 onClick={() => setOnEditOpen(!onEditOpen)}>
                         <EditIcon color="primary" fontSize="inherit"/>
                     </IconButton>
-                    <IconButton sx={{position:"static"}}aria-label="delete" size="small">
+                    <IconButton sx={{position:"static"}} aria-label="delete" size="small">
                         <DeleteOutlineIcon  sx={{color: pink[500]}} aria-label="delete" fontSize="inherit"
                                            onClick={() => deleteItem(item.id)}/>
                     </IconButton>
