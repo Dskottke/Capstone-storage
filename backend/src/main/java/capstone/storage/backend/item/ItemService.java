@@ -24,8 +24,7 @@ public class ItemService {
     private final StorageBinService storageBinService;
     private final DrivingOrderRepo drivingOrderRepo;
     private final ServiceUtils utils;
-
-
+    
     public List<Item> findAll() {
         List<Item> allItems = repository.findAll();
         List<Item> listToReturn = new ArrayList<>();

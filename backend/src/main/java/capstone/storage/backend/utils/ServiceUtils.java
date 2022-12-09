@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Component
 public class ServiceUtils {
-
     ObjectMapper objectMapper = new ObjectMapper();
 
     public String generateUUID() {
