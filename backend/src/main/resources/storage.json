@@ -1,0 +1,602 @@
+[
+  {
+    "id": "1",
+    "locationId": "1",
+    "itemNumber": "1",
+    "amount": "30"
+  },
+  {
+    "id": "2",
+    "locationId": "2",
+    "itemNumber": "4",
+    "amount": "10"
+  },
+  {
+    "id": "3",
+    "locationId": "3",
+    "itemNumber": "11",
+    "amount": "60"
+  },
+  {
+    "id": "4",
+    "locationId": "4",
+    "itemNumber": "8",
+    "amount": "50"
+  },
+  {
+    "id": "5",
+    "locationId": "5",
+    "itemNumber": "8",
+    "amount": "60"
+  },
+  {
+    "id": "6",
+    "locationId": "6",
+    "itemNumber": "2",
+    "amount": "30"
+  },
+  {
+    "id": "7",
+    "locationId": "7",
+    "itemNumber": "12",
+    "amount": "20"
+  },
+  {
+    "id": "8",
+    "locationId": "8",
+    "itemNumber": "8",
+    "amount": "25"
+  },
+  {
+    "id": "9",
+    "locationId": "9",
+    "itemNumber": "9",
+    "amount": "25"
+  },
+  {
+    "id": "10",
+    "locationId": "10",
+    "itemNumber": "3",
+    "amount": "20"
+  },
+  {
+    "id": "11",
+    "locationId": "11",
+    "itemNumber": "1",
+    "amount": "60"
+  },
+  {
+    "id": "12",
+    "locationId": "12",
+    "itemNumber": "12",
+    "amount": "25"
+  },
+  {
+    "id": "13",
+    "locationId": "13",
+    "itemNumber": "9",
+    "amount": "150"
+  },
+  {
+    "id": "14",
+    "locationId": "14",
+    "itemNumber": "8",
+    "amount": "20"
+  },
+  {
+    "id": "15",
+    "locationId": "15",
+    "itemNumber": "1",
+    "amount": "30"
+  },
+  {
+    "id": "16",
+    "locationId": "16",
+    "itemNumber": "13",
+    "amount": "25"
+  },
+  {
+    "id": "17",
+    "locationId": "17",
+    "itemNumber": "13",
+    "amount": "68"
+  },
+  {
+    "id": "18",
+    "locationId": "18",
+    "itemNumber": "14",
+    "amount": "40"
+  },
+  {
+    "id": "19",
+    "locationId": "19",
+    "itemNumber": "16",
+    "amount": "30"
+  },
+  {
+    "id": "20",
+    "locationId": "20",
+    "itemNumber": "15",
+    "amount": "50"
+  },
+  {
+    "id": "21",
+    "locationId": "21",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "22",
+    "locationId": "22",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "23",
+    "locationId": "23",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "24",
+    "locationId": "24",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "25",
+    "locationId": "25",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "26",
+    "locationId": "26",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "27",
+    "locationId": "27",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "28",
+    "locationId": "28",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "29",
+    "locationId": "29",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "30",
+    "locationId": "30",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "31",
+    "locationId": "31",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "32",
+    "locationId": "32",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "33",
+    "locationId": "33",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "34",
+    "locationId": "34",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "35",
+    "locationId": "35",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "36",
+    "locationId": "36",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "37",
+    "locationId": "37",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "38",
+    "locationId": "38",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "39",
+    "locationId": "39",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "40",
+    "locationId": "40",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "41",
+    "locationId": "41",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "42",
+    "locationId": "42",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "43",
+    "locationId": "43",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "44",
+    "locationId": "44",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "45",
+    "locationId": "45",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "46",
+    "locationId": "46",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "47",
+    "locationId": "47",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "48",
+    "locationId": "48",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "49",
+    "locationId": "49",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "50",
+    "locationId": "50",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "51",
+    "locationId": "51",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "52",
+    "locationId": "52",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "53",
+    "locationId": "53",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "54",
+    "locationId": "54",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "55",
+    "locationId": "55",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "56",
+    "locationId": "56",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "57",
+    "locationId": "57",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "58",
+    "locationId": "58",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "59",
+    "locationId": "59",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "60",
+    "locationId": "60",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "61",
+    "locationId": "61",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "62",
+    "locationId": "62",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "63",
+    "locationId": "63",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "64",
+    "locationId": "64",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "65",
+    "locationId": "65",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "66",
+    "locationId": "66",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "67",
+    "locationId": "67",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "68",
+    "locationId": "68",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "69",
+    "locationId": "69",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "70",
+    "locationId": "70",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "71",
+    "locationId": "71",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "72",
+    "locationId": "72",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "73",
+    "locationId": "73",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "74",
+    "locationId": "74",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "75",
+    "locationId": "75",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "76",
+    "locationId": "76",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "77",
+    "locationId": "77",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "78",
+    "locationId": "78",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "79",
+    "locationId": "79",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "80",
+    "locationId": "80",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "81",
+    "locationId": "81",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "82",
+    "locationId": "82",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "83",
+    "locationId": "83",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "84",
+    "locationId": "84",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "85",
+    "locationId": "85",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "86",
+    "locationId": "86",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "87",
+    "locationId": "87",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "88",
+    "locationId": "88",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "89",
+    "locationId": "89",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "90",
+    "locationId": "90",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "91",
+    "locationId": "91",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "92",
+    "locationId": "92",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "93",
+    "locationId": "93",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "94",
+    "locationId": "94",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "95",
+    "locationId": "95",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "96",
+    "locationId": "96",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "97",
+    "locationId": "97",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "98",
+    "locationId": "98",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "99",
+    "locationId": "99",
+    "itemNumber": "0",
+    "amount": "0"
+  },
+  {
+    "id": "100",
+    "locationId": "100",
+    "itemNumber": "0",
+    "amount": "0"
+  }
+]
