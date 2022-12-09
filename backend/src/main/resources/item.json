@@ -5,7 +5,7 @@
     "categoryName": "Unknown",
     "issuingCountry": "NL",
     "ean": "8710847909610",
-    "storableValue": "20",
+    "storableValue": "60",
     "itemNumber": "1"
   },
   {
@@ -14,7 +14,7 @@
     "categoryName": "Books and Magazines",
     "issuingCountry": "",
     "ean": "9789391030223",
-    "storableValue": "10",
+    "storableValue": "40",
     "itemNumber": "2"
   },
   {
@@ -23,7 +23,7 @@
     "categoryName": "Books and Magazines",
     "issuingCountry": "",
     "ean": "9783453869950",
-    "storableValue": "10",
+    "storableValue": "40",
     "itemNumber": "3"
   },
   {
@@ -32,7 +32,115 @@
     "categoryName": "Unknown",
     "issuingCountry": "DE",
     "ean": "4015291007986",
-    "storableValue": "1",
+    "storableValue": "100",
     "itemNumber": "4"
+  },
+  {
+    "id": "ebf9d578-f48f-42ef-af8c-affdc6bc5543",
+    "name": "Toys R Us Ballon Vinyle - Toys''R''Us - Rose",
+    "categoryName": "Unknown",
+    "issuingCountry": "DE",
+    "ean": "4006149202998",
+    "storableValue": "150",
+    "itemNumber": "5"
+  },
+  {
+    "id": "52240436-3805-4998-98c1-637f8192bb33",
+    "name": "Gefüllte Lebkuchenherzen",
+    "categoryName": "Unknown",
+    "issuingCountry": "DE",
+    "ean": "4005967584088",
+    "storableValue": "50",
+    "itemNumber": "6"
+  },
+  {
+    "id": "b4e30235-8f52-4e76-8d36-0e1e8b72c20c",
+    "name": "Shorts Nike Air Feminino",
+    "categoryName": "Unknown",
+    "issuingCountry": "US",
+    "ean": "0196152383990",
+    "storableValue": "70",
+    "itemNumber": "7"
+  },
+  {
+    "id": "00db63a7-3896-43fb-be2e-e78a23d22659",
+    "name": "Alfred Hitchcock: Essentials Collection",
+    "categoryName": "Unknown",
+    "issuingCountry": "US",
+    "ean": "0025192180668",
+    "storableValue": "60",
+    "itemNumber": "8"
+  },
+  {
+    "id": "a656b385-a6ef-40bd-87b0-211f7fcc2086",
+    "name": "Vitamin B Complex 460mg, 240 Caps High Potency Nutricost Folic Acid/Vitamin B12",
+    "categoryName": "Health and Beauty",
+    "issuingCountry": "US",
+    "ean": "0702669937573",
+    "storableValue": "200",
+    "itemNumber": "9"
+  },
+  {
+    "id": "277ed1e2-3146-41a3-a28e-6c0cb89eff3f",
+    "name": "Kodak Step Instant Photo Printer Black Starterpack",
+    "categoryName": "Electronics",
+    "issuingCountry": "US",
+    "ean": "0843812140508",
+    "storableValue": "10",
+    "itemNumber": "10"
+  },
+  {
+    "id": "d36bf320-f21c-429e-923d-46ddae537665",
+    "name": "AMAZON Fire HD 8 Tablet (2022) - 32 GB, Pink",
+    "categoryName": "Unknown",
+    "issuingCountry": "US",
+    "ean": "0840080580487",
+    "storableValue": "80",
+    "itemNumber": "11"
+  },
+  {
+    "id": "6c0a4172-6235-49be-a60a-803069582662",
+    "name": "Microsoft CYV-00009",
+    "categoryName": "Computerhard- and software",
+    "issuingCountry": "US",
+    "ean": "0889842208337",
+    "storableValue": "40",
+    "itemNumber": "12"
+  },
+  {
+    "id": "c7c067d8-a5da-4fcd-9851-ef92b559bc9d",
+    "name": "Michael Jackson, Thriller",
+    "categoryName": "Music",
+    "issuingCountry": "UK",
+    "ean": "5099750442227",
+    "storableValue": "150",
+    "itemNumber": "13"
+  },
+  {
+    "id": "6d355828-b47f-4847-9283-6fc53754ba83",
+    "name": "Salad potatoes",
+    "categoryName": "Food",
+    "issuingCountry": "DE",
+    "ean": "4021851200889",
+    "storableValue": "89",
+    "itemNumber": "14"
+  },
+  {
+    "id": "472ffde3-63ad-4bc9-8233-f4fd97eedcb0",
+    "name": "Barista Haferdrink",
+    "categoryName": "Food",
+    "issuingCountry": "DE",
+    "ean": "4058172455674",
+    "storableValue": "70",
+    "itemNumber": "15"
+  },
+  {
+    "id": "b44ae649-1cfc-4f34-9b55-414ac9196273",
+    "name": "Bio bis",
+    "categoryName": "Unknown",
+    "issuingCountry": "FR",
+    "ean": "3184340000542",
+    "storableValue": "60",
+    "itemNumber": "16"
   }
 ]
