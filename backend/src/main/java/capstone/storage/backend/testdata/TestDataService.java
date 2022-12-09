@@ -1,5 +1,7 @@
 package capstone.storage.backend.testdata;
 
+import capstone.storage.backend.drivingorders.DrivingOrderRepo;
+import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.exceptions.TestDataItemsNotFoundException;
 import capstone.storage.backend.item.ItemRepo;
 import capstone.storage.backend.item.models.Item;
@@ -20,6 +22,8 @@ public class TestDataService {
     private final StorageBinRepo storageBinRepo;
     private final ServiceUtils serviceUtils;
 
+    private final DrivingOrderRepo drivingOrderRepo;
+
 
     public void addTestData() {
         deleteAll();
@@ -27,12 +31,20 @@ public class TestDataService {
             List<Item> testItemListToAdd = serviceUtils.parseListFromJson(new TypeReference<>() {
             }, ResourcePath.ITEM_PATH.toString());
             addListToItemDB(testItemListToAdd);
-            List<StorageBin> testStorageBinToAdd = serviceUtils.parseListFromJson(new TypeReference<>() {
+            List<StorageBin> testStorageBinsToAdd = serviceUtils.parseListFromJson(new TypeReference<>() {
             }, ResourcePath.STORAGE_PATH.toString());
-            addListToStorageDB(testStorageBinToAdd);
+            addListToStorageDB(testStorageBinsToAdd);
+            List<DrivingOrder> testDrivingOrdersToAdd = serviceUtils.parseListFromJson(new TypeReference<>() {
+            }, ResourcePath.DRIVING_ORDER_PATH.toString());
+            addListToDrivingOrderDB(testDrivingOrdersToAdd);
         } catch (IOException e) {
             throw new TestDataItemsNotFoundException();
         }
+    }
+
+    private List<DrivingOrder> addListToDrivingOrderDB(List<DrivingOrder> testDrivingOrdersToAdd) {
+        testDrivingOrdersToAdd.forEach(drivingOrderRepo::insert);
+        return testDrivingOrdersToAdd;
     }
 
     public void deleteAll() {
