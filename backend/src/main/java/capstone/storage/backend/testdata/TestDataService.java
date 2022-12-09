@@ -50,6 +50,7 @@ public class TestDataService {
     public void deleteAll() {
         itemRepo.deleteAll();
         storageBinRepo.deleteAll();
+        drivingOrderRepo.deleteAll();
     }
 
     public List<Item> addListToItemDB(List<Item> testItemListToAdd) {

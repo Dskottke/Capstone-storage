@@ -27,7 +27,7 @@ function ItemTableRow({
                           setItemTableRowErrorModal
                       }: ItemTableRowProps) {
 
-    const [storableValue, setStorableValue] = useState<string>("");
+    const [storableValue, setStorableValue] = useState<string>(item.storableValue);
     const [onEditOpen, setOnEditOpen] = useState(false);
 
     const updateItem = () => {
@@ -86,19 +86,19 @@ function ItemTableRow({
             <td className="td_actions" width="200px">{onEditOpen ? (
                     <>
                         <IconButton sx={{marginLeft:"30%",position:"static"}} aria-label="save" size="small" onClick={() => updateItem()}>
-                            <SaveIcon color="success" fontSize="inherit"/>
+                            <SaveIcon color="primary" fontSize="inherit"/>
                         </IconButton>
 
-                        <IconButton sx={{position:"static"}}  aria-label="cancel" size="small" onClick={() => setOnEditOpen(!onEditOpen)}>
+                        <IconButton sx={{position:"static" ,color:pink[500]}} disableRipple={true} aria-label="cancel" size="small" onClick={() => setOnEditOpen(!onEditOpen)}>
                             <CancelPresentationIcon fontSize="inherit"/>
                         </IconButton>
                     </>) :
                 <>
-                    <IconButton sx={{marginLeft:"30%",position:"static"}}  aria-label="edit" size="small"
+                    <IconButton sx={{marginLeft:"30%",position:"static"}} disableRipple={true} aria-label="edit" size="small"
                                 onClick={() => setOnEditOpen(!onEditOpen)}>
                         <EditIcon color="primary" fontSize="inherit"/>
                     </IconButton>
-                    <IconButton sx={{position:"static"}} aria-label="delete" size="small">
+                    <IconButton sx={{position:"static"}} aria-label="delete" disableRipple={true} size="small">
                         <DeleteOutlineIcon  sx={{color: pink[500]}} aria-label="delete" fontSize="inherit"
                                            onClick={() => deleteItem(item.id)}/>
                     </IconButton>

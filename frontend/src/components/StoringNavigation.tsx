@@ -62,7 +62,7 @@ function StoringNavigation(props: storingNavigationProps) {
                            name="ean"/>
                     <input className="item_input_field" value={props.storingAmountValue}
                            onChange={props.handleStoringAmount} type="text" placeholder="amount" name="amount"/>
-                    <button type="submit">add</button>
+                    <button type="submit">+</button>
                 </form>
             </div>
         </div>

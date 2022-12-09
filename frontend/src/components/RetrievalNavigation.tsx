@@ -43,6 +43,9 @@ function RetrievalNavigation(props: retrievalNavigationProps) {
                     props.setRetrievalNavigationErrorMessage(error.response.data)
                 }
             }).then(props.fetchRetrievalData)
+            .then(() => props.setRetrievalStorageLocationId(""))
+            .then(() => props.setRetrievalItemNumber(""))
+            .then(() => props.setRetrievalAmountValue(""))
 
     }
     return (
@@ -58,7 +61,7 @@ function RetrievalNavigation(props: retrievalNavigationProps) {
                            name="storage-bin-nr"/>
                     <input className="item_input_field" value={props.retrievalAmountValue}
                            onChange={props.handleRetrievalAmount} type="text" placeholder="amount" name="amount"/>
-                    <button type="submit">add</button>
+                    <button type="submit">+</button>
                 </form>
             </div>
         </div>
