@@ -3,10 +3,10 @@ import {ItemModel} from "../model/ItemModel";
 import axios from "axios";
 import EditIcon from '@mui/icons-material/Edit';
 import {IconButton} from "@mui/material";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import SaveIcon from '@mui/icons-material/Save';
 import {pink} from "@mui/material/colors";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 
 type ItemTableRowProps = {
@@ -87,27 +87,31 @@ function ItemTableRow({
             <td className="center">{item.storageBinAmount}</td>
             <td className="td_actions" width="200px">{onEditOpen ? (
                     <>
-                        <IconButton sx={{marginLeft: 4}} aria-label="save" size="small" onClick={() => updateItem()}>
+                        <IconButton sx={{marginLeft:"30%",position:"static"}} aria-label="save" size="small" onClick={() => updateItem()}>
                             <SaveIcon color="success" fontSize="inherit"/>
                         </IconButton>
-                        <IconButton aria-label="cancel" size="small" onClick={() => setOnEditOpen(!onEditOpen)}>
+
+                        <IconButton sx={{position:"static"}}  aria-label="cancel" size="small" onClick={() => setOnEditOpen(!onEditOpen)}>
                             <CancelPresentationIcon fontSize="inherit"/>
                         </IconButton>
                     </>) :
                 <>
-                    <IconButton sx={{marginLeft: 4}} aria-label="edit" size="small"
+                    <IconButton sx={{marginLeft:"30%",position:"static"}}  aria-label="edit" size="small"
                                 onClick={() => setOnEditOpen(!onEditOpen)}>
                         <EditIcon color="primary" fontSize="inherit"/>
                     </IconButton>
-                    <IconButton aria-label="delete" size="small">
-                        <DeleteForeverIcon sx={{color: pink[500]}} fontSize="inherit"
+                    <IconButton sx={{position:"static"}}aria-label="delete" size="small">
+                        <DeleteOutlineIcon  sx={{color: pink[500]}} aria-label="delete" fontSize="inherit"
                                            onClick={() => deleteItem(item.id)}/>
                     </IconButton>
                 </>
             }
+
             </td>
         </tr>
     );
 }
 
-export default ItemTableRow;
+
+
+export default (ItemTableRow);
