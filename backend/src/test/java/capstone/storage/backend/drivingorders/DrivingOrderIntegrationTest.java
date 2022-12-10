@@ -35,7 +35,7 @@ class DrivingOrderIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST -> INPUT should return HTTP-Status 201 and Content ")
+    @DisplayName("POST -> INPUT should return HTTP-Status 201 and Content from new InputOrder and existing ")
     @DirtiesContext
     void addNewInputDrivingOrderAndExpectStatus201() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
@@ -58,12 +58,18 @@ class DrivingOrderIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         """
-                                [{"id": "<id>",
-                                "storageLocationId": "1",
-                                "itemNumber": "1",
-                                "type":"INPUT",
-                                "amount": "10"}]
-                                """.replace("<id>", drivingOrder.id())));
+                                [{   "id": "647cc8fd-c81c-47ac-a9bb-fd1a7ff0e288",
+                                     "storageLocationId": "100",
+                                     "itemNumber": "10",
+                                     "type": "INPUT",
+                                     "amount": "10"
+                                     },
+                                     {"id": "<id>",
+                                     "storageLocationId": "1",
+                                     "itemNumber": "1",
+                                     "type":"INPUT",
+                                     "amount": "10"}]
+                                     """.replace("<id>", drivingOrder.id())));
     }
 
     @Test
