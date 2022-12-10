@@ -17,7 +17,7 @@ function ItemTable(props: itemPageProps) {
             <table className="Table">
                 <thead>
                 <tr>
-                    <th className="center" id="id_head">Nr</th>
+                    <th className="center" id="id_head">nr.</th>
                     <th className="center">ean</th>
                     <th>name</th>
                     <th>category</th>

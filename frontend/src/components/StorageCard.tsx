@@ -4,9 +4,12 @@ import Typography from "@mui/material/Typography";
 import "../css/MainPageStorageCard.css"
 import bodypart from '../images/StorageBin_in_MaskGroup.png';
 
-function MainPageStorageCard() {
+function StorageCard() {
     return (
-        <Card sx={{marginLeft: 10, minWidth: 345, minHeight: 400, boxShadow: 5, borderRadius: 10}}>
+        <Card sx={{marginLeft: 10, minWidth: 345, minHeight: 400, boxShadow: 5, borderRadius: 10,
+            '&:hover': {
+                boxShadow:14
+            }}}>
             <div className={"storage-card-header-red"}>
                 <img className={"storage-bodypart"} src={bodypart} alt={"body-part"}/>
             </div>
@@ -22,4 +25,4 @@ function MainPageStorageCard() {
     );
 }
 
-export default MainPageStorageCard;
+export default StorageCard;

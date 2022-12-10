@@ -6,7 +6,10 @@ import bodypart from '../images/Storing_in_Maskgroup.png';
 
 function StoringCard() {
     return (
-        <Card sx={{marginLeft: 10, minWidth: 500, minHeight: 400, boxShadow: 5, borderRadius: 10}}>
+        <Card sx={{marginLeft: 10, minWidth: 500, minHeight: 400, boxShadow: 5, borderRadius: 10,
+            '&:hover': {
+            boxShadow:14
+        }}}>
             <div className={"storing-order-input-card"}>
                 <img className={"storing-order-card-bodypart"} src={bodypart} alt={"item"}/>
             </div>

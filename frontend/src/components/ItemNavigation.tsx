@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import axios from "axios";
 import "../css/TableNavigation.css"
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import {IconButton} from "@mui/material";
 
 type itemNavigationProps = {
 
@@ -33,8 +34,7 @@ function ItemNavigation(props: itemNavigationProps) {
         setEan(validEan)
     }
 
-    const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
-        event.preventDefault()
+    const handleAddSubmit = () => {
 
 
         axios.post("/api/items/" + ean, {ean, itemNumber, storableValue})
@@ -60,17 +60,16 @@ function ItemNavigation(props: itemNavigationProps) {
 
     return (
         <div className="topnav">
-            <div id="navi-logo">Items</div>
+            <div className="header-font" id="navi-logo">Items</div>
             <div className="add-container">
-                <form onSubmit={handleAddSubmit}>
+
                     <input className="item_input_field" value={itemNumber}
                            onChange={handleInputItemNumber} type="text" placeholder="item-number" name="item-number"/>
                     <input className="item_input_field" value={ean}
                            onChange={handleInputEan} type="text" placeholder="ean" name="ean"/>
                     <input className="item_input_field" value={storableValue}
                            onChange={handleInputCapacity} type="text" placeholder="capacity" name="capacity"/>
-                    <button type="submit"><AddCircleOutlineOutlinedIcon/></button>
-                </form>
+                    <IconButton onClick={handleAddSubmit} color={"primary"}><AddCircleOutlineOutlinedIcon sx={{marginTop:"50%"}} color={"inherit"}/></IconButton>
             </div>
         </div>
 

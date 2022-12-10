@@ -1,7 +1,12 @@
 .item_input_field {
     border-radius: 8px 8px;
+    text-align: center;
 }
+#logo-name-table-head-nav {
+    margin-bottom: 1%;
+    width: 225px;
 
+}
 #navi-logo {
     color: #575757;
     font-size: 25px;
@@ -9,7 +14,10 @@
     margin-left: 20px;
     padding: 9px 16px;
 }
+.header-font{
+    font-weight: bold;
 
+}
 .topnav {
     overflow: hidden;
     background-color: #EAEDF5;

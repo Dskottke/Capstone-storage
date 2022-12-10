@@ -14,9 +14,9 @@ function StorageTable(props: StorageTableProps) {
             <table id="storage_table" className="Table">
                 <thead>
                 <tr>
-                    <th className="center">location-number</th>
+                    <th className="center">storage bin</th>
                     <th className="center">item-nr.</th>
-                    <th>item-name</th>
+                    <th>name</th>
                     <th className="center">amount</th>
                 </tr>
                 </thead>
