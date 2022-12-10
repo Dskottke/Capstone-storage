@@ -14,7 +14,7 @@ function MainPage() {
 
         <div>
             <MainPageNavigation/>
-            <div className={"main-page-container"}>
+            <nav className={"main-page-container"}>
                 <NavLink to={"/item-page"} style={{textDecoration: 'none', marginTop: 40}}><ItemCard/></NavLink>
                 <NavLink to={"/storage-page"}
                          style={{textDecoration: 'none', marginTop: 40}}><StorageCard/></NavLink>
@@ -22,7 +22,7 @@ function MainPage() {
                          style={{textDecoration: 'none', marginTop: 40}}><StoringCard/></NavLink>
                 <NavLink to={"/retrieval-page"}
                          style={{textDecoration: 'none', marginTop: 40}}><RetrievalCard/></NavLink>
-            </div>
+            </nav>
         </div>
 
     );
