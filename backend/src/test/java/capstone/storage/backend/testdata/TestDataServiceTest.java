@@ -1,5 +1,6 @@
 package capstone.storage.backend.testdata;
 
+import capstone.storage.backend.drivingorders.DrivingOrderRepo;
 import capstone.storage.backend.exceptions.TestDataItemsNotFoundException;
 import capstone.storage.backend.item.ItemRepo;
 import capstone.storage.backend.item.models.Item;
@@ -19,8 +20,9 @@ class TestDataServiceTest {
 
     ServiceUtils serviceUtils = mock(ServiceUtils.class);
     StorageBinRepo storageBinRepo = mock(StorageBinRepo.class);
+    DrivingOrderRepo drivingOrderRepo = mock(DrivingOrderRepo.class);
     ItemRepo itemRepo = mock(ItemRepo.class);
-    private final TestDataService testDataService = new TestDataService(itemRepo, storageBinRepo, serviceUtils);
+    private final TestDataService testDataService = new TestDataService(itemRepo, storageBinRepo, serviceUtils,drivingOrderRepo);
 
     @Test
     @DisplayName("method -> should return the given list")
