@@ -4,10 +4,13 @@ import Typography from "@mui/material/Typography";
 import "../css/MainPageItemCard.css"
 import bodypart from '../images/Item_Icon_in_MaskGroup.png';
 
-function MainPageItemCard() {
+function ItemCard() {
     return (
 
-        <Card sx={{marginLeft: 10, minWidth: 500, minHeight: 400, boxShadow: 5, borderRadius: 10}}>
+        <Card sx={{marginLeft: 10, minWidth: 500, minHeight: 400, boxShadow: 5, borderRadius: 10 ,
+            '&:hover': {
+                boxShadow:14
+            }}}>
             <div className={"item-card"}>
                 <img className={"item-card-bodypart"} src={bodypart} alt={"item"}/>
             </div>
@@ -23,4 +26,4 @@ function MainPageItemCard() {
     );
 }
 
-export default MainPageItemCard;
+export default ItemCard;

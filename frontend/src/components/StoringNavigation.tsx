@@ -1,5 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import axios from "axios";
+import {IconButton} from "@mui/material";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
 type storingNavigationProps = {
     fetchStoringData: () => void
@@ -20,8 +22,7 @@ type storingNavigationProps = {
 
 function StoringNavigation(props: storingNavigationProps) {
 
-    const handleAddSubmit = (event: ChangeEvent<HTMLFormElement>) => {
-        event.preventDefault()
+    const handleAddSubmit = () => {
         const storingItemNumber = props.storingItemNumber
         const storingStorageLocationId = props.storingStorageLocationId
         const storingAmount = props.storingAmountValue
@@ -51,9 +52,9 @@ function StoringNavigation(props: storingNavigationProps) {
 
     return (
         <div className="topnav">
-            <div id="navi-logo">storing</div>
+            <div className="header-font" id="navi-logo">storing</div>
             <div className="add-container">
-                <form onSubmit={handleAddSubmit}>
+
                     <input className="item_input_field" value={props.storingItemNumber}
                            onChange={props.handleStoringItemNumber} type="text" placeholder="item-number"
                            name="item-number"/>
@@ -62,8 +63,7 @@ function StoringNavigation(props: storingNavigationProps) {
                            name="ean"/>
                     <input className="item_input_field" value={props.storingAmountValue}
                            onChange={props.handleStoringAmount} type="text" placeholder="amount" name="amount"/>
-                    <button type="submit">+</button>
-                </form>
+                    <IconButton onClick={handleAddSubmit} color={"primary"}><AddCircleOutlineOutlinedIcon sx={{marginTop:"50%"}} color={"inherit"}/></IconButton>
             </div>
         </div>
 

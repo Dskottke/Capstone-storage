@@ -1,5 +1,8 @@
 import React, {ChangeEvent} from 'react';
 import axios from "axios";
+import {IconButton} from "@mui/material";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import "../css/TableNavigation.css"
 
 type retrievalNavigationProps = {
     fetchRetrievalData: () => void
@@ -20,8 +23,8 @@ type retrievalNavigationProps = {
 
 function RetrievalNavigation(props: retrievalNavigationProps) {
 
-    const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
-        event.preventDefault()
+    const handleSubmit = () => {
+
         const retrievalItemNumber = props.retrievalItemNumber
         const retrievalStorageLocationId = props.retrievalStorageLocationId
         const retrievalAmount = props.retrievalAmountValue
@@ -50,9 +53,9 @@ function RetrievalNavigation(props: retrievalNavigationProps) {
     }
     return (
         <div className="topnav">
-            <div id="navi-logo">retrieval</div>
+            <div className={"header-font"} id="navi-logo">retrieval</div>
             <div className="add-container">
-                <form onSubmit={handleSubmit}>
+
                     <input className="item_input_field" value={props.retrievalItemNumber}
                            onChange={props.handleRetrievalItemNumber} type="text" placeholder="item-number"
                            name="item-number"/>
@@ -61,8 +64,8 @@ function RetrievalNavigation(props: retrievalNavigationProps) {
                            name="storage-bin-nr"/>
                     <input className="item_input_field" value={props.retrievalAmountValue}
                            onChange={props.handleRetrievalAmount} type="text" placeholder="amount" name="amount"/>
-                    <button type="submit">+</button>
-                </form>
+                    <IconButton onClick={handleSubmit} color={"primary"}><AddCircleOutlineOutlinedIcon sx={{marginTop:"50%"}} color={"inherit"}/></IconButton>
+
             </div>
         </div>
     );

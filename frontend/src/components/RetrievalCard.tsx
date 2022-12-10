@@ -7,7 +7,10 @@ import Typography from "@mui/material/Typography";
 function RetrievalCard() {
 
     return (
-        <Card sx={{marginLeft: 10, minWidth: 500, minHeight: 400, boxShadow: 5, borderRadius: 10}}>
+        <Card sx={{marginLeft: 10, minWidth: 500, minHeight: 400, boxShadow: 5, borderRadius: 10,
+            '&:hover': {
+                boxShadow:14
+            }}}>
             <div className={"discharging-card"}>
                 <img className={"Discharging-card-bodypart"} src={bodypart} alt={"item"}/>
             </div>

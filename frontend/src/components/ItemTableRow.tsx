@@ -89,8 +89,8 @@ function ItemTableRow({
                             <SaveIcon color="primary" fontSize="inherit"/>
                         </IconButton>
 
-                        <IconButton sx={{position:"static" ,color:pink[500]}} disableRipple={true} aria-label="cancel" size="small" onClick={() => setOnEditOpen(!onEditOpen)}>
-                            <CancelPresentationIcon fontSize="inherit"/>
+                        <IconButton disableRipple={true} aria-label="cancel" size="small" onClick={() => setOnEditOpen(!onEditOpen)}>
+                            <CancelPresentationIcon color={"disabled"} fontSize="inherit"/>
                         </IconButton>
                     </>) :
                 <>
