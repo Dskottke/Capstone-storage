@@ -18,8 +18,8 @@ public enum ExceptionMessage {
 
     STORED_ITEMS_EXCEPTION("can't delete because there are open orders or items stored"),
 
-    ITEM_IS_NOT_EXISTING("item is not existing");
-
+    ITEM_IS_NOT_EXISTING("item is not existing"),
+    STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE("can't change the capacity to less than stored");
     private final String message;
 
     ExceptionMessage(String message) {
