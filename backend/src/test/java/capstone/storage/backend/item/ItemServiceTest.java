@@ -339,7 +339,7 @@ class ItemServiceTest {
         }
         //THEN
         catch (StoredItemsException e) {
-            assertEquals(ExceptionMessage.STORED_ITEMS_EXCEPTION.toString(), e.getMessage());
+            assertEquals(ExceptionMessage.STORED_ITEMS_EXCEPTION_MESSAGE.toString(), e.getMessage());
         }
     }
 

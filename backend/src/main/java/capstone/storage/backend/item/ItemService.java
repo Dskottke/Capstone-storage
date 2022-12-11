@@ -1,10 +1,7 @@
 package capstone.storage.backend.item;
 
 import capstone.storage.backend.drivingorders.DrivingOrderRepo;
-import capstone.storage.backend.exceptions.ItemAlreadyExistException;
-import capstone.storage.backend.exceptions.ItemISNotExistingException;
-import capstone.storage.backend.exceptions.ItemValidationException;
-import capstone.storage.backend.exceptions.StoredItemsException;
+import capstone.storage.backend.exceptions.*;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
@@ -95,7 +92,7 @@ public class ItemService {
     }
 
     public boolean beforeDeleteControl(String id) {
-        Item item = repository.findById(id).orElseThrow();
+        Item item = repository.findById(id).orElseThrow(ItemNotFoundException::new);
         boolean isExistingInStorageBin = storageBinService.existsByItemNumber(item.itemNumber());
         boolean isExistingInDrivingOrders = drivingOrderRepo.existsByItemNumber(item.itemNumber());
         return isExistingInDrivingOrders || isExistingInStorageBin;

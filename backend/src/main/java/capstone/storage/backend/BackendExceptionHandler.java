@@ -31,7 +31,11 @@ public class BackendExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler({ItemToDeleteNotFoundException.class, OrderToDeleteNotFoundException.class, StorageBinNotFoundException.class,})
+    @ExceptionHandler({
+            ItemNotFoundException.class,
+            ItemToDeleteNotFoundException.class,
+            OrderToDeleteNotFoundException.class,
+            StorageBinNotFoundException.class,})
     public ResponseEntity<String> handleNotFoundResponseException(RuntimeException ex) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
