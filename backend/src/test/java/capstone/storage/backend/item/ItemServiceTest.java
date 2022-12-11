@@ -2,10 +2,7 @@ package capstone.storage.backend.item;
 
 import capstone.storage.backend.ExceptionMessage;
 import capstone.storage.backend.drivingorders.DrivingOrderRepo;
-import capstone.storage.backend.exceptions.ItemAlreadyExistException;
-import capstone.storage.backend.exceptions.ItemISNotExistingException;
-import capstone.storage.backend.exceptions.ItemValidationException;
-import capstone.storage.backend.exceptions.StoredItemsException;
+import capstone.storage.backend.exceptions.*;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
@@ -314,6 +311,23 @@ class ItemServiceTest {
         assertFalse(actual);
     }
 
+    @DisplayName("method -> deleteItemById should throw ItemNotFoundException")
+    @Test
+    void deleteItemByIdShouldThrowItemNotFoundException() {
+        //GIVEN
+        String id = "1";
+        //WHEN
+        when(itemRepo.findById(id)).thenReturn(Optional.empty());
+
+        try {
+            itemService.deleteItemById(id);
+            fail();
+        }
+        //THEN
+        catch (ItemNotFoundException e) {
+            assertEquals(ExceptionMessage.ITEM_NOT_FOUND_EXCEPTION_MESSAGE.toString(), e.getMessage());
+        }
+    }
 
     @DisplayName("method -> deleteItemById should throw StoredItemException")
     @Test
