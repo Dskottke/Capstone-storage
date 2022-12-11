@@ -1,7 +1,9 @@
 package capstone.storage.backend.storagebin;
 
+import capstone.storage.backend.ExceptionMessage;
 import capstone.storage.backend.drivingorders.Type;
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
+import capstone.storage.backend.exceptions.StorageBinNotFoundException;
 import capstone.storage.backend.item.ItemRepo;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.storagebin.models.StorageBin;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -43,15 +46,7 @@ class StorageBinServiceTest {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", 1, 2);
         List<StorageBin> testStorageBinList = List.of(testStorageBin);
-        Item testItem = new Item(
-                "992901d9-5eb8-4992-9620-e5e80bb7f0e0",
-                "Axe Bodyspray Wasabi & Fresh Linen",
-                "Unknown",
-                "NL",
-                "8710847909610",
-                20,
-                1,
-                2);
+        Item testItem = new Item("992901d9-5eb8-4992-9620-e5e80bb7f0e0", "Axe Bodyspray Wasabi & Fresh Linen", "Unknown", "NL", "8710847909610", 20, 1, 2);
         //WHEN
         StorageBin expected = new StorageBin("1", "1", 1, 2);
         when(storageBinrepo.findAll()).thenReturn(testStorageBinList);
@@ -117,16 +112,8 @@ class StorageBinServiceTest {
     @Test
     void getItemAmountFromStorageBinsByItemNumberAndExpect1() {
         //GIVEN
-        Item itemToCount = new Item("1",
-                "Axe Bodyspray Wasabi & Fresh Linen",
-                "ger",
-                "DE",
-                "123",
-                10,
-                1,
-                0);
-        List<StorageBin> storageBinsWithItem = List.of(new StorageBin("1"
-                , "1", 1, 1));
+        Item itemToCount = new Item("1", "Axe Bodyspray Wasabi & Fresh Linen", "ger", "DE", "123", 10, 1, 0);
+        List<StorageBin> storageBinsWithItem = List.of(new StorageBin("1", "1", 1, 1));
         //WHEN
         when(storageBinrepo.findAllByItemNumber(itemToCount.itemNumber())).thenReturn(storageBinsWithItem);
         int actual = service.getItemAmountFromStorageBinsByItemNumber(itemToCount);
@@ -135,5 +122,35 @@ class StorageBinServiceTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    @DisplayName("method -> updateInputStorageBin should throw StorageBinNotFoundException because the storageBinRepo returns Optional empty")
+    void updateInputStorageBinShouldThrowStorageBinNotFoundException() {
+        //GIVEN
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 1, Type.OUTPUT, 10);
+        //WHEN
+        when(storageBinrepo.findById(testDrivingOrder.storageLocationId())).thenReturn(Optional.empty());
+        try {
+            service.updateInputStorageBin(testDrivingOrder);
+            fail();
+        } catch (StorageBinNotFoundException e) {
+            //THEN
+            assertEquals(ExceptionMessage.STORAGE_BIN_NOT_FOUND_EXCEPTION_MESSAGE.toString(), e.getMessage());
+        }
+    }
 
+    @Test
+    @DisplayName("method -> updateOutputStorageBin should throw StorageBinNotFoundException because the storageBinRepo returns Optional empty")
+    void updateOutputStorageBinShouldThrowStorageBinNotFoundException() {
+        //GIVEN
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 1, Type.OUTPUT, 10);
+        //WHEN
+        when(storageBinrepo.findById(testDrivingOrder.storageLocationId())).thenReturn(Optional.empty());
+        try {
+            service.updateOutputStorageBin(true, testDrivingOrder);
+            fail();
+        } catch (StorageBinNotFoundException e) {
+            //THEN
+            assertEquals(ExceptionMessage.STORAGE_BIN_NOT_FOUND_EXCEPTION_MESSAGE.toString(), e.getMessage());
+        }
+    }
 }
