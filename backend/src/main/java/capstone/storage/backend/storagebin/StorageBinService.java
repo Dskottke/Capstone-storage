@@ -91,6 +91,8 @@ public class StorageBinService {
     public boolean existsByItemNumber(int itemNumber) {
         return storageBinRepo.existsByItemNumber(itemNumber);
     }
+    public List<StorageBin> findAllByItemNumber(String itemNumber) {
+        return storageBinRepo.findAllByItemNumber(itemNumber);}
 
     private StorageBinReturn toStorageBinReturn(StorageBin storageBin) {
         int itemNumber = storageBin.itemNumber();

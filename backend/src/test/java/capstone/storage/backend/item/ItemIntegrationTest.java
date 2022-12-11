@@ -184,6 +184,58 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
+    @DisplayName("PUT -> with not valid storableValue because it's to low compared to StorageBin amount. should throw STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE ")
+    void updateShouldNotBePermittedBecauseNewStorableValueIsToLow() throws Exception {
+        //GIVEN
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
+                .andExpect(status().is(204));
+        String id = "992901d9-5eb8-4992-9620-e5e80bb7f0e0";
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id" : "<id>",
+                                "name": "Axe Bodyspray Wasabi & Fresh Linen",
+                                "categoryName": "Unknown",
+                                "issuingCountry": "NL",
+                                "ean":"8710847909610",
+                                "storableValue": "20",
+                                "itemNumber": "1"
+                                },""".replace("<id>", id)))
+                //THEN
+                .andExpect(status().is(400))
+                .andExpect(content().string(ExceptionMessage.STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE.toString()));
+    }
+
+    @Test
+    @DirtiesContext
+    @DisplayName("PUT -> with not valid storableValue because it's to low compared to StorageBin amount added DrivingOrder amount . should throw STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE ")
+    void updateShouldNotBePermittedBecauseNewStorableValueIsToLowBecauseThereIsAnOrder() throws Exception {
+        //GIVEN
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
+                .andExpect(status().is(204));
+        String id = "8e1569a3-1655-45c3-ba9b-107d61937500";
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id" : "<id>",
+                                "name": "Book: Hands-on Application Development using Spring Boot: Building Modern Cloud Native Applications by Lea (ISBN: 939103022X)",
+                                "categoryName": "Books and Magazines",
+                                "issuingCountry": "",
+                                "ean":"9789391030223",
+                                "storableValue": "5",
+                                "itemNumber": "2"
+                                },""".replace("<id>", id)))
+                //THEN
+                .andExpect(status().is(400))
+                .andExpect(content().string(ExceptionMessage.STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE.toString()));
+    }
+
+    @Test
+    @DirtiesContext
     @DisplayName("PUT -> update with no matching item -> expect HTTP-status 400 and ItemIsNotExistingException.")
     void updateWithNoExistingItem() throws Exception {
         //GIVEN
@@ -202,7 +254,6 @@ class ItemIntegrationTest {
                 //THEN
                 .andExpect(status().is(400)).andExpect(content().string("Item is not existing!"));
     }
-
     @Test
     @DirtiesContext
     @DisplayName("DELETE -> delete existing item -> expect HTTP-Status 204.")
