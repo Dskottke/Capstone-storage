@@ -94,13 +94,13 @@ function ItemTableRow({
                         </IconButton>
                     </>) :
                 <>
-                    <IconButton sx={{marginLeft:"30%",position:"static"}} disableRipple={true} aria-label="edit" size="small"
-                                onClick={() => setOnEditOpen(!onEditOpen)}>
+                    <IconButton sx={{marginLeft: "30%", position: "static"}} disableRipple={true} aria-label="edit"
+                                size="small" onClick={() => setOnEditOpen(!onEditOpen)}>
                         <EditIcon color="primary" fontSize="inherit"/>
                     </IconButton>
-                    <IconButton sx={{position:"static"}} aria-label="delete" disableRipple={true} size="small">
-                        <DeleteOutlineIcon  sx={{color: pink[500]}} aria-label="delete" fontSize="inherit"
-                                           onClick={() => deleteItem(item.id)}/>
+                    <IconButton onClick={() => deleteItem(item.id)} sx={{position: "static"}} aria-label="delete"
+                                disableRipple={true} size="small">
+                        <DeleteOutlineIcon sx={{color: pink[500]}} aria-label="delete" fontSize="inherit"/>
                     </IconButton>
                 </>
             }
