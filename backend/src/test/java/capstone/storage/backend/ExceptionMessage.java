@@ -18,7 +18,8 @@ public enum ExceptionMessage {
     NOT_ENOUGH_ITEMS_REMAINING_EXCEPTION_MESSAGE("not enough items remaining"),
     STORED_ITEMS_EXCEPTION("can't delete because there are open orders or items stored"),
     ITEM_IS_NOT_EXISTING_MESSAGE("item is not existing"),
-    ILLEGAL_TYPE_EXCEPTION_MESSAGE("The type is not allowed!");
+    ILLEGAL_TYPE_EXCEPTION_MESSAGE("The type is not allowed!"),
+    STORAGE_BIN_NOT_FOUND_EXCEPTION("Can't find storage-bin.");
 
     private final String message;
 

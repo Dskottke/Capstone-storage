@@ -14,7 +14,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class BackendExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({
-            StorageBinNotFoundException.class,
             IllegalTypeException.class,
             ItemISNotExistingException.class,
             StoredItemsException.class,
@@ -32,7 +31,7 @@ public class BackendExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler({ItemToDeleteNotFoundException.class, OrderToDeleteNotFoundException.class})
+    @ExceptionHandler({ItemToDeleteNotFoundException.class, OrderToDeleteNotFoundException.class, StorageBinNotFoundException.class,})
     public ResponseEntity<String> handleNotFoundResponseException(RuntimeException ex) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
