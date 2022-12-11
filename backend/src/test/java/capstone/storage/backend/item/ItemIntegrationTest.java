@@ -186,6 +186,32 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
+    @DisplayName("PUT -> with not valid storableValue because it's to low. should throw STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE ")
+    void updateShouldNotBePermittedBecauseNewStorableValueIsToLow() throws Exception {
+        //GIVEN
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
+                .andExpect(status().is(204));
+        String id = "992901d9-5eb8-4992-9620-e5e80bb7f0e0";
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id" : "<id>",
+                                "name": "Axe Bodyspray Wasabi & Fresh Linen",
+                                "categoryName": "Unknown",
+                                "issuingCountry": "NL",
+                                "ean":"8710847909610",
+                                "storableValue": "20",
+                                "itemNumber": "1"
+                                },""".replace("<id>", id)))
+                //THEN
+                .andExpect(status().is(400))
+                .andExpect(content().string(ExceptionMessage.STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE.toString()));
+    }
+
+    @Test
+    @DirtiesContext
     @DisplayName("PUT->not existing item expect HTTP-status 201")
     void updateNotExistingItemAndExpectStatus201() throws Exception {
         //GIVEN
@@ -225,7 +251,6 @@ class ItemIntegrationTest {
                 //THEN
                 .andExpect(status().is(400)).andExpect(content().string(ExceptionMessage.ITEM_FORBIDDEN_REQUEST_EXCEPTION_MESSAGE.toString()));
     }
-
     @Test
     @DirtiesContext
     @DisplayName("DELETE -> delete existing item expect HTTP-Status 204")
