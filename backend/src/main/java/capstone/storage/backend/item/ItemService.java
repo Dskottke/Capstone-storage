@@ -1,13 +1,13 @@
 package capstone.storage.backend.item;
 
 import capstone.storage.backend.drivingorders.DrivingOrderRepo;
-import capstone.storage.backend.exceptions.ItemAlreadyExistException;
-import capstone.storage.backend.exceptions.ItemISNotExistingException;
-import capstone.storage.backend.exceptions.ItemValidationException;
-import capstone.storage.backend.exceptions.StoredItemsException;
+import capstone.storage.backend.drivingorders.Type;
+import capstone.storage.backend.drivingorders.models.DrivingOrder;
+import capstone.storage.backend.exceptions.*;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
+import capstone.storage.backend.storagebin.StorageBin;
 import capstone.storage.backend.storagebin.StorageBinService;
 import capstone.storage.backend.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class ItemService {
     private final StorageBinService storageBinService;
     private final DrivingOrderRepo drivingOrderRepo;
     private final ServiceUtils utils;
-    
+
     public List<Item> findAll() {
         List<Item> allItems = repository.findAll();
         List<Item> listToReturn = new ArrayList<>();
@@ -32,15 +32,7 @@ public class ItemService {
         for (Item item : allItems) {
             String amount = storageBinService.getItemAmountFromStorageBinsByItemNumber(item);
 
-            Item itemToAdd = new Item(
-                    item.id(),
-                    item.name(),
-                    item.categoryName(),
-                    item.issuingCountry(),
-                    item.ean(),
-                    item.storableValue(),
-                    item.itemNumber(),
-                    amount);
+            Item itemToAdd = new Item(item.id(), item.name(), item.categoryName(), item.issuingCountry(), item.ean(), item.storableValue(), item.itemNumber(), amount);
             listToReturn.add(itemToAdd);
         }
 
@@ -57,21 +49,48 @@ public class ItemService {
 
 
         String defaultStoringBinAmount = "0";
-        Item itemToAdd = new Item(
-                utils.generateUUID(),
-                product.name(),
-                product.categoryName(),
-                product.issuingCountry(),
-                product.ean(),
-                addItemDto.storableValue(),
-                addItemDto.itemNumber(),
-                defaultStoringBinAmount);
+        Item itemToAdd = new Item(utils.generateUUID(), product.name(), product.categoryName(), product.issuingCountry(), product.ean(), addItemDto.storableValue(), addItemDto.itemNumber(), defaultStoringBinAmount);
 
         return repository.insert(itemToAdd);
     }
 
-    public Item updateItem(Item articleRequest) {
-        return repository.save(articleRequest);
+    public Item updateItem(Item itemToUpdate) {
+        if (notPermittedUpdateControl(itemToUpdate)) {
+            throw new StorableValueUpdateException();
+        } else {
+            return repository.save(itemToUpdate);
+        }
+    }
+
+    private boolean notPermittedUpdateControl(Item itemToUpdate) {
+
+        boolean storageControl = storageBinService.findAllByItemNumber(itemToUpdate.itemNumber())
+                .stream()
+                .anyMatch(storageBin -> Integer.parseInt(storageBin.amount()) > Integer.parseInt(itemToUpdate.storableValue()));
+
+        if (storageControl) {
+            return true;
+        }
+
+        return getStorageBinsWithAddedOrderAmounts(itemToUpdate).stream().anyMatch(storageBin -> Integer.parseInt(storageBin.amount()) > Integer.parseInt(itemToUpdate.storableValue()));
+    }
+
+    public List<StorageBin> getStorageBinsWithAddedOrderAmounts(Item itemToUpdate) {
+
+        List<StorageBin> storageBinListWithMatchingItemNumber = storageBinService.findAllByItemNumber(itemToUpdate.itemNumber());
+        List<DrivingOrder> inputOrderListWithMatchingItemNumber = drivingOrderRepo.findByTypeAndItemNumber(Type.INPUT, itemToUpdate.itemNumber());
+
+        List<StorageBin> storageBinListAddedWithOrderAmount = new ArrayList<>();
+
+        for (StorageBin storageBin : storageBinListWithMatchingItemNumber) {
+            for (DrivingOrder drivingOrder : inputOrderListWithMatchingItemNumber) {
+                if (storageBin.locationId().equals(drivingOrder.storageLocationId())) {
+                    int totalAmount = Integer.parseInt(storageBin.amount()) + Integer.parseInt(drivingOrder.amount());
+                    storageBinListAddedWithOrderAmount.add(new StorageBin(storageBin.id(), storageBin.locationId(), storageBin.itemNumber(), Integer.toString(totalAmount), storageBin.storedItemName()));
+                }
+            }
+        }
+        return storageBinListAddedWithOrderAmount;
     }
 
     public Item findItemByItemNumber(String itemNumber) {
