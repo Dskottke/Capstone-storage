@@ -99,6 +99,6 @@ public class StorageBinService {
         return Integer.toString(finalItemAmount.get());
     }
     public boolean existsByItemNumber(String itemNumber) {
-      return  storageBinRepo.existsByItemNumber(itemNumber);
+      return storageBinRepo.existsStorageBinsByItemNumber(itemNumber);
     }
 }
