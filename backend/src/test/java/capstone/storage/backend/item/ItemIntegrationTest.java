@@ -63,7 +63,6 @@ class ItemIntegrationTest {
     @DisplayName("POST -> itemResponse field ean is null expect HTTP-status 400 and content: itemResponseEanNullExceptionMessage")
     void postRequestWithItemResponseWithEanNullAndExpectStatus400() throws Exception {
         //GIVEN
-        String ean = "8710847909610";
         Product[] product = {
                 new Product(
                         "test123",
@@ -75,7 +74,7 @@ class ItemIntegrationTest {
                 .setBody(objectMapper.writeValueAsString(product))
                 .setResponseCode(200));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
@@ -103,7 +102,7 @@ class ItemIntegrationTest {
                 .setBody(objectMapper.writeValueAsString(product))
                 .setResponseCode(200));
 
-        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
+        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -147,7 +146,7 @@ class ItemIntegrationTest {
                 .setBody(objectMapper.writeValueAsString(product))
                 .setResponseCode(200));
 
-        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
+        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -162,7 +161,7 @@ class ItemIntegrationTest {
 
         String id = mockItemResponse.id();
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -186,33 +185,12 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("PUT->not existing item expect HTTP-status 201")
-    void updateNotExistingItemAndExpectStatus201() throws Exception {
-        //GIVEN
-        String id = "123";
-        //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                "id" : "123",
-                                "name": "test",
-                                "categoryName": "test",
-                                "issuingCountry": "GER",
-                                "ean":"8710847909610",
-                                "storableValue": "10"}"""))
-                //THEN
-                .andExpect(status().is(201));
-    }
-
-    @Test
-    @DirtiesContext
-    @DisplayName("PUT -> no matching Path-variable and ean expect HTTP-status 400 and Content : itemForbiddenRequestException")
+    @DisplayName("PUT -> should return ITEM_IS_NOT_EXISTING Exception because there is no existing Item ")
     void updateWithNotMatchingPathvariableIdAndItemId() throws Exception {
         //GIVEN
-        String id = "123";
+
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -223,7 +201,7 @@ class ItemIntegrationTest {
                                 "ean":"8710847909610",
                                 "storableValue": "10"}"""))
                 //THEN
-                .andExpect(status().is(400)).andExpect(content().string(ExceptionMessage.ITEM_FORBIDDEN_REQUEST_EXCEPTION_MESSAGE.toString()));
+                .andExpect(status().is(400)).andExpect(content().string(ExceptionMessage.ITEM_IS_NOT_EXISTING.toString()));
     }
 
     @Test
@@ -242,7 +220,7 @@ class ItemIntegrationTest {
                 .setBody(objectMapper.writeValueAsString(product))
                 .setResponseCode(200));
 
-        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/8710847909610")
+        String body = mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -276,32 +254,11 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> not matching body ean and path-variable ean expect HTTP-status 400 and content: itemForbiddenRequestException")
-    void postWithNotMatchingPathVariableEanAndEanFromRequestBodyAndExpect_Status400() throws Exception {
-        //GIVEN
-        String ean = "123";
-        //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                    {
-                                    "storableValue" : "10",
-                                    "ean" : "1234",
-                                    "itemNumber": "12345"
-                                }"""))
-                //THEN
-                .andExpect(status().is(400));
-
-    }
-
-    @Test
-    @DirtiesContext
     @DisplayName("POST -> item-number less than 1 expect HTTP-status 400 and content: itemValidationException")
     void postWithItemNumberLessThan1AndExpect_Status400() throws Exception {
         //GIVEN
-        String ean = "123";
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
@@ -312,8 +269,6 @@ class ItemIntegrationTest {
                 //THEN
                 .andExpect(status().is(400))
                 .andExpect(content().string(ExceptionMessage.ITEM_VALIDATION_EXCEPTION_MESSAGE.toString()));
-
-
     }
 
     @Test
@@ -321,9 +276,8 @@ class ItemIntegrationTest {
     @DisplayName("POST -> storable-value less than 1 expect HTTP-status 400 and content: itemValidationException ")
     void postWithStorableValueLessThan1AndExpect_Status400() throws Exception {
         //GIVEN
-        String ean = "123";
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
@@ -341,9 +295,8 @@ class ItemIntegrationTest {
     @DisplayName("POST -> storable value is null expect HTTP-status 400 and content: isNullOrEmptyException")
     void postWithStorableValueNullAndExpect_Status400() throws Exception {
         //GIVEN
-        String ean = "123";
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
@@ -361,9 +314,8 @@ class ItemIntegrationTest {
     @DirtiesContext
     void postWithItemNumberNullExpectStatus_400() throws Exception {
         //GIVEN
-        String ean = "123";
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
@@ -381,9 +333,8 @@ class ItemIntegrationTest {
     @DisplayName("POST -> item-number has empty string expect HTTP-status 400 and content: isNullOrEmptyException")
     void postWithItemNumberEmptyStringExpect_Status400() throws Exception {
         //GIVEN
-        String ean = "123";
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
@@ -401,9 +352,8 @@ class ItemIntegrationTest {
     @DisplayName("POST -> ean has empty string expect HTTP-status 400 and content: isNullOrEmptyException")
     void postWithEanEmptyStringExpectStatus_400() throws Exception {
         //GIVEN
-        String ean = "";
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
@@ -421,9 +371,8 @@ class ItemIntegrationTest {
     @DisplayName("POST -> storable value has empty string expect HTTP-status 400 and content: IsNullOrEmptyException")
     void postWithStorableValueEmptyStringExpect_Status400() throws Exception {
         //GIVEN
-        String ean = "123";
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + ean)
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
@@ -452,7 +401,7 @@ class ItemIntegrationTest {
                 .setBody(objectMapper.writeValueAsString(product))
                 .setResponseCode(200));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + "8710847909610")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
@@ -464,7 +413,7 @@ class ItemIntegrationTest {
 
         //WHEN
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/" + "8710847909610")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
