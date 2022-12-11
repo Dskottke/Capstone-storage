@@ -4,7 +4,7 @@ export type ItemModel = {
     categoryName: string,
     issuingCountry: string,
     ean: string,
-    storableValue: string,
-    itemNumber: string
-    storageBinAmount: string
+    storableValue: number,
+    itemNumber: number,
+    storageBinAmount: number
 }

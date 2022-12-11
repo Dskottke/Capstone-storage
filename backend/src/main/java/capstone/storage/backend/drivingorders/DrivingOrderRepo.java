@@ -13,5 +13,5 @@ public interface DrivingOrderRepo extends MongoRepository<DrivingOrder, String> 
 
     Optional<DrivingOrder> findFirstByStorageLocationIdAndType(String storageLocationId, Type type);
 
-    boolean existsByItemNumber(String itemNumber);
+    boolean existsByItemNumber(int itemNumber);
 }

@@ -36,7 +36,6 @@ function ItemNavigation(props: itemNavigationProps) {
 
     const handleAddSubmit = () => {
 
-
         axios.post("/api/items/", {ean, itemNumber, storableValue})
             .then(response => {
                 if (response.status === 201) {
