@@ -1,7 +1,7 @@
 package capstone.storage.backend.item;
 
 import capstone.storage.backend.exceptions.IsNullOrEmptyException;
-import capstone.storage.backend.exceptions.ItemForbiddenRequestException;
+import capstone.storage.backend.exceptions.ItemISNotExistingException;
 import capstone.storage.backend.exceptions.ItemToDeleteNotFoundException;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/items/")
@@ -24,28 +23,25 @@ public class ItemController {
         return service.findAll();
     }
 
-    @PostMapping({"{eanToFind}", ""})
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Item saveItem(@PathVariable Optional<String> eanToFind, @RequestBody AddItemDto addItemDto) {
+    public Item saveItem(@RequestBody AddItemDto addItemDto) {
 
-        if (eanToFind.isEmpty() || service.isNullOrEmpty(addItemDto)) {
+        if (service.isNullOrEmpty(addItemDto)) {
             throw new IsNullOrEmptyException();
         }
-
-        if (!addItemDto.ean().equals(eanToFind.get())) {
-            throw new ItemForbiddenRequestException();
-        }
-        return service.addItem(addItemDto, eanToFind.get());
+        return service.addItem(addItemDto);
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Item> updateItem(@PathVariable String id, @RequestBody Item itemToUpdate) {
-        if (itemToUpdate.id().equals(id)) {
-            boolean itemExist = service.existById(id);
+    @PutMapping()
+    public ResponseEntity<Item> updateItem(@RequestBody Item itemToUpdate) {
+        boolean itemExist = service.existById(itemToUpdate.id());
+        if (itemExist) {
             Item updatedItem = service.updateItem(itemToUpdate);
-            return itemExist ? ResponseEntity.status(HttpStatus.OK).body(updatedItem) : ResponseEntity.status(HttpStatus.CREATED).body(updatedItem);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedItem);
+        } else {
+            throw new ItemISNotExistingException();
         }
-        throw new ItemForbiddenRequestException();
     }
 
     @DeleteMapping("{id}")

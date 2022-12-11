@@ -31,7 +31,7 @@ function ItemTableRow({
     const [onEditOpen, setOnEditOpen] = useState(false);
 
     const updateItem = () => {
-        axios.put("/api/items/" + item.id, {...item, storableValue})
+        axios.put("/api/items/", {...item, storableValue})
             .then(response => {
                 if (response.status === 200) {
                     setItemTableRowSuccessModal(true);
