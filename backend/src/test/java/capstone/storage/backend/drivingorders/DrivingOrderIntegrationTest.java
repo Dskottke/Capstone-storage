@@ -1,7 +1,7 @@
 package capstone.storage.backend.drivingorders;
 
+import capstone.storage.backend.ExceptionMessage;
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
-import capstone.storage.backend.exceptions.ExceptionMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -192,7 +192,7 @@ class DrivingOrderIntegrationTest {
                         .content("""
                                 {
                                 "storageLocationId" : "1",
-                                "itemNumber" : "1",
+                                "itemNumber" : 1,
                                 "amount" : "10"
                                 }"""))
                 .andExpect(status().is(201));
@@ -202,7 +202,7 @@ class DrivingOrderIntegrationTest {
                         .content("""
                                 {
                                 "storageLocationId" : "1",
-                                "itemNumber" : "2",
+                                "itemNumber" : 2,
                                 "amount" : "10"
                                 }"""))
                 .andExpect(status().is(400))
@@ -210,9 +210,9 @@ class DrivingOrderIntegrationTest {
 
     }
 
-    @Test
     @DisplayName("POST -> OUTPUT should return HTTP-Status 201 and Content ")
     @DirtiesContext
+    @Test
     void addNewOutputDrivingOrderAndExpectStatus201() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
                 .andExpect(status().is(204));

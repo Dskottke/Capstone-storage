@@ -51,7 +51,7 @@ public class DrivingOrderService {
         } else if (type == Type.OUTPUT) {
             validateOutputOrder(storageBinFromOrder, itemFromOrder, newDrivingOrder);
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalTypeException();
         }
     }
 
@@ -82,7 +82,7 @@ public class DrivingOrderService {
     }
 
     private boolean itemAndStorageBinExisting(NewDrivingOrder newDrivingOrder) {
-        return itemService.existByItemNumber(newDrivingOrder.itemNumber()) || storageBinService.existsByLocationId(newDrivingOrder.storageLocationId());
+        return itemService.existByItemNumber(newDrivingOrder.itemNumber()) && storageBinService.existsByLocationId(newDrivingOrder.storageLocationId());
     }
 
     public boolean checkOutputValidation(StorageBin storageBinToCheck, Item itemToCheck) {

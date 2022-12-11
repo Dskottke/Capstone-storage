@@ -1,8 +1,10 @@
 package capstone.storage.backend.drivingorders;
 
+import capstone.storage.backend.ExceptionMessage;
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.drivingorders.models.NewDrivingOrder;
-import capstone.storage.backend.exceptions.ExceptionMessage;
+import capstone.storage.backend.exceptions.IllegalTypeException;
+import capstone.storage.backend.exceptions.ItemOrStorageBinNotExistingException;
 import capstone.storage.backend.exceptions.NotEnoughItemsRemainingException;
 import capstone.storage.backend.exceptions.StorageBinFalseItemException;
 import capstone.storage.backend.item.ItemService;
@@ -181,7 +183,6 @@ class DrivingOrderServiceTest {
     }
 
 
-
     @Test
     @DisplayName("method -> getTotalAmountFromList and return 10")
     void getTotalAmountFromList() {
@@ -226,7 +227,7 @@ class DrivingOrderServiceTest {
     }
 
     @Test
-    @DisplayName("method -> INPUT checkValidation should return false because StorageBin-itemNumber is different to Item-ItemNumber ")
+    @DisplayName("method -> INPUT isValidInput should return false because StorageBin-itemNumber is different to Item-ItemNumber ")
     void checkInputValidationShouldReturnFalseBecauseStorageBinItemNumberAndItemItemNumberAreDifferent() {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", 1, 20);
@@ -240,7 +241,7 @@ class DrivingOrderServiceTest {
     }
 
     @Test
-    @DisplayName("method -> INPUT checkValidation should return true because StorageBin-itemNumber is 0 ")
+    @DisplayName("method -> INPUT isValidInput should return true because StorageBin-itemNumber is 0 ")
     void checkInputValidationShouldReturnTrueBecauseStorageBinItemNumberIs0() {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", 0, 20);
@@ -359,4 +360,44 @@ class DrivingOrderServiceTest {
         assertFalse(actual);
     }
 
+    @Test
+    @DisplayName("method -> addNewDrivingOrder should throw IllegalTypeException because the given type is null")
+    void addNewDrivingOrderShouldThrowIllegalTypeException() {
+        //GIVEN
+        Item testItem = new Item("1", "test", "test", "ger", "test", 10, 1, 1);
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", 1, 1);
+        StorageBin testStorageBin = new StorageBin("1", "1", 0, 1);
+        //WHEN
+        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(true);
+        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(true);
+        when(itemService.findItemByItemNumber(newDrivingOrder.itemNumber())).thenReturn(testItem);
+        when(storageBinService.findStorageBinByLocationId(newDrivingOrder.storageLocationId())).thenReturn(testStorageBin);
+        try {
+            drivingOrderService.addNewDrivingOrder(null, newDrivingOrder);
+            Assertions.fail();
+        }
+        //THEN
+        catch (IllegalTypeException e) {
+            assertEquals(ExceptionMessage.ILLEGAL_TYPE_EXCEPTION_MESSAGE.toString(), e.getMessage());
+        }
+
+    }
+
+    @Test
+    @DisplayName("method -> addNewDrivingOrder should throw ItemOrStorageBinNotExistingException because existsByItemNumber returns false")
+    void addNewDrivingOrderShouldThrowItemOrStorageBinNotExistingException() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", 1, 1);
+        //WHEN
+        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(false);
+        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(true);
+        try {
+            drivingOrderService.addNewDrivingOrder(Type.INPUT, newDrivingOrder);
+            Assertions.fail();
+        }
+        //THEN
+        catch (ItemOrStorageBinNotExistingException e) {
+            assertEquals(ExceptionMessage.ITEM_OR_STORAGE_BIN_NOT_EXISTING_EXCEPTION_MESSAGE.toString(), e.getMessage());
+        }
+    }
 }
