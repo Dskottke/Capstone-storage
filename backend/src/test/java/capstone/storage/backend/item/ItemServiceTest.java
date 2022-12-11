@@ -145,11 +145,11 @@ class ItemServiceTest {
     @DisplayName("method : checkItemExisting -> should return true")
     void checkIfItemAlreadyExistWithExistingEanReturnTrue() {
         //GIVEN
-        String testEanToFind = "123";
-        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
+
+        AddItemDto testAddItemDto = new AddItemDto("8710847909610", "123", "1");
 
         //WHEN
-        when(itemRepo.existsByEan(testEanToFind)).thenReturn(true);
+        when(itemRepo.existsByEan(testAddItemDto.ean())).thenReturn(true);
         try {
             itemService.checkItemExisting(testAddItemDto);
             fail();
