@@ -48,12 +48,12 @@ public class ItemService {
 
     }
 
-    public Item addItem(AddItemDto addItemDto, String eanToFind) {
+    public Item addItem(AddItemDto addItemDto) {
 
         validateAddItemDto(addItemDto);
-        checkItemExisting(addItemDto, eanToFind);
+        checkItemExisting(addItemDto);
 
-        Product product = eanService.getItemResponseFromApi(eanToFind);
+        Product product = eanService.getItemResponseFromApi(addItemDto.ean());
 
 
         String defaultStoringBinAmount = "0";
@@ -101,8 +101,8 @@ public class ItemService {
         return isExistingInDrivingOrders || isExistingInStorageBin;
     }
 
-    public void checkItemExisting(AddItemDto addItemDto, String eanToFind) {
-        boolean eanIsAlreadySaved = repository.existsByEan(eanToFind);
+    public void checkItemExisting(AddItemDto addItemDto) {
+        boolean eanIsAlreadySaved = repository.existsByEan(addItemDto.ean());
         boolean itemNumberAlreadySaved = repository.existsByItemNumber(addItemDto.itemNumber());
         if (eanIsAlreadySaved || itemNumberAlreadySaved) {
             throw new ItemAlreadyExistException();

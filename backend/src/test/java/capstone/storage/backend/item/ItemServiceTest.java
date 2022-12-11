@@ -63,7 +63,7 @@ class ItemServiceTest {
         when(utils.generateUUID()).thenReturn("123");
         when(itemRepo.insert(itemToExpect)).thenReturn(itemToExpect);
         //WHEN
-        Item actual = itemService.addItem(addItemDto, eanToFind);
+        Item actual = itemService.addItem(addItemDto);
         Item expected = itemToExpect;
         //THEN
         assertEquals(expected, actual);
@@ -129,7 +129,7 @@ class ItemServiceTest {
         when(itemRepo.existsByItemNumber(testAddItemDto.itemNumber())).thenReturn(true);
         //WHEN
         try {
-            itemService.checkItemExisting(testAddItemDto, testEanToFind);
+            itemService.checkItemExisting(testAddItemDto);
             fail();
         }
         //THEN
@@ -151,7 +151,7 @@ class ItemServiceTest {
         //WHEN
         when(itemRepo.existsByEan(testEanToFind)).thenReturn(true);
         try {
-            itemService.checkItemExisting(testAddItemDto, testEanToFind);
+            itemService.checkItemExisting(testAddItemDto);
             fail();
         }
         //THEN
