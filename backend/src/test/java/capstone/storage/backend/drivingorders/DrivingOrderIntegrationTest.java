@@ -68,8 +68,14 @@ class DrivingOrderIntegrationTest {
                                      "storageLocationId": "1",
                                      "itemNumber": "1",
                                      "type":"INPUT",
-                                     "amount": "10"}]
-                                     """.replace("<id>", drivingOrder.id())));
+                                     "amount": "10"
+                                     },
+                                     {"id": "8e1569a3-1655-45c3-ba9b-107d61937500",
+                                     "storageLocationId": "2",
+                                     "itemNumber": "2",
+                                     "type": "INPUT",
+                                     "amount": "10"
+                                      }]""".replace("<id>", drivingOrder.id())));
     }
 
     @Test

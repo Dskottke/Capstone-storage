@@ -186,7 +186,7 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("PUT -> with not valid storableValue because it's to low. should throw STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE ")
+    @DisplayName("PUT -> with not valid storableValue because it's to low compared to StorageBin amount. should throw STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE ")
     void updateShouldNotBePermittedBecauseNewStorableValueIsToLow() throws Exception {
         //GIVEN
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
@@ -204,6 +204,32 @@ class ItemIntegrationTest {
                                 "ean":"8710847909610",
                                 "storableValue": "20",
                                 "itemNumber": "1"
+                                },""".replace("<id>", id)))
+                //THEN
+                .andExpect(status().is(400))
+                .andExpect(content().string(ExceptionMessage.STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE.toString()));
+    }
+
+    @Test
+    @DirtiesContext
+    @DisplayName("PUT -> with not valid storableValue because it's to low compared to StorageBin amount added DrivingOrder amount . should throw STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE ")
+    void updateShouldNotBePermittedBecauseNewStorableValueIsToLowBecauseThereIsAnOrder() throws Exception {
+        //GIVEN
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
+                .andExpect(status().is(204));
+        String id = "8e1569a3-1655-45c3-ba9b-107d61937500";
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "id" : "<id>",
+                                "name": "Book: Hands-on Application Development using Spring Boot: Building Modern Cloud Native Applications by Lea (ISBN: 939103022X)",
+                                "categoryName": "Books and Magazines",
+                                "issuingCountry": "",
+                                "ean":"9789391030223",
+                                "storableValue": "5",
+                                "itemNumber": "2"
                                 },""".replace("<id>", id)))
                 //THEN
                 .andExpect(status().is(400))
