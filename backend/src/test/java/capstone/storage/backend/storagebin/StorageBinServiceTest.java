@@ -129,8 +129,8 @@ class StorageBinServiceTest {
                 , "1", "1", "1"));
         //WHEN
         when(storageBinrepo.findAllByItemNumber(itemToCount.itemNumber())).thenReturn(storageBinsWithItem);
-        String actual = service.getItemAmountFromStorageBinsByItemNumber(itemToCount);
-        String expected = "1";
+        int actual = service.getItemAmountFromStorageBinsByItemNumber(itemToCount);
+        int expected = 1;
         //THEN
         assertEquals(expected, actual);
     }

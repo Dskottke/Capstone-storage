@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface StorageBinRepo extends MongoRepository<StorageBin, String> {
     boolean existsByLocationId(String id);
-    boolean existsByItemNumber(String id);
+
+    boolean existsByItemNumber(int itemNumber);
+
     StorageBin findStorageBinByLocationId(String storageBinNumber);
-    List<StorageBin> findAllByItemNumber(String itemNumber);
+
+    List<StorageBin> findAllByItemNumber(int itemNumber);
 }

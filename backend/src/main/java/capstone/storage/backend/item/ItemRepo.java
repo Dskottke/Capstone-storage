@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface ItemRepo extends MongoRepository<Item, String> {
     boolean existsByEan(String ean);
 
-    boolean existsByItemNumber(String itemNumber);
+    boolean existsByItemNumber(int itemNumber);
 
 
-    Optional<Item> findItemByItemNumber(String itemNumber);
+    Optional<Item> findItemByItemNumber(int itemNumber);
 }

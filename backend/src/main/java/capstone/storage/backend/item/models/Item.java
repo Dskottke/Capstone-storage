@@ -6,9 +6,9 @@ public record Item(
         String categoryName,
         String issuingCountry,
         String ean,
-        String storableValue,
-        String itemNumber,
+        int storableValue,
+        int itemNumber,
 
-        String storageBinAmount
+        int storageBinAmount
 ) {
 }

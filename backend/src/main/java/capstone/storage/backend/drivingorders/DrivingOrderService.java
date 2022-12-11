@@ -69,14 +69,12 @@ public class DrivingOrderService {
 
     public boolean isNullOrEmpty(NewDrivingOrder newDrivingOrder) {
         if (newDrivingOrder.storageLocationId() == null
-                || newDrivingOrder.itemNumber() == null
-                || newDrivingOrder.amount() == null) {
+                || newDrivingOrder.itemNumber() == 0
+                || newDrivingOrder.amount() == 0) {
             return true;
         }
         String emptyString = "";
-        return emptyString.equals(newDrivingOrder.itemNumber())
-                || emptyString.equals(newDrivingOrder.storageLocationId())
-                || emptyString.equals(newDrivingOrder.amount());
+        return emptyString.equals(newDrivingOrder.storageLocationId());
     }
 
     public boolean itemAndStorageBinExisting(NewDrivingOrder newDrivingOrder) {
@@ -85,30 +83,30 @@ public class DrivingOrderService {
     }
 
     public boolean checkOutputValidation(StorageBin storageBinToCheck, Item itemToCheck) {
-        return storageBinToCheck.itemNumber().equals(itemToCheck.itemNumber());
+        return storageBinToCheck.itemNumber() == (itemToCheck.itemNumber());
     }
 
     public boolean checkInputValidation(StorageBin storageBinToCheck, Item itemToCheck) {
         Optional<DrivingOrder> existingOrderMatchingStorageBin = drivingOrderRepo.findFirstByStorageLocationIdAndType(storageBinToCheck.locationId(), Type.INPUT);
-        if (existingOrderMatchingStorageBin.isPresent() && (!existingOrderMatchingStorageBin.get().itemNumber().equals(itemToCheck.itemNumber()))) {
+        if (existingOrderMatchingStorageBin.isPresent() && (existingOrderMatchingStorageBin.get().itemNumber() != itemToCheck.itemNumber())) {
             return false;
         }
-        return storageBinToCheck.itemNumber().equals(itemToCheck.itemNumber()) || storageBinToCheck.itemNumber().equals("0");
+        return storageBinToCheck.itemNumber() == (itemToCheck.itemNumber()) || storageBinToCheck.itemNumber() == 0;
     }
 
     public int getTotalAmountFromList(List<DrivingOrder> existingInputDrivingOrders) {
         AtomicInteger orderTotalAmount = new AtomicInteger();
-        existingInputDrivingOrders.forEach(drivingOrder -> orderTotalAmount.addAndGet(Integer.parseInt(drivingOrder.amount())));
+        existingInputDrivingOrders.forEach(drivingOrder -> orderTotalAmount.addAndGet(drivingOrder.amount()));
         return orderTotalAmount.get();
     }
 
     public boolean checkInputStorageBinFreeAmount(StorageBin storageBinToCheck, NewDrivingOrder newDrivingOrder, Item itemToCheck) {
 
-        int actualStorageBinAmount = Integer.parseInt(storageBinToCheck.amount());
+        int actualStorageBinAmount = storageBinToCheck.amount();
 
-        int itemsToStore = Integer.parseInt(newDrivingOrder.amount());
+        int itemsToStore = newDrivingOrder.amount();
 
-        int storageBinCapacity = Integer.parseInt(itemToCheck.storableValue());
+        int storageBinCapacity = itemToCheck.storableValue();
 
         List<DrivingOrder> existingInputDrivingOrders = drivingOrderRepo.findByTypeAndStorageLocationId(Type.INPUT, storageBinToCheck.locationId());
 
@@ -121,9 +119,9 @@ public class DrivingOrderService {
 
     public boolean checkOutputStorageBinEnoughAmount(StorageBin storageBinToCheck, NewDrivingOrder newDrivingOrder) {
 
-        int actualStorageBinAmount = Integer.parseInt(storageBinToCheck.amount());
+        int actualStorageBinAmount = storageBinToCheck.amount();
 
-        int itemsToRetrieve = Integer.parseInt(newDrivingOrder.amount());
+        int itemsToRetrieve = newDrivingOrder.amount();
 
         List<DrivingOrder> existingOutputDrivingOrders = drivingOrderRepo.findByTypeAndStorageLocationId(Type.OUTPUT, storageBinToCheck.locationId());
 
@@ -161,12 +159,10 @@ public class DrivingOrderService {
 
     public boolean beforeDoneControl(DrivingOrder succeedOutputDrivingOrder) {
         StorageBin storageBinToControl = storageBinService.findStorageBinByLocationId(succeedOutputDrivingOrder.storageLocationId());
-        int storageBinAmount = Integer.parseInt(storageBinToControl.amount());
-        int succeedOutputDrivingOrderAmount = Integer.parseInt(succeedOutputDrivingOrder.amount());
-        if ((storageBinAmount - succeedOutputDrivingOrderAmount) < 0) {
+        if ((storageBinToControl.amount() - succeedOutputDrivingOrder.amount()) < 0) {
             throw new NotEnoughItemsRemainingException();
         }
-        return (storageBinAmount - succeedOutputDrivingOrderAmount) == 0;
+        return (storageBinToControl.amount() - succeedOutputDrivingOrder.amount()) == 0;
 
     }
 

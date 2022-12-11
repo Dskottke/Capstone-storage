@@ -30,7 +30,7 @@ public class ItemService {
         List<Item> listToReturn = new ArrayList<>();
 
         for (Item item : allItems) {
-            String amount = storageBinService.getItemAmountFromStorageBinsByItemNumber(item);
+            int amount = storageBinService.getItemAmountFromStorageBinsByItemNumber(item);
 
             Item itemToAdd = new Item(
                     item.id(),
@@ -56,7 +56,7 @@ public class ItemService {
         Product product = eanService.getItemResponseFromApi(addItemDto.ean());
 
 
-        String defaultStoringBinAmount = "0";
+        int defaultStoringBinAmount = 0;
         Item itemToAdd = new Item(
                 utils.generateUUID(),
                 product.name(),
@@ -74,7 +74,7 @@ public class ItemService {
         return repository.save(articleRequest);
     }
 
-    public Item findItemByItemNumber(String itemNumber) {
+    public Item findItemByItemNumber(int itemNumber) {
         return repository.findItemByItemNumber(itemNumber).orElseThrow(ItemISNotExistingException::new);
     }
 
@@ -82,7 +82,7 @@ public class ItemService {
         return repository.existsById(id);
     }
 
-    public boolean existByItemNumber(String itemNumber) {
+    public boolean existByItemNumber(int itemNumber) {
         return repository.existsByItemNumber(itemNumber);
     }
 
@@ -110,18 +110,18 @@ public class ItemService {
     }
 
     public void validateAddItemDto(AddItemDto addItemDto) {
-        boolean invalidCapacity = Integer.parseInt(addItemDto.storableValue()) < 1;
-        boolean invalidItemNumber = Integer.parseInt(addItemDto.itemNumber()) < 1;
+        boolean invalidCapacity = addItemDto.storableValue() < 1;
+        boolean invalidItemNumber = addItemDto.itemNumber() < 1;
         if (invalidItemNumber || invalidCapacity) {
             throw new ItemValidationException();
         }
     }
 
     public boolean isNullOrEmpty(AddItemDto addItemDto) {
-        if (addItemDto.ean() == null || addItemDto.itemNumber() == null || addItemDto.storableValue() == null) {
+        if (addItemDto.ean() == null || addItemDto.itemNumber() == 0 || addItemDto.storableValue() == 0) {
             return true;
         }
         String emptyString = "";
-        return emptyString.equals(addItemDto.itemNumber()) || emptyString.equals(addItemDto.storableValue()) || emptyString.equals(addItemDto.ean());
+        return emptyString.equals(addItemDto.ean());
     }
 }
