@@ -34,7 +34,6 @@ public class DrivingOrderController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void inputDrivingOrderDone(@PathVariable String id) {
         drivingOrderService.inputDrivingOrderDone(id);
-
     }
 
     @DeleteMapping("/output/{id}")
