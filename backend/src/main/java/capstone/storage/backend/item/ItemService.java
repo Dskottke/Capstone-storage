@@ -110,8 +110,8 @@ public class ItemService {
     }
 
     public void validateAddItemDto(AddItemDto addItemDto) {
-        boolean invalidCapacity = addItemDto.storableValue() < 1;
-        boolean invalidItemNumber = addItemDto.itemNumber() < 1;
+        boolean invalidCapacity = addItemDto.storableValue() < 0;
+        boolean invalidItemNumber = addItemDto.itemNumber() < 0;
         if (invalidItemNumber || invalidCapacity) {
             throw new ItemValidationException();
         }

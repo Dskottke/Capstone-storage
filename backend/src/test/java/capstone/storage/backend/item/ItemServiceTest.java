@@ -1,9 +1,7 @@
 package capstone.storage.backend.item;
+
 import capstone.storage.backend.drivingorders.DrivingOrderRepo;
-import capstone.storage.backend.exceptions.ExceptionMessage;
-import capstone.storage.backend.exceptions.ItemAlreadyExistException;
-import capstone.storage.backend.exceptions.ItemISNotExistingException;
-import capstone.storage.backend.exceptions.StoredItemsException;
+import capstone.storage.backend.exceptions.*;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
@@ -67,6 +65,38 @@ class ItemServiceTest {
         Item expected = itemToExpect;
         //THEN
         assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("method : addItem -> should throw ItemValidationException because itemNumber is -5")
+    void addItemShouldThrowItemValidationExceptionBecauseItemNumberIsLess0() {
+        //GIVEN
+        AddItemDto addItemDto = new AddItemDto("123", -5, 20);
+        //WHEN
+        try {
+            itemService.addItem(addItemDto);
+            fail();
+        } catch (ItemValidationException e) {
+            //THEN
+            String expected = ExceptionMessage.ITEM_VALIDATION_EXCEPTION_MESSAGE.toString();
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    @DisplayName("method : addItem -> should throw ItemValidationException because storableValue is -5")
+    void addItemShouldThrowItemValidationExceptionBecauseStorableValueIsLess0() {
+        //GIVEN
+        AddItemDto addItemDto = new AddItemDto("123", 1, -5);
+        //WHEN
+        try {
+            itemService.addItem(addItemDto);
+            fail();
+        } catch (ItemValidationException e) {
+            //THEN
+            String expected = ExceptionMessage.ITEM_VALIDATION_EXCEPTION_MESSAGE.toString();
+            assertEquals(expected, e.getMessage());
+        }
     }
 
     @Test
@@ -256,6 +286,7 @@ class ItemServiceTest {
         //THEN
         assertTrue(actual);
     }
+
     @Test
     @DisplayName("method : beforeDeleteControl should return false")
     void beforeDeleteControlShouldReturnFalseBecauseBothBooleanAreFalse() {
@@ -278,7 +309,6 @@ class ItemServiceTest {
         //THEN
         assertFalse(actual);
     }
-
 
 
     @DisplayName("method -> deleteItemById should throw StoredItemException")
@@ -326,4 +356,5 @@ class ItemServiceTest {
         }
 
     }
+
 }
