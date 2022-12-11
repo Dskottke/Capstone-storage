@@ -62,7 +62,7 @@ public class ItemService {
         }
     }
 
-    private boolean notPermittedUpdateControl(Item itemToUpdate) {
+    public boolean notPermittedUpdateControl(Item itemToUpdate) {
 
         boolean storageControl = storageBinService.findAllByItemNumber(itemToUpdate.itemNumber())
                 .stream()
@@ -86,7 +86,12 @@ public class ItemService {
             for (DrivingOrder drivingOrder : inputOrderListWithMatchingItemNumber) {
                 if (storageBin.locationId().equals(drivingOrder.storageLocationId())) {
                     int totalAmount = Integer.parseInt(storageBin.amount()) + Integer.parseInt(drivingOrder.amount());
-                    storageBinListAddedWithOrderAmount.add(new StorageBin(storageBin.id(), storageBin.locationId(), storageBin.itemNumber(), Integer.toString(totalAmount), storageBin.storedItemName()));
+                    storageBinListAddedWithOrderAmount.add(
+                            new StorageBin(storageBin.id(),
+                                    storageBin.locationId(),
+                                    storageBin.itemNumber(),
+                                    Integer.toString(totalAmount),
+                                    storageBin.storedItemName()));
                 }
             }
         }
