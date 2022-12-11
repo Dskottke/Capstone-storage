@@ -1,6 +1,6 @@
 package capstone.storage.backend.item;
 
-import capstone.storage.backend.exceptions.ApiItemNotFound;
+import capstone.storage.backend.exceptions.ApiItemNotFoundException;
 import capstone.storage.backend.exceptions.EanApiResponseException;
 import capstone.storage.backend.exceptions.ItemResponseEanNullException;
 import capstone.storage.backend.item.models.Product;
@@ -44,7 +44,7 @@ public class ItemEanApiService {
             throw new ItemResponseEanNullException();
         }
         if (!(firstEan.equals(eanToFind))) {
-            throw new ApiItemNotFound();
+            throw new ApiItemNotFoundException();
         }
         return product;
 
