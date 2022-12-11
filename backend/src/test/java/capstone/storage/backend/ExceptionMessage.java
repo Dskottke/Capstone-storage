@@ -1,4 +1,5 @@
-package capstone.storage.backend.exceptions;
+package capstone.storage.backend;
+
 
 public enum ExceptionMessage {
     EAN_API_RESPONSE_EXCEPTION_MESSAGE("couldn't find item by ean"),
@@ -15,12 +16,12 @@ public enum ExceptionMessage {
     STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE("storage-bin is filled with not matching item"),
     TEST_DATA_ITEMS_NOT_FOUND_MESSAGE("can't find data from json"),
     NOT_ENOUGH_ITEMS_REMAINING_EXCEPTION_MESSAGE("not enough items remaining"),
-
     STORED_ITEMS_EXCEPTION("can't delete because there are open orders or items stored"),
-
-    ITEM_IS_NOT_EXISTING("item is not existing");
+    ITEM_IS_NOT_EXISTING_MESSAGE("item is not existing"),
+    ILLEGAL_TYPE_EXCEPTION_MESSAGE("The type is not allowed!");
 
     private final String message;
+
 
     ExceptionMessage(String message) {
         this.message = message;

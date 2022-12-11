@@ -1,7 +1,11 @@
 package capstone.storage.backend.item;
 
+import capstone.storage.backend.ExceptionMessage;
 import capstone.storage.backend.drivingorders.DrivingOrderRepo;
-import capstone.storage.backend.exceptions.*;
+import capstone.storage.backend.exceptions.ItemAlreadyExistException;
+import capstone.storage.backend.exceptions.ItemISNotExistingException;
+import capstone.storage.backend.exceptions.ItemValidationException;
+import capstone.storage.backend.exceptions.StoredItemsException;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
@@ -195,7 +199,7 @@ class ItemServiceTest {
 
     @Test
     @DisplayName("method : isNullOrEmpty -> should return true when all AddItemDto fields are null")
-    void checkIfIsNullOrEmptyReturnsTrueWhenAddITemDtoFieldsAreNull() {
+    void checkIfIsNullOrEmptyReturnsTrueWhenAddITemDtoFieldsAreNullOr0() {
         //GIVEN
         AddItemDto addItemDto = new AddItemDto(null, 0, 0);
         //WHEN
@@ -352,7 +356,7 @@ class ItemServiceTest {
         }
         //THEN
         catch (ItemISNotExistingException e) {
-            assertEquals(ExceptionMessage.ITEM_IS_NOT_EXISTING.toString(), e.getMessage());
+            assertEquals(ExceptionMessage.ITEM_IS_NOT_EXISTING_MESSAGE.toString(), e.getMessage());
         }
 
     }

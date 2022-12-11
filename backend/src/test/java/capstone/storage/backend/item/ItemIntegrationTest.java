@@ -1,5 +1,5 @@
 package capstone.storage.backend.item;
-import capstone.storage.backend.exceptions.ExceptionMessage;
+import capstone.storage.backend.ExceptionMessage;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -200,7 +200,7 @@ class ItemIntegrationTest {
                                 "ean":"8710847909610",
                                 "storableValue": "10"}"""))
                 //THEN
-                .andExpect(status().is(400)).andExpect(content().string(ExceptionMessage.ITEM_IS_NOT_EXISTING.toString()));
+                .andExpect(status().is(400)).andExpect(content().string(ExceptionMessage.ITEM_IS_NOT_EXISTING_MESSAGE.toString()));
     }
 
     @Test
