@@ -54,11 +54,11 @@ class ItemServiceTest {
                 "testName",
                 "testCategory",
                 "GER", eanToFind,
-                "20",
-                "1"
-                , "0");
+                20,
+                1
+                , 0);
 
-        AddItemDto addItemDto = new AddItemDto(eanToFind, "1", "20");
+        AddItemDto addItemDto = new AddItemDto(eanToFind, 1, 20);
         when(eanApiService.getItemResponseFromApi(eanToFind)).thenReturn(response);
         when(utils.generateUUID()).thenReturn("123");
         when(itemRepo.insert(itemToExpect)).thenReturn(itemToExpect);
@@ -77,9 +77,9 @@ class ItemServiceTest {
                 "testName",
                 "testCategory",
                 "GER", "8710847909610",
-                "20",
-                "1",
-                "1");
+                20,
+                1,
+                1);
         when(itemRepo.save(itemToExpect)).thenReturn(itemToExpect);
         //WHEN
         Item actual = itemService.updateItem(itemToExpect);
@@ -109,9 +109,9 @@ class ItemServiceTest {
                 "testName",
                 "testCategory",
                 "GER", "8710847909610",
-                "20",
-                "1",
-                "0");
+                20,
+                1,
+                0);
         //WHEN
         doNothing().when(itemRepo).deleteById(itemToDelete.id());
         when(itemRepo.findById(itemToDelete.id())).thenReturn(Optional.of(itemToDelete));
@@ -124,8 +124,8 @@ class ItemServiceTest {
     @DisplayName("method : checkItemExisting -> should throw ItemAlreadyExistingException")
     void ifItemIsAlreadyExistingThrowItemAlreadyExistingException() {
         //GIVEN
-        String testEanToFind = "123";
-        AddItemDto testAddItemDto = new AddItemDto("8710847909610", testEanToFind, "1");
+
+        AddItemDto testAddItemDto = new AddItemDto("8710847909610", 123, 1);
         when(itemRepo.existsByItemNumber(testAddItemDto.itemNumber())).thenReturn(true);
         //WHEN
         try {
@@ -146,7 +146,7 @@ class ItemServiceTest {
     void checkIfItemAlreadyExistWithExistingEanReturnTrue() {
         //GIVEN
 
-        AddItemDto testAddItemDto = new AddItemDto("8710847909610", "123", "1");
+        AddItemDto testAddItemDto = new AddItemDto("8710847909610", 123, 1);
 
         //WHEN
         when(itemRepo.existsByEan(testAddItemDto.ean())).thenReturn(true);
@@ -167,7 +167,7 @@ class ItemServiceTest {
     @DisplayName("method : isNullOrEmpty -> should return true when all AddItemDto fields are null")
     void checkIfIsNullOrEmptyReturnsTrueWhenAddITemDtoFieldsAreNull() {
         //GIVEN
-        AddItemDto addItemDto = new AddItemDto(null, null, null);
+        AddItemDto addItemDto = new AddItemDto(null, 0, 0);
         //WHEN
         boolean actual = itemService.isNullOrEmpty(addItemDto);
         boolean expected = true;
@@ -179,7 +179,7 @@ class ItemServiceTest {
     @DisplayName("method : isNullOrEmpty -> should return true when all AddItemDto fields are empty")
     void checkIfIsNullOrEmptyReturnsTrueWhenAddITemDtoStorableValueIsEmptyString() {
         //GIVEN
-        AddItemDto addItemDto = new AddItemDto("", "", "");
+        AddItemDto addItemDto = new AddItemDto("", 0, 0);
         //WHEn
         boolean actual = itemService.isNullOrEmpty(addItemDto);
         boolean expected = true;
@@ -191,7 +191,7 @@ class ItemServiceTest {
     @DisplayName("method : isNullOrEmpty -> should return false when all AddItemDto fields are not empty")
     void checkIfIsNullOrEmptyReturnsFalseWhenAddITemDtoFieldsAreNotEmptyString() {
         //GIVEN
-        AddItemDto addItemDto = new AddItemDto("123", "1", "1");
+        AddItemDto addItemDto = new AddItemDto("123", 1, 1);
         //WHEn
         boolean actual = itemService.isNullOrEmpty(addItemDto);
         boolean expected = false;
@@ -203,7 +203,7 @@ class ItemServiceTest {
     @DisplayName("method : isNullOrEmpty -> should return true when one AddItemDto field is empty ")
     void checkIfIsNullOrEmptyReturnsTrueWhen1AddITemDtoIsEmptyString() {
         //GIVEN
-        AddItemDto addItemDto = new AddItemDto("", "1", "1");
+        AddItemDto addItemDto = new AddItemDto("", 1, 1);
         //WHEn
         boolean actual = itemService.isNullOrEmpty(addItemDto);
         boolean expected = true;
@@ -222,9 +222,9 @@ class ItemServiceTest {
                 "testCategory",
                 "GER",
                 "123",
-                "12",
-                "12",
-                "10");
+                12,
+                12,
+                10);
         //WHEN
         when(itemRepo.findById(id)).thenReturn(Optional.of(item));
         when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(true);
@@ -245,9 +245,9 @@ class ItemServiceTest {
                 "testCategory",
                 "GER",
                 "123",
-                "12",
-                "12",
-                "10");
+                12,
+                12,
+                10);
         //WHEN
         when(itemRepo.findById(id)).thenReturn(Optional.of(item));
         when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(false);
@@ -267,9 +267,9 @@ class ItemServiceTest {
                 "testCategory",
                 "GER",
                 "123",
-                "12",
-                "12",
-                "10");
+                12,
+                12,
+                10);
         //WHEN
         when(itemRepo.findById(id)).thenReturn(Optional.of(item));
         when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(false);
@@ -292,9 +292,9 @@ class ItemServiceTest {
                 "testCategory",
                 "GER",
                 "123",
-                "12",
-                "12",
-                "10");
+                12,
+                12,
+                10);
         //WHEN
         when(itemRepo.findById(id)).thenReturn(Optional.of(item));
         when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(true);
@@ -313,7 +313,7 @@ class ItemServiceTest {
     @DisplayName("method -> should throw ItemNotExistingException because the repository returns null")
     void findItemByItemNumberThrowItemIsNotExistingException() {
         //GIVEN
-        String itemNumber = "1";
+        int itemNumber = 1;
         //WHEN
         when(itemRepo.findItemByItemNumber(itemNumber)).thenReturn(Optional.empty());
         try {

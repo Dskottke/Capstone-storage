@@ -27,7 +27,7 @@ function ItemTableRow({
                           setItemTableRowErrorModal
                       }: ItemTableRowProps) {
 
-    const [storableValue, setStorableValue] = useState<string>(item.storableValue.toString);
+    const [storableValue, setStorableValue] = useState<number>(item.storableValue);
     const [onEditOpen, setOnEditOpen] = useState(false);
 
     const updateItem = () => {
@@ -66,7 +66,7 @@ function ItemTableRow({
     }
     const handleInputCapacity = (event: ChangeEvent<HTMLInputElement>) => {
         const validCapacity = event.target.value.replace(/\D/g, '')
-        setStorableValue(validCapacity)
+        setStorableValue(Number(validCapacity))
     }
     return (
 
