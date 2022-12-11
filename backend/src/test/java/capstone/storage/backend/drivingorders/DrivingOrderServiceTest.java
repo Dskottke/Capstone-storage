@@ -385,12 +385,30 @@ class DrivingOrderServiceTest {
 
     @Test
     @DisplayName("method -> addNewDrivingOrder should throw ItemOrStorageBinNotExistingException because existsByItemNumber returns false")
-    void addNewDrivingOrderShouldThrowItemOrStorageBinNotExistingException() {
+    void addNewDrivingOrderWithFalseExistByItemNumberShouldThrowItemOrStorageBinNotExistingException() {
         //GIVEN
         NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", 1, 1);
         //WHEN
         when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(false);
         when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(true);
+        try {
+            drivingOrderService.addNewDrivingOrder(Type.INPUT, newDrivingOrder);
+            Assertions.fail();
+        }
+        //THEN
+        catch (ItemOrStorageBinNotExistingException e) {
+            assertEquals(ExceptionMessage.ITEM_OR_STORAGE_BIN_NOT_EXISTING_EXCEPTION_MESSAGE.toString(), e.getMessage());
+        }
+    }
+
+    @Test
+    @DisplayName("method -> addNewDrivingOrder should throw ItemOrStorageBinNotExistingException because existsByLocationId returns false")
+    void addNewDrivingOrderWithFalseExistsByLocationIdShouldThrowItemOrStorageBinNotExistingException() {
+        //GIVEN
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", 1, 1);
+        //WHEN
+        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(true);
+        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(false);
         try {
             drivingOrderService.addNewDrivingOrder(Type.INPUT, newDrivingOrder);
             Assertions.fail();
