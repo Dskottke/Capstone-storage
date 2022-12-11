@@ -26,9 +26,9 @@ class StorageBinServiceTest {
     @DisplayName("method -> getAllStorageBins should return the expected list")
     void getAllStorageBinsAndReturnExpectedList() {
         //GIVEN
-        List<StorageBinReturn> expectedList = List.of(new StorageBinReturn("1", "1", "1", "20", "test"));
-        List<StorageBin> mockList = List.of(new StorageBin("1", "1", "1", "20"));
-        Item mockItem = new Item("1", "test", "test", "ger", "123", "40", "1", "");
+        List<StorageBinReturn> expectedList = List.of(new StorageBinReturn("1", "1", 1, 20, "test"));
+        List<StorageBin> mockList = List.of(new StorageBin("1", "1", 1, 20));
+        Item mockItem = new Item("1", "test", "test", "ger", "123", 40, 1, 0);
         //WHEN
         when(itemRepo.findItemByItemNumber(mockItem.itemNumber())).thenReturn(Optional.of(mockItem));
         when(storageBinrepo.findAll()).thenReturn(mockList);
@@ -41,7 +41,7 @@ class StorageBinServiceTest {
     @DisplayName("method -> addItemNameToStorageList should update the StorageBin in DB with the itemNumber matching ItemName")
     void addItemNameToStorageListAndExpectStorageBinWithMatchingItemName() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "1", "2");
+        StorageBin testStorageBin = new StorageBin("1", "1", 1, 2);
         List<StorageBin> testStorageBinList = List.of(testStorageBin);
         Item testItem = new Item(
                 "992901d9-5eb8-4992-9620-e5e80bb7f0e0",
@@ -49,15 +49,15 @@ class StorageBinServiceTest {
                 "Unknown",
                 "NL",
                 "8710847909610",
-                "20",
-                "1",
-                "2");
+                20,
+                1,
+                2);
         //WHEN
-        StorageBin expected = new StorageBin("1", "1", "1", "2");
+        StorageBin expected = new StorageBin("1", "1", 1, 2);
         when(storageBinrepo.findAll()).thenReturn(testStorageBinList);
         when(itemRepo.findItemByItemNumber(testStorageBin.itemNumber())).thenReturn(Optional.of(testItem));
         when(storageBinrepo.findStorageBinByLocationId("1")).thenReturn(expected);
-        service.addItemNameToStorageList();
+
         StorageBin actual = storageBinrepo.findStorageBinByLocationId("1");
         //THEN
         assertEquals(expected, actual);
@@ -67,9 +67,9 @@ class StorageBinServiceTest {
     @DisplayName("method -> addItemNameToStorageList should do nothing because itemNumber is 0")
     void getAllStorageBinsShouldReturnExpectedList() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "0", "0");
+        StorageBin testStorageBin = new StorageBin("1", "1", 0, 0);
         List<StorageBin> testStorageBinList = List.of(testStorageBin);
-        List<StorageBinReturn> expected = List.of(new StorageBinReturn("1", "1", "0", "0", ""));
+        List<StorageBinReturn> expected = List.of(new StorageBinReturn("1", "1", 0, 0, ""));
         //WHEN
         when(storageBinrepo.findAll()).thenReturn(testStorageBinList);
         when(itemRepo.findItemByItemNumber(testStorageBin.itemNumber())).thenReturn(Optional.empty());
@@ -84,9 +84,9 @@ class StorageBinServiceTest {
     void updateOutputStorageBinAndExpectStorageBinWithEmptyItemNameAndItemNumber0() {
         //GIVEN
         boolean testStorageBinIsEmpty = false;
-        StorageBin expected = new StorageBin("1", "1", "0", "0");
-        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.OUTPUT, "10");
-        StorageBin testStorageBin = new StorageBin("1", "1", "1", "10");
+        StorageBin expected = new StorageBin("1", "1", 0, 0);
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 1, Type.OUTPUT, 10);
+        StorageBin testStorageBin = new StorageBin("1", "1", 1, 10);
         //WHEN
         when(storageBinrepo.findById(testDrivingOrder.storageLocationId())).thenReturn(Optional.of(testStorageBin));
         when(storageBinrepo.findStorageBinByLocationId(testStorageBin.locationId())).thenReturn(expected);
@@ -101,9 +101,9 @@ class StorageBinServiceTest {
     void updateOutputStorageBinAndExpectStorageBinWithSameItemNumberAndNewAmount() {
         //GIVEN
         boolean testStorageBinIsEmpty = true;
-        StorageBin expected = new StorageBin("1", "1", "0", "10");
-        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.OUTPUT, "10");
-        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
+        StorageBin expected = new StorageBin("1", "1", 0, 10);
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 1, Type.OUTPUT, 10);
+        StorageBin testStorageBin = new StorageBin("1", "1", 1, 20);
         //WHEN
         when(storageBinrepo.findById(testDrivingOrder.storageLocationId())).thenReturn(Optional.of(testStorageBin));
         when(storageBinrepo.findStorageBinByLocationId(testStorageBin.locationId())).thenReturn(expected);
@@ -122,11 +122,11 @@ class StorageBinServiceTest {
                 "ger",
                 "DE",
                 "123",
-                "10",
-                "1",
-                "0");
+                10,
+                1,
+                0);
         List<StorageBin> storageBinsWithItem = List.of(new StorageBin("1"
-                , "1", "1", "1"));
+                , "1", 1, 1));
         //WHEN
         when(storageBinrepo.findAllByItemNumber(itemToCount.itemNumber())).thenReturn(storageBinsWithItem);
         int actual = service.getItemAmountFromStorageBinsByItemNumber(itemToCount);

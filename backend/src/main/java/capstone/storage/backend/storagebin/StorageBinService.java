@@ -8,9 +8,7 @@ import capstone.storage.backend.storagebin.models.StorageBinReturn;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -24,37 +22,27 @@ public class StorageBinService {
     }
 
     public List<StorageBinReturn> getAllStorageBins() {
-        return addItemNameToStorageList();
+
+        return storageBinRepo.findAll()
+                .stream()
+                .map(this::toStorageBinReturn)
+                .toList();
     }
 
-    public List<StorageBinReturn> addItemNameToStorageList() {
+    private StorageBinReturn toStorageBinReturn(StorageBin storageBin) {
+        int itemNumber = storageBin.itemNumber();
+        String storedItemName = itemNumber > 0 ? loadItemName(itemNumber) : "";
+        return new StorageBinReturn(
+                storageBin.id(),
+                storageBin.locationId(),
+                itemNumber,
+                storageBin.amount(),
+                storedItemName);
+    }
 
-        List<StorageBin> storageBinList = storageBinRepo.findAll();
-        List<StorageBinReturn> storageBinReturnList = new ArrayList<>();
+    private String loadItemName(int itemNumber) {
+        return itemRepo.findItemByItemNumber(itemNumber).map(Item::name).orElseThrow();
 
-        for (StorageBin storageBin : storageBinList) {
-            if (storageBin.itemNumber() > 0) {
-
-                Optional<Item> item = itemRepo.findItemByItemNumber(storageBin.itemNumber());
-
-                item.ifPresent(update -> storageBinReturnList.add(
-                        new StorageBinReturn(
-                                storageBin.id(),
-                                storageBin.locationId(),
-                                storageBin.itemNumber(),
-                                storageBin.amount(),
-                                item.get().name())));
-            } else {
-                storageBinReturnList.add(
-                        new StorageBinReturn(
-                                storageBin.id(),
-                                storageBin.locationId(),
-                                storageBin.itemNumber(),
-                                storageBin.amount(),
-                                ""));
-            }
-        }
-        return storageBinReturnList;
     }
 
     public boolean existsByLocationId(String locationId) {

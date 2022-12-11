@@ -10,7 +10,7 @@ public interface StorageBinRepo extends MongoRepository<StorageBin, String> {
 
     boolean existsByItemNumber(int itemNumber);
 
-    StorageBin findStorageBinByLocationId(String storageBinNumber);
+    StorageBin findStorageBinByLocationId(String locationId);
 
     List<StorageBin> findAllByItemNumber(int itemNumber);
 }

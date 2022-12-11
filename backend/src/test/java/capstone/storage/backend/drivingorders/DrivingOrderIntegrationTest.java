@@ -46,8 +46,8 @@ class DrivingOrderIntegrationTest {
                         .content("""
                                 {
                                 "storageLocationId" : "1",
-                                "itemNumber" : "1",
-                                "amount" : "10"
+                                "itemNumber" : 1,
+                                "amount" : 10
                                 }"""))
                 .andExpect(status().is(201))
                 .andReturn().getResponse().getContentAsString();
@@ -60,15 +60,15 @@ class DrivingOrderIntegrationTest {
                         """
                                 [{   "id": "647cc8fd-c81c-47ac-a9bb-fd1a7ff0e288",
                                      "storageLocationId": "100",
-                                     "itemNumber": "10",
+                                     "itemNumber": 10,
                                      "type": "INPUT",
-                                     "amount": "10"
+                                     "amount": 10
                                      },
                                      {"id": "<id>",
                                      "storageLocationId": "1",
-                                     "itemNumber": "1",
+                                     "itemNumber": 1,
                                      "type":"INPUT",
-                                     "amount": "10"}]
+                                     "amount": 10}]
                                      """.replace("<id>", drivingOrder.id())));
     }
 
@@ -252,9 +252,9 @@ class DrivingOrderIntegrationTest {
                         """
                                 [{"id": "<id>",
                                 "storageLocationId": "1",
-                                "itemNumber": "1",
+                                "itemNumber": 1,
                                 "type":"OUTPUT",
-                                "amount": "10"}]
+                                "amount": 10}]
                                 """.replace("<id>", drivingOrder2.id())));
     }
 

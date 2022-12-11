@@ -2,43 +2,43 @@
   {
     "id": "647cc8fd-c81c-47ac-a9bb-fd1a7ff0e288",
     "storageLocationId": "1",
-    "itemNumber": "1",
+    "itemNumber": 1,
     "type": "INPUT",
-    "amount": "10"
+    "amount": 10
   },
   {
     "id": "1b9359ae-c152-4164-8d54-30091b3d973b",
     "storageLocationId": "7",
-    "itemNumber": "12",
+    "itemNumber": 12,
     "type": "INPUT",
-    "amount": "20"
+    "amount": 20
   },
   {
     "id": "444a304f-8e08-40cd-9914-763bc90897fa",
     "storageLocationId": "17",
-    "itemNumber": "13",
+    "itemNumber": 13,
     "type": "INPUT",
-    "amount": "5"
+    "amount": 5
   },
   {
     "id": "7b412117-449c-4492-b9dd-08a020046423",
     "storageLocationId": "1",
-    "itemNumber": "1",
+    "itemNumber": 1,
     "type": "OUTPUT",
-    "amount": "5"
+    "amount": 5
   },
   {
     "id": "cca86de8-9342-4f4b-b123-93de306efa5a",
     "storageLocationId": "13",
-    "itemNumber": "9",
+    "itemNumber": 9,
     "type": "OUTPUT",
-    "amount": "5"
+    "amount": 5
   },
   {
     "id": "da5c9856-ebf7-4b8e-bc59-413949a6a59c",
     "storageLocationId": "3",
-    "itemNumber": "11",
+    "itemNumber": 11,
     "type": "OUTPUT",
-    "amount": "5"
+    "amount": 5
   }
 ]

@@ -38,7 +38,7 @@ class DrivingOrderServiceTest {
     @DisplayName("Method -> should return the expected List")
     void getAllDrivingOrdersByTypeInputAndGetExpectedList() {
         //GIVEN
-        List<DrivingOrder> expectedList = List.of(new DrivingOrder("1", "2", "1", Type.INPUT, "20"));
+        List<DrivingOrder> expectedList = List.of(new DrivingOrder("1", "2", 1, Type.INPUT, 20));
         //WHEN
         when(drivingOrderRepo.findByType(Type.INPUT)).thenReturn(expectedList);
         List<DrivingOrder> actual = drivingOrderService.getAllDrivingOrdersByType(Type.INPUT);
@@ -51,7 +51,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> isNullOrEmpty should return true because one field is null")
     void isNullOrEmptyWithOneFieldNullShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "2", null);
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", 2, 0);
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -63,7 +63,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> isNullOrEmpty should return true because two fields are null")
     void isNullOrEmptyWithTwoFieldsNullShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", null, null);
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", 0, 0);
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -75,7 +75,7 @@ class DrivingOrderServiceTest {
     @DisplayName("Method -> isNullOrEmpty should return true because all fields are null")
     void isNullOrEmptyWithAllFieldsNullShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder(null, null, null);
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder(null, 0, 0);
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -88,7 +88,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> isNullOrEmpty should return true because itemNumber and amount are empty")
     void isNullOrEmptyWithItemNumberAndAmountEmptyShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "", "");
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", 0, 0);
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -100,7 +100,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> isNullOrEmpty should return true because storageLocationId is empty")
     void isNullOrEmptyWitStorageLocationIdFieldIsEmptyShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("", "1", "1");
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("", 1, 1);
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -112,7 +112,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> isNullOrEmpty should return true because storageLocationId and itemNumber are empty")
     void isNullOrEmptyWitStorageLocationIdFieldAndItemNumberAreEmptyShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("", "", "1");
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("", 0, 1);
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -124,7 +124,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> isNullOrEmpty should return true because itemNumber field is empty")
     void isNullOrEmptyWithItemNumberEmptyShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "", "1");
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", 0, 1);
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -136,7 +136,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> isNullOrEmpty should return true because amount field is empty")
     void isNullOrEmptyWithAmountEmptyShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "");
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", 1, 0);
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -148,7 +148,7 @@ class DrivingOrderServiceTest {
     @DisplayName("Method -> isNullOrEmpty should return true because all fields are empty")
     void isNullOrEmptyWithAllFieldsAreEmptyShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("", "", "");
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("", 0, 0);
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -160,7 +160,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> isNullOrEmpty should return false because all fields are filled")
     void isNullOrEmptyWithOneFieldNullShouldReturnFalse() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "2", "3");
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", 2, 3);
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = false;
@@ -172,7 +172,7 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> isNullOrEmpty should return true because one field is null and one field is empty")
     void isNullOrEmptyWithOneFieldNullAndOneFieldEmptyStringShouldReturnTrue() {
         //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder(null, "2", "");
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder(null, 2, 0);
         //WHEN
         boolean actual = drivingOrderService.isNullOrEmpty(newDrivingOrder);
         boolean expected = true;
@@ -180,41 +180,15 @@ class DrivingOrderServiceTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    @DisplayName("method -> itemAndStorageBinExisting should return true")
-    void itemAndStorageBinExistingReturnsTrue() {
-        //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "1");
-        //WHEN
-        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(true);
-        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(true);
-        boolean actual = drivingOrderService.itemAndStorageBinExisting(newDrivingOrder);
-        //THEN
-        boolean expected = true;
-        assertEquals(expected, actual);
-    }
 
-    @Test
-    @DisplayName("method -> itemAndStorageBinExisting should return true")
-    void itemAndStorageBinItemNotExistingReturnsTrue() {
-        //GIVEN
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "1");
-        //WHEN
-        when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(false);
-        when(storageBinService.existsByLocationId(newDrivingOrder.storageLocationId())).thenReturn(true);
-        boolean actual = drivingOrderService.itemAndStorageBinExisting(newDrivingOrder);
-        //THEN
-        boolean expected = true;
-        assertEquals(expected, actual);
-    }
 
     @Test
     @DisplayName("method -> getTotalAmountFromList and return 10")
     void getTotalAmountFromList() {
         //GIVEN
         List<DrivingOrder> testInputDrivingOrders = List.of(
-                new DrivingOrder("1", "1", "1", Type.INPUT, "5"),
-                new DrivingOrder("2", "1", "1", Type.INPUT, "5"));
+                new DrivingOrder("1", "1", 1, Type.INPUT, 5),
+                new DrivingOrder("2", "1", 1, Type.INPUT, 5));
         //WHEN
         int actual = drivingOrderService.getTotalAmountFromList(testInputDrivingOrders);
         int expected = 10;
@@ -226,12 +200,12 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> checkValidation should return false because there is an existing DrivingOrder with not matching item on the storage bin ")
     void checkInputValidationWithExistingDrivingOrderNotMatchingItemOnStorageBinShouldReturnFalse() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
-        Item testItem = new Item("1", "test", "test", "test", "1", "30", "1", "1");
-        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "2", Type.INPUT, "5");
+        StorageBin testStorageBin = new StorageBin("1", "1", 1, 20);
+        Item testItem = new Item("1", "test", "test", "test", "1", 30, 1, 1);
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 2, Type.INPUT, 5);
         //WHEN
         when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.of(testDrivingOrder));
-        boolean actual = drivingOrderService.checkInputValidation(testStorageBin, testItem);
+        boolean actual = drivingOrderService.isValidInputItem(testStorageBin, testItem.itemNumber());
 
         //THEN
         assertFalse(actual);
@@ -241,12 +215,12 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> checkValidation should return true because StorageBin-itemNumber equals item-itemNumber ")
     void checkInputValidationShouldReturnTrue() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
-        Item testItem = new Item("1", "test", "test", "test", "1", "30", "1", "1");
-        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.INPUT, "5");
+        StorageBin testStorageBin = new StorageBin("1", "1", 1, 20);
+        Item testItem = new Item("1", "test", "test", "test", "1", 30, 1, 1);
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 1, Type.INPUT, 5);
         //WHEN
         when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.of(testDrivingOrder));
-        boolean actual = drivingOrderService.checkInputValidation(testStorageBin, testItem);
+        boolean actual = drivingOrderService.isValidInputItem(testStorageBin, testItem.itemNumber());
         //THEN
         assertTrue(actual);
     }
@@ -255,12 +229,12 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> INPUT checkValidation should return false because StorageBin-itemNumber is different to Item-ItemNumber ")
     void checkInputValidationShouldReturnFalseBecauseStorageBinItemNumberAndItemItemNumberAreDifferent() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "1", "20");
-        Item testItem = new Item("1", "test", "test", "test", "1", "30", "2", "1");
-        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.INPUT, "5");
+        StorageBin testStorageBin = new StorageBin("1", "1", 1, 20);
+        Item testItem = new Item("1", "test", "test", "test", "1", 30, 2, 1);
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 1, Type.INPUT, 5);
         //WHEN
         when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.of(testDrivingOrder));
-        boolean actual = drivingOrderService.checkInputValidation(testStorageBin, testItem);
+        boolean actual = drivingOrderService.isValidInputItem(testStorageBin, testItem.itemNumber());
         //THEN
         assertFalse(actual);
     }
@@ -269,11 +243,11 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> INPUT checkValidation should return true because StorageBin-itemNumber is 0 ")
     void checkInputValidationShouldReturnTrueBecauseStorageBinItemNumberIs0() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "0", "20");
-        Item testItem = new Item("1", "test", "test", "test", "1", "30", "2", "1");
+        StorageBin testStorageBin = new StorageBin("1", "1", 0, 20);
+        Item testItem = new Item("1", "test", "test", "test", "1", 30, 2, 1);
         //WHEN
         when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.empty());
-        boolean actual = drivingOrderService.checkInputValidation(testStorageBin, testItem);
+        boolean actual = drivingOrderService.isValidInputItem(testStorageBin, testItem.itemNumber());
         //THEN
         assertTrue(actual);
     }
@@ -282,11 +256,11 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> INPUT checkValidation should return true because StorageBin-itemNumber is 12 ")
     void checkInputValidationInputShouldReturnFalseBecauseStorageBinItemNumberIs12() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "12", "20");
-        Item testItem = new Item("1", "test", "test", "test", "1", "30", "2", "1");
+        StorageBin testStorageBin = new StorageBin("1", "1", 12, 20);
+        Item testItem = new Item("1", "test", "test", "test", "1", 30, 2, 1);
         //WHEN
         when(drivingOrderRepo.findFirstByStorageLocationIdAndType(testStorageBin.locationId(), Type.INPUT)).thenReturn(Optional.empty());
-        boolean actual = drivingOrderService.checkInputValidation(testStorageBin, testItem);
+        boolean actual = drivingOrderService.isValidInputItem(testStorageBin, testItem.itemNumber());
         //THEN
         assertFalse(actual);
     }
@@ -295,10 +269,10 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> addNewInputDrivingOrder should throw StorageBinFalseItemException ")
     void addNewInputDrivingOrderShouldThrowException() {
         //GIVEN
-        Item testItem = new Item("1", "test", "test", "ger", "test", "10", "1", "1");
-        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", "1", "1");
-        StorageBin testStorageBin = new StorageBin("1", "1", "0", "1");
-        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "2", Type.INPUT, "5");
+        Item testItem = new Item("1", "test", "test", "ger", "test", 10, 1, 1);
+        NewDrivingOrder newDrivingOrder = new NewDrivingOrder("1", 1, 1);
+        StorageBin testStorageBin = new StorageBin("1", "1", 0, 1);
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 2, Type.INPUT, 5);
 
         //WHEN
         when(itemService.existByItemNumber(newDrivingOrder.itemNumber())).thenReturn(true);
@@ -320,8 +294,8 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> OUTPUT checkValidation should return false because the ItemNumber of testStorageBin and testItem don't match")
     void checkOutputValidationInputShouldReturnFalseBecauseStorageBinItemNumberIs12() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "12", "20");
-        Item testItem = new Item("1", "test", "test", "test", "1", "30", "2", "1");
+        StorageBin testStorageBin = new StorageBin("1", "1", 12, 20);
+        Item testItem = new Item("1", "test", "test", "test", "1", 30, 2, 1);
         //WHEN
         boolean actual = drivingOrderService.checkOutputValidation(testStorageBin, testItem);
         //THEN
@@ -332,8 +306,8 @@ class DrivingOrderServiceTest {
     @DisplayName("method -> OUTPUT checkValidation should return true because itemNumber of storageBinTest and testItem are equal ")
     void checkOutputValidationInputShouldReturnTrue() {
         //GIVEN
-        StorageBin testStorageBin = new StorageBin("1", "1", "2", "20");
-        Item testItem = new Item("1", "test", "test", "test", "1", "30", "2", "1");
+        StorageBin testStorageBin = new StorageBin("1", "1", 2, 20);
+        Item testItem = new Item("1", "test", "test", "test", "1", 30, 2, 1);
         //WHEN
         boolean actual = drivingOrderService.checkOutputValidation(testStorageBin, testItem);
         //THEN
@@ -344,8 +318,8 @@ class DrivingOrderServiceTest {
     @DisplayName("method-> beforeDoneControl should throw NotEnoughItemsRemainingException ")
     void beforeDoneControlShouldThrowException() {
         //GIVEN
-        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.OUTPUT, "10");
-        StorageBin mockStorageBin = new StorageBin("1", "1", "1", "0");
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 1, Type.OUTPUT, 10);
+        StorageBin mockStorageBin = new StorageBin("1", "1", 1, 0);
         //WHEN
         when(storageBinService.findStorageBinByLocationId(testDrivingOrder.storageLocationId())).thenReturn(mockStorageBin);
         try {
@@ -363,8 +337,8 @@ class DrivingOrderServiceTest {
     @DisplayName("method-> beforeDoneControl should return true because the storageBin will be empty ")
     void beforeDoneControlShouldReturnTrue() {
         //WHEN
-        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.OUTPUT, "10");
-        StorageBin mockStorageBin = new StorageBin("1", "1", "1", "10");
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 1, Type.OUTPUT, 10);
+        StorageBin mockStorageBin = new StorageBin("1", "1", 1, 10);
         //GIVEN
         when(storageBinService.findStorageBinByLocationId(testDrivingOrder.storageLocationId())).thenReturn(mockStorageBin);
         boolean actual = drivingOrderService.beforeDoneControl(testDrivingOrder);
@@ -376,8 +350,8 @@ class DrivingOrderServiceTest {
     @DisplayName("method-> beforeDoneControl should return false because the Storage Bin will not be empty ")
     void beforeDoneControlShouldReturnFalse() {
         //WHEN
-        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", "1", Type.OUTPUT, "10");
-        StorageBin mockStorageBin = new StorageBin("1", "1", "1", "12");
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 1, Type.OUTPUT, 10);
+        StorageBin mockStorageBin = new StorageBin("1", "1", 1, 12);
         //GIVEN
         when(storageBinService.findStorageBinByLocationId(testDrivingOrder.storageLocationId())).thenReturn(mockStorageBin);
         boolean actual = drivingOrderService.beforeDoneControl(testDrivingOrder);

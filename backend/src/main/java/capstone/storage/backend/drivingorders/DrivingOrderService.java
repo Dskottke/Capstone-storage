@@ -29,69 +29,75 @@ public class DrivingOrderService {
     }
 
     public DrivingOrder addNewDrivingOrder(Type type, NewDrivingOrder newDrivingOrder) {
+        validateNewDrivingOrder(type, newDrivingOrder);
+        DrivingOrder drivingOrder = new DrivingOrder(
+                serviceUtils.generateUUID(),
+                newDrivingOrder.storageLocationId(),
+                newDrivingOrder.itemNumber(), type,
+                newDrivingOrder.amount());
+        return drivingOrderRepo.insert(drivingOrder);
+    }
+
+    private void validateNewDrivingOrder(Type type, NewDrivingOrder newDrivingOrder) {
         if (!itemAndStorageBinExisting(newDrivingOrder)) {
             throw new ItemOrStorageBinNotExistingException();
         }
         Item itemFromOrder = itemService.findItemByItemNumber(newDrivingOrder.itemNumber());
         StorageBin storageBinFromOrder = storageBinService.findStorageBinByLocationId(newDrivingOrder.storageLocationId());
 
-        if (type.equals(Type.INPUT)) {
+        if (type == Type.INPUT) {
+            validateInputOrder(storageBinFromOrder, itemFromOrder, newDrivingOrder);
 
-            if (!checkInputValidation(storageBinFromOrder, itemFromOrder)) {
-                throw new StorageBinFalseItemException();
-            }
-
-            if (!checkInputStorageBinFreeAmount(storageBinFromOrder, newDrivingOrder, itemFromOrder)) {
-                throw new IsNotEnoughSpaceException();
-            }
-
-            return drivingOrderRepo.insert(new DrivingOrder(serviceUtils.generateUUID(),
-                    newDrivingOrder.storageLocationId(),
-                    newDrivingOrder.itemNumber(),
-                    Type.INPUT,
-                    newDrivingOrder.amount()));
+        } else if (type == Type.OUTPUT) {
+            validateOutputOrder(storageBinFromOrder, itemFromOrder, newDrivingOrder);
+        } else {
+            throw new IllegalArgumentException();
         }
+    }
 
-
+    private void validateOutputOrder(StorageBin storageBinFromOrder, Item itemFromOrder, NewDrivingOrder newDrivingOrder) {
         if (!checkOutputValidation(storageBinFromOrder, itemFromOrder)) {
             throw new StorageBinFalseItemException();
         }
-        if (!checkOutputStorageBinEnoughAmount(storageBinFromOrder, newDrivingOrder)) {
+        if (!hasEnoughAmount(storageBinFromOrder, newDrivingOrder)) {
             throw new NotEnoughItemsRemainingException();
         }
-        return drivingOrderRepo.insert(new DrivingOrder(serviceUtils.generateUUID(),
-                newDrivingOrder.storageLocationId(),
-                newDrivingOrder.itemNumber(),
-                Type.OUTPUT,
-                newDrivingOrder.amount()));
+    }
 
+    private void validateInputOrder(StorageBin storageBinFromOrder, Item itemFromOrder, NewDrivingOrder newDrivingOrder) {
+        if (!isValidInputItem(storageBinFromOrder, itemFromOrder.itemNumber())) {
+            throw new StorageBinFalseItemException();
+        }
+        if (!hasFreeAmount(storageBinFromOrder, newDrivingOrder, itemFromOrder)) {
+            throw new IsNotEnoughSpaceException();
+        }
     }
 
     public boolean isNullOrEmpty(NewDrivingOrder newDrivingOrder) {
-        if (newDrivingOrder.storageLocationId() == null
-                || newDrivingOrder.itemNumber() == 0
-                || newDrivingOrder.amount() == 0) {
+        if (newDrivingOrder.storageLocationId() == null || newDrivingOrder.itemNumber() == 0 || newDrivingOrder.amount() == 0) {
             return true;
         }
         String emptyString = "";
         return emptyString.equals(newDrivingOrder.storageLocationId());
     }
 
-    public boolean itemAndStorageBinExisting(NewDrivingOrder newDrivingOrder) {
-        return itemService.existByItemNumber(newDrivingOrder.itemNumber())
-                || storageBinService.existsByLocationId(newDrivingOrder.storageLocationId());
+    private boolean itemAndStorageBinExisting(NewDrivingOrder newDrivingOrder) {
+        return itemService.existByItemNumber(newDrivingOrder.itemNumber()) || storageBinService.existsByLocationId(newDrivingOrder.storageLocationId());
     }
 
     public boolean checkOutputValidation(StorageBin storageBinToCheck, Item itemToCheck) {
-        return storageBinToCheck.itemNumber() == (itemToCheck.itemNumber());
+        return storageBinToCheck.itemNumber() == itemToCheck.itemNumber();
     }
 
-    public boolean checkInputValidation(StorageBin storageBinToCheck, Item itemToCheck) {
-        Optional<DrivingOrder> existingOrderMatchingStorageBin = drivingOrderRepo.findFirstByStorageLocationIdAndType(storageBinToCheck.locationId(), Type.INPUT);
-        if (existingOrderMatchingStorageBin.isPresent() && (existingOrderMatchingStorageBin.get().itemNumber() != itemToCheck.itemNumber())) {
-            return false;
-        }
-        return storageBinToCheck.itemNumber() == (itemToCheck.itemNumber()) || storageBinToCheck.itemNumber() == 0;
+    public boolean isValidInputItem(StorageBin storageBinToCheck, int itemNumber) {
+        boolean binIsNotOccupiedByOtherItem = storageBinToCheck.itemNumber() == itemNumber || storageBinToCheck.itemNumber() == 0;
+        return binIsNotOccupiedByOtherItem && !hasConflictingOrder(storageBinToCheck, itemNumber);
+    }
+
+    private boolean hasConflictingOrder(StorageBin storageBin, int itemNumber) {
+        return drivingOrderRepo.findFirstByStorageLocationIdAndType(storageBin.locationId(), Type.INPUT)
+                .map(drivingOrder -> drivingOrder.itemNumber() != itemNumber)
+                .orElse(false);
     }
 
     public int getTotalAmountFromList(List<DrivingOrder> existingInputDrivingOrders) {
@@ -100,11 +106,11 @@ public class DrivingOrderService {
         return orderTotalAmount.get();
     }
 
-    public boolean checkInputStorageBinFreeAmount(StorageBin storageBinToCheck, NewDrivingOrder newDrivingOrder, Item itemToCheck) {
+    public boolean hasFreeAmount(StorageBin storageBinToCheck, NewDrivingOrder newDrivingOrder, Item itemToCheck) {
 
         int actualStorageBinAmount = storageBinToCheck.amount();
 
-        int itemsToStore = newDrivingOrder.amount();
+        int itemsToStoreAmount = newDrivingOrder.amount();
 
         int storageBinCapacity = itemToCheck.storableValue();
 
@@ -114,10 +120,10 @@ public class DrivingOrderService {
 
         int freeAmount = storageBinCapacity - (ordersTotalAmount + actualStorageBinAmount);
 
-        return itemsToStore <= freeAmount;
+        return itemsToStoreAmount <= freeAmount;
     }
 
-    public boolean checkOutputStorageBinEnoughAmount(StorageBin storageBinToCheck, NewDrivingOrder newDrivingOrder) {
+    public boolean hasEnoughAmount(StorageBin storageBinToCheck, NewDrivingOrder newDrivingOrder) {
 
         int actualStorageBinAmount = storageBinToCheck.amount();
 
@@ -163,7 +169,5 @@ public class DrivingOrderService {
             throw new NotEnoughItemsRemainingException();
         }
         return (storageBinToControl.amount() - succeedOutputDrivingOrder.amount()) == 0;
-
     }
-
 }

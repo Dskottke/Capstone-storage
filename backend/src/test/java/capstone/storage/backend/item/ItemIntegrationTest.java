@@ -62,7 +62,6 @@ class ItemIntegrationTest {
     @DirtiesContext
     @DisplayName("POST -> itemResponse field ean is null expect HTTP-status 400 and content: itemResponseEanNullExceptionMessage")
     void postRequestWithItemResponseWithEanNullAndExpectStatus400() throws Exception {
-        //GIVEN
         Product[] product = {
                 new Product(
                         "test123",
@@ -106,9 +105,9 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                "storableValue" : "10",
+                                "storableValue" : 10,
                                 "ean" : "8710847909610",
-                                "itemNumber" : "123"
+                                "itemNumber" : 123
                                 }"""))
                 .andExpect(status().is(201))
                 .andReturn().getResponse().getContentAsString();
@@ -126,7 +125,7 @@ class ItemIntegrationTest {
                                 "categoryName": "test",
                                 "issuingCountry": "GER",
                                 "ean": "8710847909610",
-                                "storableValue": "10"}]
+                                "storableValue": 10}]
                                 """.replace("<id>", mockItemResponse.id())));
     }
 
@@ -150,7 +149,7 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                "storableValue" : "10",
+                                "storableValue" : 10,
                                 "ean" : "8710847909610",
                                 "itemNumber" : "123"
                                 }"""))
@@ -170,7 +169,7 @@ class ItemIntegrationTest {
                                 "categoryName": "test",
                                 "issuingCountry": "GER",
                                 "ean":"8710847909610",
-                                "storableValue": "10"}""".replace("<id>", id)))
+                                "storableValue": 10}""".replace("<id>", id)))
                 //THEN
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
@@ -180,7 +179,7 @@ class ItemIntegrationTest {
                         "categoryName": "test",
                         "issuingCountry": "GER",
                         "ean":"8710847909610",
-                        "storableValue": "10"}""".replace("<id>", id)));
+                        "storableValue": 10}""".replace("<id>", id)));
     }
 
     @Test
@@ -254,7 +253,7 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> item-number less than 1 expect HTTP-status 400 and content: itemValidationException")
+    @DisplayName("POST -> item-number less than 1 expect HTTP-status 400 and content: IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE")
     void postWithItemNumberLessThan1AndExpect_Status400() throws Exception {
         //GIVEN
         //WHEN
@@ -262,18 +261,18 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
-                                    "storableValue" : "2",
+                                    "storableValue" : 2,
                                     "ean" : "123",
-                                    "itemNumber": "0"
+                                    "itemNumber": 0
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.ITEM_VALIDATION_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
     }
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> storable-value less than 1 expect HTTP-status 400 and content: itemValidationException ")
+    @DisplayName("POST -> storable-value less than 1 expect HTTP-status 400 and content: IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE ")
     void postWithStorableValueLessThan1AndExpect_Status400() throws Exception {
         //GIVEN
         //WHEN
@@ -281,33 +280,15 @@ class ItemIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                     {
-                                    "storableValue" : "0",
+                                    "storableValue" : 0,
                                     "ean" : "123",
-                                    "itemNumber": "1"
-                                }"""))
-                //THEN
-                .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.ITEM_VALIDATION_EXCEPTION_MESSAGE.toString()));
-    }
-
-    @Test
-    @DirtiesContext
-    @DisplayName("POST -> storable value is null expect HTTP-status 400 and content: isNullOrEmptyException")
-    void postWithStorableValueNullAndExpect_Status400() throws Exception {
-        //GIVEN
-        //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/items/")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                    {
-                                    "storableValue" : null,
-                                    "ean" : "123",
-                                    "itemNumber": "1"
+                                    "itemNumber": 1
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
                 .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
     }
+
 
     @Test
     @DisplayName("POST -> item-number is null expect HTTP-status 400 and content: isNullOrEmptyException")
