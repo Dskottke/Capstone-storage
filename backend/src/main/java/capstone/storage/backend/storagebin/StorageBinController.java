@@ -1,5 +1,6 @@
 package capstone.storage.backend.storagebin;
 
+import capstone.storage.backend.storagebin.models.StorageBinReturn;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,7 @@ public class StorageBinController {
     private final StorageBinService storageBinService;
 
     @GetMapping
-    public List<StorageBin> getAllStorageBins() {
+    public List<StorageBinReturn> getAllStorageBins() {
         return storageBinService.getAllStorageBins();
     }
 }
