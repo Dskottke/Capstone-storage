@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class BackendExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({
+            StorageBinNotFoundException.class,
             IllegalTypeException.class,
             ItemISNotExistingException.class,
             StoredItemsException.class,

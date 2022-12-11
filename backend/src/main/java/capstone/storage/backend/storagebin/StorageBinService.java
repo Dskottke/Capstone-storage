@@ -1,6 +1,8 @@
 package capstone.storage.backend.storagebin;
 
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
+import capstone.storage.backend.exceptions.ItemISNotExistingException;
+import capstone.storage.backend.exceptions.StorageBinNotFoundException;
 import capstone.storage.backend.item.ItemRepo;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.storagebin.models.StorageBin;
@@ -41,7 +43,7 @@ public class StorageBinService {
     }
 
     private String loadItemName(int itemNumber) {
-        return itemRepo.findItemByItemNumber(itemNumber).map(Item::name).orElseThrow();
+        return itemRepo.findItemByItemNumber(itemNumber).map(Item::name).orElseThrow(ItemISNotExistingException::new);
 
     }
 
@@ -50,8 +52,7 @@ public class StorageBinService {
     }
 
     public void updateInputStorageBin(DrivingOrder drivingOrder) {
-        StorageBin storageBinToUpdateInput = storageBinRepo.findById(drivingOrder.storageLocationId())
-                .orElseThrow();
+        StorageBin storageBinToUpdateInput = storageBinRepo.findById(drivingOrder.storageLocationId()).orElseThrow(StorageBinNotFoundException::new);
 
         int newAmountInput = storageBinToUpdateInput.amount() + drivingOrder.amount();
 
