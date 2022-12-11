@@ -19,7 +19,8 @@ public enum ExceptionMessage {
     ITEM_IS_NOT_EXISTING_MESSAGE("item is not existing"),
     ILLEGAL_TYPE_EXCEPTION_MESSAGE("The type is not allowed!"),
     STORAGE_BIN_NOT_FOUND_EXCEPTION_MESSAGE("Can't find storage-bin."),
-    ITEM_NOT_FOUND_EXCEPTION_MESSAGE("Can't find item!");
+    ITEM_NOT_FOUND_EXCEPTION_MESSAGE("Can't find item!"),
+    API_ITEM_NOT_FOUND_EXCEPTION("ean to find doesn't match with response ean");
 
     private final String message;
 

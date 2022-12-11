@@ -1,7 +1,7 @@
 package capstone.storage.backend.item;
 
 import capstone.storage.backend.ExceptionMessage;
-import capstone.storage.backend.exceptions.ApiItemNotFound;
+import capstone.storage.backend.exceptions.ApiItemNotFoundException;
 import capstone.storage.backend.exceptions.EanApiResponseException;
 import capstone.storage.backend.exceptions.ItemResponseEanNullException;
 import okhttp3.mockwebserver.MockResponse;
@@ -147,8 +147,8 @@ class ItemEanApiServiceTest {
             fail();
         }
         //THEN
-        catch (ApiItemNotFound e) {
-            String expected = ExceptionMessage.ITEM_NOT_FOUND_EXCEPTION_MESSAGE.toString();
+        catch (ApiItemNotFoundException e) {
+            String expected = ExceptionMessage.API_ITEM_NOT_FOUND_EXCEPTION.toString();
             String actual = e.getMessage();
             assertEquals(expected, actual);
         }

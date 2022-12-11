@@ -1,7 +1,7 @@
 package capstone.storage.backend.exceptions;
 
-public class ApiItemNotFound extends RuntimeException {
-    public ApiItemNotFound() {
+public class ApiItemNotFoundException extends RuntimeException {
+    public ApiItemNotFoundException() {
         super("ean to find doesn't match with response ean");
     }
 }
