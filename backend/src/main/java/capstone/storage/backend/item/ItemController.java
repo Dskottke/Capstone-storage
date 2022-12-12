@@ -48,7 +48,7 @@ public class ItemController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteItem(@PathVariable String id) {
         if (!service.existById(id)) {
-            throw new ItemToDeleteNotFoundException();
+            throw new ItemToDeleteNotFoundException(id);
         }
         service.deleteItemById(id);
     }

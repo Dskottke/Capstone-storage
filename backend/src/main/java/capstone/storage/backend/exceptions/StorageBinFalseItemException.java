@@ -1,7 +1,7 @@
 package capstone.storage.backend.exceptions;
 
 public class StorageBinFalseItemException extends RuntimeException {
-    public StorageBinFalseItemException() {
-        super("storage-bin is filled with not matching item");
+    public StorageBinFalseItemException(int storageBinItemNumber, int newOrderItemNumber) {
+        super("Storage-bin item-nr.: " + storageBinItemNumber + " and order item-nr.: " + newOrderItemNumber + " doesn't match");
     }
 }

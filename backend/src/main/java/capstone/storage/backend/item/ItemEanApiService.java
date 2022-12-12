@@ -41,7 +41,7 @@ public class ItemEanApiService {
         String firstEan = product.ean();
 
         if (firstEan == null) {
-            throw new ItemResponseEanNullException();
+            throw new ItemResponseEanNullException(firstEan);
         }
         if (!(firstEan.equals(eanToFind))) {
             throw new ApiItemNotFoundException();

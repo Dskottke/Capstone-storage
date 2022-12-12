@@ -52,7 +52,8 @@ public class StorageBinService {
     }
 
     public void updateInputStorageBin(DrivingOrder drivingOrder) {
-        StorageBin storageBinToUpdateInput = storageBinRepo.findById(drivingOrder.storageLocationId()).orElseThrow(StorageBinNotFoundException::new);
+        StorageBin storageBinToUpdateInput = storageBinRepo.findById(drivingOrder.storageLocationId())
+                .orElseThrow(() -> new StorageBinNotFoundException(drivingOrder.storageLocationId()));
 
         int newAmountInput = storageBinToUpdateInput.amount() + drivingOrder.amount();
 
@@ -67,7 +68,8 @@ public class StorageBinService {
 
     public void updateOutputStorageBin(boolean storageBinIsEmpty, DrivingOrder drivingOrder) {
 
-        StorageBin storageBinToUpdateOutput = storageBinRepo.findById(drivingOrder.storageLocationId()).orElseThrow(StorageBinNotFoundException::new);
+        StorageBin storageBinToUpdateOutput = storageBinRepo.findById(drivingOrder.storageLocationId()).
+                orElseThrow(() -> new StorageBinNotFoundException(drivingOrder.storageLocationId()));
 
         int newAmountOutput = storageBinToUpdateOutput.amount() - drivingOrder.amount();
 

@@ -1,8 +1,8 @@
 package capstone.storage.backend.exceptions;
 
 public class StoredItemsException extends RuntimeException {
-    public StoredItemsException() {
-        super("can't delete because there are open orders or items stored");
+    public StoredItemsException(String id) {
+        super("Can't delete item with ID: " + id + " because there are open driving-orders or items are still stored");
     }
 }
 

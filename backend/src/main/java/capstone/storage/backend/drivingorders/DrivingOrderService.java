@@ -57,7 +57,7 @@ public class DrivingOrderService {
 
     private void validateOutputOrder(StorageBin storageBinFromOrder, Item itemFromOrder, NewDrivingOrder newDrivingOrder) {
         if (!checkOutputValidation(storageBinFromOrder, itemFromOrder)) {
-            throw new StorageBinFalseItemException();
+            throw new StorageBinFalseItemException(storageBinFromOrder.itemNumber(), newDrivingOrder.itemNumber());
         }
         if (!hasEnoughAmount(storageBinFromOrder, newDrivingOrder)) {
             throw new NotEnoughItemsRemainingException();
@@ -66,10 +66,10 @@ public class DrivingOrderService {
 
     private void validateInputOrder(StorageBin storageBinFromOrder, Item itemFromOrder, NewDrivingOrder newDrivingOrder) {
         if (!isValidInputItem(storageBinFromOrder, itemFromOrder.itemNumber())) {
-            throw new StorageBinFalseItemException();
+            throw new StorageBinFalseItemException(storageBinFromOrder.itemNumber(), newDrivingOrder.itemNumber());
         }
         if (!hasFreeAmount(storageBinFromOrder, newDrivingOrder, itemFromOrder)) {
-            throw new IsNotEnoughSpaceException();
+            throw new IsNotEnoughSpaceException(storageBinFromOrder.locationId());
         }
     }
 
@@ -143,7 +143,7 @@ public class DrivingOrderService {
         Optional<DrivingOrder> succeedInputDrivingOrder = drivingOrderRepo.findById(id);
 
         if (succeedInputDrivingOrder.isEmpty()) {
-            throw new OrderToDeleteNotFoundException();
+            throw new OrderToDeleteNotFoundException(id);
         }
         storageBinService.updateInputStorageBin(succeedInputDrivingOrder.get());
         drivingOrderRepo.deleteById(id);
@@ -153,7 +153,7 @@ public class DrivingOrderService {
         Optional<DrivingOrder> succeedOutputDrivingOrder = drivingOrderRepo.findById(id);
 
         if (succeedOutputDrivingOrder.isEmpty()) {
-            throw new OrderToDeleteNotFoundException();
+            throw new OrderToDeleteNotFoundException(id);
         }
         boolean storageBinIsEmpty = beforeDoneControl(succeedOutputDrivingOrder.get());
 

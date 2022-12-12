@@ -82,7 +82,7 @@ class ItemIntegrationTest {
                                     "itemNumber": "12345"
                                 }"""))
                 .andExpect(status().is(400))
-                .andExpect(content().string("couldn't find item by ean"));
+                .andExpect(content().string("couldn't find item by ean: null"));
     }
 
     @Test
@@ -247,7 +247,7 @@ class ItemIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/items/" + id))
                 //THEN
                 .andExpect(status().is(404))
-                .andExpect(content().string(ExceptionMessage.ITEM_TO_DELETE_NOT_FOUND_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("Couldn't delete item with ID: 123 because it doesn't exist."));
     }
 
 
@@ -404,7 +404,7 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.ITEM_ALREADY_EXIST_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("The item with ean: 8710847909610 is already existing!"));
 
     }
 
