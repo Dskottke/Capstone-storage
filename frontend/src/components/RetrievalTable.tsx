@@ -32,13 +32,13 @@ function RetrievalTable(props: retrievalTableProps) {
                         <td></td>
 
                     </tr>) : (
-                    props.drivingOutputOrders.map(order => <RetrievalTableRow
-                        fetchRetrievalData={props.fetchRetrievalData}
-                        setRetrievalTableRowSuccessMessage={props.setRetrievalTableSuccessMessage}
-                        setRetrievalTableRowSuccessModal={props.setRetrievalTableSuccessModal}
-                        setRetrievalTableRowErrorModal={props.setRetrievalTableErrorModal}
-                        setRetrievalTableRowErrorMessage={props.setRetrievalTableErrorMessage}
-                        retrievalDrivingOrder={order}/>
+                    props.drivingOutputOrders.map(order => <RetrievalTableRow key={order.id}
+                                                                              fetchRetrievalData={props.fetchRetrievalData}
+                                                                              setRetrievalTableRowSuccessMessage={props.setRetrievalTableSuccessMessage}
+                                                                              setRetrievalTableRowSuccessModal={props.setRetrievalTableSuccessModal}
+                                                                              setRetrievalTableRowErrorModal={props.setRetrievalTableErrorModal}
+                                                                              setRetrievalTableRowErrorMessage={props.setRetrievalTableErrorMessage}
+                                                                              retrievalDrivingOrder={order}/>
                     ))}
                 </tbody>
             </table>
