@@ -287,7 +287,7 @@ class DrivingOrderServiceTest {
         }
         //THEN
         catch (StorageBinFalseItemException e) {
-            assertEquals(ExceptionMessage.STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE.toString(), e.getMessage());
+            assertEquals("Storage-bin item-nr.: 0 and order item-nr.: 1 doesn't match", e.getMessage());
         }
     }
 

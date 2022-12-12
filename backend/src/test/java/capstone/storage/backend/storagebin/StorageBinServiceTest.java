@@ -1,6 +1,5 @@
 package capstone.storage.backend.storagebin;
 
-import capstone.storage.backend.ExceptionMessage;
 import capstone.storage.backend.drivingorders.Type;
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.exceptions.StorageBinNotFoundException;
@@ -134,7 +133,7 @@ class StorageBinServiceTest {
             fail();
         } catch (StorageBinNotFoundException e) {
             //THEN
-            assertEquals(ExceptionMessage.STORAGE_BIN_NOT_FOUND_EXCEPTION_MESSAGE.toString(), e.getMessage());
+            assertEquals("Can't find storage-bin with ID: 1", e.getMessage());
         }
     }
 
@@ -150,7 +149,7 @@ class StorageBinServiceTest {
             fail();
         } catch (StorageBinNotFoundException e) {
             //THEN
-            assertEquals(ExceptionMessage.STORAGE_BIN_NOT_FOUND_EXCEPTION_MESSAGE.toString(), e.getMessage());
+            assertEquals("Can't find storage-bin with ID: 1", e.getMessage());
         }
     }
 }

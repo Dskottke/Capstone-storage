@@ -85,14 +85,14 @@ public class ItemService {
 
     public void deleteItemById(String id) {
         if (beforeDeleteControl(id)) {
-            throw new StoredItemsException();
+            throw new StoredItemsException(id);
         } else {
             repository.deleteById(id);
         }
     }
 
     public boolean beforeDeleteControl(String id) {
-        Item item = repository.findById(id).orElseThrow(ItemNotFoundException::new);
+        Item item = repository.findById(id).orElseThrow(() -> new ItemNotFoundException(id));
         boolean isExistingInStorageBin = storageBinService.existsByItemNumber(item.itemNumber());
         boolean isExistingInDrivingOrders = drivingOrderRepo.existsByItemNumber(item.itemNumber());
         return isExistingInDrivingOrders || isExistingInStorageBin;
@@ -102,7 +102,7 @@ public class ItemService {
         boolean eanIsAlreadySaved = repository.existsByEan(addItemDto.ean());
         boolean itemNumberAlreadySaved = repository.existsByItemNumber(addItemDto.itemNumber());
         if (eanIsAlreadySaved || itemNumberAlreadySaved) {
-            throw new ItemAlreadyExistException();
+            throw new ItemAlreadyExistException(addItemDto.ean());
         }
     }
 
@@ -110,7 +110,7 @@ public class ItemService {
         boolean invalidCapacity = addItemDto.storableValue() < 0;
         boolean invalidItemNumber = addItemDto.itemNumber() < 0;
         if (invalidItemNumber || invalidCapacity) {
-            throw new ItemValidationException();
+            throw new ItemValidationException(addItemDto.itemNumber(), addItemDto.storableValue());
         }
     }
 

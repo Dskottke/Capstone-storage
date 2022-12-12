@@ -131,7 +131,7 @@ class DrivingOrderIntegrationTest {
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/driving-orders/input/123"))
                 .andExpect(status().is(404))
-                .andExpect(content().string(ExceptionMessage.ORDER_TO_DELETE_NOT_FOUND_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("Couldn't delete order with ID: 123 because it doesn't exist"));
     }
 
     @Test
@@ -155,6 +155,7 @@ class DrivingOrderIntegrationTest {
     @DisplayName("POST -> INPUT should return HTTP-Status 400 and IS_NOT_ENOUGH_SPACE_EXCEPTION_MESSAGE ")
     @DirtiesContext
     void addNewInputDrivingOrderWithAmountGreaterThanCapacity() throws Exception {
+        String storageLocationId = "1";
         mockMvc.perform(MockMvcRequestBuilders.post("/api/test-data"))
                 .andExpect(status().is(204));
 
@@ -177,7 +178,7 @@ class DrivingOrderIntegrationTest {
                                 "amount" : "20"
                                 }"""))
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.IS_NOT_ENOUGH_SPACE_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string(ExceptionMessage.IS_NOT_ENOUGH_SPACE_EXCEPTION_MESSAGE + storageLocationId));
     }
 
     @Test
@@ -206,7 +207,7 @@ class DrivingOrderIntegrationTest {
                                 "amount" : "10"
                                 }"""))
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("Storage-bin item-nr.: 0 and order item-nr.: 2 doesn't match"));
 
     }
 
@@ -340,7 +341,7 @@ class DrivingOrderIntegrationTest {
                                 "itemNumber" : "2",
                                 "amount" : "10"
                                 }"""))
-                .andExpect(status().is(400)).andExpect(content().string(ExceptionMessage.STORAGE_BIN_FALSE_ITEM_EXCEPTION_MESSAGE.toString()));
+                .andExpect(status().is(400)).andExpect(content().string("Storage-bin item-nr.: 1 and order item-nr.: 2 doesn't match"));
 
     }
 

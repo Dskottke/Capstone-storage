@@ -79,7 +79,7 @@ class ItemServiceTest {
             fail();
         } catch (ItemValidationException e) {
             //THEN
-            String expected = ExceptionMessage.ITEM_VALIDATION_EXCEPTION_MESSAGE.toString();
+            String expected = "The capacity: 20 and the item-number: -5 must be greater than 0.";
             assertEquals(expected, e.getMessage());
         }
     }
@@ -95,7 +95,7 @@ class ItemServiceTest {
             fail();
         } catch (ItemValidationException e) {
             //THEN
-            String expected = ExceptionMessage.ITEM_VALIDATION_EXCEPTION_MESSAGE.toString();
+            String expected = "The capacity: -5 and the item-number: 1 must be greater than 0.";
             assertEquals(expected, e.getMessage());
         }
     }
@@ -166,7 +166,7 @@ class ItemServiceTest {
         //THEN
         catch (ItemAlreadyExistException e) {
             String actual = e.getMessage();
-            String expected = ExceptionMessage.ITEM_ALREADY_EXIST_EXCEPTION_MESSAGE.toString();
+            String expected = "The item with ean: 8710847909610 is already existing!";
 
             assertEquals(expected, actual);
         }
@@ -188,7 +188,7 @@ class ItemServiceTest {
         //THEN
         catch (ItemAlreadyExistException e) {
             String actual = e.getMessage();
-            String expected = ExceptionMessage.ITEM_ALREADY_EXIST_EXCEPTION_MESSAGE.toString();
+            String expected = "The item with ean: 8710847909610 is already existing!";
 
             assertEquals(expected, actual);
         }
@@ -325,7 +325,7 @@ class ItemServiceTest {
         }
         //THEN
         catch (ItemNotFoundException e) {
-            assertEquals(ExceptionMessage.ITEM_NOT_FOUND_EXCEPTION_MESSAGE.toString(), e.getMessage());
+            assertEquals("Can't find item by ID: 1", e.getMessage());
         }
     }
 
@@ -353,7 +353,7 @@ class ItemServiceTest {
         }
         //THEN
         catch (StoredItemsException e) {
-            assertEquals(ExceptionMessage.STORED_ITEMS_EXCEPTION_MESSAGE.toString(), e.getMessage());
+            assertEquals("Can't delete item with ID: 1 because there are open driving-orders or items are still stored", e.getMessage());
         }
     }
 
