@@ -60,7 +60,7 @@ public class DrivingOrderService {
             throw new StorageBinFalseItemException(storageBinFromOrder.itemNumber(), newDrivingOrder.itemNumber());
         }
         if (!hasEnoughAmount(storageBinFromOrder, newDrivingOrder)) {
-            throw new NotEnoughItemsRemainingException();
+            throw new NotEnoughItemsRemainingException(storageBinFromOrder.locationId());
         }
     }
 
@@ -166,7 +166,7 @@ public class DrivingOrderService {
     public boolean beforeDoneControl(DrivingOrder succeedOutputDrivingOrder) {
         StorageBin storageBinToControl = storageBinService.findStorageBinByLocationId(succeedOutputDrivingOrder.storageLocationId());
         if ((storageBinToControl.amount() - succeedOutputDrivingOrder.amount()) < 0) {
-            throw new NotEnoughItemsRemainingException();
+            throw new NotEnoughItemsRemainingException(succeedOutputDrivingOrder.storageLocationId());
         }
         return (storageBinToControl.amount() - succeedOutputDrivingOrder.amount()) == 0;
     }

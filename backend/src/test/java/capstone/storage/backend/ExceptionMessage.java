@@ -10,7 +10,6 @@ public enum ExceptionMessage {
     ITEM_OR_STORAGE_BIN_NOT_EXISTING_EXCEPTION_MESSAGE("Item or storage-bin doesn't exist."),
 
     TEST_DATA_ITEMS_NOT_FOUND_MESSAGE("can't find data from json"),
-    NOT_ENOUGH_ITEMS_REMAINING_EXCEPTION_MESSAGE("Not enough items remaining."),
     ITEM_IS_NOT_EXISTING_MESSAGE("Item is not existing!"),
     ILLEGAL_TYPE_EXCEPTION_MESSAGE("The type is not allowed!"),
     API_ITEM_NOT_FOUND_EXCEPTION_MESSAGE("EAN doesn't match with response EAN from Api.");

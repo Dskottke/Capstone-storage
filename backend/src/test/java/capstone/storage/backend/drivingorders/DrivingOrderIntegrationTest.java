@@ -377,6 +377,6 @@ class DrivingOrderIntegrationTest {
                                 "itemNumber" : "1",
                                 "amount" : "40"
                                 }"""))
-                .andExpect(status().is(400)).andExpect(content().string(ExceptionMessage.NOT_ENOUGH_ITEMS_REMAINING_EXCEPTION_MESSAGE.toString()));
+                .andExpect(status().is(400)).andExpect(content().string("Not enough items remaining on storageBin with ID: 1"));
     }
 }

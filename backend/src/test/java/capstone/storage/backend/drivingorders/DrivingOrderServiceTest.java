@@ -329,7 +329,7 @@ class DrivingOrderServiceTest {
         }
         //THEN
         catch (NotEnoughItemsRemainingException e) {
-            assertEquals(ExceptionMessage.NOT_ENOUGH_ITEMS_REMAINING_EXCEPTION_MESSAGE.toString(), e.getMessage());
+            assertEquals("Not enough items remaining on storageBin with ID: 1", e.getMessage());
         }
 
     }
