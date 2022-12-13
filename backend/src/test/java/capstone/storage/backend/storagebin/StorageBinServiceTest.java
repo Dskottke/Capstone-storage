@@ -51,12 +51,10 @@ class StorageBinServiceTest {
         StorageBin expected = new StorageBin("1", "1", 1, 2);
         when(storageBinrepo.findAll()).thenReturn(testStorageBinList);
         when(itemRepo.findItemByItemNumber(testStorageBin.itemNumber())).thenReturn(Optional.of(testItem));
-        when(storageBinrepo.findStorageBinByLocationId("1")).thenReturn(expected);
+        when(storageBinrepo.findStorageBinByLocationId(testStorageBin.locationId())).thenReturn(expected);
 
-        StorageBin actual = storageBinrepo.findStorageBinByLocationId("1");
+        StorageBin actual = storageBinrepo.findStorageBinByLocationId(testStorageBin.locationId());
         //THEN
-        verify(storageBinrepo).findAll();
-        verify(storageBinrepo).findStorageBinByLocationId("1");
         assertEquals(expected, actual);
     }
 
