@@ -136,18 +136,17 @@ public class StorageBinService {
     }
 
     /**
-     * This method fetches all StorageBins by itemNumber and adds all amounts to a final amount
+     * This method fetches all StorageBins by itemNumber and adds all amounts to a total amount
      * which it returns.
      *
-     * @param totalizingItem
      * @return int
      */
 
-    public int getAmountsFromStorageBins(Item totalizingItem) {
-        AtomicInteger finalItemAmount = new AtomicInteger();
+    public int getTotalAmountFromStorageBins(Item totalizingItem) {
+        AtomicInteger totalItemAmount = new AtomicInteger();
         List<StorageBin> storageBinsWithItem = storageBinRepo.findAllByItemNumber(totalizingItem.itemNumber());
-        storageBinsWithItem.forEach(storageBin -> finalItemAmount.addAndGet(storageBin.amount()));
-        return finalItemAmount.get();
+        storageBinsWithItem.forEach(storageBin -> totalItemAmount.addAndGet(storageBin.amount()));
+        return totalItemAmount.get();
     }
 
     public boolean existsByItemNumber(int itemNumber) {

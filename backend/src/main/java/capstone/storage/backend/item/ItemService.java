@@ -32,7 +32,7 @@ public class ItemService {
         List<Item> listToReturn = new ArrayList<>();
 
         for (Item item : allItems) {
-            int amount = storageBinService.getAmountsFromStorageBins(item);
+            int amount = storageBinService.getTotalAmountFromStorageBins(item);
 
             Item itemToAdd = new Item(
                     item.id(),
