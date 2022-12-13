@@ -45,7 +45,7 @@ public class StorageBinService {
 
     /**
      * This method initializes a new StorageBinReturn object for a StorageBin
-     * with a storedItemName default: "" when the itemNumber is 0
+     * with a storedItemName by default: "" when the itemNumber is 0
      * or with the matching item name when the itemNumber is greater 0
      *
      * @param storageBin from database
@@ -80,9 +80,9 @@ public class StorageBinService {
     }
 
     /**
-     * This method fetches the StorageBin from the database by drivingOrder.locationId
+     * This method fetches the StorageBin from the database
      * and calculates the new amount of the storageBin adds with drivingOrder amount
-     * and updates the drivingOrder with the new amount in database
+     * and updates the storageBin with the new amount in database
      *
      * @param drivingOrder for the storageBin update
      */
@@ -102,10 +102,10 @@ public class StorageBinService {
     }
 
     /**
-     * This method fetches the StorageBin from the database by drivingOrder.locationId
-     * and calculates the new amount of the storageBin subtracting with drivingOrder amount.
-     * If the storageBin is empty the storageBin will be updated with the calculated amount and an emptyStorageItemNumber 0.
-     * If the storageBin is not empty the storageBin will be updated with the calculated amount.
+     * This method fetches the StorageBin from the database
+     * and calculates the new amount of the StorageBin by subtracting it with the drivingOrder amount.
+     * If the StorageBin is empty, the StorageBin is updated with the calculated amount and an emptyStorageItemNumber 0.
+     * If the storage bin is not empty, the storage bin is updated with the calculated amount.
      *
      * @param storageBinIsEmpty boolean if the storageBin is empty
      * @param drivingOrder      the drivingOrder that updates the storageBin
@@ -136,8 +136,8 @@ public class StorageBinService {
     }
 
     /**
-     * This method fetches all StorageBins by itemNumber and adds all amounts to a total amount
-     * which it returns.
+     * This method retrieves all StorageBins by ItemNumber, adds all amounts to a total amount
+     * and returns it.
      *
      * @return int
      */

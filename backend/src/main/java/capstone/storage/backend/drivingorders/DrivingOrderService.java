@@ -29,8 +29,8 @@ public class DrivingOrderService {
     }
 
     /**
-     * the method takes care that the newDrivingOrder gets validation from validateNewDrivingOrder method
-     * the method inserts a new DrivingOrder with the fields of the NewDrivingOrder inside the database
+     * The method ensures that the newDrivingOrder is validated by the validateNewDrivingOrder method.
+     * The method inserts a new DrivingOrder with the fields of the newDrivingOrder into the database
      *
      * @param type            type of the DrivingOrder
      * @param newDrivingOrder newDrivingOrder to add
@@ -47,8 +47,8 @@ public class DrivingOrderService {
     }
 
     /**
-     * This method handles the different validation methods for the DrivingOrder depends on its type.<Br>
-     * It also takes care -> type independent -> that it's proved by itemAndStorageBinExisting method.
+     * This method handles the different validation methods for the DrivingOrder, depending on its type.<Br>.
+     * It also takes care -> regardless of type -> of being checked by the itemAndStorageBinExisting method.
      *
      * @param type            the type of the NewDrivingOrder
      * @param newDrivingOrder newDriving to validate
@@ -109,7 +109,7 @@ public class DrivingOrderService {
      * Returns true if the newDrivingOrder fields are null or 0.<br>
      * Returns true if the newDrivingOrder field storageLocationId is an empty String.
      *
-     * @param newDrivingOrder contains all the fields for the conditionals
+     * @param newDrivingOrder contains all the fields for the conditions
      * @return boolean
      */
     public boolean isNullOrEmpty(NewDrivingOrder newDrivingOrder) {
@@ -121,7 +121,7 @@ public class DrivingOrderService {
     }
 
     /**
-     * checks if the item and storageBin of the newDrivingOrder exists in the database.
+     * checks if the item and storageBin of the newDrivingOrder exist in the database.
      *
      * @param newDrivingOrder field itemNumber is used for methods
      * @return boolean
@@ -132,8 +132,8 @@ public class DrivingOrderService {
     }
 
     /**
-     * checks if the itemNumber of storageBin is matching with the itemNumber of the item.<br>
-     * returns true if the itemNumbers are equal<br>
+     * checks if the itemNumber of storageBin matches the itemNumber of the item.
+     * returns true if the itemNumbers are the same
      * returns false if the itemNumbers are different
      *
      * @param storageBinToCheck the storageBin to validate
@@ -145,8 +145,8 @@ public class DrivingOrderService {
     }
 
     /**
-     * returns true if the StorageBinToCheck itemNumber equals the given itemNumber or equals 0
-     * and when the hasConflictingOrder boolean method returns false
+     * returns true if the StorageBinToCheck itemNumber is equal to the specified itemNumber or 0
+     * and if the boolean method hasConflictingOrder returns false
      *
      * @param storageBinToCheck is the storageBin to prove
      * @param itemNumber        is the ItemNumber to prove
@@ -158,8 +158,8 @@ public class DrivingOrderService {
     }
 
     /**
-     * returns true if there is an existing InputDrivingOrder with no matching itemNumber on the StorageBin.<br>
-     * returns false if there is an existing InputDrivingOrder with matching itemNumber on the StorageBin.
+     * returns true if there is an existing InputDrivingOrder without matching itemNumber on the StorageBin.<br>
+     * returns false if there is an existing InputDrivingOrder with matching itemNumber on the StorageBin..
      *
      * @param storageBin locationId field is used to find an order with the storageBin
      * @param itemNumber the itemNumber to prove if it is equal with the storageBin - itemNumber
@@ -172,7 +172,7 @@ public class DrivingOrderService {
     }
 
     /**
-     * This method adds all amounts of the drivingOrder inside the existingInputDrivingOrders and returns the sum
+     * This method adds all drivingOrder amounts within the specified list and returns the sum.
      *
      * @param existingInputDrivingOrders is a list of DrivingOrders with Type INPUT
      * @return int
@@ -184,9 +184,9 @@ public class DrivingOrderService {
     }
 
     /**
-     * returns true if there is enough free amount on the storageBin
-     * dependent on the already existing INPUT drivingOrders, the already stored items and
-     * the storableValue of the item that is stored
+     * Returns true if there is enough free amount on the storageBin
+     * depending on the already existing INPUT drivingOrders, the already stored articles and
+     * the storableValue of the item
      *
      * @param storageBinToCheck contains the already stored amount for the calculation
      * @param newDrivingOrder   contains the amount to add for the calculation
@@ -211,8 +211,8 @@ public class DrivingOrderService {
     }
 
     /**
-     * This method returns true if the storageBin has enough amount to retrieve the newDrivingOrders amount
-     * dependent on the already existing OUTPUT drivingOrder.
+     * This method returns true if the storageBin has enough space to retrieve the newDrivingOrders
+     * depending on the already existing OUTPUT drivingOrders.
      *
      * @param storageBinToCheck contains the amount of stored items
      * @param newDrivingOrder   contains the amount that should be retrieved from the storageBin
@@ -236,8 +236,8 @@ public class DrivingOrderService {
     }
 
     /**
-     * This method takes care that the storageBinService updates the amount of the INPUT drivingOrder.
-     * deletes the drivingOrder in database.
+     * This method makes the storageBinService put the amount of INPUT drivingOrder in the storage bin.
+     * deletes the drivingOrder in the database.
      *
      * @param id is the id of the INPUT drivingOrder
      */
@@ -252,9 +252,9 @@ public class DrivingOrderService {
     }
 
     /**
-     * Takes care that the storageBinService updates the amount of the OUTPUT drivingOrder.
-     * it uses beforeDoneControl - method to check if the StorageBin is empty after all
-     * deletes the drivingOrder in Database.
+     * Makes the StorageBinService update the amount of OUTPUT drivingOrder.
+     * Uses the beforeDoneControl method to check if the StorageBin is empty.
+     * deletes the drivingOrder in the database.
      *
      * @param id is the id of the INPUT drivingOrder
      */
@@ -273,8 +273,8 @@ public class DrivingOrderService {
     }
 
     /**
-     * This method proves if the StorageBin is empty before the retrieval of the newDrivingOrder amount.<br>
-     * returns true if the storageBin will be empty<br>
+     * This method checks if the StorageBin is empty before retrieving the newDrivingOrder amount.
+     * returns true if the StorageBin will be empty
      * returns false if the storageBin has still amount
      *
      * @param succeedOutputDrivingOrder contains the amount that will be retrieved from the storageBin

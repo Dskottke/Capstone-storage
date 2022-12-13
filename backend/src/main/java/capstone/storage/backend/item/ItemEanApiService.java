@@ -23,8 +23,8 @@ public class ItemEanApiService {
     }
 
     /**
-     * This method does an api request for a product by an ean.
-     * It also handles the response control before it returns the product.
+     * This method performs an api request for a product with an ean.
+     * It also handles the response check before returning the product.
      *
      * @param eanToFind the ean that is used for the api request
      * @return product
