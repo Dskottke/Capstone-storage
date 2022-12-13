@@ -19,7 +19,7 @@ public class BackendExceptionHandler extends ResponseEntityExceptionHandler {
             StoredItemsException.class,
             IsNullOrEmptyException.class,
             ItemValidationException.class,
-            ItemAlreadyExistException.class,
+            ItemAlreadyExistsException.class,
             ItemResponseEanNullException.class,
             IsNotEnoughSpaceException.class,
             StorageBinFalseItemException.class,

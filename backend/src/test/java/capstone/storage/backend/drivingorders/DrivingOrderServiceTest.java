@@ -297,7 +297,7 @@ class DrivingOrderServiceTest {
         StorageBin testStorageBin = new StorageBin("1", "1", 12, 20);
         Item testItem = new Item("1", "test", "test", "test", "1", 30, 2, 1);
         //WHEN
-        boolean actual = drivingOrderService.checkOutputValidation(testStorageBin, testItem);
+        boolean actual = drivingOrderService.isValidOutputItem(testStorageBin, testItem);
         //THEN
         assertFalse(actual);
     }
@@ -309,7 +309,7 @@ class DrivingOrderServiceTest {
         StorageBin testStorageBin = new StorageBin("1", "1", 2, 20);
         Item testItem = new Item("1", "test", "test", "test", "1", 30, 2, 1);
         //WHEN
-        boolean actual = drivingOrderService.checkOutputValidation(testStorageBin, testItem);
+        boolean actual = drivingOrderService.isValidOutputItem(testStorageBin, testItem);
         //THEN
         assertTrue(actual);
     }

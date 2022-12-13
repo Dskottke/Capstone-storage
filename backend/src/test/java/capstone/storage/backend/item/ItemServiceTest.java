@@ -168,7 +168,7 @@ class ItemServiceTest {
             fail();
         }
         //THEN
-        catch (ItemAlreadyExistException e) {
+        catch (ItemAlreadyExistsException e) {
             String actual = e.getMessage();
             String expected = "The item with ean: 8710847909610 is already existing!";
             verify(itemRepo).existsByItemNumber(testAddItemDto.itemNumber());
@@ -190,7 +190,7 @@ class ItemServiceTest {
             fail();
         }
         //THEN
-        catch (ItemAlreadyExistException e) {
+        catch (ItemAlreadyExistsException e) {
             String actual = e.getMessage();
             String expected = "The item with ean: 8710847909610 is already existing!";
             verify(itemRepo).existsByEan(testAddItemDto.ean());
@@ -264,7 +264,7 @@ class ItemServiceTest {
         when(itemRepo.findById(id)).thenReturn(Optional.of(item));
         when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(true);
         when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(false);
-        boolean actual = itemService.beforeDeleteControl(id);
+        boolean actual = itemService.hasStock(id);
         //THEN
         verify(itemRepo).findById(id);
         verify(storageBinService).existsByItemNumber(item.itemNumber());
@@ -290,7 +290,7 @@ class ItemServiceTest {
         when(itemRepo.findById(id)).thenReturn(Optional.of(item));
         when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(false);
         when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(true);
-        boolean actual = itemService.beforeDeleteControl(id);
+        boolean actual = itemService.hasStock(id);
         //THEN
         verify(itemRepo).findById(id);
         verify(storageBinService).existsByItemNumber(item.itemNumber());
@@ -316,7 +316,7 @@ class ItemServiceTest {
         when(itemRepo.findById(id)).thenReturn(Optional.of(item));
         when(storageBinService.existsByItemNumber(item.itemNumber())).thenReturn(false);
         when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(false);
-        boolean actual = itemService.beforeDeleteControl(id);
+        boolean actual = itemService.hasStock(id);
         //THEN
         verify(itemRepo).findById(id);
         verify(storageBinService).existsByItemNumber(item.itemNumber());

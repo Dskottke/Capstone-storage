@@ -22,6 +22,13 @@ public class ItemEanApiService {
         this.webClient = WebClient.create(basicUrl);
     }
 
+    /**
+     * This method does an api request for a product by an ean.
+     * It also handles the response control before it returns the product.
+     *
+     * @param eanToFind the ean that is used for the api request
+     * @return product
+     */
     public Product getItemResponseFromApi(String eanToFind) {
         ResponseEntity<Product[]> itemResponseEntity = requireNonNull(webClient
                         .get()
