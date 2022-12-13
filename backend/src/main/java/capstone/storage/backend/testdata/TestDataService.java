@@ -42,11 +42,6 @@ public class TestDataService {
         }
     }
 
-    private List<DrivingOrder> addListToDrivingOrderDB(List<DrivingOrder> testDrivingOrdersToAdd) {
-        testDrivingOrdersToAdd.forEach(drivingOrderRepo::insert);
-        return testDrivingOrdersToAdd;
-    }
-
     public void deleteAll() {
         itemRepo.deleteAll();
         storageBinRepo.deleteAll();
@@ -61,5 +56,10 @@ public class TestDataService {
     public List<StorageBin> addListToStorageDB(List<StorageBin> testItemListToAdd) {
         testItemListToAdd.forEach(storageBinRepo::insert);
         return testItemListToAdd;
+    }
+
+    public List<DrivingOrder> addListToDrivingOrderDB(List<DrivingOrder> testDrivingOrdersToAdd) {
+        testDrivingOrdersToAdd.forEach(drivingOrderRepo::insert);
+        return testDrivingOrdersToAdd;
     }
 }

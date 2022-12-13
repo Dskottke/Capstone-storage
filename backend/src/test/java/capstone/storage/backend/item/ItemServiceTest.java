@@ -1,6 +1,5 @@
 package capstone.storage.backend.item;
 
-import capstone.storage.backend.ExceptionMessage;
 import capstone.storage.backend.drivingorders.DrivingOrderRepo;
 import capstone.storage.backend.exceptions.*;
 import capstone.storage.backend.item.models.AddItemDto;
@@ -27,7 +26,7 @@ class ItemServiceTest {
     private final ItemService itemService = new ItemService(itemRepo, eanApiService, storageBinService, drivingOrderRepo, utils);
 
     @Test
-    @DisplayName("method : findAll -> should return an empty list")
+    @DisplayName("Method -> findAll -> should return an empty list.")
     void findAllItemsAndExpectEmptyList() {
         //GIVEN
         List<Item> itemList = Collections.emptyList();
@@ -41,7 +40,7 @@ class ItemServiceTest {
     }
 
     @Test
-    @DisplayName("method : addItem -> should return the item to add")
+    @DisplayName("Method -> addItem -> should return the item to add")
     void addItemByEanAndAddItemDtoAndReturnItemWithId() {
         //GIVEN
         String eanToFind = "8710847909610";
@@ -65,11 +64,14 @@ class ItemServiceTest {
         Item actual = itemService.addItem(addItemDto);
         Item expected = itemToExpect;
         //THEN
+        verify(eanApiService).getItemResponseFromApi(eanToFind);
+        verify(utils).generateUUID();
+        verify(itemRepo).insert(itemToExpect);
         assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("method : addItem -> should throw ItemValidationException because itemNumber is -5")
+    @DisplayName("Method -> addItem -> should throw ItemValidationException because itemNumber is -5.")
     void addItemShouldThrowItemValidationExceptionBecauseItemNumberIsLess0() {
         //GIVEN
         AddItemDto addItemDto = new AddItemDto("123", -5, 20);
@@ -85,7 +87,7 @@ class ItemServiceTest {
     }
 
     @Test
-    @DisplayName("method : addItem -> should throw ItemValidationException because storableValue is -5")
+    @DisplayName("method -> addItem -> should throw ItemValidationException because storableValue is -5")
     void addItemShouldThrowItemValidationExceptionBecauseStorableValueIsLess0() {
         //GIVEN
         AddItemDto addItemDto = new AddItemDto("123", 1, -5);
@@ -101,7 +103,7 @@ class ItemServiceTest {
     }
 
     @Test
-    @DisplayName("method : updateItem -> should return updated item")
+    @DisplayName("method -> updateItem -> should return updated item.")
     void UpdateItemAndExpectSameItemToReturn() {
         //GIVEN
         Item itemToExpect = new Item("123",
@@ -120,7 +122,7 @@ class ItemServiceTest {
     }
 
     @Test
-    @DisplayName("method: existById -> should return true")
+    @DisplayName("Method -> existById -> should return true")
     void existById() {
         //GIVEN
         String id = "123";
@@ -129,11 +131,12 @@ class ItemServiceTest {
         boolean actual = itemService.existById(id);
         boolean expected = true;
         //THEN
+        verify(itemRepo).existsById(id);
         assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("method: deleteItemById -> should give the itemToDelete to the itemRepo")
+    @DisplayName("Method -> deleteItemById -> should give the itemToDelete to the itemRepo.")
     void deleteItemById() {
         //GIVEN
         Item itemToDelete = new Item("123",
@@ -148,12 +151,13 @@ class ItemServiceTest {
         when(itemRepo.findById(itemToDelete.id())).thenReturn(Optional.of(itemToDelete));
         itemService.deleteItemById(itemToDelete.id());
         //THEN
+        verify(itemRepo).findById(itemToDelete.id());
         verify(itemRepo).deleteById(itemToDelete.id());
     }
 
     @Test
-    @DisplayName("method : checkItemExisting -> should throw ItemAlreadyExistingException")
-    void ifItemIsAlreadyExistingThrowItemAlreadyExistingException() {
+    @DisplayName("Method : checkItemExisting with itemRepo.existsByItemNumber true -> should throw ItemAlreadyExistingException.")
+    void checkItemExistsThrowsItemAlreadyExistingException() {
         //GIVEN
 
         AddItemDto testAddItemDto = new AddItemDto("8710847909610", 123, 1);
@@ -167,13 +171,13 @@ class ItemServiceTest {
         catch (ItemAlreadyExistException e) {
             String actual = e.getMessage();
             String expected = "The item with ean: 8710847909610 is already existing!";
-
+            verify(itemRepo).existsByItemNumber(testAddItemDto.itemNumber());
             assertEquals(expected, actual);
         }
     }
 
     @Test
-    @DisplayName("method : checkItemExisting -> should return true")
+    @DisplayName("Method -> checkItemExisting with itemRepo.existsByEan true -> should throw ItemAlreadyExistsException because the item already exists.")
     void checkIfItemAlreadyExistWithExistingEanReturnTrue() {
         //GIVEN
 
@@ -189,13 +193,13 @@ class ItemServiceTest {
         catch (ItemAlreadyExistException e) {
             String actual = e.getMessage();
             String expected = "The item with ean: 8710847909610 is already existing!";
-
+            verify(itemRepo).existsByEan(testAddItemDto.ean());
             assertEquals(expected, actual);
         }
     }
 
     @Test
-    @DisplayName("method : isNullOrEmpty -> should return true when all AddItemDto fields are null")
+    @DisplayName("Method -> isNullOrEmpty -> should return true when all AddItemDto fields are null.")
     void checkIfIsNullOrEmptyReturnsTrueWhenAddITemDtoFieldsAreNullOr0() {
         //GIVEN
         AddItemDto addItemDto = new AddItemDto(null, 0, 0);
@@ -207,7 +211,7 @@ class ItemServiceTest {
     }
 
     @Test
-    @DisplayName("method : isNullOrEmpty -> should return true when all AddItemDto fields are empty")
+    @DisplayName("Method -> isNullOrEmpty -> should return true when all AddItemDto fields are empty.")
     void checkIfIsNullOrEmptyReturnsTrueWhenAddITemDtoStorableValueIsEmptyString() {
         //GIVEN
         AddItemDto addItemDto = new AddItemDto("", 0, 0);
@@ -219,7 +223,7 @@ class ItemServiceTest {
     }
 
     @Test
-    @DisplayName("method : isNullOrEmpty -> should return false when all AddItemDto fields are not empty")
+    @DisplayName("Method -> isNullOrEmpty -> should return false when all AddItemDto fields are not empty.")
     void checkIfIsNullOrEmptyReturnsFalseWhenAddITemDtoFieldsAreNotEmptyString() {
         //GIVEN
         AddItemDto addItemDto = new AddItemDto("123", 1, 1);
@@ -231,7 +235,7 @@ class ItemServiceTest {
     }
 
     @Test
-    @DisplayName("method : isNullOrEmpty -> should return true when one AddItemDto field is empty ")
+    @DisplayName("Method -> isNullOrEmpty -> should return true when one AddItemDto field is empty.")
     void checkIfIsNullOrEmptyReturnsTrueWhen1AddITemDtoIsEmptyString() {
         //GIVEN
         AddItemDto addItemDto = new AddItemDto("", 1, 1);
@@ -243,7 +247,7 @@ class ItemServiceTest {
     }
 
     @Test
-    @DisplayName("method : beforeDeleteControl should return true")
+    @DisplayName("Method -> beforeDeleteControl should return true.")
     void beforeDeleteControlShouldReturnTrueBecauseDrivingOrderRepoReturnsTrue() {
         //GIVEN
         String id = "1";
@@ -262,11 +266,14 @@ class ItemServiceTest {
         when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(false);
         boolean actual = itemService.beforeDeleteControl(id);
         //THEN
+        verify(itemRepo).findById(id);
+        verify(storageBinService).existsByItemNumber(item.itemNumber());
+        verify(drivingOrderRepo).existsByItemNumber(item.itemNumber());
         assertTrue(actual);
     }
 
     @Test
-    @DisplayName("method : beforeDeleteControl should return true")
+    @DisplayName("method : beforeDeleteControl should return true because the storageBinService returns true and the drivingOrderRepo returns false")
     void beforeDeleteControlShouldReturnTrueBecauseStorageBinRepoReturnsTrue() {
         //GIVEN
         String id = "1";
@@ -285,11 +292,14 @@ class ItemServiceTest {
         when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(true);
         boolean actual = itemService.beforeDeleteControl(id);
         //THEN
+        verify(itemRepo).findById(id);
+        verify(storageBinService).existsByItemNumber(item.itemNumber());
+        verify(drivingOrderRepo).existsByItemNumber(item.itemNumber());
         assertTrue(actual);
     }
 
     @Test
-    @DisplayName("method : beforeDeleteControl should return false")
+    @DisplayName("method : beforeDeleteControl should return false because the storageBinService and drivingOrderRepo return false")
     void beforeDeleteControlShouldReturnFalseBecauseBothBooleanAreFalse() {
         //GIVEN
         String id = "1";
@@ -308,28 +318,13 @@ class ItemServiceTest {
         when(drivingOrderRepo.existsByItemNumber(item.itemNumber())).thenReturn(false);
         boolean actual = itemService.beforeDeleteControl(id);
         //THEN
+        verify(itemRepo).findById(id);
+        verify(storageBinService).existsByItemNumber(item.itemNumber());
+        verify(drivingOrderRepo).existsByItemNumber(item.itemNumber());
         assertFalse(actual);
     }
 
-    @DisplayName("method -> deleteItemById should throw ItemNotFoundException")
-    @Test
-    void deleteItemByIdShouldThrowItemNotFoundException() {
-        //GIVEN
-        String id = "1";
-        //WHEN
-        when(itemRepo.findById(id)).thenReturn(Optional.empty());
-
-        try {
-            itemService.deleteItemById(id);
-            fail();
-        }
-        //THEN
-        catch (ItemNotFoundException e) {
-            assertEquals("Can't find item by ID: 1", e.getMessage());
-        }
-    }
-
-    @DisplayName("method -> deleteItemById should throw StoredItemException")
+    @DisplayName("Method -> deleteItemById -> should throw StoredItemException because the storageBinService and drivingOrderRepo return true")
     @Test
     void deleteItemByIdShouldThrowStoredItemException() {
         //GIVEN
@@ -353,12 +348,35 @@ class ItemServiceTest {
         }
         //THEN
         catch (StoredItemsException e) {
+            verify(itemRepo).findById(id);
+            verify(storageBinService).existsByItemNumber(item.itemNumber());
+            verify(drivingOrderRepo).existsByItemNumber(item.itemNumber());
             assertEquals("Can't delete item with ID: 1 because there are open driving-orders or items are still stored", e.getMessage());
         }
     }
 
+    @DisplayName("Method -> deleteItemById -> should throw ItemNotFoundException because the itemRepo returns Optional.empty.")
     @Test
-    @DisplayName("method -> should throw ItemNotExistingException because the repository returns null")
+    void deleteItemByIdShouldThrowItemNotFoundException() {
+        //GIVEN
+        String id = "1";
+        //WHEN
+        when(itemRepo.findById(id)).thenReturn(Optional.empty());
+
+        try {
+            itemService.deleteItemById(id);
+            fail();
+        }
+        //THEN
+        catch (ItemNotFoundException e) {
+            verify(itemRepo).findById(id);
+            assertEquals("Can't find item", e.getMessage());
+        }
+    }
+
+
+    @Test
+    @DisplayName("Method -> should throw ItemNotExistingException because the repository returns null.")
     void findItemByItemNumberThrowItemIsNotExistingException() {
         //GIVEN
         int itemNumber = 1;
@@ -370,7 +388,8 @@ class ItemServiceTest {
         }
         //THEN
         catch (ItemISNotExistingException e) {
-            assertEquals(ExceptionMessage.ITEM_IS_NOT_EXISTING_MESSAGE.toString(), e.getMessage());
+            verify(itemRepo).findItemByItemNumber(itemNumber);
+            assertEquals("Item is not existing!", e.getMessage());
         }
 
     }

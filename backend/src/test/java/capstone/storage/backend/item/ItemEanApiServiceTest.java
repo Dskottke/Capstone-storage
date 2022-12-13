@@ -1,6 +1,5 @@
 package capstone.storage.backend.item;
 
-import capstone.storage.backend.ExceptionMessage;
 import capstone.storage.backend.exceptions.ApiItemNotFoundException;
 import capstone.storage.backend.exceptions.EanApiResponseException;
 import capstone.storage.backend.exceptions.ItemResponseEanNullException;
@@ -42,8 +41,8 @@ class ItemEanApiServiceTest {
     }
 
     @Test
-    @DisplayName("method : getItemResponseFromApi -> should throw Exception eanApiResponseExceptionMessage because response list ist null")
-    void expectItemResponseException() {
+    @DisplayName("Method : getItemResponseFromApi -> should throw Exception EanApiResponseException because response list ist null.")
+    void getItemResponseFromApiShouldThrowEanApiResponseException1() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse());
         String ean = "123";
@@ -54,7 +53,7 @@ class ItemEanApiServiceTest {
         }
         //THEN
         catch (EanApiResponseException e) {
-            String expected = ExceptionMessage.EAN_API_RESPONSE_EXCEPTION_MESSAGE.toString();
+            String expected = "The api responseBody is null or invalid.";
             String actual = e.getMessage();
             assertEquals(expected, actual);
         }
@@ -62,8 +61,8 @@ class ItemEanApiServiceTest {
     }
 
     @Test
-    @DisplayName("method : getItemResponseFromApi -> should throw Exception with eanApiResponseExceptionMessage because the Api response size is greater 1")
-    void expectItemResponseException2case() {
+    @DisplayName("Method : getItemResponseFromApi -> should throw EanApiResponseException because the Api response size is greater 1.")
+    void getItemResponseFromApiExpectEanApiResponseException2() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()
                 .setBody("""
@@ -90,15 +89,15 @@ class ItemEanApiServiceTest {
         }
         //THEN
         catch (EanApiResponseException e) {
-            String expected = ExceptionMessage.EAN_API_RESPONSE_EXCEPTION_MESSAGE.toString();
+            String expected = "The api responseBody is null or invalid.";
             String actual = e.getMessage();
             assertEquals(expected, actual);
         }
     }
 
     @Test
-    @DisplayName("method : getItemResponseFromApi -> should throw Exception with ITEM_RESPONSE_EAN_NULL_EXCEPTION_MESSAGE because the request ean is null ")
-    void expectItemResponseException3case() {
+    @DisplayName("Method : getItemResponseFromApi -> should throw exception ItemResponseEanNullException because the request EAN is null.")
+    void getItemResponseExpectExpectItemResponseException() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()
                 .setBody("""
@@ -126,8 +125,8 @@ class ItemEanApiServiceTest {
     }
 
     @Test
-    @DisplayName("method : getItemResponseFromApi -> should throw Exception with API_ITEM_NOT_FOUND_EXCEPTION_MESSAGE")
-    void expectItemResponseException4case() {
+    @DisplayName("Method : getItemResponseFromApi -> should throw ApiItemNotFoundException because the response EAN doesn't match with request EAN")
+    void getItemResponseFromApiExpectApiItemNotFoundException() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()
                 .setBody("""
@@ -148,7 +147,7 @@ class ItemEanApiServiceTest {
         }
         //THEN
         catch (ApiItemNotFoundException e) {
-            String expected = ExceptionMessage.API_ITEM_NOT_FOUND_EXCEPTION_MESSAGE.toString();
+            String expected = "EAN doesn't match with response EAN from Api.";
             String actual = e.getMessage();
             assertEquals(expected, actual);
         }

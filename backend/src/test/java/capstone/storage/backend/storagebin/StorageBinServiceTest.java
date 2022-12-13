@@ -15,8 +15,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class StorageBinServiceTest {
 
@@ -25,7 +24,7 @@ class StorageBinServiceTest {
     private final StorageBinService service = new StorageBinService(storageBinrepo, itemRepo);
 
     @Test
-    @DisplayName("method -> getAllStorageBins should return the expected list")
+    @DisplayName("Method -> getAllStorageBins -> should return the expected list.")
     void getAllStorageBinsAndReturnExpectedList() {
         //GIVEN
         List<StorageBinReturn> expectedList = List.of(new StorageBinReturn("1", "1", 1, 20, "test"));
@@ -36,12 +35,14 @@ class StorageBinServiceTest {
         when(storageBinrepo.findAll()).thenReturn(mockList);
         List<StorageBinReturn> actual = service.getAllStorageBins();
         //THEN
+        verify(itemRepo).findItemByItemNumber(mockItem.itemNumber());
+        verify(storageBinrepo).findAll();
         assertEquals(expectedList, actual);
     }
 
     @Test
-    @DisplayName("method -> addItemNameToStorageList should update the StorageBin in DB with the itemNumber matching ItemName")
-    void addItemNameToStorageListAndExpectStorageBinWithMatchingItemName() {
+    @DisplayName("Method -> addItemNameToStorageList should update the StorageBin in DB with the itemNumber matching ItemName.")
+    void getAllStorageBinAndExpectStorageBinWithMatchingItemName() {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", 1, 2);
         List<StorageBin> testStorageBinList = List.of(testStorageBin);
@@ -54,11 +55,14 @@ class StorageBinServiceTest {
 
         StorageBin actual = storageBinrepo.findStorageBinByLocationId("1");
         //THEN
+        verify(storageBinrepo).findAll();
+        verify(itemRepo).findItemByItemNumber(testStorageBin.itemNumber());
+        verify(storageBinrepo).findStorageBinByLocationId("1");
         assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("method -> addItemNameToStorageList should do nothing because itemNumber is 0")
+    @DisplayName("Method -> addItemNameToStorageList -> should return list with storageBins where storedItemName is empty String.")
     void getAllStorageBinsShouldReturnExpectedList() {
         //GIVEN
         StorageBin testStorageBin = new StorageBin("1", "1", 0, 0);
@@ -68,12 +72,13 @@ class StorageBinServiceTest {
         when(storageBinrepo.findAll()).thenReturn(testStorageBinList);
         when(itemRepo.findItemByItemNumber(testStorageBin.itemNumber())).thenReturn(Optional.empty());
         List<StorageBinReturn> actual = service.getAllStorageBins();
-
         //THEN
+        verify(storageBinrepo).findAll();
+        verify(itemRepo).findItemByItemNumber(testStorageBin.itemNumber());
         assertEquals(expected, actual);
     }
 
-    @DisplayName("method -> updateOutputStorageBin should return StorageBin with empty storedItemName and itemNumber 0 ")
+    @DisplayName("Method -> updateOutputStorageBin -> should return StorageBin with empty storedItemName and itemNumber 0 .")
     @Test
     void updateOutputStorageBinAndExpectStorageBinWithEmptyItemNameAndItemNumber0() {
         //GIVEN
@@ -87,10 +92,12 @@ class StorageBinServiceTest {
         service.updateOutputStorageBin(testStorageBinIsEmpty, testDrivingOrder);
         StorageBin actual = storageBinrepo.findStorageBinByLocationId(testStorageBin.locationId());
         //THEN
+        verify(storageBinrepo).findById(testDrivingOrder.storageLocationId());
+        verify(storageBinrepo).findStorageBinByLocationId(testStorageBin.locationId());
         assertEquals(expected, actual);
     }
 
-    @DisplayName("method -> updateOutputStorageBin should return StorageBin with same ItemNumber but updated amount ")
+    @DisplayName("method -> updateOutputStorageBin -> should return StorageBin with same ItemNumber but updated amount ")
     @Test
     void updateOutputStorageBinAndExpectStorageBinWithSameItemNumberAndNewAmount() {
         //GIVEN
@@ -104,28 +111,31 @@ class StorageBinServiceTest {
         service.updateOutputStorageBin(testStorageBinIsEmpty, testDrivingOrder);
         StorageBin actual = storageBinrepo.findStorageBinByLocationId(testStorageBin.locationId());
         //THEN
+        verify(storageBinrepo).findById(testDrivingOrder.storageLocationId());
+        verify(storageBinrepo).findStorageBinByLocationId(testStorageBin.locationId());
         assertEquals(expected, actual);
     }
 
-    @DisplayName("method -> getItemAmountFromStorageBinsByItemNumber should Return 1")
+    @DisplayName("Method -> getAmountsFromStorageBins -> should Return 1.")
     @Test
-    void getItemAmountFromStorageBinsByItemNumberAndExpect1() {
+    void getAmountsFromStorageBinsByItemNumberAndExpectReturn1() {
         //GIVEN
         Item itemToCount = new Item("1", "Axe Bodyspray Wasabi & Fresh Linen", "ger", "DE", "123", 10, 1, 0);
         List<StorageBin> storageBinsWithItem = List.of(new StorageBin("1", "1", 1, 1));
         //WHEN
         when(storageBinrepo.findAllByItemNumber(itemToCount.itemNumber())).thenReturn(storageBinsWithItem);
-        int actual = service.getItemAmountFromStorageBinsByItemNumber(itemToCount);
+        int actual = service.getAmountsFromStorageBins(itemToCount);
         int expected = 1;
         //THEN
+        verify(storageBinrepo).findAllByItemNumber(itemToCount.itemNumber());
         assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("method -> updateInputStorageBin should throw StorageBinNotFoundException because the storageBinRepo returns Optional empty")
+    @DisplayName("Method -> updateInputStorageBin -> should throw StorageBinNotFoundException because the storageBinRepo returns Optional empty.")
     void updateInputStorageBinShouldThrowStorageBinNotFoundException() {
         //GIVEN
-        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 1, Type.OUTPUT, 10);
+        DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 1, Type.INPUT, 10);
         //WHEN
         when(storageBinrepo.findById(testDrivingOrder.storageLocationId())).thenReturn(Optional.empty());
         try {
@@ -133,12 +143,13 @@ class StorageBinServiceTest {
             fail();
         } catch (StorageBinNotFoundException e) {
             //THEN
+            verify(storageBinrepo).findById(testDrivingOrder.storageLocationId());
             assertEquals("Can't find storage-bin with ID: 1", e.getMessage());
         }
     }
 
     @Test
-    @DisplayName("method -> updateOutputStorageBin should throw StorageBinNotFoundException because the storageBinRepo returns Optional empty")
+    @DisplayName("Method -> updateOutputStorageBin -> should throw StorageBinNotFoundException because the storageBinRepo returns Optional empty.")
     void updateOutputStorageBinShouldThrowStorageBinNotFoundException() {
         //GIVEN
         DrivingOrder testDrivingOrder = new DrivingOrder("1", "1", 1, Type.OUTPUT, 10);
@@ -149,6 +160,7 @@ class StorageBinServiceTest {
             fail();
         } catch (StorageBinNotFoundException e) {
             //THEN
+            verify(storageBinrepo).findById(testDrivingOrder.storageLocationId());
             assertEquals("Can't find storage-bin with ID: 1", e.getMessage());
         }
     }

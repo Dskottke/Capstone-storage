@@ -91,7 +91,7 @@ public class StorageBinService {
         }
     }
 
-    public int getItemAmountFromStorageBinsByItemNumber(Item itemToCount) {
+    public int getAmountsFromStorageBins(Item itemToCount) {
         AtomicInteger finalItemAmount = new AtomicInteger();
         List<StorageBin> storageBinsWithItem = storageBinRepo.findAllByItemNumber(itemToCount.itemNumber());
         storageBinsWithItem.forEach(storageBin -> finalItemAmount.addAndGet(storageBin.amount()));

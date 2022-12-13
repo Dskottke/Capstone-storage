@@ -4,11 +4,13 @@ import capstone.storage.backend.drivingorders.Type;
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.testdata.ResourcePath;
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -33,5 +35,16 @@ class ServiceUtilsTest {
         }, path);
         //THEN
         assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("Method -> generateUUID -> the returned UUID should have matching REGEX pattern and the invalid-uuid not.")
+    void generateUUID() {
+        //GIVEN
+        Pattern UUID_REGEX = Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
+        //THEN
+        Assertions.assertTrue(UUID_REGEX.matcher(serviceUtils.generateUUID()).matches());
+        Assertions.assertFalse(UUID_REGEX.matcher("invalid-uuid").matches());
+
     }
 }
