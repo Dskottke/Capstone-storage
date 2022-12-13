@@ -121,7 +121,7 @@ public class DrivingOrderService {
     }
 
     /**
-     * checks if the item and storage of the newDrivingOrder are existing in the database.
+     * checks if the item and storageBin of the newDrivingOrder exists in the database.
      *
      * @param newDrivingOrder field itemNumber is used for methods
      * @return boolean
