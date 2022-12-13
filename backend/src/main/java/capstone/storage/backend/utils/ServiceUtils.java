@@ -13,11 +13,24 @@ import java.util.UUID;
 public class ServiceUtils {
     ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * This method returns a UUID as a String
+     *
+     * @return String
+     */
 
     public String generateUUID() {
         return UUID.randomUUID().toString();
     }
 
+    /**
+     * This generic method returns a parsed Object from a .JSON data
+     *
+     * @param classTypeReference TypReference of List<T>
+     * @param path               the folder path
+     * @param <T>                generic Object
+     * @return Object
+     */
     public <T> List<T> parseListFromJson(TypeReference<List<T>> classTypeReference, String path) throws IOException {
         Class<?> itemClass = getClass();
         InputStream inputStream = itemClass.getResourceAsStream(path);

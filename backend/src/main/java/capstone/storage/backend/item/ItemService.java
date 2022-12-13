@@ -17,11 +17,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepo repository;
-    private final ItemEanApiService eanService;
+    private final ItemEanApiService eanApiService;
     private final StorageBinService storageBinService;
     private final DrivingOrderRepo drivingOrderRepo;
     private final ServiceUtils utils;
-    
+
+    /**
+     * This method returns the List of all items with the sum of amounts on storageBins for each item.
+     *
+     * @return List of Items with sum of amounts.
+     */
     public List<Item> findAll() {
         List<Item> allItems = repository.findAll();
         List<Item> listToReturn = new ArrayList<>();
@@ -45,12 +50,20 @@ public class ItemService {
 
     }
 
+    /**
+     * This Method takes care that the addItem will be validated and gets proved if the item is already existing.
+     * if everything is proved successfully it fetches the product from eanApiService by EAN and insert a new item into the
+     * database with a default amount of 0.
+     *
+     * @param addItemDto to add a new item
+     * @return Item
+     */
     public Item addItem(AddItemDto addItemDto) {
 
         validateAddItemDto(addItemDto);
         checkItemExisting(addItemDto);
 
-        Product product = eanService.getItemResponseFromApi(addItemDto.ean());
+        Product product = eanApiService.getItemResponseFromApi(addItemDto.ean());
 
 
         int defaultStoringBinAmount = 0;
@@ -66,6 +79,7 @@ public class ItemService {
 
         return repository.insert(itemToAdd);
     }
+
 
     public Item updateItem(Item articleRequest) {
         return repository.save(articleRequest);
@@ -83,29 +97,56 @@ public class ItemService {
         return repository.existsByItemNumber(itemNumber);
     }
 
+    /**
+     * This method throws new StoredItemsException when the hasStock by id method returns true<br>
+     * otherwise it deletes the item in database
+     *
+     * @param id of the item
+     */
     public void deleteItemById(String id) {
-        if (beforeDeleteControl(id)) {
+        if (hasStock(id)) {
             throw new StoredItemsException(id);
         } else {
             repository.deleteById(id);
         }
     }
 
-    public boolean beforeDeleteControl(String id) {
+    /**
+     * This method fetches the item by id from database and
+     * returns true if there is an existing storageBin or drivingOrder with the itemNumber.
+     *
+     * @param id of the item
+     * @return boolean
+     */
+
+    public boolean hasStock(String id) {
         Item item = repository.findById(id).orElseThrow(ItemNotFoundException::new);
         boolean isExistingInStorageBin = storageBinService.existsByItemNumber(item.itemNumber());
         boolean isExistingInDrivingOrders = drivingOrderRepo.existsByItemNumber(item.itemNumber());
         return isExistingInDrivingOrders || isExistingInStorageBin;
     }
 
+    /**
+     * This method throws an ItemAlreadyExistsException
+     * when an item with the addItemDto ean or itemNumber is already existing.
+     *
+     * @param addItemDto fields ean and itemNumber
+     */
+
     public void checkItemExisting(AddItemDto addItemDto) {
         boolean eanIsAlreadySaved = repository.existsByEan(addItemDto.ean());
         boolean itemNumberAlreadySaved = repository.existsByItemNumber(addItemDto.itemNumber());
         if (eanIsAlreadySaved || itemNumberAlreadySaved) {
-            throw new ItemAlreadyExistException(addItemDto.ean());
+            throw new ItemAlreadyExistsException(addItemDto.ean());
         }
     }
 
+    /**
+     * This method throws an ItemValidationException
+     * when the addItemDto fields -> storable value and itemNumber are lower 0.
+     *
+     * @param addItemDto fields storableValue and itemNumber
+     */
     public void validateAddItemDto(AddItemDto addItemDto) {
         boolean invalidCapacity = addItemDto.storableValue() < 0;
         boolean invalidItemNumber = addItemDto.itemNumber() < 0;
@@ -114,6 +155,12 @@ public class ItemService {
         }
     }
 
+    /**
+     * This method returns true when addItemDto fields contains null , 0 or an empty String.
+     *
+     * @param addItemDto fields ean , itemNumber and storableValue
+     * @return boolean
+     */
     public boolean isNullOrEmpty(AddItemDto addItemDto) {
         if (addItemDto.ean() == null || addItemDto.itemNumber() == 0 || addItemDto.storableValue() == 0) {
             return true;

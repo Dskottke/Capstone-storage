@@ -16,6 +16,7 @@ import java.util.Optional;
 public class DrivingOrderController {
     private final DrivingOrderService drivingOrderService;
 
+
     @GetMapping
     public List<DrivingOrder> getAllDrivingOrdersByType(@RequestParam Type type) {
         return drivingOrderService.getAllDrivingOrdersByType(type);
