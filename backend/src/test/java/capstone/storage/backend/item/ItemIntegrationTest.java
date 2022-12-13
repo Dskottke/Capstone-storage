@@ -1,5 +1,5 @@
 package capstone.storage.backend.item;
-import capstone.storage.backend.ExceptionMessage;
+
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,7 +60,7 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> itemResponse field ean is null expect HTTP-status 400 and content: itemResponseEanNullExceptionMessage")
+    @DisplayName("POST -> response field ean is null -> expect HTTP-status 400 and expect ItemResponseEanNullException.")
     void postRequestWithItemResponseWithEanNullAndExpectStatus400() throws Exception {
         Product[] product = {
                 new Product(
@@ -87,7 +87,7 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> add item and expect HTTP-status 201 and matching content")
+    @DisplayName("POST -> add item -> expect HTTP-status 201 and matching content.")
     void addItemWithEanFromApiAndExpectItemWithId() throws Exception {
         //GIVEN
         Product[] product = {new Product(
@@ -131,7 +131,7 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("PUT -> update existing item expect HTTP-status 200")
+    @DisplayName("PUT -> update existing item -> expect HTTP-status 200.")
     void updateStorableValueFromExistingItemToValue20() throws Exception {
         //GIVEN
         Product[] product = {new Product(
@@ -184,8 +184,8 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("PUT -> should return ITEM_IS_NOT_EXISTING Exception because there is no existing Item ")
-    void updateWithNotMatchingPathvariableIdAndItemId() throws Exception {
+    @DisplayName("PUT -> update with no matching item -> expect HTTP-status 400 and ItemIsNotExistingException.")
+    void updateWithNoExistingItem() throws Exception {
         //GIVEN
 
         //WHEN
@@ -200,12 +200,12 @@ class ItemIntegrationTest {
                                 "ean":"8710847909610",
                                 "storableValue": "10"}"""))
                 //THEN
-                .andExpect(status().is(400)).andExpect(content().string(ExceptionMessage.ITEM_IS_NOT_EXISTING_MESSAGE.toString()));
+                .andExpect(status().is(400)).andExpect(content().string("Item is not existing!"));
     }
 
     @Test
     @DirtiesContext
-    @DisplayName("DELETE -> delete existing item expect HTTP-Status 204")
+    @DisplayName("DELETE -> delete existing item -> expect HTTP-Status 204.")
     void deleteExistingItemByIdAndReturnStatus204() throws Exception {
         //GIVEN
         Product[] product = {new Product(
@@ -239,7 +239,7 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("DELETE -> item to delete doesn't exist expect HTTP-status 404 and content : itemToDeleteNotFoundException ")
+    @DisplayName("DELETE -> item to delete doesn't exist -> expect HTTP-status 404 and itemToDeleteNotFoundException.")
     void tryToDeleteNotExistingItemByIdAndReturnStatus404() throws Exception {
         //GIVEN
         String id = "123";
@@ -253,7 +253,7 @@ class ItemIntegrationTest {
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> item-number less than 1 expect HTTP-status 400 and content: IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE")
+    @DisplayName("POST -> item-number less than 1 -> expect HTTP-status 400 and IsNullOrEmptyException.")
     void postWithItemNumberLessThan1AndExpect_Status400() throws Exception {
         //GIVEN
         //WHEN
@@ -267,12 +267,12 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("All input fields must be filled!"));
     }
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> storable-value less than 1 expect HTTP-status 400 and content: IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE ")
+    @DisplayName("POST -> storableValue less than 1 -> expect HTTP-status 400 and IsNullOrEmptyException.")
     void postWithStorableValueLessThan1AndExpect_Status400() throws Exception {
         //GIVEN
         //WHEN
@@ -286,12 +286,12 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("All input fields must be filled!"));
     }
 
 
     @Test
-    @DisplayName("POST -> item-number is null expect HTTP-status 400 and content: isNullOrEmptyException")
+    @DisplayName("POST -> itemNumber is null -> expect HTTP-status 400 and isNullOrEmptyException.")
     @DirtiesContext
     void postWithItemNumberNullExpectStatus_400() throws Exception {
         //GIVEN
@@ -306,12 +306,12 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("All input fields must be filled!"));
     }
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> item-number has empty string expect HTTP-status 400 and content: isNullOrEmptyException")
+    @DisplayName("POST -> item-number has empty string -> expect HTTP-status 400 and isNullOrEmptyException.")
     void postWithItemNumberEmptyStringExpect_Status400() throws Exception {
         //GIVEN
         //WHEN
@@ -325,12 +325,12 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("All input fields must be filled!"));
     }
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> ean has empty string expect HTTP-status 400 and content: isNullOrEmptyException")
+    @DisplayName("POST -> ean has empty string -> expect HTTP-status 400 and isNullOrEmptyException.")
     void postWithEanEmptyStringExpectStatus_400() throws Exception {
         //GIVEN
         //WHEN
@@ -344,12 +344,12 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("All input fields must be filled!"));
     }
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> storable value has empty string expect HTTP-status 400 and content: IsNullOrEmptyException")
+    @DisplayName("POST -> storable value has empty string expect HTTP-status 400 and IsNullOrEmptyException.")
     void postWithStorableValueEmptyStringExpect_Status400() throws Exception {
         //GIVEN
         //WHEN
@@ -363,12 +363,12 @@ class ItemIntegrationTest {
                                 }"""))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("All input fields must be filled!"));
     }
 
     @Test
     @DirtiesContext
-    @DisplayName("POST -> with already existing Item-Number itemAlreadyExistExceptionMessage ")
+    @DisplayName("POST -> with already existing Item-Number -> expect HTTP-status 400 and itemAlreadyExistException.")
     void postWithExistingItemNumberAndExpectStatus400() throws Exception {
         //GIVEN
         Product[] product = {new Product(
@@ -405,7 +405,5 @@ class ItemIntegrationTest {
                 //THEN
                 .andExpect(status().is(400))
                 .andExpect(content().string("The item with ean: 8710847909610 is already existing!"));
-
     }
-
 }

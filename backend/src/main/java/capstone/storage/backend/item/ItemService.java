@@ -27,7 +27,7 @@ public class ItemService {
         List<Item> listToReturn = new ArrayList<>();
 
         for (Item item : allItems) {
-            int amount = storageBinService.getItemAmountFromStorageBinsByItemNumber(item);
+            int amount = storageBinService.getAmountsFromStorageBins(item);
 
             Item itemToAdd = new Item(
                     item.id(),
@@ -92,7 +92,7 @@ public class ItemService {
     }
 
     public boolean beforeDeleteControl(String id) {
-        Item item = repository.findById(id).orElseThrow(() -> new ItemNotFoundException(id));
+        Item item = repository.findById(id).orElseThrow(ItemNotFoundException::new);
         boolean isExistingInStorageBin = storageBinService.existsByItemNumber(item.itemNumber());
         boolean isExistingInDrivingOrders = drivingOrderRepo.existsByItemNumber(item.itemNumber());
         return isExistingInDrivingOrders || isExistingInStorageBin;

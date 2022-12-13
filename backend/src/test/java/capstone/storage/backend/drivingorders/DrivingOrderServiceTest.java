@@ -1,6 +1,5 @@
 package capstone.storage.backend.drivingorders;
 
-import capstone.storage.backend.ExceptionMessage;
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.drivingorders.models.NewDrivingOrder;
 import capstone.storage.backend.exceptions.IllegalTypeException;
@@ -378,7 +377,7 @@ class DrivingOrderServiceTest {
         }
         //THEN
         catch (IllegalTypeException e) {
-            assertEquals(ExceptionMessage.ILLEGAL_TYPE_EXCEPTION_MESSAGE.toString(), e.getMessage());
+            assertEquals("The type is not allowed!", e.getMessage());
         }
 
     }
@@ -397,7 +396,7 @@ class DrivingOrderServiceTest {
         }
         //THEN
         catch (ItemOrStorageBinNotExistingException e) {
-            assertEquals(ExceptionMessage.ITEM_OR_STORAGE_BIN_NOT_EXISTING_EXCEPTION_MESSAGE.toString(), e.getMessage());
+            assertEquals("Item or storage-bin doesn't exist.", e.getMessage());
         }
     }
 
@@ -415,7 +414,7 @@ class DrivingOrderServiceTest {
         }
         //THEN
         catch (ItemOrStorageBinNotExistingException e) {
-            assertEquals(ExceptionMessage.ITEM_OR_STORAGE_BIN_NOT_EXISTING_EXCEPTION_MESSAGE.toString(), e.getMessage());
+            assertEquals("Item or storage-bin doesn't exist.", e.getMessage());
         }
     }
 }

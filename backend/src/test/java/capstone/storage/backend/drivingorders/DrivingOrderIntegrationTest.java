@@ -1,6 +1,5 @@
 package capstone.storage.backend.drivingorders;
 
-import capstone.storage.backend.ExceptionMessage;
 import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -85,7 +84,7 @@ class DrivingOrderIntegrationTest {
                                 "amount" : null
                                 }"""))
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("All input fields must be filled!"));
 
     }
 
@@ -97,7 +96,7 @@ class DrivingOrderIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/driving-orders/?type=INPUT")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.IS_NULL_OR_EMPTY_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("All input fields must be filled!"));
 
     }
 
@@ -148,7 +147,7 @@ class DrivingOrderIntegrationTest {
                                 "amount" : "10"
                                 }"""))
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.ITEM_OR_STORAGE_BIN_NOT_EXISTING_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("Item or storage-bin doesn't exist."));
     }
 
     @Test
@@ -178,7 +177,7 @@ class DrivingOrderIntegrationTest {
                                 "amount" : "20"
                                 }"""))
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.IS_NOT_ENOUGH_SPACE_EXCEPTION_MESSAGE + storageLocationId));
+                .andExpect(content().string("There is not enough space in storage-bin: " + storageLocationId));
     }
 
     @Test
@@ -341,7 +340,8 @@ class DrivingOrderIntegrationTest {
                                 "itemNumber" : "2",
                                 "amount" : "10"
                                 }"""))
-                .andExpect(status().is(400)).andExpect(content().string("Storage-bin item-nr.: 1 and order item-nr.: 2 doesn't match"));
+                .andExpect(status().is(400))
+                .andExpect(content().string("Storage-bin item-nr.: 1 and order item-nr.: 2 doesn't match"));
 
     }
 

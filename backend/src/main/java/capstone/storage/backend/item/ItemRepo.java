@@ -10,6 +10,5 @@ public interface ItemRepo extends MongoRepository<Item, String> {
 
     boolean existsByItemNumber(int itemNumber);
 
-
     Optional<Item> findItemByItemNumber(int itemNumber);
 }
