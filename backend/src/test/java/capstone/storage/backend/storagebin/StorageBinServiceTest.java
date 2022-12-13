@@ -116,15 +116,15 @@ class StorageBinServiceTest {
         assertEquals(expected, actual);
     }
 
-    @DisplayName("Method -> getAmountsFromStorageBins -> should Return 1.")
+    @DisplayName("Method -> getTotalAmountsFromStorageBins -> should Return 1.")
     @Test
-    void getAmountsFromStorageBinsByItemNumberAndExpectReturn1() {
+    void getTotalAmountsFromStorageBinsByItemNumberAndExpectReturn1() {
         //GIVEN
         Item itemToCount = new Item("1", "Axe Bodyspray Wasabi & Fresh Linen", "ger", "DE", "123", 10, 1, 0);
         List<StorageBin> storageBinsWithItem = List.of(new StorageBin("1", "1", 1, 1));
         //WHEN
         when(storageBinrepo.findAllByItemNumber(itemToCount.itemNumber())).thenReturn(storageBinsWithItem);
-        int actual = service.getAmountsFromStorageBins(itemToCount);
+        int actual = service.getTotalAmountFromStorageBins(itemToCount);
         int expected = 1;
         //THEN
         verify(storageBinrepo).findAllByItemNumber(itemToCount.itemNumber());
