@@ -74,9 +74,9 @@ public class DrivingOrderService {
      * Throws StorageBinFalseItemException when the isValidOutputItem method returns false.<br>
      * Throws NotEnoughItemsRemainingException when the hasEnoughAmount method returns false.
      *
-     * @param storageBinFromOrder is needed for the isValidInputItem and hasFreeAmount methods
-     * @param itemFromOrder       is needed for the isValidInputItem and hasFreeAmount methods
-     * @param newDrivingOrder     is needed for the isValidInputItem and hasFreeAmount methods
+     * @param storageBinFromOrder is used for the isValidInputItem and hasFreeAmount methods
+     * @param itemFromOrder       is used for the isValidInputItem and hasFreeAmount methods
+     * @param newDrivingOrder     is used for the isValidInputItem and hasFreeAmount methods
      */
 
     private void validateOutputOrder(StorageBin storageBinFromOrder, Item itemFromOrder, NewDrivingOrder newDrivingOrder) {
