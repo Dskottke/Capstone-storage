@@ -92,9 +92,9 @@ public class DrivingOrderService {
      * Throws StorageBinFalseItemException when the isValidInputItem method returns false.<br>
      * Throws IsNotEnoughSpaceException when the hasFreeAmount method returns false.
      *
-     * @param storageBinFromOrder is needed for the isValidInputItem and hasFreeAmount methods
-     * @param itemFromOrder       is needed for the isValidInputItem and hasFreeAmount methods
-     * @param newDrivingOrder     is needed for the isValidInputItem and hasFreeAmount methods
+     * @param storageBinFromOrder is used for the isValidInputItem and hasFreeAmount methods
+     * @param itemFromOrder       is used for the isValidInputItem and hasFreeAmount methods
+     * @param newDrivingOrder     is used for the isValidInputItem and hasFreeAmount methods
      */
     private void validateInputOrder(StorageBin storageBinFromOrder, Item itemFromOrder, NewDrivingOrder newDrivingOrder) {
         if (!isValidInputItem(storageBinFromOrder, itemFromOrder.itemNumber())) {
