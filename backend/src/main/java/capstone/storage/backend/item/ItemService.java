@@ -51,8 +51,8 @@ public class ItemService {
     }
 
     /**
-     * This Method takes care that the addItem will be validated and gets proved if the item is already existing.
-     * if everything is proved successfully it fetches the product from eanApiService by EAN and insert a new item into the
+     * This method makes sure that the addItem is validated and checks if the item already exists.
+     * If everything has been checked successfully, it fetches the product from the eanApiService via EAN and adds a new item to the
      * database with a default amount of 0.
      *
      * @param addItemDto to add a new item
@@ -112,8 +112,8 @@ public class ItemService {
     }
 
     /**
-     * This method fetches the item by id from database and
-     * returns true if there is an existing storageBin or drivingOrder with the itemNumber.
+     * This method retrieves the item from the database and
+     * returns true if there is a storageBin or a drivingOrder with the itemNumber.
      *
      * @param id of the item
      * @return boolean
@@ -128,7 +128,7 @@ public class ItemService {
 
     /**
      * This method throws an ItemAlreadyExistsException
-     * when an item with the addItemDto ean or itemNumber is already existing.
+     * if an item with the name addItemDto ean or itemNumber already exists.
      *
      * @param addItemDto fields ean and itemNumber
      */
@@ -143,7 +143,7 @@ public class ItemService {
 
     /**
      * This method throws an ItemValidationException
-     * when the addItemDto fields -> storable value and itemNumber are lower 0.
+     * if the addItemDto fields -> storableValue and itemNumber are less than 0.
      *
      * @param addItemDto fields storableValue and itemNumber
      */
