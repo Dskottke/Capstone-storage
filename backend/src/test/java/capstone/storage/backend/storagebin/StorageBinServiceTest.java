@@ -56,7 +56,6 @@ class StorageBinServiceTest {
         StorageBin actual = storageBinrepo.findStorageBinByLocationId("1");
         //THEN
         verify(storageBinrepo).findAll();
-        verify(itemRepo).findItemByItemNumber(testStorageBin.itemNumber());
         verify(storageBinrepo).findStorageBinByLocationId("1");
         assertEquals(expected, actual);
     }
@@ -74,7 +73,6 @@ class StorageBinServiceTest {
         List<StorageBinReturn> actual = service.getAllStorageBins();
         //THEN
         verify(storageBinrepo).findAll();
-        verify(itemRepo).findItemByItemNumber(testStorageBin.itemNumber());
         assertEquals(expected, actual);
     }
 
