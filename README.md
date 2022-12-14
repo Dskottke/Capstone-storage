@@ -31,4 +31,4 @@ You need to set the token in your application.properties:
 Example:
 'token:12345678
 ```
-If you do not want to use the function, you can also use the Test Mode button on the main page for a simulation state.
+If you do not want to use the function, you can also use the test Mode button on the main page for a simulation state.
