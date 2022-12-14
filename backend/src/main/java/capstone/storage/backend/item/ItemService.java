@@ -22,11 +22,7 @@ public class ItemService {
     private final DrivingOrderRepo drivingOrderRepo;
     private final ServiceUtils utils;
 
-    /**
-     * This method returns the List of all items with the sum of amounts on storageBins for each item.
-     *
-     * @return List of Items with sum of amounts.
-     */
+
     public List<Item> findAll() {
         List<Item> allItems = repository.findAll();
         List<Item> listToReturn = new ArrayList<>();
@@ -50,14 +46,7 @@ public class ItemService {
 
     }
 
-    /**
-     * This method makes sure that the addItem is validated and checks if the item already exists.
-     * If everything has been checked successfully, it fetches the product from the eanApiService via EAN and adds a new item to the
-     * database with a default amount of 0.
-     *
-     * @param addItemDto to add a new item
-     * @return Item
-     */
+
     public Item addItem(AddItemDto addItemDto) {
 
         validateAddItemDto(addItemDto);
@@ -80,7 +69,6 @@ public class ItemService {
         return repository.insert(itemToAdd);
     }
 
-
     public Item updateItem(Item articleRequest) {
         return repository.save(articleRequest);
     }
@@ -97,12 +85,7 @@ public class ItemService {
         return repository.existsByItemNumber(itemNumber);
     }
 
-    /**
-     * This method throws new StoredItemsException when the hasStock by id method returns true<br>
-     * otherwise it deletes the item in database
-     *
-     * @param id of the item
-     */
+
     public void deleteItemById(String id) {
         if (hasStock(id)) {
             throw new StoredItemsException(id);
@@ -111,13 +94,6 @@ public class ItemService {
         }
     }
 
-    /**
-     * This method retrieves the item from the database and
-     * returns true if there is a storageBin or a drivingOrder with the itemNumber.
-     *
-     * @param id of the item
-     * @return boolean
-     */
 
     public boolean hasStock(String id) {
         Item item = repository.findById(id).orElseThrow(ItemNotFoundException::new);
@@ -126,12 +102,6 @@ public class ItemService {
         return isExistingInDrivingOrders || isExistingInStorageBin;
     }
 
-    /**
-     * This method throws an ItemAlreadyExistsException
-     * if an item with the name addItemDto ean or itemNumber already exists.
-     *
-     * @param addItemDto fields ean and itemNumber
-     */
 
     public void checkItemExisting(AddItemDto addItemDto) {
         boolean eanIsAlreadySaved = repository.existsByEan(addItemDto.ean());
@@ -141,12 +111,6 @@ public class ItemService {
         }
     }
 
-    /**
-     * This method throws an ItemValidationException
-     * if the addItemDto fields -> storableValue and itemNumber are less than 0.
-     *
-     * @param addItemDto fields storableValue and itemNumber
-     */
     public void validateAddItemDto(AddItemDto addItemDto) {
         boolean invalidCapacity = addItemDto.storableValue() < 0;
         boolean invalidItemNumber = addItemDto.itemNumber() < 0;
@@ -155,12 +119,6 @@ public class ItemService {
         }
     }
 
-    /**
-     * This method returns true when addItemDto fields contains null , 0 or an empty String.
-     *
-     * @param addItemDto fields ean , itemNumber and storableValue
-     * @return boolean
-     */
     public boolean isNullOrEmpty(AddItemDto addItemDto) {
         if (addItemDto.ean() == null || addItemDto.itemNumber() == 0 || addItemDto.storableValue() == 0) {
             return true;
