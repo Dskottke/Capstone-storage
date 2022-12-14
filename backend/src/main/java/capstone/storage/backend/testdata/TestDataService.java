@@ -24,11 +24,6 @@ public class TestDataService {
 
     private final DrivingOrderRepo drivingOrderRepo;
 
-    /**
-     * this method deletes all Items,StorageBins and DrivingOrders from the database,
-     * manages the parsing of Objects(Items,StorageBins and DrivingOrders) from JSON data
-     * and the storing of these objects in the database.
-     */
     public void addTestData() {
         deleteAll();
         try {
