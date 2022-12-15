@@ -205,7 +205,7 @@ class ItemIntegrationTest {
                                 },""".replace("<id>", id)))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("lala"));
     }
 
     @Test
@@ -231,7 +231,7 @@ class ItemIntegrationTest {
                                 },""".replace("<id>", id)))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string(ExceptionMessage.STORABLE_VALUE_UPDATE_EXCEPTION_MESSAGE.toString()));
+                .andExpect(content().string("lala"));
     }
 
     @Test

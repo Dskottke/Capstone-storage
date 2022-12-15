@@ -91,8 +91,10 @@ public class StorageBinService {
     public boolean existsByItemNumber(int itemNumber) {
         return storageBinRepo.existsByItemNumber(itemNumber);
     }
-    public List<StorageBin> findAllByItemNumber(String itemNumber) {
-        return storageBinRepo.findAllByItemNumber(itemNumber);}
+
+    public List<StorageBin> findAllByItemNumber(int itemNumber) {
+        return storageBinRepo.findAllByItemNumber(itemNumber);
+    }
 
     private StorageBinReturn toStorageBinReturn(StorageBin storageBin) {
         int itemNumber = storageBin.itemNumber();
@@ -109,5 +111,4 @@ public class StorageBinService {
         return itemRepository.findItemByItemNumber(itemNumber).map(Item::name).orElseThrow(ItemISNotExistingException::new);
 
     }
-
 }

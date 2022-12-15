@@ -2,18 +2,14 @@ package capstone.storage.backend.item;
 
 import capstone.storage.backend.drivingorders.DrivingOrderRepo;
 import capstone.storage.backend.exceptions.*;
-import capstone.storage.backend.drivingorders.Type;
-import capstone.storage.backend.drivingorders.models.DrivingOrder
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
-import capstone.storage.backend.storagebin.StorageBin;
 import capstone.storage.backend.storagebin.StorageBinService;
 import capstone.storage.backend.utils.ServiceUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -397,27 +393,4 @@ class ItemServiceTest {
         }
 
     }
-
-    @Test
-    @DisplayName("method -> notPermittedUpdateControl should return false")
-    void notPermittedUpdateControlShouldReturnFalse() {
-        //GIVEN
-        Item itemToUpdate = new Item("1",
-                "testName",
-                "testCategory",
-                "TestCountry",
-                "testEan", "10",
-                "1",
-                "");
-        List<StorageBin> mockStorageBinList = new ArrayList<>();
-        List<DrivingOrder> mockDrivingOrderList = new ArrayList<>();
-        //WHEN
-        when(storageBinService.findAllByItemNumber(itemToUpdate.itemNumber())).thenReturn(mockStorageBinList);
-        when(storageBinService.findAllByItemNumber(itemToUpdate.itemNumber())).thenReturn(mockStorageBinList);
-        when(drivingOrderRepo.findByTypeAndItemNumber(Type.INPUT, itemToUpdate.itemNumber())).thenReturn(mockDrivingOrderList);
-        boolean actual = itemService.notPermittedUpdateControl(itemToUpdate);
-        //THEN
-        assertFalse(actual);
-    }
-
 }
