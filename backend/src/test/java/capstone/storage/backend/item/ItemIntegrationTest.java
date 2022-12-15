@@ -191,7 +191,7 @@ class ItemIntegrationTest {
                 .andExpect(status().is(204));
         String id = "992901d9-5eb8-4992-9620-e5e80bb7f0e0";
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -201,7 +201,7 @@ class ItemIntegrationTest {
                                 "issuingCountry": "NL",
                                 "ean":"8710847909610",
                                 "storableValue": "20",
-                                "itemNumber": "1"
+                                "itemNumber": 1
                                 },""".replace("<id>", id)))
                 //THEN
                 .andExpect(status().is(400))
@@ -217,7 +217,7 @@ class ItemIntegrationTest {
                 .andExpect(status().is(204));
         String id = "8e1569a3-1655-45c3-ba9b-107d61937500";
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/" + id)
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/items/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -226,12 +226,12 @@ class ItemIntegrationTest {
                                 "categoryName": "Books and Magazines",
                                 "issuingCountry": "",
                                 "ean":"9789391030223",
-                                "storableValue": "5",
-                                "itemNumber": "2"
+                                "storableValue": 5,
+                                "itemNumber": 2
                                 },""".replace("<id>", id)))
                 //THEN
                 .andExpect(status().is(400))
-                .andExpect(content().string("lala"));
+                .andExpect(content().string("can't change the capacity to less than stored"));
     }
 
     @Test
@@ -250,7 +250,7 @@ class ItemIntegrationTest {
                                 "categoryName": "test",
                                 "issuingCountry": "GER",
                                 "ean":"8710847909610",
-                                "storableValue": "10"}"""))
+                                "storableValue": 10}"""))
                 //THEN
                 .andExpect(status().is(400)).andExpect(content().string("Item is not existing!"));
     }
