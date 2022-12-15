@@ -1,11 +1,14 @@
 package capstone.storage.backend.item;
 
 import capstone.storage.backend.drivingorders.DrivingOrderRepo;
+import capstone.storage.backend.drivingorders.Type;
+import capstone.storage.backend.drivingorders.models.DrivingOrder;
 import capstone.storage.backend.exceptions.*;
 import capstone.storage.backend.item.models.AddItemDto;
 import capstone.storage.backend.item.models.Item;
 import capstone.storage.backend.item.models.Product;
 import capstone.storage.backend.storagebin.StorageBinService;
+import capstone.storage.backend.storagebin.models.StorageBin;
 import capstone.storage.backend.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -69,8 +72,105 @@ public class ItemService {
         return repository.insert(itemToAdd);
     }
 
-    public Item updateItem(Item articleRequest) {
-        return repository.save(articleRequest);
+    public Item updateItem(Item itemToUpdate) {
+        if (isChangeable(itemToUpdate)) {
+            throw new StorableValueUpdateException();
+        } else {
+            return repository.save(itemToUpdate);
+        }
+    }
+
+    public boolean isChangeable(Item updateItem) {
+        boolean storageIsValid = storedCheck(updateItem);
+        boolean totalStockIsValid = totalStockCheck(updateItem);
+
+
+        return storageIsValid && totalStockIsValid;
+    }
+
+    private boolean storedCheck(Item updateItem) {
+        return storageBinService.findAllByItemNumber(updateItem.itemNumber())
+                .stream()
+                .anyMatch(storageBin -> storageBin.amount() > updateItem.storableValue());
+    }
+
+    private boolean totalStockCheck(Item updateItem) {
+        return getTotalStock(updateItem)
+                .stream()
+                .anyMatch(storageBin -> storageBin.amount() > updateItem.storableValue());
+    }
+
+    public List<StorageBin> getTotalStock(Item itemToUpdate) {
+
+
+        List<StorageBin> matchingStorageBins = storageBinService.findAllByItemNumber(itemToUpdate.itemNumber());
+
+        return matchingStorageBins.stream()
+                .map(storageBin -> locationMatches(storageBin, itemToUpdate))
+                .toList();
+//1
+
+    /*    List<DrivingOrder> matchingOrders = drivingOrderRepo.findByTypeAndItemNumber(Type.INPUT, itemToUpdate.itemNumber());
+        List<StorageBin> storageBinListAddedWithOrderAmount = new ArrayList<>();
+        for (DrivingOrder order : matchingOrders) {
+
+            Optional<StorageBin> storageBinOptional = storageBinService.findStorageBinByLocationIdAndItemNumber(order.storageLocationId(), itemToUpdate.itemNumber());
+
+            if (storageBinOptional.isPresent()) {
+
+                StorageBin storageBin = storageBinOptional.get();
+                int totalAmount = storageBin.amount() + order.amount();
+                storageBinListAddedWithOrderAmount.add(
+                        new StorageBin(
+                                storageBin.id(),
+                                storageBin.locationId(),
+                                storageBin.itemNumber(),
+                                totalAmount));
+            }
+        }
+        stopWatch.stop();
+        System.err.println(stopWatch.getTotalTimeNanos());
+        return storageBinListAddedWithOrderAmount;
+      */
+        //2
+
+        //3
+     /*   List<StorageBin> matchingStorageBins = storageBinService.findAllByItemNumber(itemToUpdate.itemNumber());
+        List<DrivingOrder> matchingOrders = drivingOrderRepo.findByTypeAndItemNumber(Type.INPUT, itemToUpdate.itemNumber());
+
+        List<StorageBin> storageBinListAddedWithOrderAmount = new ArrayList<>();
+
+      for (StorageBin storageBin : matchingStorageBins) {
+            for (DrivingOrder drivingOrder : matchingOrders) {
+                if (storageBin.locationId().equals(drivingOrder.storageLocationId())) {
+                    int totalAmount = storageBin.amount() + drivingOrder.amount();
+                    storageBinListAddedWithOrderAmount.add(
+                            new StorageBin(storageBin.id(),
+                                    storageBin.locationId(),
+                                    storageBin.itemNumber(),
+                                    totalAmount));
+                }
+            }
+        }
+       stopWatch.stop();
+
+        System.err.println(stopWatch.getTotalTimeNanos());
+         return storageBinListAddedWithOrderAmount;*/
+    }
+
+    private StorageBin locationMatches(StorageBin storageBin, Item itemToUpdate) {
+        List<DrivingOrder> matchingOrders = drivingOrderRepo.findByTypeAndItemNumber(Type.INPUT, itemToUpdate.itemNumber());
+
+        return matchingOrders.stream()
+                .filter(drivingOrder -> drivingOrder.storageLocationId().equals(storageBin.locationId()))
+                .map(drivingOrder -> calculateStock(storageBin, itemToUpdate, drivingOrder))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private StorageBin calculateStock(StorageBin storageBin, Item itemToUpdate, DrivingOrder drivingOrder) {
+        int totalStock = storageBin.amount() + drivingOrder.amount();
+        return new StorageBin(storageBin.id(), storageBin.locationId(), itemToUpdate.itemNumber(), totalStock);
     }
 
     public Item findItemByItemNumber(int itemNumber) {
